@@ -125,7 +125,16 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const skills = ['JavaScript (ES6+)', 'TypeScript', 'React', 'Eleventy', 'Node.js', 'WordPress'];
+  const skills = [
+    'C#',
+    'ASP.Net',
+    'React',
+    'React Native',
+    'Umbraco',
+    'Azure',
+    'SQL Server',
+    'MySQL',
+  ];
 
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
@@ -135,30 +144,37 @@ const About = () => {
         <StyledText>
           <div>
             <p>
-              Hello! My name is Brittany and I enjoy creating things that live on the internet. My
-              interest in web development started back in 2012 when I decided to try editing custom
-              Tumblr themes — turns out hacking together a custom reblog button taught me a lot
-              about HTML &amp; CSS!
+              Hello! I'm Clint, and I like making things that empower people. I live in Minneapolis,
+              Minnesota, with my wife, our son, and our dog. My journey in tech began in 9th grade,
+              building websites on AOL. By 19, I was already in my first development role. Along the
+              way, I also started and sold a t-shirt business.
             </p>
 
             <p>
-              Fast-forward to today, and I’ve had the privilege of working at{' '}
-              <a href="https://us.mullenlowe.com/">an advertising agency</a>,{' '}
-              <a href="https://starry.com/">a start-up</a>,{' '}
-              <a href="https://www.apple.com/">a huge corporation</a>, and{' '}
-              <a href="https://scout.camd.northeastern.edu/">a student-led design studio</a>. My
-              main focus these days is building accessible, inclusive products and digital
-              experiences at <a href="https://upstatement.com/">Upstatement</a> for a variety of
-              clients.
+              Over the years, I’ve had the privilege of working to create{' '}
+              <a target="_blank" href="https://preview.srtr.org/">
+                an organ transplant center search
+              </a>
+              ,{' '}
+              <a href="https://www.srtr.org/transplant-centers/interactive-report?center=NYUC&type=TX1&organ=ki&ref=clintmcmahon.com">
+                data visualizations
+              </a>
+              ,{' '}
+              <a href="https://srtr.org/tools/donation-and-transplantation-analytics/?ref=clintmcmahon.com">
+                analytics tools
+              </a>
+              , and{' '}
+              <a href="https://www.srtr.org/reports/opo-specific-reports/interactive-report?ref=clintmcmahon.com">
+                interactive reports
+              </a>
+              . My main focus these days is architecting and building valuable products and digital
+              experiences at <a href="https://parkasoftware.com/">Parka Software</a> for a variety
+              of clients.
             </p>
 
             <p>
-              I also recently{' '}
-              <a href="https://www.newline.co/courses/build-a-spotify-connected-app">
-                launched a course
-              </a>{' '}
-              that covers everything you need to build a web app with the Spotify API using Node
-              &amp; React.
+              I also recently <a href="https://mplscoffee.com">launched an app</a> that helps people
+              find the best coffee shops in Minneapolis &amp; St. Paul
             </p>
 
             <p>Here are a few technologies I’ve been working with recently:</p>
