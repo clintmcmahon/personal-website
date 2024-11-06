@@ -65,15 +65,14 @@ const Hero = () => {
   const four = (
     <>
       <p>
-        I’m a software engineer specializing in developing web and mobile apps with C# and .Net
-        (usually). Currently, I'm focused on building and designing creative solutions with my
-        consulting company{' '}
+        I’m a software engineer and consultant specializing in C# and .NET, building high-quality
+        web and mobile apps. Currently, I’m focused on delivering efficient, client-driven solutions
+        with{' '}
         <a href="https://parkasoftware.com/" target="_blank" rel="noreferrer">
           Parka Software
-        </a>
-        .
+        </a>{' '}
+        for organizations in the legal and healthcare industries.
       </p>
-      <p>My preferred tech stack is: C#, Asp.Net, WebAPI, React, Angular and Azure.</p>
     </>
   );
   const five = (
