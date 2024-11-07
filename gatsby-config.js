@@ -2,7 +2,7 @@ const config = require('./src/config');
 
 module.exports = {
   siteMetadata: {
-    title: 'Clint McMahon',
+    title: 'Clint McMahon - Freelance C# .Net web & mobile app consultant in Minneapolis, MN',
     description:
       'Clint McMahon is a software engineer and consultant who specializes in creating exceptional digital experiences with C#, Asp.Net and Azure.',
     siteUrl: 'https://clintmcmahon.com', // No trailing slash allowed!
