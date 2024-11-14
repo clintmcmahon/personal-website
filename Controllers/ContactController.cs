@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace Website.Controllers;
-public class NowController : Controller
+public class ContactController : Controller
 {
 
-    public NowController()
+    public ContactController()
     {
 
     }

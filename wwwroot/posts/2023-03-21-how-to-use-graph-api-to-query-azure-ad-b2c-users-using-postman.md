@@ -7,7 +7,7 @@ slug: "how-to-use-graph-api-to-query-azure-ad-b2c-users-using-postman"
 tags:
 ---
 
-<p><em>I've built an </em><a href="https://github.com/clintmcmahon/azure-ad-b2c-user-manager" rel="noreferrer"><em>entire Azure AD B2C User Management solution</em></a><em> that is available for free on Github. The code samples below are part of this larger solution. Feel free to use this application as you see fit. </em><a href="__GHOST_URL__/contact" rel="noreferrer"><em>Contact me</em></a><em> if you run into any issues or need help consulting on your Azure AD B2C project.</em></p>
+<p><em>I've built an </em><a href="https://github.com/clintmcmahon/azure-ad-b2c-user-manager" rel="noreferrer"><em>entire Azure AD B2C User Management solution</em></a><em> that is available for free on Github. The code samples below are part of this larger solution. Feel free to use this application as you see fit. </em><a href="/contact" rel="noreferrer"><em>Contact me</em></a><em> if you run into any issues or need help consulting on your Azure AD B2C project.</em></p>
 <!--kg-card-begin: html-->
 
 <p>
