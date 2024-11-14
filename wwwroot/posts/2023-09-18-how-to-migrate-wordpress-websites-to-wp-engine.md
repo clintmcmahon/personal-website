@@ -52,7 +52,7 @@ tags:
 <li>You&#8217;ll see a screen that looks like this one below. Here you see the site properties that you&#8217;ll need to input into the source/existing website migration plug in. You can generate the migration SFTP credentials here if you have not already done so.</li>
 </ol>
 
-<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="711" src="/images/wordpress/2023/09/Screenshot-2023-09-18-at-4.20.42-PM-1024x711.png" alt="WP Engine Migrate website" class="wp-image-1245"/></figure>
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" src="/images/wordpress/2023/09/Screenshot-2023-09-18-at-4.20.42-PM-1024x711.png" alt="WP Engine Migrate website" class="wp-image-1245"/ sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
 <h3 class="wp-block-heading">Step 3: Plugin Configuration</h3>
 
@@ -64,7 +64,7 @@ tags:
 <li>Click <code>Start Migration</code>.</li>
 </ol>
 
-<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="717" src="/images/wordpress/2023/09/Screenshot-2023-09-18-at-4.20.25-PM-1024x717.png" alt="" class="wp-image-1248"/></figure>
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" src="/images/wordpress/2023/09/Screenshot-2023-09-18-at-4.20.25-PM-1024x717.png" alt="" class="wp-image-1248"/ sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
 <h3 class="wp-block-heading">Step 4: Monitoring and Verification</h3>
 
@@ -74,7 +74,7 @@ tags:
 <li>You&#8217;ll receive a confirmation email upon successful migration.</li>
 </ol>
 
-<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="692" src="/images/wordpress/2023/09/Screenshot-2023-09-18-at-4.22.38-PM-1024x692.png" alt="WP Engine migration status" class="wp-image-1246"/></figure>
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" src="/images/wordpress/2023/09/Screenshot-2023-09-18-at-4.22.38-PM-1024x692.png" alt="WP Engine migration status" class="wp-image-1246"/ sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
 <h3 class="wp-block-heading">Step 5: DNS Update</h3>
 

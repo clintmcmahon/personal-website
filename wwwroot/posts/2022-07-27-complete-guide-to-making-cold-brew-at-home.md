@@ -22,7 +22,7 @@ tags:
 
 <p>I start with 64 ounce jar/jug/pitcher/container or whatever can hold at least 32 ounces of liquid. Fill the container with <strong>32 ounces of filtered water</strong>.</p>
 
-<figure class="wp-block-image aligncenter size-full"><img decoding="async" loading="lazy" width="640" height="606" src="/images/wordpress/2022/07/IMG_3185.jpeg" alt="Complete guide to making cold brew at home" class="wp-image-5626" sizes="(max-width: 640px) 100vw, 640px" /></figure>
+<figure class="wp-block-image aligncenter size-full"><img decoding="async" loading="lazy" src="/images/wordpress/2022/07/IMG_3185.jpeg" alt="Complete guide to making cold brew at home" class="wp-image-5626" sizes="(max-width: 640px) 100vw, 640px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
 <p></p>
 
@@ -30,7 +30,7 @@ tags:
 
 <p>Weigh <strong>6 ounces</strong> of the freshest beans you have available. I like <a href="https://irvingfarm.com/collections/coffee/products/cold-brew-blend" data-type="URL" data-id="https://irvingfarm.com/collections/coffee/products/cold-brew-blend" target="_blank" rel="noreferrer noopener">Irving Farm&#8217;s Cold Brew Blend</a> but I&#8217;m using my local Minneapolis roaster <a href="https://www.dogwoodcoffee.com/collections/coffee/products/rwanda-shyira" data-type="URL" data-id="https://www.dogwoodcoffee.com/collections/coffee/products/rwanda-shyira" target="_blank" rel="noreferrer noopener">Dogwood Coffee&#8217;s Rwanda</a> in this tutorial.</p>
 
-<figure class="wp-block-image aligncenter size-full"><img decoding="async" loading="lazy" width="640" height="423" src="/images/wordpress/2022/07/IMG_3186.jpeg" alt="Dogwood coffee" class="wp-image-5627" sizes="(max-width: 640px) 100vw, 640px" /></figure>
+<figure class="wp-block-image aligncenter size-full"><img decoding="async" loading="lazy" src="/images/wordpress/2022/07/IMG_3186.jpeg" alt="Dogwood coffee" class="wp-image-5627" sizes="(max-width: 640px) 100vw, 640px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
 <p></p>
 
@@ -51,11 +51,11 @@ tags:
 <p>Dump the grounds straight into the container and stir them until the water and grounds are completely covered mixed together.</p>
 
 <div class="is-layout-flow wp-block-group">
-<figure class="wp-block-image aligncenter size-large"><img decoding="async" loading="lazy" width="1024" height="683" src="/images/wordpress/2022/07/IMG_3191-1.jpeg" alt="" class="wp-image-5858" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image aligncenter size-large"><img decoding="async" loading="lazy" src="/images/wordpress/2022/07/IMG_3191-1.jpeg" alt="" class="wp-image-5858" sizes="(max-width: 1024px) 100vw, 1024px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
-<figure class="wp-block-image aligncenter size-large"><img decoding="async" loading="lazy" width="1024" height="819" src="/images/wordpress/2022/07/IMG_3192-1.jpeg" alt="" class="wp-image-5859" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image aligncenter size-large"><img decoding="async" loading="lazy" src="/images/wordpress/2022/07/IMG_3192-1.jpeg" alt="" class="wp-image-5859" sizes="(max-width: 1024px) 100vw, 1024px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
-<figure class="wp-block-image aligncenter size-large"><img decoding="async" loading="lazy" width="1024" height="683" src="/images/wordpress/2022/07/IMG_3193-1.jpeg" alt="" class="wp-image-5860" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image aligncenter size-large"><img decoding="async" loading="lazy" src="/images/wordpress/2022/07/IMG_3193-1.jpeg" alt="" class="wp-image-5860" sizes="(max-width: 1024px) 100vw, 1024px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 </div>
 
 <p></p>
@@ -71,9 +71,9 @@ tags:
 <p>After the time is up it&#8217;s time to filter the grounds from the water. Take a flour sifter or a strainer with small enough holes so that the coffee grounds cant get through. Place the strainer over another container similar to the container holding your water + grounds. Then pour the coffee and water mixture through the strainer into the new container. This will leave all the coffee grounds in the strainer and your pure coffee concentrate will be in the other container. Let sit for a few minutes to allow all the coffee to completely drain through the strainer.</p>
 
 <div class="is-layout-flow wp-block-group">
-<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="1024" height="665" src="/images/wordpress/2022/07/IMG_3209.jpg" alt="Spend cold brew grounds filters" class="wp-image-5840" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" src="/images/wordpress/2022/07/IMG_3209.jpg" alt="Spend cold brew grounds filters" class="wp-image-5840" sizes="(max-width: 1024px) 100vw, 1024px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
-<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="1024" height="822" src="/images/wordpress/2022/07/IMG_3210.jpg" alt="Spend cold brew grounds filters" class="wp-image-5841" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" src="/images/wordpress/2022/07/IMG_3210.jpg" alt="Spend cold brew grounds filters" class="wp-image-5841" sizes="(max-width: 1024px) 100vw, 1024px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 </div>
 
 <p>At this point we&#8217;ve just made the coffee is ready to drink, however since it&#8217;s concentrate it will be pretty thick and strong. The next two steps are to filter the sludge from the coffee and add water to dilute the concentrate.</p>
@@ -87,9 +87,9 @@ tags:
 <p>Add the filter to the Chemex like normal and pour the coffee through the Chemex filter until the all the coffee has been filtered.</p>
 
 <div class="is-layout-flow wp-block-group">
-<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="1024" height="902" src="/images/wordpress/2022/07/IMG_3211.jpg" alt="Chemex filtering cold brew" class="wp-image-5842" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" src="/images/wordpress/2022/07/IMG_3211.jpg" alt="Chemex filtering cold brew" class="wp-image-5842" sizes="(max-width: 1024px) 100vw, 1024px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
-<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="1024" height="683" src="/images/wordpress/2022/07/IMG_3212.jpg" alt="Chemex filtered cold brew" class="wp-image-5843" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" src="/images/wordpress/2022/07/IMG_3212.jpg" alt="Chemex filtered cold brew" class="wp-image-5843" sizes="(max-width: 1024px) 100vw, 1024px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 </div>
 
 <p></p>
@@ -104,5 +104,5 @@ tags:
 
 <p>You don&#8217;t need to mix the <strong>32 ounces</strong> of water to the final concentrate. Add water or milk to taste. Sometimes just having the ice melt in the glass is enough water for some people. YMMV depending on how strong you like your cold brew.</p>
 
-<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="1024" height="631" src="/images/wordpress/2022/07/IMG_3213.jpg" alt="Cold brew in a glass" class="wp-image-5838" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" src="/images/wordpress/2022/07/IMG_3213.jpg" alt="Cold brew in a glass" class="wp-image-5838" sizes="(max-width: 1024px) 100vw, 1024px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 <!--kg-card-end: html-->

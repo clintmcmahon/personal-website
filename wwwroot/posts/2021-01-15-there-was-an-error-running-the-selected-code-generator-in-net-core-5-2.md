@@ -26,7 +26,7 @@ tags:
 </li>
 </ol>
 <p>If the command completed without errors that should have fixed the &#8220;There was an error running the selected code generator&#8221; issue and created the necessary Identity Pages under Areas/Identity/Pages.</p>
-<p><img decoding="async" loading="lazy" class="alignnone size-full wp-image-962" src="http://clintmcmahon.com/content/images/wordpress/2021/01/Capture.jpg" alt="MVC Scaffold Identity Pages" width="434" height="555" sizes="(max-width: 434px) 100vw, 434px" /></p>
+<p><img decoding="async" loading="lazy" class="alignnone size-full wp-image-962" src="http://clintmcmahon.com/content/images/wordpress/2021/01/Capture.jpg" alt="MVC Scaffold Identity Pages" sizes="(max-width: 434px) 100vw, 434px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></p>
 <p><strong>dotnet aspnet-codegenerator</strong> also has the ability to scaffold only specific files versus all the Identity files if you don&#8217;t need the full set by passing in the -files parameter followed by the files you want to create. (Thanks to Nick for giving me a heads up in the comments about this parameter).</p>
 <pre class="EnlighterJSRAW" data-enlighter-language="powershell">dotnet aspnet-codegenerator identity -dc MyApp.Models.ApplicationDbContext –files “Account.Register;Account.Login;Account.Logout”</pre>
 <p>&nbsp;</p>

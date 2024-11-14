@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Website.Models;
@@ -66,4 +67,5 @@ public class HomeController : Controller
         // Return the XML content as an RSS feed
         return Content(rss.ToString(), "application/rss+xml", Encoding.UTF8);
     }
+
 }

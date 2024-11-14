@@ -8,7 +8,7 @@ tags:
 ---
 
 <!--kg-card-begin: html--><p>In addition default search box in DataTables sometimes it&#8217;s nice to have the ability to filter by a specific DataTable column. This example shows how to use a custom drop-down menu to filter a <a href="https://datatables.net/" target="_blank" rel="noopener">DataTable</a> by column value. I&#8217;m going to create a drop-down menu that displays the unique list of strings from a column called Category and when the user selects a category from the dropdown-menu, the datatable will be rendered with only records with the Category from the selected value.</p>
-<p><img decoding="async" loading="lazy" class="alignnone size-large wp-image-946" src="/images/wordpress/2021/02/filterdatatable.png" alt="Filter DataTable Example" width="1024" height="457" sizes="(max-width: 1024px) 100vw, 1024px" /></p>
+<p><img decoding="async" loading="lazy" class="alignnone size-large wp-image-946" src="/images/wordpress/2021/02/filterdatatable.png" alt="Filter DataTable Example" sizes="(max-width: 1024px) 100vw, 1024px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></p>
 <p><a href="https://clintmcmahon.github.io/add-filter-datatable/" target="_blank" rel="noopener">View full working example.</a><br />
 <a href="https://github.com/clintmcmahon/add-filter-datatable" target="_blank" rel="noopener">Download full repo.</a></p>
 <h2>HTML</h2>

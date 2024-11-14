@@ -30,7 +30,7 @@ Title4=KEXP - Seattle listener powered radio</pre></div>
 
 <p>Here&#8217;s what the playlist looks like in the VLC player, too. This will also work with other player programs that are compatible with pls files &#8211; like Winamp.<br></p>
 
-<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img decoding="async" loading="lazy" src="/images/wordpress/2021/06/Capture.jpg" alt="VLC playlist example" class="wp-image-1002" width="568" height="508" sizes="(max-width: 568px) 100vw, 568px" /></figure></div>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img decoding="async" loading="lazy" src="/images/wordpress/2021/06/Capture.jpg" alt="VLC playlist example" class="wp-image-1002" sizes="(max-width: 568px) 100vw, 568px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure></div>
 
 <p></p>
 <!--kg-card-end: html-->

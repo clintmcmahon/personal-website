@@ -35,11 +35,11 @@ select \* from DemoTable</pre></div>
 
 <p>You will now have data saved in the encrypted column. Because <em>Enable Always Encryption</em> was checked at the connection window the results are returned decrypted. </p>
 
-<figure class="wp-block-image size-full is-resized"><img decoding="async" loading="lazy" src="/images/wordpress/2022/03/with.jpg" alt="" class="wp-image-1201" width="178" height="70"/></figure>
+<figure class="wp-block-image size-full is-resized"><img decoding="async" loading="lazy" src="/images/wordpress/2022/03/with.jpg" alt="" class="wp-image-1201"/ sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
 <p>In order to see the encrypted values, reconnect from the server instance and uncheck the <em>Enable Always Encryption</em> checkbox in the Always Encrypted tab. This checkbox tells SQL Server to try to decrypt the encrypted columns. You should now see the encrypted values in the database table.</p>
 
-<figure class="wp-block-image size-full"><img decoding="async" loading="lazy" width="401" height="68" src="/images/wordpress/2022/03/encrypted.jpg" alt="" class="wp-image-1202" sizes="(max-width: 401px) 100vw, 401px" /></figure>
+<figure class="wp-block-image size-full"><img decoding="async" loading="lazy" src="/images/wordpress/2022/03/encrypted.jpg" alt="" class="wp-image-1202" sizes="(max-width: 401px) 100vw, 401px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
 <p></p>
 

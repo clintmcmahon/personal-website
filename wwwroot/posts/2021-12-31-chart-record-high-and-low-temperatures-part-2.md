@@ -24,25 +24,25 @@ tags:
 
 <h3>Record temperatures for a selected date</h3>
 
-<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="1024" height="445" src="/images/wordpress/2021/12/Screen-Shot-2021-12-31-at-8.43.02-AM.png" alt="" class="wp-image-1123" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" src="/images/wordpress/2021/12/Screen-Shot-2021-12-31-at-8.43.02-AM.png" alt="" class="wp-image-1123" sizes="(max-width: 1024px) 100vw, 1024px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
 <p>The first section of the front end contains six different components that display record high temperature, low temperature, coldest high temperature and warmest low temperature records. The other two components are normal high and normal low temperatures to compare the records to. </p>
 
 <h3>All time record highs and lows for a selected date</h3>
 
-<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="1024" height="369" src="/images/wordpress/2021/12/Screen-Shot-2021-12-31-at-8.43.10-AM.png" alt="Chart record high and low temperatures" class="wp-image-1124" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" src="/images/wordpress/2021/12/Screen-Shot-2021-12-31-at-8.43.10-AM.png" alt="Chart record high and low temperatures" class="wp-image-1124" sizes="(max-width: 1024px) 100vw, 1024px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
 <p>In addition to the record high temperature for the selected date, the next section shows the all time record highs and all time record lows for the selected date. By default the order is from highest/lowest record first and down the array from there. At first I had the records ordered by date so that you could easily see if there was a pattern developing but in the end decided I liked highest to lowest was more visually appealing. </p>
 
 <h3>Monthly temperature trends for a selected date&#8217;s month</h3>
 
-<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="1024" height="683" src="/images/wordpress/2021/12/Screen-Shot-2021-12-31-at-8.43.19-AM.png" alt="" class="wp-image-1125" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" src="/images/wordpress/2021/12/Screen-Shot-2021-12-31-at-8.43.19-AM.png" alt="" class="wp-image-1125" sizes="(max-width: 1024px) 100vw, 1024px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
 <p>After the top ten record highs and low temperature charts, the section that follows is for the selected date&#8217;s month temperatures. This section displays the number of days the high temperature was above the normal high and the number of days the high temperature was below the normal high. Then the chart displays the high, low and normal temperature range for each day of the month. High and low is month to selected date, while normal range goes through the entire month.</p>
 
 <h3>Snowfall for selected date&#8217;s season</h3>
 
-<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="1024" height="558" src="/images/wordpress/2021/12/Screen-Shot-2021-12-31-at-8.43.30-AM.png" alt="" class="wp-image-1126" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" src="/images/wordpress/2021/12/Screen-Shot-2021-12-31-at-8.43.30-AM.png" alt="" class="wp-image-1126" sizes="(max-width: 1024px) 100vw, 1024px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
 <p>Finally, this week I was able to get the chart to display the snowfall for the selected date&#8217;s season. The normal snowfall numbers per &#8220;year&#8221; are not calculated January through December like precipitation (rain) numbers are, however they&#8217;re calculated from July to June. I reached out to the NWS Twin Cities on Twitter for verification on the dates and they replied within a couple minutes.</p>
 

@@ -40,7 +40,7 @@ tags:
 
 <p>And would&#8217;nt you know it, my API health monitor started returning <strong>Healthy</strong>!</p>
 
-<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="1017" height="551" src="/images/wordpress/2023/10/Screenshot-2023-10-23-at-10.43.05%E2%80%AFAM.png" alt="" class="wp-image-1277"/></figure>
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" src="/images/wordpress/2023/10/Screenshot-2023-10-23-at-10.43.05%E2%80%AFAM.png" alt="" class="wp-image-1277"/ sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
 <h2 class="wp-block-heading">The How-To: Setting Up Headers in Cloudflare</h2>
 

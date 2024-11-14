@@ -16,7 +16,7 @@ tags:
 
 <p></p>
 
-<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="1024" height="488" src="/images/wordpress/2022/11/Screenshot-2022-11-15-at-9.09.48-AM.png" alt="" class="wp-image-14641" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" src="/images/wordpress/2022/11/Screenshot-2022-11-15-at-9.09.48-AM.png" alt="" class="wp-image-14641" sizes="(max-width: 1024px) 100vw, 1024px" / sizes="(max-width: 720px) 100vw, 720px" class="kg-image" loading="lazy" style="width: 100%; height: auto; max-width: 100%;"></figure>
 
 <p></p>
 
