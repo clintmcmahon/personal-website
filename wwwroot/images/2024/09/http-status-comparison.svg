@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <!-- Background -->
+  <rect width="800" height="400" fill="#f0f0f0"/>
+  
+  <!-- 401 Section -->
+  <rect x="50" y="50" width="300" height="300" fill="#ffcccc" rx="10"/>
+  <text x="200" y="100" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="#333">401 Unauthorized</text>
+  
+  <!-- 401 Door -->
+  <rect x="150" y="150" width="100" height="150" fill="#8b4513" stroke="#000" stroke-width="3"/>
+  <circle cx="235" cy="225" r="8" fill="#ffd700"/>
+  <line x1="100" y1="225" x2="140" y2="225" stroke="#000" stroke-width="3"/>
+  <circle cx="95" cy="225" r="10" fill="#ff0000"/>
+  <text x="95" y="230" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#fff">?</text>
+  
+  <!-- 403 Section -->
+  <rect x="450" y="50" width="300" height="300" fill="#cce5ff" rx="10"/>
+  <text x="600" y="100" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="#333">403 Forbidden</text>
+  
+  <!-- 403 Door -->
+  <rect x="550" y="150" width="100" height="150" fill="#8b4513" stroke="#000" stroke-width="3"/>
+  <circle cx="635" cy="225" r="8" fill="#ffd700"/>
+  <line x1="500" y1="225" x2="540" y2="225" stroke="#000" stroke-width="3"/>
+  <circle cx="495" cy="225" r="10" fill="#008000"/>
+  <text x="495" y="230" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#fff">✓</text>
+  <rect x="560" y="180" width="80" height="30" fill="#ff0000"/>
+  <text x="600" y="200" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#fff">No Entry</text>
+  
+  <!-- Labels -->
+  <text x="200" y="340" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#333">Unknown or Invalid Credentials</text>
+  <text x="600" y="340" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#333">Valid Credentials, No Access</text>
+</svg>

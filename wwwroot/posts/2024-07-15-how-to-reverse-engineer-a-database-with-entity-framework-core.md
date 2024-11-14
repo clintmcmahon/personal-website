@@ -1,0 +1,13 @@
+---
+title: "How to reverse engineer a database with Entity Framework Core"
+description: "Here are the steps to reverse engineer or scaffold your SQL Server database into C# models. "
+date: "2024-07-15"
+draft: false
+slug: "how-to-reverse-engineer-a-database-with-entity-framework-core"
+tags:
+---
+
+<p>Here are the steps to reverse engineer or scaffold your SQL Server database into C# models. </p><p>Code first or database first are generally the two paths forward when I'm staring a new project. Generally I like to create the models in code first and then do a database migration to create the database. That's considered a code first approach. However, when I'm work with larger organizations there tends to be a database person who takes care of creating the database, tables, views and relationships. When this is the case, I will refer to a database first approach. In the database first approach I use reverse engineering to scaffold the database using Entity Framework which allows you to generate entity classes and a DbContext class based on an existing database schema. </p><p>Here’s how you do it:</p><h3 id="prerequisites">Prerequisites</h3><ol><li><strong>Install Entity Framework Core Tools</strong>: Install the necessary EF Core tools.</li></ol><h3 id="step-1-install-ef-core-tools">Step 1: Install EF Core Tools</h3><p>First, install the EF Core tools. You can do this using the .NET CLI or the NuGet Package Manager in Visual Studio.</p><h4 id="using-net-cli">Using .NET CLI:</h4><p>Run the following command in your project directory to install the EF Core CLI tools:</p><pre><code class="language-bash">dotnet tool install --global dotnet-ef
+</code></pre><p>Next, install the necessary EF Core packages in your project. For example, if you are using SQL Server, you would install the SQL Server provider:</p><pre><code class="language-bash">dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.EntityFrameworkCore.Design</code></pre><h3 id="step-2-scaffold-the-database">Step 2: Scaffold the Database</h3><p>Use the <code>dotnet ef dbcontext scaffold</code> command to reverse engineer your database. You need to provide the connection string to your database and the provider to use. Use the option <code>--force</code> to overwrite any classes or models inside the output folder.</p><pre><code class="language-bash">dotnet ef dbcontext scaffold "Server=your_server;Database=your_database;User Id=your_user;Password=your_password;" Microsoft.EntityFrameworkCore.SqlServer -o Models --force
+</code></pre><p>That's it. Running the above command will output the database in C# model form into the Models folder of your project.</p>

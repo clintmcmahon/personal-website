@@ -1,0 +1,23 @@
+---
+title: "Develop .Net Core apps with a SQL Server database on a Mac"
+description: ""
+date: "2023-01-12"
+draft: false
+slug: "develop-net-core-apps-with-a-sql-server-database-on-a-mac-2"
+tags:
+---
+
+<!--kg-card-begin: html--><p><!--kg-card-begin: html--></p>
+<p>Since the release of .Net Core and the dream of cross-platform development became a reality I&#8217;ve been eager to switch my development machine from a Windows laptop to my Macbook Air. I&#8217;m happy to say that I&#8217;ve been running 99% on a Mac since July of 2022. The move has been easy and fantastic, aside from not being able to develop legacy .Net apps &#8211; which are not cross-platform friendly, I&#8217;ve been doing all my development on my Mac &#8211; I still use my Windows machine for old .Net code. Outside the obvious environment setup and framework installations 90% of the migration was super easy &#8211; most of my code is in <a href="https://github.com/clintmcmahon" data-type="URL" data-id="https://github.com/clintmcmahon" target="_blank" rel="noreferrer noopener">Github</a>, so a simple clone of each repository was all that was needed to get up and running. </p>
+<p>The biggest lift was finding a solution for SQL Server. SQL Server is not available on MacOS, so I had to find way to develop apps with a SQL Server back end. My first solution was to put all SQL Server databases in the cloud on Azure or AWS databases. That is definitely a valid option, but I wanted to run locally so I started looking for alternatives to hosting my development databases in the cloud. That&#8217;s where Docker comes to the rescue.</p>
+<p>It turns out that you can run SQL Server on a Mac pretty easily using a <a href="https://hub.docker.com/_/microsoft-mssql-server" data-type="URL" data-id="https://hub.docker.com/_/microsoft-mssql-server" target="_blank" rel="noreferrer noopener">SQL Server Docker container</a> and <a href="https://learn.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&amp;culture=en-us&amp;country=us" data-type="URL" data-id="https://learn.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&amp;culture=en-us&amp;country=us" target="_blank" rel="noreferrer noopener">Azure Data Studio</a>. </p>
+<h2>SQL Server Docker Container</h2>
+<p>Turns out you can run the latest version of SQL Server on a Mac using Docker. All that is needed is to set up a Docker container that is running SQL Server. To get started with SQL Server and Docker follow this tutorial: <a href="https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver16&amp;pivots=cs1-bash" target="_blank" rel="noreferrer noopener">Quickstart: Run SQL Server Linux container images with Docker</a>. After the tutorial you should be able have a running SQL Server. Out of the box this SQL Server instance won&#8217;t have any databases associated to it. So if you need to restore a database from an existing backup, follow this tutorial: <a href="https://docs.microsoft.com/en-us/sql/linux/tutorial-restore-backup-in-sql-server-container?view=sql-server-ver16" data-type="URL" data-id="https://docs.microsoft.com/en-us/sql/linux/tutorial-restore-backup-in-sql-server-container?view=sql-server-ver16" target="_blank" rel="noreferrer noopener">Restore a SQL Server database in Docker</a>.</p>
+<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="1024" height="409" src="http://clintmcmahon.com/content/images/wordpress/2023/01/Screenshot-2023-01-12-at-10.55.29-AM.png" alt="SQL Server running on Mac" class="wp-image-19268" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<h2>Azure Data Studio</h2>
+<p>Azure Data Studio is a lot like SQL Server Management Studio but without all of the SSMS features. It works great for development in that you can create databases, query, write stored procedures/views, etc. Essentially the majority of things you would do with Query Analyzer you can do with Azure Data Studio on a Mac. </p>
+<p>Once I had the Docker container running with SQL Server I used Azure Data Studio to connect to the server instance on the container. The SQL Server instance is running at localhost:1433 so you can connect just like you would using Management Studio. From there you are able to use the program just like Query Analyzer.</p>
+<p>From here you can run .Net Core apps that connect to your SQL Server running in Docker just like you would if you were running on a Windows machine.</p>
+<p>Enjoy!</p>
+<p><!--kg-card-end: html--></p>
+<!--kg-card-end: html-->

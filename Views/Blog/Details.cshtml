@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = @Model.Title + " - Clint McMahon";
+}
+
+@model Post
+
+<article class="blog-post">
+    <h1 class="blog-heading">@Model.Title</h1>
+    <p class="post-date">@Model.Date.ToString("MMMM dd, yyyy")</p>
+    <div class="post-tags">
+        @foreach (var tag in Model.Tags)
+        {
+            <span class="tag">@tag</span>
+        }
+    </div>
+    <div class="post-content">
+        @Html.Raw(Model.Content) <!-- Assuming Content has been parsed to HTML -->
+    </div>
+</article>

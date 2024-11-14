@@ -1,0 +1,14 @@
+---
+title: "You don't know what I haven't told you"
+description: ""
+date: "2023-04-13"
+draft: false
+slug: "you-dont-know-what-i-havent-told-you-2"
+tags:
+---
+
+<!--kg-card-begin: html--><p>When I&#8217;m explaining a new feature or work item to other developers I get into the habit of thinking the person I&#8217;m talking with has all the information about the client or project that I do. It&#8217;s far too easy to assume that they understand every detail of a project or client or know the history behind them, but in reality they don&#8217;t know what I haven&#8217;t told them yet. A fact I often forget about. Especially with remote workers, typing things out in detail is a lot more time consuming and takes more effort then if we were sitting at a table next to each other where you could stop me mid sentence to ask what I&#8217;m talking about. That&#8217;s hard to do in a chat message.</p>
+<p>Everyone has different knowledge and understanding of any given project we&#8217;re working on, so I try to keep the thought that nobody knows what I&#8217;m talking about at the front of my mind when trying to communicate with my coworkers. This helps me to provide a clear and detailed background, instructions, expectations and to make sure the people I&#8217;m working with have the information they need to do their jobs. One of the most important things I do is to avoid assuming people know what I&#8217;m talking about. This works well for both work and my personal life. I&#8217;ve learned never to assume that the person on the other end of the keyboard or table understands every detail of the thing we&#8217;re talking about or knows the history behind it. Instead, I have to remember to slow down and take the time to provide context and background information, even if it seems trivial to me.</p>
+<p>Providing details is key to effectively communicating what I&#8217;m talking about. I make sure my instructions are clear, concise, and easy to understand. Depending on the audience, I&#8217;ll try to avoid using technical jargon or acronyms that people might not be familiar with. This works well in the <a href="https://www.msoftwaredev.com/projects/transplant-centers-interactive-report/">organ transplant space</a> where acronyms are everywhere. </p>
+<p>So, in the end I try to reminder to make sure everyone knows what I&#8217;m talking about and that being effective communicator is crucial to the success our projects. Avoiding the assumption trap and providing details, no matter how much extra typing I have to do, I&#8217;m able to ensure we&#8217;re all on the same page and working toward the same goals. With that clear communication, we&#8217;re able to build great things and solid high-quality products without wasting client dollars asking question over and over again.</p>
+<!--kg-card-end: html-->

@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Blog - Clint McMahon";
+}
+@model IEnumerable<Post>
+
+<div class="blog-posts">
+    <h1 class="mb-5 main-heading">Blog</h1>
+
+    @foreach (var post in Model)
+    {
+        <div class="post-summary numbered">
+            <h2 class="blog-heading"><a href="@Url.Action("Details", "Blog", new { slug = post.Slug })">@post.Title</a>
+            </h2>
+            <p>@post.Description</p>
+            <small>@post.Date.ToString("MMMM dd, yyyy")</small>
+            <hr />
+        </div>
+    }
+</div>

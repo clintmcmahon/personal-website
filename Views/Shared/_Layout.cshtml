@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"]</title>
+    <meta name="description" content="@ViewData["Description"] ?? " Clint McMahon is a software engineer and consultant
+        who specializes in creating exceptional digital experiences with C#, Asp.Net, and Azure."" />
+
+    <!-- Open Graph and Twitter Card Meta Tags -->
+    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta property="og:description" content="@ViewData["Description"] ?? " Clint McMahon is a software engineer and
+        consultant who specializes in creating exceptional digital experiences with C#, Asp.Net, and Azure."" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url"
+        content="https://clintmcmahon.com/@(ViewContext.RouteData.Values["controller"])/@(ViewContext.RouteData.Values["action"])" />
+    <meta property="og:image" content="https://clintmcmahon.com/images/default-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@ViewData["Title"]" />
+    <meta name="twitter:description" content="@ViewData["Description"] ?? " Clint McMahon is a software engineer and
+        consultant who specializes in creating exceptional digital experiences with C#, Asp.Net, and Azure."" />
+    <meta name="twitter:image" content="https://clintmcmahon.com/images/default-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Preload CSS to reduce flash of unstyled content (FOUC) -->
+    <link rel="preload" href="~/lib/bootstrap/dist/css/bootstrap.min.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    </noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="preload" href="~/css/site.css" as="style" onload="this.onload=null;this.rel='stylesheet'"
+        asp-append-version="true">
+    <noscript>
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true">
+    </noscript>
+
+    <!-- Inline critical CSS -->
+    <style>
+        /* Add critical CSS here for above-the-fold content, e.g., header and navigation styles */
+        .dark-background {
+            background-color: #0a192f;
+        }
+
+        .navbar-dark .navbar-brand {
+            color: #fff;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body class="dark-background">
+    <!-- Sticky Sidebar with Icons -->
+    <div class="sticky-sidebar">
+        <a href="https://github.com/clintmcmahon" target="_blank" aria-label="GitHub">
+            <i class="bi bi-github"></i>
+        </a>
+        <a href="https://instagram.com/cwmcmhn" target="_blank" aria-label="Instagram">
+            <i class="bi bi-instagram"></i>
+        </a>
+        <a href="https://linkedin.com/in/clintmcmahon" target="_blank" aria-label="LinkedIn">
+            <i class="bi bi-linkedin"></i>
+        </a>
+        <div class="vertical-line"></div>
+    </div>
+
+    <!-- Full-Width Header -->
+    <header class="w-100">
+        <nav class="navbar navbar-expand-lg navbar-dark dark-background mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand logo" asp-area="" asp-controller="Home" asp-action="Index">C M</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-lg-inline-flex justify-content-end">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link text-light" href="/#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="/#jobs">Experience</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="/#projects">Work</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="/blog">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link text-light"
+                                href="mailto:clintmcmahon@pm.me?subject=Hello!">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link resume-button" href="/resume.pdf">Resume</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-top footer text-muted">
+        <div class="container mt-4">
+            &copy; @DateTime.Now.Year - Clint McMahon | Site design inspired by <a href="https://github.com/bchiang7/v4"
+                target="_blank">Brittany Chiang</a>
+        </div>
+    </footer>
+
+    <!-- Defer Scripts to improve initial render -->
+    <script src="~/lib/jquery/dist/jquery.min.js" defer></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="~/js/site.js" asp-append-version="true" defer></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

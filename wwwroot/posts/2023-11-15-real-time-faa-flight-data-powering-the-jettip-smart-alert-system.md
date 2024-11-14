@@ -1,0 +1,28 @@
+---
+title: "Real-time FAA Flight Data Powering the JetTip Smart Alert System"
+description: ""
+date: "2023-11-15"
+draft: false
+slug: "real-time-faa-flight-data-powering-the-jettip-smart-alert-system"
+tags:
+---
+
+<!--kg-card-begin: html-->
+<p>Over the past year I&#8217;ve been working with <a href="https://jettip.net" data-type="link" data-id="https://jettip.net" target="_blank" rel="noreferrer noopener">JetTip</a> to provide their <a href="https://jettip.net/blog/real-time-faa-data-is-now-powering-jettips-smart-flight-alert-system" data-type="link" data-id="https://jettip.net/blog/real-time-faa-data-is-now-powering-jettips-smart-flight-alert-system" target="_blank" rel="noreferrer noopener">smart alert system with real-time FAA flight data</a>. We finally launched the service into production last month so I decided to write this blog post about the real-time FAA flight data powering the JetTip smart alert system. The collaboration between JetTip and me has led us to the creation of a cutting-edge software solution that has a direct connection to the FAA data stream which is now integral to the JetTip smart alert system. </p>
+
+<p>I started working with JetTip a couple summers ago when they hired me to build the <a href="https://jettip.net/blog/new-flight-tracking-app-helps-aviation-enthusiasts-see-interesting-aircraft" data-type="link" data-id="https://jettip.net/blog/new-flight-tracking-app-helps-aviation-enthusiasts-see-interesting-aircraft">JetTip mobile app</a>. The app has been downloaded by thousands of users for both <a href="https://apps.apple.com/us/app/jettip/id1577380011" data-type="link" data-id="https://apps.apple.com/us/app/jettip/id1577380011" target="_blank" rel="noreferrer noopener">iOS</a> and <a href="https://play.google.com/store/apps/details?id=com.jettip.mobile&amp;hl=en_US&amp;gl=US" data-type="link" data-id="https://play.google.com/store/apps/details?id=com.jettip.mobile&amp;hl=en_US&amp;gl=US" target="_blank" rel="noreferrer noopener">Android</a> mobile operating systems. The mobile app allowed JetTip&#8217;s users to move from a text messages based alert system to a push notification system. This update not only saves money via the loss of text messaging rates but allows more flexibility for the end users who can now pause and update their notifications much more easily via the app interface. </p>
+
+<p>The mobile app project was just the beginning of what&#8217;s turned into a pretty rad relationship. Over the past couple years I&#8217;ve gotten to know Nick from JetTip quite well and even consider him a friend. When he came to me with the idea of creating a system to process the FAA data in real-time I was on board immediately. So, as flight data providers shifted their focus to enterprise clients and costs surged, we saw an opportunity to use our development backgrounds and data processing experience to create our own flight data processing product.</p>
+
+<p>I&#8217;ve become pretty comfortable processing <a href="https://clintmcmahon.com/portfolio/" data-type="link" data-id="https://clintmcmahon.com/portfolio/">large amounts of data</a>, so plugging into the FAA fire host wasn&#8217;t a huge overhaul. The biggest challenge was how to process all that data so fast and store it efficiently. Managing gigs and gigs of data is not a trivial thing, I quickly become pretty good at fine tuning MySQL databases and managing server resources. The core objective was to develop a system capable of ingesting and processing all of that FAA flight data accurately. This system was not just about managing data; it was about transforming it into actionable insights for all the aviation enthusiasts out there. But build in a way that we can utilize the data source in the future for more products. </p>
+
+<p>This direct feed has revolutionized how JetTip subscribers receive information and opened up my mind to additional flight data products that we can develop in the future. Part of the new service that we&#8217;ve created is virtually instant diversion alerts, real-time notifications of international departures, and the ability to see flight plans well into the future were all made possible by this integration. Based on this information, I think there is room for more robust products that are just as good, or better, than some of the competitors out there that we can provide at a much lower cost.</p>
+
+<h4 class="wp-block-heading">Looking Ahead</h4>
+
+<p>I&#8217;ve been working on this product for the past nine months and have learned a ton about high transactional databases, Java Messaging and managing large databases. We&#8217;re excited about the future possibilities this data has in store. The feedback from the community has been pretty great and have spurred more thoughts about how to incorporating these insights into additional products. The goal is to not only maintain this data set, but grow the level of service provided and products to the plane spotting community and anyone else interested in real-time flight updates.</p>
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+<p><em>This blog post aims to provide a background to the JetTip announcement regarding their new in-house FAA data source. For more details on this exciting development, please refer to the <a href="https://jettip.net/blog/real-time-faa-data-is-now-powering-jettips-smart-flight-alert-system" target="_blank" data-type="link" data-id="https://jettip.net/blog/real-time-faa-data-is-now-powering-jettips-smart-flight-alert-system" rel="noreferrer noopener">original JetTip post</a>.</em></p>
+<!--kg-card-end: html-->

@@ -1,0 +1,8 @@
+@model Post
+
+<div class="post-summary">
+    <h2><a href="@Url.Action("Details", "Blog", new { slug = Model.Slug })">@Model.Title</a></h2>
+    <p>@Model.Description</p>
+    <small>@Model.Date.ToString("MMMM dd, yyyy")</small>
+    <hr />
+</div>
