@@ -15,28 +15,32 @@ public class SitemapController : Controller
         _postRepository = postRepository;
     }
 
-    [HttpGet]
+    [HttpGet("sitemap")]
     public IActionResult Sitemap()
     {
         var urls = new List<string>
-        {
-            Url.Action("Index", "Home", null, Request.Scheme), // Homepage
-            Url.Action("Index", "Blog", null, Request.Scheme)  // Blog index page
-        };
+    {
+        Url.Action("Index", "Home", null, Request.Scheme),
+        Url.Action("Index", "Blog", null, Request.Scheme),
+        Url.Action("Index", "Rss", null, Request.Scheme),
+        Url.Action("Index", "Contact", null, Request.Scheme)
+    };
 
         // Add individual blog post URLs
         var posts = _postRepository.GetAllPosts().Where(post => !post.Draft);
         urls.AddRange(posts.Select(post => Url.Action("Details", "Blog", new { slug = post.Slug }, Request.Scheme)));
 
+        // Define the XML namespace
+        XNamespace xmlns = "http://www.sitemaps.org/schemas/sitemap/0.9";
+
         var sitemap = new XDocument(
-            new XElement("urlset",
-                new XAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9"),
+            new XElement(xmlns + "urlset",  // Apply the namespace here
                 urls.Select(url =>
-                    new XElement("url",
-                        new XElement("loc", url),
-                        new XElement("lastmod", DateTime.UtcNow.ToString("yyyy-MM-dd")), // Optional: update to post's last modified date
-                        new XElement("changefreq", "weekly"), // Suggested frequency
-                        new XElement("priority", "0.8")       // Priority of the page
+                    new XElement(xmlns + "url",  // Apply the namespace here
+                        new XElement(xmlns + "loc", url),  // Apply the namespace here
+                        new XElement(xmlns + "lastmod", DateTime.UtcNow.ToString("yyyy-MM-dd")), // Optional: update to post's last modified date
+                        new XElement(xmlns + "changefreq", "weekly"), // Suggested frequency
+                        new XElement(xmlns + "priority", "0.8")       // Priority of the page
                     )
                 )
             )
@@ -44,4 +48,5 @@ public class SitemapController : Controller
 
         return Content(sitemap.ToString(), "application/xml", Encoding.UTF8);
     }
+
 }
