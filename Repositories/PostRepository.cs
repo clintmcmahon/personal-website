@@ -38,7 +38,7 @@ public class PostRepository : IPostRepository
 
         // Set the HTML content after rendering Markdown
         var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-        post.Content = Markdown.ToHtml(markdownContent, pipeline);
+        post.Content = markdownContent;
 
         return post;
     }
