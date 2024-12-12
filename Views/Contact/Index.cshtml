@@ -5,50 +5,5 @@
 
 <div class="contact page">
     <h1 class="mb-5 main-heading">Contact Me</h1>
-    <p>If you are looking for help building your app, website, or need someone to talk through your technology strategy,
-        send me a message using the form below or email me at <a
-            href="mailto:clint@parkasoftware.com?subject=Let's%20build%20something">clint@parkasoftware.com</a>. I look
-        forward to hearing from you and building something great together.</p>
-    <hr>
-    <h2 id="contact-form">Contact Form</h2>
-    <!--kg-card-begin: html-->
-    <form id="fs-frm" name="simple-contact-form" accept-charset="utf-8" action="https://formspree.io/f/xgegppve"
-        method="post">
-        <fieldset id="fs-frm-inputs" style="margin: 0; padding: 0; border: 0;">
-            <label for="full-name" style="display: block; margin-bottom: 5px; font-size: 16px;">Full Name</label>
-            <input type="text" name="name" id="full-name" placeholder="First and Last" required=""
-                style="display: block; width: 100%; padding: 6px 12px; font-size: 14px; line-height: 1.42857143; color: #555; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; box-shadow: inset 0 1px 1px rgba(0,0,0,.075); transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;">
-            <label for="email-address"
-                style="display: block; margin-top: 15px; margin-bottom: 5px; font-size: 16px;">Email
-                Address</label>
-            <input type="email" name="_replyto" id="email-address" placeholder="email@domain.tld" required=""
-                style="display: block; width: 100%; padding: 6px 12px; font-size: 14px; line-height: 1.42857143; color: #555; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; box-shadow: inset 0 1px 1px rgba(0,0,0,.075); transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;">
-            <label for="message"
-                style="display: block; margin-top: 15px; margin-bottom: 5px; font-size: 16px;">Message</label>
-            <textarea rows="5" name="message" id="message"
-                placeholder="Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla nullam quis risus."
-                required=""
-                style="display: block; width: 100%; padding: 6px 12px; font-size: 14px; line-height: 1.42857143; color: #555; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; box-shadow: inset 0 1px 1px rgba(0,0,0,.075); transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;"></textarea>
-            <input type="hidden" name="_subject" id="email-subject" value="Contact Form Submission">
-        </fieldset>
-        <input type="submit" value="Submit"
-            style="display: block; width: 100%; padding: 6px 12px; margin-top: 20px; font-size: 14px; line-height: 1.42857143; color: #fff; background-color: #337ab7; border: 1px solid #2e6da4; border-radius: 4px; cursor: pointer;">
-    </form>
-
-    <!--kg-card-end: html-->
-    <hr>
-    <!--kg-card-begin: html-->
-    <div style="display: flex;">
-        <div style="flex: 1; padding-right: 10px;">
-            <strong>Contact Info</strong> <br />
-            Email: clint@parkasoftware.com<br />
-            Phone: (612) 314-5384<br />
-        </div>
-        <div style="flex: 1; padding-left: 10px;">
-            <strong>Social Media Links</strong><br />
-            <a href="https://www.instagram.com/cwmcmhn/">Instagram</a><br />
-            <a href="https://www.linkedin.com/in/clintmcmahon/">LinkedIn</a><br />
-            <a href="https://github.com/clintmcmahon">GitHub</a><br />
-            <a href="https://www.reddit.com/user/mplsdev">Reddit</a><br />
-        </div>
-    </div>
+    @Html.Partial("_Contact")
+</div>
