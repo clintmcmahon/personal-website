@@ -13,14 +13,19 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly IPostRepository _postRepository;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IPostRepository postRepository)
     {
         _logger = logger;
+        _postRepository = postRepository;
     }
 
     public IActionResult Index()
     {
-        return View();
+     var posts = _postRepository.GetLatestPosts()
+        .Where(post => !post.Draft)
+        .OrderByDescending(post => post.Date)
+        .Take(3);
+        return View(posts);
     }
 
     public IActionResult Privacy()

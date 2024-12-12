@@ -15,6 +15,12 @@ public class PostRepository : IPostRepository
         return files.Select(ParseMarkdownFile);
     }
 
+      public IEnumerable<Post> GetLatestPosts()
+    {
+        var files = Directory.GetFiles(_postsFolderPath, "*.md");
+        return files.Select(ParseMarkdownFile);
+    }
+
     public Post GetPostBySlug(string slug)
     {
         var filePath = Directory.GetFiles(_postsFolderPath, $"*-{slug}.md").FirstOrDefault();

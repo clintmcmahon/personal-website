@@ -1,7 +1,9 @@
 ﻿@{
+   
     ViewData["Title"] = "Clint McMahon - Freelance C# .Net web & mobile app consultant in Minneapolis, MN";
     ViewData["Description"] = "Software engineer & consultant specializing in web and mobile app development for healthcare, legal, and government sectors. Delivering secure, scalable solutions";
 }
+ @model IEnumerable<Post>
 
 <section class="hero-section pt-0">
     <p class="intro-text">Hi, my name is</p>
@@ -67,7 +69,29 @@
         </div>
     </div>
 </section>
-<section id="jobs">
+<section id="latest">
+    <div class="container">
+        <h2 class="numbered-heading">Latest Blog Posts</h2>
+        <div class="row align-items-start">
+           <div class="col">
+               
+
+                @foreach (var post in Model)
+                {
+                    <div class="post-summary numbered">
+                        <h2 class="blog-heading"><a href="@Url.Action("Details", "Blog", new { slug = post.Slug })">@post.Title</a>
+                        </h2>
+                        <p>@post.Description</p>
+                        <small>@post.Date.ToString("MMMM dd, yyyy")</small>
+                        <hr />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="jobs" class="d-none">
     <div class="container">
         <h2 class="numbered-heading">Where I’ve Worked</h2>
         <div class="row">
