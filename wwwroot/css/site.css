@@ -130,9 +130,15 @@ main {
   color: #0a192f;
 }
 
+
 section {
+  padding: 15px 0px;
+}
+
+
+.home section {
   margin: 0 auto;
-  padding: 100px 0;
+  padding: 75px 0;
   max-width: 1000px;
   border-bottom: 1px solid;
 }
@@ -410,10 +416,6 @@ footer {
   body {
     padding: 0px;
     font-size: 1rem;
-  }
-
-  section {
-    padding: 25px 0px;
   }
 
   main {
