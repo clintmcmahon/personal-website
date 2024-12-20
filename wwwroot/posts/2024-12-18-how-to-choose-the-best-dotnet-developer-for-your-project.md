@@ -12,7 +12,7 @@ tags:
         When projects get to be larger than a one-person project, I tend to hire other freelance developers to come and work with me. After all these years, I've been able to create a core group of developers that I work with. However, due to the nature of consulting, those people are not always free when I need to bring them on the project. When that happens, I need to find the best developer I can find. 
     </p>
     <p>
-        This can be really overwhelming. It's important to ask the right questions so you can make the right choice for whatever role you're hiring for—usually, in my case, it's freelance developers with experience in the tech stack that is being used—primarily C#, .NET, and React. It’s not an easy task, even for this technically inclined developer. Here are some of the things that I ask and look for when I'm looking for a new developer to bring onto a project.
+        This can be really overwhelming. It's important to ask the right questions so you can make the right choice for whatever role you're hiring for—usually, in my case, it's freelance developers with experience in the tech stack that is being used—primarily <a href="/blog/im-a-c-sharp-consultant-for-hire">C#, .NET, and React</a>. It’s not an easy task, even for this technically inclined developer. Here are some of the things that I ask and look for when I'm looking for a new developer to bring onto a project.
     </p>
 </section>
 <section>
@@ -37,7 +37,7 @@ tags:
 <section>
     <h2>Look for Relevant Experience</h2>
     <p>
-        If you can find a freelancer with experience in your chosen tech stack (C#, React, SQL Server) or industry (healthcare, finance, legal, etc.), then you are in a good place. You will want to hire people who are not going to need a lot of hand-holding. In full-time hires, you've got more time to dedicate to learning, but when you are billing for time, you do not want to waste time explaining how a git merge works.
+        If you can find a freelancer with experience in your chosen <a href="/blog/tech-stacks-dont-really-matter">tech stack</a> (C#, React, SQL Server) or industry (healthcare, finance, legal, etc.), then you are in a good place. You will want to hire people who are not going to need a lot of hand-holding. In full-time hires, you've got more time to dedicate to learning, but when you are billing for time, you do not want to waste time explaining how a git merge works.
     </p>
     <p>
         Make sure that the consultant you are bringing on has at least some knowledge and understanding of the technology stack and industry. 
