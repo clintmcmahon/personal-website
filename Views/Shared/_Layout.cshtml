@@ -99,7 +99,11 @@
     <!-- Main Content -->
     <div class="container">
         <main role="main" class="pb-3">
-            @RenderBody()
+            <div class="row">
+                <div class="col-12">
+                    @RenderBody()
+                </div>
+            </div>
         </main>
     </div>
 
@@ -114,6 +118,7 @@
     <!-- Defer Scripts to improve initial render -->
     <script src="~/lib/jquery/dist/jquery.min.js" defer></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="~/lib/Responsive-Justified-Gallery-jQuery-TJ-gallery/src/jquery-tjgallery.min.js" defer></script>
     <script src="~/js/site.js" asp-append-version="true" defer></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
