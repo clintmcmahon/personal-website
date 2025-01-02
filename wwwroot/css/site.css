@@ -6,7 +6,7 @@ h5,
 h6 {
   margin: 0 0 10px 0;
   font-weight: 600;
-  color: #ccd6f6;
+  color: #ccd6f6;;
   line-height: 1.1;
 }
 
@@ -26,7 +26,7 @@ html {
 body {
   margin-bottom: 60px;
   padding: 30px;
-  color: #8892b0;
+  color: #ccd6f6;;
   font-size: 20px;
   line-height: 1.5;
 }
@@ -39,6 +39,7 @@ figcaption {
   font-size: 1rem;
   margin-top: 5px;
 }
+
 .dark-background {
   background-color: #0a192f;
 }
@@ -286,7 +287,6 @@ section {
 }
 
 .project-description p {
-  color: #8892b0;
   font-size: 1rem;
   margin-bottom: 10px;
 }
@@ -355,7 +355,7 @@ section {
 .blog-post,
 .page {
   margin: auto;
-  max-width: 800px;
+  max-width: 900px;
   font-size: 20px;
   line-height: 1.5;
 }
