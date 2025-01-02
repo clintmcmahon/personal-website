@@ -21,16 +21,11 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-     var posts = _postRepository.GetLatestPosts()
-        .Where(post => !post.Draft)
-        .OrderByDescending(post => post.Date)
-        .Take(3);
+        var posts = _postRepository.GetLatestPosts()
+           .Where(post => !post.Draft)
+           .OrderByDescending(post => post.Date)
+           .Take(3);
         return View(posts);
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
