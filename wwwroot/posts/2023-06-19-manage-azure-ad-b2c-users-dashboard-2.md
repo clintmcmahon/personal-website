@@ -7,7 +7,16 @@ slug: "manage-azure-ad-b2c-users-dashboard-2"
 tags:
 ---
 
-<p><em>I've built an </em><a href="https://github.com/clintmcmahon/azure-ad-b2c-user-manager" rel="noreferrer"><em>entire Azure AD B2C User Management solution</em></a><em> that is available for free on Github. The code samples below are part of this larger solution. Feel free to use this application as you see fit. </em><a href="/contact" rel="noreferrer"><em>Contact me</em></a><em> if you run into any issues or need help consulting on your Azure AD B2C project.</em></p>
+<div>
+  <h3><em>Simplify Your Azure AD B2C User Management</em></h3>
+  <p><em>Managing Azure AD B2C users doesn’t have to be complicated. I've created an online or on prem service to manage Azure AD B2C users. With 
+    <a href="https://attributeeditor.com" rel="noreferrer"><em>Attribute Editor</em></a>, you get an intuitive, powerful tool to handle custom user attributes effortlessly.</em></p>
+  <p><em><a href="https://attributeeditor.com" rel="noreferrer" style="font-weight: bold; text-decoration: none; ">Learn More</a> 
+    or <a href="/contact" rel="noreferrer" style="font-weight: bold; text-decoration: none; ">Contact Me</a> 
+    for assistance with your Azure AD B2C project.</em></p>
+</div>
+<hr />
+
 <!--kg-card-begin: html-->
 <p>I&#8217;ve gotten a few emails from <a href="http://clintmcmahon.com/add-role-claims-to-an-azure-b2c-user-flow-access-token">my blog post</a> on using Postman to query Azure B2C users extension properties using Microsoft&#8217;s GraphAPI. The documentation is light but I&#8217;ve implemented this strategy over and over again so I wrote that blog post to help other people out. </p>
 <p>Now, I want to create a dashboard to allows administrative users to ability to manage their B2C properties of other users in their tenants. Currently, user properties need to be managed through the Azure Portal. The Azure Portal feels clunky and not very user friendly. There is also no way for administrators of a tenant to manage the extension properties of a user through the Azure Portal. All extension properties of a <a href="http://clintmcmahon.com/add-role-claims-to-an-azure-b2c-user-flow-access-token/">user must be managed via the Microsoft Graph API</a>.</p>
