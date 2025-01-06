@@ -86,13 +86,11 @@ main {
 }
 
 .main-heading {
-  font-size: 5rem;
   color: #ccd6f6;
   margin: 10px 0;
   line-height: 1.1;
   font-weight: 600;
   margin: 0px;
-  font-size: clamp(40px, 8vw, 80px);
 }
 
 .medium-heading {
