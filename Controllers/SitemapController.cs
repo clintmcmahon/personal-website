@@ -22,7 +22,7 @@ public class SitemapController : Controller
     {
         Url.Action("Index", "Home", null, Request.Scheme),
         Url.Action("Index", "Services", null, Request.Scheme),
-        Url.Action("Index", "About", null, Request.Scheme)
+        Url.Action("Index", "About", null, Request.Scheme),
         Url.Action("Index", "Blog", null, Request.Scheme),
         Url.Action("Index", "Rss", null, Request.Scheme),
         Url.Action("Index", "Contact", null, Request.Scheme)
