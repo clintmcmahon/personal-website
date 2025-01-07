@@ -27,7 +27,6 @@ body {
   margin-bottom: 60px;
   padding: 30px;
   color: #ccd6f6;;
-  font-size: 20px;
   line-height: 1.5;
 }
 
@@ -86,13 +85,11 @@ main {
 }
 
 .main-heading {
-  font-size: 5rem;
   color: #ccd6f6;
   margin: 10px 0;
   line-height: 1.1;
   font-weight: 600;
   margin: 0px;
-  font-size: clamp(40px, 8vw, 80px);
 }
 
 .medium-heading {
@@ -356,7 +353,6 @@ section {
 .page {
   margin: auto;
   max-width: 900px;
-  font-size: 20px;
   line-height: 1.5;
 }
 
@@ -366,12 +362,10 @@ section {
   margin-bottom: 20px;
   margin: 10px 0 10px;
   width: 100%;
-  font-size: 1.5rem;
   white-space: wrap;
 }
 
 .blog-posts .blog-heading a {
-  font-size: 1.5em;
   color: #ccd6f6;
   text-decoration: none;
 }
@@ -381,21 +375,12 @@ section {
   text-decoration: underline;
 }
 
-.blog-post .blog-heading {
-  font-size: 5rem;
-  color: #ccd6f6;
-  font-weight: 600;
-  margin-bottom: 10px;
-  font-size: clamp(40px, 8vw, 70px);
-}
-
 .blog-post .post-content img {
   width: 100% !important;
 }
 
 .blog-post .post-date {
   color: #ccd6f6;
-  font-size: 1rem;
 }
 
 footer {

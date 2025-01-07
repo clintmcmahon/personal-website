@@ -6,7 +6,7 @@
 @model Post
 
 <article class="blog-post">
-    <h1 class="blog-heading">@Model.Title</h1>
+    <h1>@Model.Title</h1>
     <p class="post-date">@Model.Date.ToString("MMMM dd, yyyy")</p>
     <div class="post-tags">
         @foreach (var tag in Model.Tags)
