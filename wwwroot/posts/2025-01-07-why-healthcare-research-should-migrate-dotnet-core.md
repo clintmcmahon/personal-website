@@ -3,7 +3,7 @@ title: "Why Healthcare Research Organizations Should Migrate to .Net Core"
 description: "Discover why healthcare research organizations should migrate from .Net Framework to .Net Core. Learn about the benefits, challenges, and successful strategies for seamless migration."
 date: "2025-01-07"
 draft: false
-slug: "why-healthcare-research-should-migrate-dotNet-core"
+slug: "why-healthcare-research-should-migrate-dotnet-core"
 tags:
 ---
 
