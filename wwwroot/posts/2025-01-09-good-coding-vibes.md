@@ -8,7 +8,6 @@ tags:
 ---
 
  <section>
-   <div class="container my-5">
     <p>There’s something that just feels good when you start to write a nice chunk of code. The entire process sets me into a flow state. Even with little bits of code, there’s some sort of clarity—a calm that comes over me when I look down the path at some new objective or problem to solve. I get way even when using AI. Just a little bit, like having it lay the groundwork for a class or something and then I use my actual brain to write the implementation details. 
     </p>
     <p>
@@ -20,5 +19,4 @@ tags:
     <p>
         I suppose this is what we all refer to as flow. It’s good. We all need flow in our daily lives. Although, it's ironic (am I using that right?) that I stopped my flow state to write a post about said flow state. Now I need to get back to it.</p>
     </p>
-</div>
 </section>

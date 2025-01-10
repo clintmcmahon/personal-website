@@ -6,7 +6,7 @@ h5,
 h6 {
   margin: 0 0 10px 0;
   font-weight: 600;
-  color: #ccd6f6;;
+  color: #ccd6f6;
   line-height: 1.1;
 }
 
@@ -26,7 +26,7 @@ html {
 body {
   margin-bottom: 60px;
   padding: 30px;
-  color: #ccd6f6;;
+  color: #ccd6f6;
   line-height: 1.5;
 }
 
@@ -84,15 +84,11 @@ main {
   font-weight: 400;
 }
 
-.main-heading {
+.big-heading {
   color: #ccd6f6;
   margin: 10px 0;
   line-height: 1.1;
   font-weight: 600;
-  margin: 0px;
-}
-
-.medium-heading {
   margin: 0px;
   font-size: clamp(40px, 8vw, 60px);
 }
@@ -103,7 +99,6 @@ main {
   line-height: 0.9;
   font-weight: 600;
   margin: 0px;
-  font-size: clamp(40px, 8vw, 70px);
 }
 
 .description {
