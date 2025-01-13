@@ -9,7 +9,7 @@ tags:
 
  <section>
     <p>
-        Recently, I completely obliterated user privileges on a client folder while trying to implement CI/CD using Azure DevOps. My goal was to set up an Angular front-end build and deploy pipeline using an existing agent, so it's a pretty simple change since there wasn’t a need to set up a new agent.
+        Recently, I completely obliterated user privileges on a client folder while trying to implement CI/CD using <a href="/services">Azure DevOps</a>. My goal was to set up an Angular front-end build and deploy pipeline using an existing agent, so it's a pretty simple change since there wasn’t a need to set up a new agent.
     </p>
     <p>
         The build process worked just about out of the box so I just needed to configure the deploy process. I configured the deployment to target a new test folder that was inside the same parent folder as the existing website folder. Then I created a share of the existing parent folder which allows the agent to directly access the deployment folder without requiring access to the entire directory chain.
