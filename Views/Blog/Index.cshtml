@@ -4,18 +4,18 @@
 @model IEnumerable<Post>
 
 <div class="blog page">
-  <section id="blog">
-    <h1>Blog </h1>
-
-    @foreach (var post in Model)
-    {
-        <div class="post-summary numbered">
-            <h2 class="blog-heading"><a href="@Url.Action("Details", "Blog", new { slug = post.Slug })">@post.Title</a>
-            </h2>
-            <p>@post.Description</p>
-            <small>@post.Date.ToString("MMMM dd, yyyy")</small>
-            <hr />
-        </div>
-    }
-  </section>
+    <section id="blog">
+        <h1 class="mb-4">Blog </h1>
+        <p>A collection of thoughts on programmning and consulting.</p>
+        @foreach (var post in Model)
+        {
+            <div class="post-summary numbered">
+                <h2 class="blog-heading"><a href="@Url.Action("Details", "Blog", new { slug = post.Slug })">@post.Title</a>
+                </h2>
+                <p>@post.Description</p>
+                <small>@post.Date.ToString("MMMM dd, yyyy")</small>
+                <hr />
+            </div>
+        }
+    </section>
 </div>
