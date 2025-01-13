@@ -15,31 +15,43 @@ public class ServicesController : Controller
     }
 
     [Route("[controller]/custom-software-development")]
-     public IActionResult CustomSoftware()
+    public IActionResult CustomSoftware()
     {
         return View();
     }
 
     [Route("[controller]/azure-b2c-integration")]
-     public IActionResult AzureB2CIntegration()
+    public IActionResult AzureB2CIntegration()
     {
         return View();
     }
 
     [Route("[controller]/cloud-implementation")]
-     public IActionResult CloudImplementation()
+    public IActionResult CloudImplementation()
     {
         return View();
     }
 
     [Route("[controller]/legacy-systems")]
-     public IActionResult LegacySystems()
+    public IActionResult LegacySystems()
     {
         return View();
     }
 
     [Route("[controller]/rescue-recovery")]
-     public IActionResult RescueRecovery()
+    public IActionResult RescueRecovery()
+    {
+        return View();
+    }
+
+    [Route("[controller]/wordpress-hosting")]
+    public IActionResult WordpressHosting()
+    {
+        return View();
+    }
+
+    [Route("[controller]/shopify-ecommerce-development")]
+    public IActionResult Shopify()
     {
         return View();
     }

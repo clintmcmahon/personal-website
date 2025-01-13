@@ -10,6 +10,9 @@ h6 {
   line-height: 1.1;
 }
 
+ul li {
+  margin: 5px;
+}
 .btn:focus,
 .btn:active:focus,
 .btn-link.nav-link:focus,
