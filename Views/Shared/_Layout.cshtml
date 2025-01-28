@@ -41,8 +41,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
 
 </head>
-
-<body >
+<body class="d-flex flex-column min-vh-100">
     <!-- Sticky Sidebar with Icons -->
     <div class="sticky-sidebar">
         <a href="https://github.com/clintmcmahon" target="_blank" aria-label="GitHub">
@@ -63,11 +62,11 @@
         <div class="vertical-line"></div>
     </div>
 
-    
-    <div class="container">
+    <!-- Wrapper for Main Content -->
+    <div class="container flex-grow-1">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
             <a href="/" class="d-flex align-items-start mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-            <span><strong>CLINT MCMAHON</strong></span>
+                <span><strong>CLINT MCMAHON</strong></span>
             </a>
             <ul class="nav nav-pills">
                 <li class="nav-item"><a href="/about" class="nav-link link-dark">About</a></li>
@@ -76,10 +75,8 @@
                 <li class="nav-item"><a href="/contact" class="nav-link link-dark">Contact</a></li>
             </ul>
         </header>
-    </div>
 
-    <!-- Main Content -->
-    <div class="container">
+        <!-- Main Content -->
         <main role="main" class="pb-3">
             <div class="row">
                 <div class="col-12">
@@ -103,5 +100,6 @@
     <script src="~/js/site.js" asp-append-version="true" defer></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 
 </html>

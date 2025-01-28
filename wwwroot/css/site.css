@@ -2,6 +2,17 @@
 a{
   color:#183537;
 }
+
+.btn-primary{
+  background-color: #183537;
+  border-color: #183537;
+}
+
+.btn-primary:hover{
+  background-color: #224749;
+  border-color: #183537;
+}
+
 .big-heading{
   font-size: 72px;
   font-weight: 700;
@@ -18,9 +29,10 @@ a{
   max-width: 700px;
 }
 
-.container .blog,
-.container .contact{
-  max-width: 1000px;
+.card-img-top {
+  width: 100%;
+  height: 200px; /* Adjust to desired height */
+  object-fit: cover; /* Ensures the image scales and crops without distortion */
 }
 
 /* Card Icon */
@@ -72,8 +84,16 @@ a{
   transition: color 0.3s;
 }
 
+@media (max-width: 575.98px) {
+  /* Styles for small screens and below */
+  .sticky-sidebar {
+    display: none; /* Example: Hide the element */
+  }
+}
+
 .vertical-line {
   width: 1px;
   height: 100px;
   background-color: #212427;
 }
+

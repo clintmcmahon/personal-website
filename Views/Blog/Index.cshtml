@@ -3,19 +3,21 @@
 }
 @model IEnumerable<Post>
 
-<div class="blog page">
-    <section id="blog">
-        <h1 class="mb-4">Blog </h1>
+<section class="contact py-5">
+  <div class="container" style="max-width:800px">
+    <h2 class="text-center mb-4">Writing</h2>
+    <div class="row g-4">
+    <div class="col">
         <p>A collection of thoughts on programmning and consulting.</p>
         @foreach (var post in Model)
         {
             <div class="post-summary numbered">
-                <h2 class="blog-heading"><a href="@Url.Action("Details", "Blog", new { slug = post.Slug })">@post.Title</a>
-                </h2>
+                <h3><a href="@Url.Action("Details", "Blog", new { slug = post.Slug })">@post.Title</a>
+                </h3>
                 <p>@post.Description</p>
                 <small>@post.Date.ToString("MMMM dd, yyyy")</small>
                 <hr />
             </div>
         }
     </section>
-</div>
+
