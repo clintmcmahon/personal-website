@@ -4,47 +4,78 @@
 
 @model IEnumerable<Post>
 
-<div class="now page">
-    <h1 class="mb-5 main-heading">Now</h1>
-    <p>
-        This out my <a href="https://nownownow.com/about" target="_blank">Now page</a>, inspired by <a
-            href="https://sive.rs/now">Derek Sivers</a>, where I share what I’m focused on at this point in life.
-    </p>
-    <ul>
-        <li>
-            <p>Building MPLS Coffee – I’m working on a coffee shop locator app for Minneapolis and St. Paul, designed
-                for people who love a well-crafted cup of coffee. It’s called <a
-                    href="https://mplscoffee.com">mplscoffee.com</a>, and it’s all about highlighting spots that offer
-                great roasts, quality pour-overs, and places worth visiting for their craft.</p>
-        </li>
-        <li>
-            <p>Reading About Strangers – Since the pandemic and a lot of time spent working from home, I've been
-                reflecting on connection. I’m reading books focused on strangers and human connection, looking for ways
-                to better connect with people who aren’t like me. Working from CoCo has helped, but I’m interested in
-                more conversations that push my perspective.</p>
-        </li>
-        <li>
-            <p>Wrapping Up a Project for the State – I'm putting the final touches on a significant project with the
-                State of Minnesota. It’s close to going live, and I’m excited to see it out in the world soon.</p>
-        </li>
-        <li>
-            <p>Meditating Daily – I’m making it a priority to meditate for 10 minutes each day. The goal is to be more
-                mindful and reduce distraction, helping me be more present with people and projects.</p>
-        </li>
-        <li>
-            <p>Helping Theo Adjust – My son Theo just started a new school. We’re working together to help him feel
-                comfortable, make new friends, and settle into the new schedule. Watching him step out of his comfort
-                zone has been a reminder of the value of persistence.</p>
-        </li>
-        <li>
-            <p>Going to Tech Meetups – I’m attending more meetups around the Twin Cities, connecting with the
-                local tech community. It’s been a good way to meet others and stay involved in
-                what’s going on.</p>
-        </li>
-        <li>
-            <p>Updating My Personal Site – I'm in the process of updating this site, transitioning from Ghost to
-                .NET 8 MVC for more flexibility and customization.</p>
-        </li>
-    </ul>
+<section class="contact py-5">
+  <div class="container" style="max-width:800px">
+    <h2 class="text-center mb-4">Now</h2>
+    <div class="row g-4">
+        <div class="col">
+        <p class="text-center">
+            This is my <a href="https://nownownow.com/about" target="_blank">Now page</a>, inspired by <a
+            href="https://sive.rs/now">Derek Sivers</a>.
+        </p>
+        <div class="fw-bold mb-4">
+            January 2025
+        </div>
+            <ul>
+                <li>
+                    <p>☕ I've officially launched my Minneapolis coffee locator app, <a href="https://mplscoffee.com">MPLS Coffee</a> in the iOS and Android stores. <a href="/blog/find-best-coffee-minneapolis">I'm continuing to work</a> on it as I get time, but that has not happened as much as I've wanted this month.
+                    The main goal was to do a release every month, it's more like every other month right now. The next update will extend the range of coffee shops to include the entire state of Minnesota instead of just the Twin Cities metro area. That's probably going to require a name change sometime down the road.  </p>
+                </li>
+                <li>
+                    <p>🖥️ <a href="https://clintmcmahon.com">This website is now running .Net 8</a>! I migrated the blog posts to markdown format and updated the CSS to use Bootstrap 5. It's a pretty bland and boring design but I'd rather focus on creating software than updating my website design.  </p>
+                </li>
+                <li>
+                    <p>🤒 There is something fierce going around Minneapolis these days. Everyone in my house has gotten ill in one way or another this month. We're on the tail end, I hope but everyone I talk to is going through the same thing. </p>
+                </li>
+                 <li>
+                    <p>🏂 For the first time in 15 odd years I own a snowboard again. Now that Theo is learning to shred, I went out and bought my own board from Cal Surf in Uptown. Cal Surf is a Minneapolis institution for boards of snow and the street. They also have Nike Dunks, before buying my snowboard there I have not been there since the early 2000s. Now that I know they are a dunk shop, I'm going to shop there more often. </p>
+                </li>
+                <li>
+                    <p>📸 Updated to a new pocket sized camera, the Ricoh GR IIIx. I haven't been out taking as many photos lately, but I already love this camera. I can't wait to really start using it and posting pictures.</p>
+                </li>
+            </ul>
+        <hr />
+        <div class="fw-bold mb-4">
+            October 2024
+        </div>
+            <ul>
+                <li>
+                    <p>Building MPLS Coffee – I’m working on a coffee shop locator app for Minneapolis and St. Paul, designed
+                        for people who love a well-crafted cup of coffee. It’s called <a
+                            href="https://mplscoffee.com">mplscoffee.com</a>, and it’s all about highlighting spots that offer
+                        great roasts, quality pour-overs, and places worth visiting for their craft.</p>
+                </li>
+                <li>
+                    <p>Reading About Strangers – Since the pandemic and a lot of time spent working from home, I've been
+                        reflecting on connection. I’m reading books focused on strangers and human connection, looking for ways
+                        to better connect with people who aren’t like me. Working from CoCo has helped, but I’m interested in
+                        more conversations that push my perspective.</p>
+                </li>
+                <li>
+                    <p>Wrapping Up a Project for the State – I'm putting the final touches on a significant project with the
+                        State of Minnesota. It’s close to going live, and I’m excited to see it out in the world soon.</p>
+                </li>
+                <li>
+                    <p>Meditating Daily – I’m making it a priority to meditate for 10 minutes each day. The goal is to be more
+                        mindful and reduce distraction, helping me be more present with people and projects.</p>
+                </li>
+                <li>
+                    <p>Helping Theo Adjust – My son Theo just started a new school. We’re working together to help him feel
+                        comfortable, make new friends, and settle into the new schedule. Watching him step out of his comfort
+                        zone has been a reminder of the value of persistence.</p>
+                </li>
+                <li>
+                    <p>Going to Tech Meetups – I’m attending more meetups around the Twin Cities, connecting with the
+                        local tech community. It’s been a good way to meet others and stay involved in
+                        what’s going on.</p>
+                </li>
+                <li>
+                    <p>Updating My Personal Site – I'm in the process of updating this site, transitioning from Ghost to
+                        .NET 8 MVC for more flexibility and customization.</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+  </div>
+</section>
 
-</div>
