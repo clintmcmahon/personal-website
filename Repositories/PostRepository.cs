@@ -11,20 +11,32 @@ public class PostRepository : IPostRepository
 
     public IEnumerable<Post> GetAllPosts()
     {
-        var files = Directory.GetFiles(_postsFolderPath, "*.md");
+        var files = GetMarkdownFiles();
         return files.Select(ParseMarkdownFile);
     }
 
-      public IEnumerable<Post> GetLatestPosts()
+    public IEnumerable<Post> GetLatestPosts()
     {
-        var files = Directory.GetFiles(_postsFolderPath, "*.md");
-        return files.Select(ParseMarkdownFile);
+        var files = GetMarkdownFiles();
+        return files.OrderByDescending(f => File.GetLastWriteTime(f)).Take(5).Select(ParseMarkdownFile);
     }
 
     public Post GetPostBySlug(string slug)
     {
-        var filePath = Directory.GetFiles(_postsFolderPath, $"*-{slug}.md").FirstOrDefault();
+        var filePath = GetMarkdownFiles().FirstOrDefault(file => Path.GetFileNameWithoutExtension(file).EndsWith($"-{slug}"));
         return filePath != null ? ParseMarkdownFile(filePath) : null;
+    }
+
+    public IEnumerable<Post> GetPostsByTag(string tag)
+    {
+        var files = GetMarkdownFiles();
+        return files.Select(ParseMarkdownFile).Where(post => post.Tags != null && post.Tags.Contains(tag, StringComparer.OrdinalIgnoreCase));
+    }
+
+    private IEnumerable<string> GetMarkdownFiles()
+    {
+        // Get all .md files from subdirectories within _postsFolderPath
+        return Directory.EnumerateFiles(_postsFolderPath, "*.md", SearchOption.AllDirectories);
     }
 
     private Post ParseMarkdownFile(string filePath)
@@ -44,7 +56,7 @@ public class PostRepository : IPostRepository
 
         // Set the HTML content after rendering Markdown
         var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-        post.Content = markdownContent;
+        post.Content = Markdown.ToHtml(markdownContent, pipeline);
 
         return post;
     }
@@ -63,7 +75,7 @@ public class PostRepository : IPostRepository
             if (parts.Length < 2) continue;
 
             var key = parts[0].Trim().ToLowerInvariant();
-            var value = parts[1].Trim().Trim('"', '\''); // Remove both single and double quotes
+var value = parts[1].Trim().Trim('"', '\''); // Remove both single and double quotes
 
             switch (key)
             {
@@ -90,6 +102,5 @@ public class PostRepository : IPostRepository
 
         return post;
     }
-
-
 }
+

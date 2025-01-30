@@ -97,3 +97,28 @@ a{
   background-color: #212427;
 }
 
+.photo-detail ul,
+.photo-detail li{
+  display: none;
+}
+
+.photo-header {
+  text-align: right;  /* Float content to the right */
+  margin-bottom: 10px;
+}
+
+.photo-title {
+  font-size: 1.2rem; /* Small uppercase */
+  text-transform: uppercase;
+  font-weight: bold;
+  display: inline-block; /* Ensures it aligns properly */
+  margin-bottom: 0;
+}
+
+.photo-date {
+  font-size: 0.9rem; /* Smaller date */
+  text-transform: uppercase;
+  font-weight: normal;
+  color: gray;
+  margin-top: -5px; /* Bring it closer to the title */
+}

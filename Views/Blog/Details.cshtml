@@ -1,20 +1,27 @@
 @{
-    ViewData["Title"] = @Model.Title + " - Clint McMahon";
+    ViewData["Title"] = @Model.Title + " | Clint McMahon";
     ViewData["Description"] = @Model.Description;
 }
 
 @model Post
 
-<article class="blog-post">
-    <h1>@Model.Title</h1>
-    <p class="post-date">@Model.Date.ToString("MMMM dd, yyyy")</p>
-    <div class="post-tags">
-        @foreach (var tag in Model.Tags)
-        {
-            <span class="tag">@tag</span>
-        }
+<section class="blog-post py-5">
+    <div class="container" style="max-width:800px">
+        <h1>@Model.Title</h1>
+        <div class="row g-4">
+            <div class="col">
+
+                <p class="post-date">@Model.Date.ToString("MMMM dd, yyyy")</p>
+                <div class="post-tags">
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <span class="tag">@tag</span>
+                    }
+                </div>
+                <div class="post-content">
+                    @Html.Raw(Model.Content) <!-- Assuming Content has been parsed to HTML -->
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="post-content">
-        @Html.Raw(Model.Content) <!-- Assuming Content has been parsed to HTML -->
-    </div>
-</article>
+</section>

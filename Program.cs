@@ -1,5 +1,6 @@
 using Website.Middleware;
 using Website.Repositories;
+using Website.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IPostRepository, PostRepository>();
+builder.Services.AddSingleton<PhotoRepository>(provider =>
+    new PhotoRepository(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos")));
+builder.Services.AddSingleton<PhotoService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
