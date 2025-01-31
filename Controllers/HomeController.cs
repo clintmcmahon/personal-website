@@ -21,7 +21,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var posts = _postRepository.GetLatestPosts()
+        var posts = _postRepository.GetAllPosts()
            .Where(post => !post.Draft)
            .OrderByDescending(post => post.Date)
            .Take(3);
