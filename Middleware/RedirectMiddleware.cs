@@ -17,7 +17,7 @@ public class RedirectMiddleware
         var path = context.Request.Path.Value.Trim('/');
 
         // Only execute if the path has no slashes (indicating it's at the root)
-        if (!string.IsNullOrEmpty(path) && !path.Contains("/"))
+        if (!string.IsNullOrEmpty(path) && !path.Contains("/") && path != "photos")
         {
             // Resolve IPostRepository within the request scope
             var postRepository = context.RequestServices.GetService<IPostRepository>();

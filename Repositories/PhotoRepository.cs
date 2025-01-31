@@ -38,62 +38,56 @@ public class PhotoRepository
         return photos.OrderByDescending(p => p.Date).ToList();
     }
 
-    private PhotoEntry? ParseMarkdown(string content)
-{
-    if (string.IsNullOrWhiteSpace(content)) return null;
-
-    // Custom pipeline to disable unwanted extensions
-    var pipeline = new MarkdownPipelineBuilder()
-        .UseYamlFrontMatter()
-        .UseAdvancedExtensions()
-        .DisableHtml() // Prevent Markdig from injecting extra HTML structures
-        .Build();
-
-    var document = Markdown.Parse(content, pipeline);
-    var yamlBlock = document.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
-
-    if (yamlBlock == null) return null;
-
-    // Extract YAML block as raw text
-    var yamlText = content.Substring(yamlBlock.Span.Start, yamlBlock.Span.Length).Trim();
-    
-    // Parse YAML metadata
-    var metadata = ParseYamlMetadata(yamlText);
-
-    if (!metadata.TryGetValue("title", out var title) ||
-        !metadata.TryGetValue("date", out var dateString) ||
-        !metadata.TryGetValue("image", out var image) ||
-        !DateTime.TryParse(dateString, out var date))
+    public PhotoEntry? GetPhotoBySlug(string slug)
     {
-        return null; // Invalid or missing metadata
+        var photos = GetAllPhotos();
+        return photos.FirstOrDefault(p => p.Slug.Equals(slug, StringComparison.OrdinalIgnoreCase));
     }
 
-    var slug = metadata.ContainsKey("slug") ? metadata["slug"] : GenerateSlug(title);
-    var tags = metadata.ContainsKey("tags") 
-        ? metadata["tags"].Split(',').Select(tag => tag.Trim().Trim('"').Trim('\'')).ToList() 
-        : new List<string>();
-
-    // Extract Markdown content after YAML front matter
-    var markdownContent = content.Substring(yamlBlock.Span.End).Trim();
-
-    // Convert Markdown to HTML (disabling auto lists)
-    var htmlContent = Markdown.ToHtml(markdownContent, pipeline);
-
-    return new PhotoEntry
+    private PhotoEntry? ParseMarkdown(string content)
     {
-        Title = title,
-        Slug = slug,
-        Date = date,
-        ImageUrl = image,
-        Content = htmlContent,
-        Tags = tags
-    };
-}
+        if (string.IsNullOrWhiteSpace(content)) return null;
 
+        var pipeline = new MarkdownPipelineBuilder()
+            .UseYamlFrontMatter()
+            .UseAdvancedExtensions()
+            .Build();
 
-    /// <summary>
-    /// Parses YAML front matter and removes unwanted characters
-    /// </summary>
+        var document = Markdown.Parse(content, pipeline);
+        var yamlBlock = document.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
+
+        if (yamlBlock == null) return null;
+
+        var yamlText = content.Substring(yamlBlock.Span.Start, yamlBlock.Span.Length).Trim();
+        var metadata = ParseYamlMetadata(yamlText);
+
+        if (!metadata.TryGetValue("title", out var title) ||
+            !metadata.TryGetValue("date", out var dateString) ||
+            !metadata.TryGetValue("image", out var image) ||
+            !DateTime.TryParse(dateString, out var date))
+        {
+            return null;
+        }
+
+        var slug = metadata.ContainsKey("slug") ? metadata["slug"] : GenerateSlug(title);
+        var tags = metadata.ContainsKey("tags") 
+            ? metadata["tags"].Split(',').Select(tag => tag.Trim().Trim('"').Trim('\'')).ToList() 
+            : new List<string>();
+
+        var markdownContent = content.Substring(yamlBlock.Span.End).Trim();
+        var htmlContent = Markdown.ToHtml(markdownContent, pipeline);
+
+        return new PhotoEntry
+        {
+            Title = title,
+            Slug = slug,
+            Date = date,
+            ImageUrl = image,
+            Content = htmlContent,
+            Tags = tags
+        };
+    }
+
     private static Dictionary<string, string> ParseYamlMetadata(string yaml)
     {
         var metadata = new Dictionary<string, string>();
@@ -107,9 +101,7 @@ public class PhotoRepository
                 var key = match.Groups["key"].Value.Trim();
                 var value = match.Groups["value"].Value.Trim();
 
-                // Remove leading and trailing quotes (single or double)
                 value = value.Trim('"').Trim('\'');
-
                 metadata[key] = value;
             }
         }

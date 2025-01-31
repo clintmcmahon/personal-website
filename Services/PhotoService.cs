@@ -32,4 +32,33 @@ public class PhotoService
             NextPhoto = nextPhoto
         };
     }
+
+    public PhotoViewModel? GetPhotoBySlug(string slug)
+{
+    var photos = _photoRepository.GetAllPhotos();
+    var photo = photos.FirstOrDefault(p => p.Slug.Equals(slug, StringComparison.OrdinalIgnoreCase));
+
+    if (photo == null)
+    {
+        return null;
+    }
+
+    var index = photos.IndexOf(photo);
+
+    // Only assign previous if there is an older photo in the list
+    var previousPhoto = index < photos.Count - 1 ? photos[index + 1] : null;
+
+    // Only assign next if there is a newer photo in the list
+    var nextPhoto = index > 0 ? photos[index - 1] : null;
+
+    return new PhotoViewModel
+    {
+        CurrentPhoto = photo,
+        PreviousPhoto = previousPhoto,
+        NextPhoto = nextPhoto
+    };
 }
+
+
+}
+

@@ -21,4 +21,16 @@ public class PhotosController : Controller
 
         return View("PhotoDetail", viewModel);
     }
+
+    [Route("photos/{slug}")]
+    public IActionResult PhotoBySlug(string slug)
+    {
+        var viewModel = _photoService.GetPhotoBySlug(slug);
+        if (viewModel == null)
+        {
+            return NotFound("Photo not found.");
+        }
+
+        return View("PhotoDetail", viewModel);
+    }
 }
