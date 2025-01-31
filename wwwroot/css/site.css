@@ -1,4 +1,8 @@
 
+body{
+  padding: 0px 50px
+}
+
 a{
   color:#183537;
 }
@@ -84,12 +88,7 @@ a{
   transition: color 0.3s;
 }
 
-@media (max-width: 575.98px) {
-  /* Styles for small screens and below */
-  .sticky-sidebar {
-    display: none; /* Example: Hide the element */
-  }
-}
+
 
 .vertical-line {
   width: 1px;
@@ -121,4 +120,21 @@ a{
   font-weight: normal;
   color: gray;
   margin-top: -5px; /* Bring it closer to the title */
+}
+
+
+
+@media (max-width: 575.98px) {
+  body{
+    padding: 0px;
+  }
+  /* Styles for small screens and below */
+  .sticky-sidebar {
+    display: none; /* Example: Hide the element */
+  }
+
+  .bg-body-tertiary.top{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
 }
