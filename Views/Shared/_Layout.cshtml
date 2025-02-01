@@ -62,36 +62,39 @@
         <div class="vertical-line"></div>
     </div>
 
-    <!-- Wrapper for Main Content -->
-    <div class="container flex-grow-1">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="/">CLINT MCMAHON</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a href="/about" class="nav-link link-dark">About</a></li>
-                <li class="nav-item"><a href="/now" class="nav-link link-dark">Now</a></li>
-                <li class="nav-item"><a href="/blog" class="nav-link link-dark">Writing</a></li>
-                <li class="nav-item"><a href="/photos" class="nav-link link-dark">Photos</a></li>
-                <li class="nav-item"><a href="/portfolio" class="nav-link link-dark">Portfolio</a></li>
-                <li class="nav-item"><a href="/contact" class="nav-link link-dark">Contact</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <nav class="navbar navbar-expand-md w-100">
+            <div class="container">
+                <a href="/" class="d-flex align-items-start mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                    <span><strong>CLINT MCMAHON</strong></span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="nav nav-pills ms-auto">
+                        <li class="nav-item"><a href="/about" class="nav-link link-dark">About</a></li>
+                        <li class="nav-item"><a href="/now" class="nav-link link-dark">Now</a></li>
+                        <li class="nav-item"><a href="/blog" class="nav-link link-dark">Writing</a></li>
+                        <li class="nav-item"><a href="/photos" class="nav-link link-dark">Photos</a></li>
+                        <li class="nav-item"><a href="/portfolio" class="nav-link link-dark">Portfolio</a></li>
+                        <li class="nav-item"><a href="/contact" class="nav-link link-dark">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
         <!-- Main Content -->
-        <main role="main" class="pb-3">
+        <main role="main" class="container pb-3">
             <div class="row">
                 <div class="col-12">
                     @RenderBody()
                 </div>
             </div>
         </main>
-    </div>
+ 
 
     <!-- Footer -->
     <footer class="border-top footer text-muted">
