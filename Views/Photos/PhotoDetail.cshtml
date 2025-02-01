@@ -10,7 +10,7 @@
         <p class="photo-date"><em>@Model.CurrentPhoto.Date.ToString("MMMM dd, yyyy")</em></p>
     </div>
 
-    <img src="@Model.CurrentPhoto.ImageUrl" class="img-fluid rounded shadow-lg" alt="@Model.CurrentPhoto.Title">
+    <img src="@Model.CurrentPhoto.ImageUrl" class="img-fluid rounded shadow-lg" alt="@Model.CurrentPhoto.Title" title="@Model.CurrentPhoto.Title">
 
     <div class="mt-3 photo-detail">
         @Html.Raw(Model.CurrentPhoto.Content)
