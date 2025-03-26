@@ -56,4 +56,10 @@ public class ServicesController : Controller
         return View();
     }
 
+     [Route("[controller]/umbraco-consultant")]
+    public IActionResult UmbracoConsultant()
+    {
+        return View();
+    }
+
 }
