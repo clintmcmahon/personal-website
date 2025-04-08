@@ -21,4 +21,4 @@ By copying the existing code and not introducing a new feature plus a change I e
 **✔ Limit scope of testing**  
 **✔ Reduce risk of introducing new bugs**
 
-If sometime later the business decides to create another component that uses these same features, then it would be time to write a new component that can be reused in all three locations. But for now this is the most straightforward, quick and cost effective solution which gets the job done.
+If sometime later the business decides to create another component that uses these same features, then it would be time to write a new component that can be reused in all three locations. But for now this is the most straightforward, quick and cost effective solution which gets the job done. 
