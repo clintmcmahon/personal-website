@@ -3,6 +3,10 @@ body{
   padding: 0px 50px
 }
 
+img{
+  width: 100%;
+}
+
 a{
   color:#183537;
 }
@@ -96,33 +100,22 @@ a{
   background-color: #212427;
 }
 
-.photo-detail ul,
-.photo-detail li{
-  display: none;
+#gallery {
+  max-width: 1200px;
+  margin: auto;
 }
 
-.photo-header {
-  text-align: right;  /* Float content to the right */
-  margin-bottom: 10px;
+#gallery a {
+  width: 100%;
+  display: block;
+  margin-bottom: 12px;
 }
 
-.photo-title {
-  font-size: 1.2rem; /* Small uppercase */
-  text-transform: uppercase;
-  font-weight: bold;
-  display: inline-block; /* Ensures it aligns properly */
-  margin-bottom: 0;
+#gallery img {
+  width: 100%;
+  display: block;
+  border-radius: 6px;
 }
-
-.photo-date {
-  font-size: 0.9rem; /* Smaller date */
-  text-transform: uppercase;
-  font-weight: normal;
-  color: gray;
-  margin-top: -5px; /* Bring it closer to the title */
-}
-
-
 
 @media (max-width: 575.98px) {
   body{
