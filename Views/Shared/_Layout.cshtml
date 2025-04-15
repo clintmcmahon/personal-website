@@ -40,7 +40,8 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
-
+    
+    <link type="text/css" rel="stylesheet" href="~/lib/lightGallery/css/lightgallery-bundle.css" />
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -108,8 +109,18 @@
     <!-- Defer Scripts to improve initial render -->
     <script src="~/lib/jquery/dist/jquery.min.js" defer></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="~/lib/Responsive-Justified-Gallery-jQuery-TJ-gallery/src/jquery-tjgallery.min.js" defer></script>
-    <script src="~/js/site.js" asp-append-version="true" defer></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
+    <script src="~/lib/lightGallery/lightgallery.umd.js"></script>
+    <!-- Or use the minified version -->
+    <script src="~/lib/lightGallery/lightgallery.min.js"></script>
+
+    <!-- lightgallery plugins -->
+    <script src="~/lib/lightGallery/plugins/thumbnail/lg-thumbnail.umd.js"></script>
+    <script src="~/lib/lightGallery/plugins/zoom/lg-zoom.umd.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 
