@@ -46,6 +46,12 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
+    <!-- Representative h-card for IndieWeb/microformats -->
+    <div class="h-card d-none">
+        <a class="p-name u-url" rel="me" href="https://clintmcmahon.com/">Clint McMahon</a>
+        <img class="u-photo" src="/images/icon/me.jpg" alt="Clint McMahon" />
+    </div>
+
     <!-- Sticky Sidebar with Icons -->
     <div class="sticky-sidebar">
         <a href="https://github.com/clintmcmahon" target="_blank" aria-label="GitHub">
@@ -102,18 +108,15 @@
 
     <!-- Footer -->
     <footer class="border-top footer text-muted">
-        <div class="container mt-4 mb-4">
-            &copy; @DateTime.Now.Year - Clint McMahon
-            <span class="float-end">
-                @if (Website.Controllers.AuthController.IsLoggedIn(Context))
-                {
-                    <a href="/auth/logout">Logout</a>
-                }
-                else
-                {
-                    <a href="/auth/login">Sign in with IndieAuth</a>
-                }
-            </span>
+        <div class="container mt-4 mb-4 d-flex justify-content-between align-items-center flex-wrap">
+            <div class="footer-left">
+                &copy; @DateTime.Now.Year - Clint McMahon
+            </div>
+            <div class="footer-center text-center flex-grow-1">
+                <a href="https://xn--sr8hvo.ws/previous">&larr;</a>
+                An <a href="https://xn--sr8hvo.ws">IndieWeb Webring</a> 🕸💍
+                <a href="https://xn--sr8hvo.ws/next">&rarr;</a>
+            </div>
         </div>
     </footer>
 
