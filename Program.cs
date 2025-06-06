@@ -11,6 +11,7 @@ builder.Services.AddTransient<IPostRepository, PostRepository>();
 builder.Services.AddSingleton<PhotoRepository>(provider =>
     new PhotoRepository(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos")));
 builder.Services.AddSingleton<PhotoService>();
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -31,6 +32,7 @@ app.UseMiddleware<RedirectMiddleware>();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

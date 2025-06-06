@@ -104,6 +104,16 @@
     <footer class="border-top footer text-muted">
         <div class="container mt-4 mb-4">
             &copy; @DateTime.Now.Year - Clint McMahon
+            <span class="float-end">
+                @if (Website.Controllers.AuthController.IsLoggedIn(Context))
+                {
+                    <a href="/auth/logout">Logout</a>
+                }
+                else
+                {
+                    <a href="/auth/login">Sign in with IndieAuth</a>
+                }
+            </span>
         </div>
     </footer>
 
