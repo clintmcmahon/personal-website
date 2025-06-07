@@ -13,12 +13,20 @@ public class BlogController : Controller
         _postRepository = postRepository;
     }
 
-    public IActionResult Index()
+    public IActionResult Index(int page = 1, int pageSize = 20)
     {
         var posts = _postRepository.GetAllPosts()
-        .Where(post => !post.Draft)
-        .OrderByDescending(post => post.Date);
-        return View(posts);
+            .Where(post => !post.Draft)
+            .OrderByDescending(post => post.Date)
+            .ToList();
+
+        var totalPosts = posts.Count;
+        var totalPages = (int)Math.Ceiling(totalPosts / (double)pageSize);
+        var pagedPosts = posts.Skip((page - 1) * pageSize).Take(pageSize);
+
+        ViewData["CurrentPage"] = page;
+        ViewData["TotalPages"] = totalPages;
+        return View(pagedPosts);
     }
 
     [Route("[controller]/{slug}")]

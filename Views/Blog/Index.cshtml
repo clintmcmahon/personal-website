@@ -18,5 +18,27 @@
                 <hr />
             </div>
         }
-    </section>
+    </div>
+    <nav aria-label="Blog pagination">
+        <ul class="pagination justify-content-center mt-4">
+            @{
+                var currentPage = ViewData["CurrentPage"] as int? ?? 1;
+                var totalPages = ViewData["TotalPages"] as int? ?? 1;
+            }
+            <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = currentPage - 1 })" tabindex="-1">Previous</a>
+            </li>
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                </li>
+            }
+            <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = currentPage + 1 })">Next</a>
+            </li>
+        </ul>
+    </nav>
+    </div>
+</section>
 
