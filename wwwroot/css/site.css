@@ -2,9 +2,6 @@ body{
   padding: 0px 50px
 }
 
-img{
-  width: 100%;
-}
 
 a{
   color:#183537;
@@ -99,22 +96,6 @@ a{
   background-color: #212427;
 }
 
-#gallery {
-  max-width: 1200px;
-  margin: auto;
-}
-
-#gallery a {
-  width: 100%;
-  display: block;
-  margin-bottom: 12px;
-}
-
-#gallery img {
-  width: 100%;
-  display: block;
-  border-radius: 6px;
-}
 
 .pagination {
   display: flex;
@@ -148,6 +129,67 @@ a{
     color: #aaa;
     background-color: #f8f9fa;
     border-color: #e0e0e0;
+}
+
+/* Masonry gallery for blog photo posts */
+#gallery.grid {
+  column-count: 2;
+  column-gap: 1.5rem;
+}
+#gallery.grid a {
+  display: block;
+  margin-bottom: 1.5rem;
+  break-inside: avoid;
+}
+#gallery.grid img {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  background: #fff;
+  transition: box-shadow 0.2s;
+}
+#gallery.grid img:hover {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+}
+
+/* True masonry layout for blog photo gallery */
+.masonry-gallery {
+  column-count: 2 !important;
+  column-gap: 1.5rem !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  display: block !important;
+  padding: 0 !important;
+}
+.masonry-gallery .masonry-item {
+  display: block;
+  margin-bottom: 1.5rem;
+  break-inside: avoid;
+}
+.masonry-gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  background: #fff;
+  transition: box-shadow 0.2s;
+  display: block;
+}
+.masonry-gallery img:hover {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+}
+@media (max-width: 900px) {
+  .masonry-gallery {
+    column-count: 1 !important;
+  }
+}
+/* Remove Bootstrap row/grid margin/padding from masonry-gallery */
+.masonry-gallery.row, .masonry-gallery[class*="col-"] {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 @media (max-width: 575.98px) {

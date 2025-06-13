@@ -16,36 +16,49 @@ tags: photos
     <p>
         Here are my favorite photos from the trip.
     </p>
-    <div id="gallery" class="grid">
-        <a href="/images/2025/R0001248.jpeg"><img src="/images/2025/R0001248.jpeg" alt="California"></a>
-        <a href="/images/2025/R0001217.jpeg"><img src="/images/2025/R0001217.jpeg" alt="California"></a>
-        <a href="/images/2025/R0001207.jpeg"><img src="/images/2025/R0001207.jpeg" alt="California"></a>
-        <a href="/images/2025/R0001161.jpeg"><img src="/images/2025/R0001161.jpeg" alt="California"></a>
-        <a href="/images/2025/R0001158.jpeg"><img src="/images/2025/R0001158.jpeg" alt="California"></a>
-        <a href="/images/2025/R0001109.jpeg"><img src="/images/2025/R0001109.jpeg" alt="California"></a>
-        <a href="/images/2025/R0001097.jpeg"><img src="/images/2025/R0001097.jpeg" alt="California"></a>
-        <a href="/images/2025/R0001068.jpeg"><img src="/images/2025/R0001068.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000987.jpeg"><img src="/images/2025/R0000987.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000968.jpeg"><img src="/images/2025/R0000968.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000958.jpeg"><img src="/images/2025/R0000958.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000953.jpeg"><img src="/images/2025/R0000953.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000951.jpeg"><img src="/images/2025/R0000951.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000943.jpeg"><img src="/images/2025/R0000943.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000940.jpeg"><img src="/images/2025/R0000940.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000936.jpeg"><img src="/images/2025/R0000936.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000935.jpeg"><img src="/images/2025/R0000935.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000924.jpeg"><img src="/images/2025/R0000924.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000911.jpeg"><img src="/images/2025/R0000911.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000910.jpeg"><img src="/images/2025/R0000910.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000900.jpeg"><img src="/images/2025/R0000900.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000895.jpeg"><img src="/images/2025/R0000895.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000884.jpeg"><img src="/images/2025/R0000884.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000882.jpeg"><img src="/images/2025/R0000882.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000875.jpeg"><img src="/images/2025/R0000875.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000868.jpeg"><img src="/images/2025/R0000868.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000863.jpeg"><img src="/images/2025/R0000863.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000862.jpeg"><img src="/images/2025/R0000862.jpeg" alt="California"></a>
-        <a href="/images/2025/R0000860.jpeg"><img src="/images/2025/R0000860.jpeg" alt="California"></a>
+    <div id="gallery" class="masonry-gallery">
+        <a href="/images/2025/R0001248.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0001248.jpeg" alt="California"></a>
+        <a href="/images/2025/R0001217.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0001217.jpeg" alt="California"></a>
+        <a href="/images/2025/R0001207.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0001207.jpeg" alt="California"></a>
+        <a href="/images/2025/R0001161.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0001161.jpeg" alt="California"></a>
+        <a href="/images/2025/R0001158.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0001158.jpeg" alt="California"></a>
+        <a href="/images/2025/R0001109.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0001109.jpeg" alt="California"></a>
+        <a href="/images/2025/R0001097.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0001097.jpeg" alt="California"></a>
+        <a href="/images/2025/R0001068.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0001068.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000987.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000987.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000968.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000968.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000958.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000958.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000953.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000953.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000951.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000951.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000943.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000943.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000940.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000940.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000936.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000936.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000935.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000935.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000924.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000924.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000911.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000911.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000910.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000910.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000900.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000900.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000895.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000895.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000884.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000884.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000882.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000882.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000875.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000875.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000868.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000868.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000863.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000863.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000862.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000862.jpeg" alt="California"></a>
+        <a href="/images/2025/R0000860.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000860.jpeg" alt="California"></a>
     </div>
-
 </section>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    if (window.GLightbox) {
+      GLightbox({
+        selector: '.glightbox',
+        loop: true,
+        touchNavigation: true,
+        closeButton: true,
+        zoomable: true,
+        draggable: true
+      });
+    }
+  });
+</script>
