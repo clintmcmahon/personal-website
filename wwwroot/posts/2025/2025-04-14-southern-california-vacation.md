@@ -48,17 +48,3 @@ tags: photos
         <a href="/images/2025/R0000860.jpeg" class="glightbox masonry-item" data-gallery="socal2025"><img src="/images/2025/R0000860.jpeg" alt="California"></a>
     </div>
 </section>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    if (window.GLightbox) {
-      GLightbox({
-        selector: '.glightbox',
-        loop: true,
-        touchNavigation: true,
-        closeButton: true,
-        zoomable: true,
-        draggable: true
-      });
-    }
-  });
-</script>

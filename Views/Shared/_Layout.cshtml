@@ -126,6 +126,20 @@
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 
     <script src="~/lib/glightbox/glightbox.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        if (window.GLightbox) {
+          GLightbox({
+            selector: '.glightbox',
+            loop: true,
+            touchNavigation: true,
+            closeButton: true,
+            zoomable: true,
+            draggable: true
+          });
+        }
+      });
+    </script>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     

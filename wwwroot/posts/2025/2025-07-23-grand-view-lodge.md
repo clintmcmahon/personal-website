@@ -14,7 +14,6 @@ tags: [photos]
     <p>
         Earlier this month we spent three days at the Grand View Lodge in nothern Minnesota. I've never been to this lodge before but it's definitely one of my new favorite places. Since moving back to Minnesota from New York City I've always felt like we needed to have a 'up north vacation spot' to visit every year. It's only taken 10+ years but I think we might have finally found our place. We've already agreed that we will be going back next summer.
     </p>
-    <p>
     <div id="gallery" class="masonry-gallery">
         <a href="/photos/2025/07/R0001968_VSCO.jpeg" class="glightbox masonry-item" data-gallery="july2025" data-title="Grand View Lodge - Nisswa Minnesota"><img src="/photos/2025/07/R0001968_VSCO.jpeg" alt="Grand View Lodge - Nisswa Minnesota"></a>
         <a href="/photos/2025/07/R0002074-2.jpeg" class="glightbox masonry-item" data-gallery="july2025" data-title="Grand View Lodge - Nisswa Minnesota"><img src="/photos/2025/07/R0002074-2.jpeg" alt="Grand View Lodge - Nisswa Minnesota"></a>
