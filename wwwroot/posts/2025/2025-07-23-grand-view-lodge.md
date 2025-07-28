@@ -1,7 +1,7 @@
 ---
 title: "Short Weekend at Grand View Lodge"
 description: "We had a short weekend at the Grand View Lodge in Nisswa, Minnesota. Here are some pictures from that trip."
-date: "2025-07-27"
+date: "2025-07-23"
 draft: false
 slug: "grand-view-lodge"
 tags: [photos]
