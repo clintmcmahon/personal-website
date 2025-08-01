@@ -46,7 +46,7 @@ public class PostRepository : IPostRepository
         // Use regex to extract front matter and Markdown content
         var frontMatterMatch = Regex.Match(content, @"^---\s*(.*?)\s*---\s*(.*)", RegexOptions.Singleline);
         if (!frontMatterMatch.Success)
-            throw new Exception("Invalid front matter format.");
+            throw new Exception($"Invalid front matter format -- {filePath}");
 
         var frontMatter = frontMatterMatch.Groups[1].Value;
         var markdownContent = frontMatterMatch.Groups[2].Value;
