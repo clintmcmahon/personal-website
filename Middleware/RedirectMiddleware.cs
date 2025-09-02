@@ -14,10 +14,13 @@ public class RedirectMiddleware
 
     public async Task Invoke(HttpContext context)
     {
-        var path = context.Request.Path.Value.Trim('/');
+        var path = context.Request.Path.Value?.Trim('/') ?? string.Empty;
 
-        // Only execute if the path has no slashes (indicating it's at the root)
-        if (!string.IsNullOrEmpty(path) && !path.Contains("/") && path != "photos")
+        // Define paths that should not be redirected (controller routes)
+        var excludedPaths = new[] { "photos", "projects", "about", "contact", "home", "blog", "now", "portfolio", "services", "rss", "sitemap" };
+
+        // Only execute if the path has no slashes (indicating it's at the root) and is not an excluded path
+        if (!string.IsNullOrEmpty(path) && !path.Contains("/") && !excludedPaths.Contains(path, StringComparer.OrdinalIgnoreCase))
         {
             // Resolve IPostRepository within the request scope
             var postRepository = context.RequestServices.GetService<IPostRepository>();
