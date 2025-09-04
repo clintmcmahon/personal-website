@@ -29,9 +29,9 @@ public class RssController : Controller
             new XElement("rss",
                 new XAttribute("version", "2.0"),
                 new XElement("channel",
-                    new XElement("title", "Your Blog Title"),
+                    new XElement("title", "Clint McMahon's Blog"),
                     new XElement("link", Url.Action("Index", "Blog", null, Request.Scheme)),
-                    new XElement("description", "Your Blog Description"),
+                    new XElement("description", "Thoughts on .NET development, software consulting, and the occasional coffee shop discovery from a Minneapolis-based developer."),
                     new XElement("language", "en-us"),
                     posts.Select(post =>
                         new XElement("item",
