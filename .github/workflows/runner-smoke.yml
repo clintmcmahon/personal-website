@@ -1,0 +1,14 @@
+# .github/workflows/runner-smoke.yml
+name: Runner smoke
+on:
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: self-hosted
+    steps:
+      - name: Show machine
+        shell: pwsh
+        run: |
+          whoami
+          hostname
+          $PSVersionTable.PSVersion
