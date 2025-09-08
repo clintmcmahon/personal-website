@@ -81,7 +81,3 @@ If you have questions, want to show off your fork, or have ideas for improvement
 - [GLightbox](https://github.com/biati-digital/glightbox) for the photo gallery.
 - [ASP.NET Core](https://dotnet.microsoft.com/) for the web framework.
 - IndieWeb community for standards inspiration.
-
----
-
-**Fork it, customize it, and make something awesome!**
