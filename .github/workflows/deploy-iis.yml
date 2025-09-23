@@ -9,29 +9,40 @@ concurrency:
   group: deploy-iis
   cancel-in-progress: true
 
+# Use Windows PowerShell everywhere (your box doesn't have pwsh)
 defaults:
   run:
     shell: powershell
 
 jobs:
   deploy:
-    runs-on: [ self-hosted, Windows, X64 ]
+    runs-on: [ self-hosted, Windows, X64 ]   # matches the built-in labels
+    timeout-minutes: 30
+
+    # Put dotnet where the service account can write
     env:
-      DOTNET_INSTALL_DIR: ${{ runner.temp }}\dotnet  # avoids Program Files perms
+      DOTNET_INSTALL_DIR: ${{ runner.temp }}\dotnet
 
     steps:
-      - uses: actions/checkout@v4
-
       - name: Allow scripts in this job
         run: Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
+
+      # Optional but recommended so checkout uses Git (not the archive fallback)
+      - name: Git version
+        run: git --version
+
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Install .NET SDK
         uses: actions/setup-dotnet@v4
         with:
+          # If you have global.json, this will honor it.
+          # Otherwise comment the line above and use a version like:
+          # dotnet-version: '8.0.x'
           global-json-file: ./global.json
-        # or: dotnet-version: '8.0.x'
 
-      - name: Ensure dotnet on PATH
+      - name: Ensure dotnet on PATH (custom install dir)
         run: |
           "$env:DOTNET_INSTALL_DIR" | Out-File -FilePath $env:GITHUB_PATH -Append
           dotnet --info
@@ -88,7 +99,7 @@ jobs:
           $sitePath = 'C:\websites\clintmcmahon.com'
           Remove-Item (Join-Path $sitePath 'app_offline.htm') -ErrorAction SilentlyContinue
           Import-Module WebAdministration
-          Start-WebAppPool -Name $appPool
+          Start-WebAppool -Name $appPool
 
       - name: Smoke check (optional)
         continue-on-error: true
