@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: [ self-hosted, windows, iis, prod ]  # matches your runner labels
+    runs-on: [ self-hosted, Windows, X64 ]  # matches your runner labels
     timeout-minutes: 30
 
     steps:
