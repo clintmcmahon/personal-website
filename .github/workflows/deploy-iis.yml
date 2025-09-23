@@ -25,7 +25,7 @@ jobs:
         run: dotnet build .\Website.csproj -c Release --no-restore
 
       - name: Publish (self-contained folder)
-        shell: pwsh
+        shell: powershell
         run: |
           $pub = Join-Path $env:RUNNER_TEMP "publish"
           dotnet publish .\Website.csproj -c Release -o $pub --no-build
@@ -33,7 +33,7 @@ jobs:
           echo "PUBLISH_DIR=$pub" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Ensure IIS site folder permissions (once)
-        shell: pwsh
+        shell: powershell
         run: |
           $site = 'C:\websites\clintmcmahon.com'
           if (-not (Test-Path $site)) { New-Item -Path $site -ItemType Directory -Force | Out-Null }
@@ -41,7 +41,7 @@ jobs:
           icacls $site /grant "NT AUTHORITY\NETWORK SERVICE:(OI)(CI)M" /T
 
       - name: Stop AppPool + take site offline
-        shell: pwsh
+        shell: powershell
         run: |
           $appPool = 'clintmcmahon.com'
           Import-Module WebAdministration
@@ -53,7 +53,7 @@ jobs:
           Set-Content -Path (Join-Path $sitePath 'app_offline.htm') -Value '<html><body><h3>Updating… back in a moment.</h3></body></html>'
 
       - name: Backup current site (zip)
-        shell: pwsh
+        shell: powershell
         run: |
           $sitePath = 'C:\websites\clintmcmahon.com'
           $backupRoot = 'C:\websites\_backups'
@@ -64,7 +64,7 @@ jobs:
           [IO.Compression.ZipFile]::CreateFromDirectory($sitePath, $dest)
 
       - name: Deploy publish output (robocopy mirror)
-        shell: pwsh
+        shell: powershell
         run: |
           $src = "$env:PUBLISH_DIR\"
           $dst = 'C:\websites\clintmcmahon.com\'
@@ -74,7 +74,7 @@ jobs:
           if ($LASTEXITCODE -gt 3) { throw "robocopy failed with exit code $LASTEXITCODE" }
 
       - name: Bring site online + start AppPool
-        shell: pwsh
+        shell: powershell
         run: |
           $appPool = 'clintmcmahon.com'
           $sitePath = 'C:\websites\clintmcmahon.com'
@@ -83,7 +83,7 @@ jobs:
           Start-WebAppPool -Name $appPool
 
       - name: Smoke check (optional)
-        shell: pwsh
+        shell: powershell
         continue-on-error: true
         run: |
           # replace with your site URL or local binding if you want a quick ping
