@@ -64,14 +64,23 @@ jobs:
           [IO.Compression.ZipFile]::CreateFromDirectory($sitePath, $dest)
 
       - name: Deploy publish output (robocopy mirror)
-        shell: powershell
         run: |
           $src = "$env:PUBLISH_DIR\"
           $dst = 'C:\websites\clintmcmahon.com\'
-          # /MIR mirrors (be careful—removes files not in source)
-          # Exclude the app_offline.htm we just created
-          robocopy $src $dst /MIR /NFL /NDL /NJH /NJS /NP /R:2 /W:2 /XF app_offline.htm
+      
+          # Mirror app content but KEEP certain folders/files in dest
+          # /XD  -> exclude directories (keeps them; not mirrored)
+          # /XF  -> exclude files
+          # /XJ  -> skip junctions (safer on IIS trees)
+          # /R:2 /W:2 -> retry/wait limits
+          robocopy $src $dst `
+            /MIR /XJ /R:2 /W:2 `
+            /XD "$dst\.well-known" "$dst\logs" "$dst\uploads" `
+            /XF app_offline.htm
+      
+          # Robocopy exit codes: 0/1 = success; >3 = real failure
           if ($LASTEXITCODE -gt 3) { throw "robocopy failed with exit code $LASTEXITCODE" }
+
 
       - name: Bring site online + start AppPool
         shell: powershell
