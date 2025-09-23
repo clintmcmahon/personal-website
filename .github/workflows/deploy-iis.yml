@@ -2,25 +2,39 @@ name: Build & Deploy to IIS (self-hosted)
 
 on:
   push:
-    branches: [ main ]   # <-- change if your branch isn't literally "main"
+    branches: [ main ]
   workflow_dispatch:
 
 concurrency:
   group: deploy-iis
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: powershell
+
 jobs:
   deploy:
-    runs-on: [ self-hosted, Windows, X64 ]  # matches your runner labels
-    timeout-minutes: 30
+    runs-on: [ self-hosted, Windows, X64 ]
+    env:
+      DOTNET_INSTALL_DIR: ${{ runner.temp }}\dotnet  # avoids Program Files perms
 
     steps:
+      - uses: actions/checkout@v4
+
       - name: Allow scripts in this job
-        shell: pwsh
         run: Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
-     
-      - name: Checkout
-        uses: actions/checkout@v4
+
+      - name: Install .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: ./global.json
+        # or: dotnet-version: '8.0.x'
+
+      - name: Ensure dotnet on PATH
+        run: |
+          "$env:DOTNET_INSTALL_DIR" | Out-File -FilePath $env:GITHUB_PATH -Append
+          dotnet --info
 
       - name: Restore
         run: dotnet restore .\Website.csproj
@@ -29,35 +43,29 @@ jobs:
         run: dotnet build .\Website.csproj -c Release --no-restore
 
       - name: Publish (self-contained folder)
-        shell: pwsh
         run: |
           $pub = Join-Path $env:RUNNER_TEMP "publish"
           dotnet publish .\Website.csproj -c Release -o $pub --no-build
           Write-Host "Publish folder: $pub"
-          echo "PUBLISH_DIR=$pub" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "PUBLISH_DIR=$pub" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Ensure IIS site folder permissions (once)
-        shell: pwsh
         run: |
           $site = 'C:\websites\clintmcmahon.com'
           if (-not (Test-Path $site)) { New-Item -Path $site -ItemType Directory -Force | Out-Null }
-          # Runner service is running as NETWORK SERVICE on your box
           icacls $site /grant "NT AUTHORITY\NETWORK SERVICE:(OI)(CI)M" /T
 
       - name: Stop AppPool + take site offline
-        shell: pwsh
         run: |
           $appPool = 'clintmcmahon.com'
           Import-Module WebAdministration
           if ((Get-WebAppPoolState -Name $appPool).Value -ne 'Stopped') {
             Stop-WebAppPool -Name $appPool
           }
-          # app_offline.htm prevents file locks while copying
           $sitePath = 'C:\websites\clintmcmahon.com'
           Set-Content -Path (Join-Path $sitePath 'app_offline.htm') -Value '<html><body><h3>Updating… back in a moment.</h3></body></html>'
 
       - name: Backup current site (zip)
-        shell: pwsh
         run: |
           $sitePath = 'C:\websites\clintmcmahon.com'
           $backupRoot = 'C:\websites\_backups'
@@ -68,17 +76,13 @@ jobs:
           [IO.Compression.ZipFile]::CreateFromDirectory($sitePath, $dest)
 
       - name: Deploy publish output (robocopy mirror)
-        shell: pwsh
         run: |
           $src = "$env:PUBLISH_DIR\"
           $dst = 'C:\websites\clintmcmahon.com\'
-          # /MIR mirrors (be careful—removes files not in source)
-          # Exclude the app_offline.htm we just created
           robocopy $src $dst /MIR /NFL /NDL /NJH /NJS /NP /R:2 /W:2 /XF app_offline.htm
           if ($LASTEXITCODE -gt 3) { throw "robocopy failed with exit code $LASTEXITCODE" }
 
       - name: Bring site online + start AppPool
-        shell: pwsh
         run: |
           $appPool = 'clintmcmahon.com'
           $sitePath = 'C:\websites\clintmcmahon.com'
@@ -87,10 +91,8 @@ jobs:
           Start-WebAppPool -Name $appPool
 
       - name: Smoke check (optional)
-        shell: pwsh
         continue-on-error: true
         run: |
-          # replace with your site URL or local binding if you want a quick ping
           try {
             $resp = Invoke-WebRequest http://localhost/ -UseBasicParsing -TimeoutSec 10
             Write-Host "HTTP $($resp.StatusCode)"
