@@ -1,3 +1,4 @@
+---
 title: "How I Got My Start As A Professional Software Developer"
 description: "Learn how to become a professional software developer without a four-year degree. Discover my journey, practical tips, and resources for aspiring programmers."
 date: "2021-03-15"
