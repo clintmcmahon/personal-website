@@ -82,6 +82,33 @@ Highcharts.chart('minneapolis-september-chart', {
   However, when we look at the average temperatures in September in Minneapolis, things start to change. Here, the Highcharts regression line points sharply upward. The warmest September on record wasn’t back in the Dust Bowl—it was 2024, with an average of 70.4°F, followed closely by 2023 at 69.1°F. Several of the top ten warmest Septembers have all come in the last ten years. In the chart, this shows up as a clustering of high values on the right-hand side. You can clearly see that starting around 2000, those temperatures have been clumping up over the last twenty-five years.
 </p>
 <p>
+    Here's a look at the top ten warmest months of September on record. Three out of the top ten are in the last three years alone:
+    <div class="container my-4">
+  <h3 class="mb-3">Top 10 Hottest Septembers in Minneapolis (by Monthly Average Temperature)</h3>
+  <table class="table table-striped table-bordered">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Rank</th>
+        <th scope="col">Year</th>
+        <th scope="col">Mean Avg Temp (°F)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>2024</td><td>70.4</td></tr>
+      <tr><td>2</td><td>2023</td><td>69.1</td></tr>
+      <tr><td>3</td><td>1897</td><td>68.8</td></tr>
+      <tr><td>4</td><td>1931</td><td>68.7</td></tr>
+      <tr><td>5</td><td>1908</td><td>68.0</td></tr>
+      <tr><td>6</td><td>1948</td><td>67.9</td></tr>
+      <tr><td>7</td><td>2015</td><td>67.9</td></tr>
+      <tr><td>8</td><td>1891</td><td>67.7</td></tr>
+      <tr><td>9</td><td>2025</td><td>67.6</td></tr>
+      <tr><td>10</td><td>2004</td><td>67.4</td></tr>
+    </tbody>
+  </table>
+</div>
+</p>
+<p>
   What this means for Minneapolis is that while we may not see record-breaking temperatures or the "hottest day ever" every year, the entire month of September is trending warmer than it used to be. Average conditions are shifting, and that matters for everything from energy use to lake levels and outdoor events. This is where data visualizations are awesome and show why I love them so much. By putting both extremes and averages side by side, the charts show the trends in a simple visual style.
 </p>
 <p>
