@@ -24,7 +24,7 @@ public class HomeController : Controller
         var posts = _postRepository.GetAllPosts()
            .Where(post => !post.Draft)
            .OrderByDescending(post => post.Date)
-           .Take(3);
+           .Take(10);
         return View(posts);
     }
 
