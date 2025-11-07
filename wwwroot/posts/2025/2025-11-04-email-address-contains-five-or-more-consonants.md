@@ -23,10 +23,13 @@ As a side note, when I first got this error, I asked ChatGPT about it. ChatGPT s
 
 Here is the original response:
 <img src="/images/2025/chatgpt_consonants.png" class="w-100 border p-2 m-3" />
+
+That response is wrong, as there are five consonants in a row in my email address cli<strong>ntmcm</strong>ahon@pm.me. I've seen cases where LLMs have skipped over a second instance of a letter that previously showed up in a string. Maybe that is what's happening here. 
+
+I ran this by ChatGPT to get the following (correct) response:
+<img src="/images/2025/chatgpt_consonants2.png" class="w-100 border p-2 m-3" />
 Nothing changed except my challenging the LLM's answer. LLMs are not perfect, and they are great at a lot of things. But you can't trust everything they say, and that's a huge drawback for me when using them in production environments.
 
-That response is wrong, as there are five consonants in a row in my email address cli<strong>ntmcm</strong>ahon@pm.me. I've seen cases where LLMs have skipped over a second instance of a letter that previously showed up in a string. Maybe that is what's happening here. I ran this by ChatGPT to get the following (correct) response:
-<img src="/images/2025/chatgpt_consonants2.png" class="w-100 border p-2 m-3" />
 Here lies one of the major reasons I don't think LLMs are ready for straight blind production usage like so many people are out there pitching to clients. They are "smart" and definitely useful, but I don't think they are ready to be allowed to make their own decisions without a human in the loop - not yet anyway. The human still has to verify that the responses are correct and adjust when necessary.
 
 
