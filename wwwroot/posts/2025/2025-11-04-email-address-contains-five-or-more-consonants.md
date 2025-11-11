@@ -17,6 +17,9 @@ The feature's built to stop spammers from signing up for the service, but in thi
 
 I really want to try Buttondown so I reached out to their support team to see what they can do. I'll update this post when I hear back from them.
 
+## Update
+Buttondown support got back to me right away to explain the issue was a spat of spammy signups tied to Proton Mail accounts that look like a bunch of characters. They agree  the 5 consonants in a row might be a bit aggressive. Since the spam filter is still in place, they've added my email address to the approved list and I'm now able to sign up. Can't wait to give this a try.
+
 ## What does ChatGPT think
 
 As a side note, when I first got this error, I asked ChatGPT about it. ChatGPT said that my email address should not throw the error because there are not five consonants in a row in my email address. 
