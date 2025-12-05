@@ -2,7 +2,7 @@
 title: "Programatically create and upload products to Printify"
 description: "Manually creating Printify products was taking too long to do manually. I created a Python application to programatically create products and upload them to Printify."
 date: "2025-11-26"
-draft: false
+draft: true
 slug: "printify-uploader"
 tags: programming, printify
 ---

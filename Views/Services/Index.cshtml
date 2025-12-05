@@ -1,122 +1,149 @@
 @{
-    ViewData["Title"] = "Custom Software Development Services";
-    ViewData["Description"] = "Explore freelance .NET consulting services including Umbraco CMS, Azure B2C integration, cloud architecture, Shopify development, and custom enterprise software solutions. Based in Minneapolis with national reach.";
+    ViewData["Title"] = ".NET Consulting Services | Clint McMahon";
+    ViewData["Description"] = ".NET consulting and development services including custom application development, team leadership, legacy system modernization, and project rescue. 20+ years experience.";
 }
 
 <div class="services page container py-5">
-    <section id="services" class="mb-5">
-        <h1 class="display-4 fw-bold text-center mb-3">.NET Consulting and Custom Software Development Services</h1>
-        <p class="lead text-muted text-center">Helping startups, agencies, and enterprises build scalable, secure, and modern digital solutions from Minneapolis to wherever you are.</p>
+    <section class="mb-5">
+        <h1 class="display-4 fw-bold text-center mb-3">.NET Consulting & Development Services</h1>
+        <p class="lead text-center mb-5">I help teams build, modernize, and rescue .NET applications. Whether you need hands-on development, technical leadership, or someone to fix what's broken—I've got you covered.</p>
 
         <!-- Service Badges -->
-        <div class="row text-center my-4">
+        <div class="row text-center my-5">
             <div class="col-md-4 mb-3">
-                <div class="border p-3 rounded bg-light">
+                <div class="border p-4 rounded bg-light">
+                    <i class="bi bi-code-slash fs-1 mb-3 d-block" style="color: #183537;"></i>
                     <strong>20+ Years Experience</strong><br />
-                    Trusted by government, healthcare, and startups.
+                    <span class="text-muted">Building enterprise .NET applications</span>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
-                <div class="border p-3 rounded bg-light">
-                    <strong>Umbraco CMS Specialist</strong><br />
-                    Custom Razor views, upgrades, and content modeling.
+                <div class="border p-4 rounded bg-light">
+                    <i class="bi bi-people fs-1 mb-3 d-block" style="color: #183537;"></i>
+                    <strong>Team Leadership</strong><br />
+                    <span class="text-muted">Technical direction and mentoring</span>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
-                <div class="border p-3 rounded bg-light">
-                    <strong>Rescue Project Expertise</strong><br />
-                    Stabilize and deliver broken or delayed .NET solutions.
+                <div class="border p-4 rounded bg-light">
+                    <i class="bi bi-wrench-adjustable fs-1 mb-3 d-block" style="color: #183537;"></i>
+                    <strong>Project Rescue</strong><br />
+                    <span class="text-muted">Fixing broken and stalled projects</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- New Summary Block -->
-    <section id="umbraco-consulting" class="mb-5">
-        <h2 class="h3 fw-bold">Umbraco CMS Consulting</h2>
-        <p>
-            Need an <strong>experienced Umbraco consultant</strong> to build or upgrade your content platform? I specialize in <strong>custom Umbraco development, migrations, Razor view customization, and integrations</strong> for government, healthcare, and media clients. Whether you're modernizing from Umbraco 7 or starting fresh with Umbraco 13, I provide strategy, architecture, and delivery.
-        </p>
-        <p>
-            <a href="/services/umbraco-consulting" class="btn btn-outline-primary">Explore Umbraco Services</a>
-        </p>
+    <!-- Core Services -->
+    <section id="net-development" class="mb-5 pb-4 border-bottom">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h2 class="h3 fw-bold mb-4">.NET Application Development</h2>
+                <p class="lead">Need someone who can actually build your .NET application? I write clean, maintainable code that works.</p>
+                
+                <p>I specialize in building web applications, APIs, and backend systems using ASP.NET Core, Entity Framework, and modern .NET patterns. Whether you're starting from scratch or adding features to an existing application, I deliver code that's built to last.</p>
+                
+                <h4 class="mt-4 mb-3">What I Build:</h4>
+                <ul class="mb-4">
+                    <li><strong>Web Applications:</strong> ASP.NET Core MVC, Razor Pages, Blazor</li>
+                    <li><strong>APIs:</strong> RESTful services, GraphQL, microservices</li>
+                    <li><strong>Backend Systems:</strong> Business logic, data access, integrations</li>
+                    <li><strong>Cloud Solutions:</strong> Azure-native applications, serverless functions</li>
+                    <li><strong>CMS Development:</strong> Umbraco, custom content management</li>
+                </ul>
+
+                <p>I work with teams who need a developer they can trust—someone who communicates clearly, delivers on time, and writes code that other developers won't hate.</p>
+            </div>
+        </div>
     </section>
 
-    <hr />
+    <section id="team-leadership" class="mb-5 pb-4 border-bottom">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h2 class="h3 fw-bold mb-4">Staff Augmentation & Team Leadership</h2>
+                <p class="lead">Need technical leadership without the overhead of a full-time hire? I step in as a senior developer or technical lead to guide your team.</p>
+                
+                <p>Sometimes you need more than just extra hands—you need someone who can make architectural decisions, mentor junior developers, and keep projects on track. I work alongside your team to provide technical direction and hands-on development.</p>
+                
+                <h4 class="mt-4 mb-3">How I Help Teams:</h4>
+                <ul class="mb-4">
+                    <li><strong>Technical Leadership:</strong> Architecture decisions, code reviews, best practices</li>
+                    <li><strong>Mentoring:</strong> Training junior developers, knowledge transfer</li>
+                    <li><strong>Sprint Planning:</strong> Breaking down features, estimating work</li>
+                    <li><strong>Code Quality:</strong> Establishing standards, improving workflows</li>
+                    <li><strong>Problem Solving:</strong> Unblocking developers, debugging complex issues</li>
+                </ul>
 
-    <!-- Existing Services with Summary and CTA -->
-    <section id="custom-software-development" class="mb-5">
-        <h2 class="h3 fw-bold">Custom Software Development</h2>
-        <p>
-            Every organization has unique challenges, and off-the-shelf software doesn't always fit. My <strong>custom software development services</strong> provide end-to-end solutions built to match your specific business needs—whether it's a robust web app, API-driven backend, or specialized mobile platform.
-        </p>
-        <p><a href="/services/custom-software-development" class="btn btn-outline-primary">Explore Custom Software Development</a></p>
+                <p>I integrate with your existing processes—whether that's Scrum, Kanban, or something else entirely. No ego, just results.</p>
+            </div>
+        </div>
     </section>
 
-    <section id="legacy-system-modernization" class="mb-5">
-        <h2 class="h3 fw-bold">Legacy System Modernization</h2>
-        <p>
-            Don’t let outdated systems slow your growth. I help businesses modernize aging infrastructure by migrating legacy code to modern frameworks like <strong>.NET Core</strong>, refactoring inefficient code, and integrating cloud-native technologies for performance and scale.
-        </p>
-        <p><a href="/services/legacy-systems" class="btn btn-outline-primary">Explore Legacy Modernization</a></p>
+    <section id="legacy-modernization" class="mb-5 pb-4 border-bottom">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h2 class="h3 fw-bold mb-4">Legacy .NET Platform Modernization</h2>
+                <p class="lead">Running an old .NET Framework application that needs to move forward? I help you modernize without rewriting everything.</p>
+                
+                <p>Legacy systems aren't going anywhere—but they don't have to hold you back. I specialize in incrementally modernizing old .NET applications, moving them to .NET Core/.NET 6+, updating dependencies, and refactoring code that's been causing problems.</p>
+                
+                <h4 class="mt-4 mb-3">Modernization Services:</h4>
+                <ul class="mb-4">
+                    <li><strong>Framework Upgrades:</strong> .NET Framework to .NET Core/6+</li>
+                    <li><strong>Dependency Updates:</strong> Replacing obsolete packages, updating libraries</li>
+                    <li><strong>Code Refactoring:</strong> Improving structure without breaking functionality</li>
+                    <li><strong>Database Migrations:</strong> Moving to modern ORM patterns, optimizing queries</li>
+                    <li><strong>Cloud Migration:</strong> Moving from on-premises to Azure or AWS</li>
+                    <li><strong>Performance Tuning:</strong> Making slow applications fast again</li>
+                </ul>
+
+                <p>I've modernized everything from 15-year-old WebForms apps to early MVC applications. The goal is always the same: get you on a modern platform without months of downtime.</p>
+            </div>
+        </div>
     </section>
 
-    <section id="rescue-recovery-and-recovery" class="mb-5">
-        <h2 class="h3 fw-bold">Project Rescue & Recovery</h2>
-        <p>
-            When projects stall or break down, I step in to assess, stabilize, and deliver. With <strong>project rescue services</strong>, I analyze existing work, identify roadblocks, rebuild trust, and guide the solution to completion.
-        </p>
-        <p><a href="/services/rescue-recovery" class="btn btn-outline-primary">Explore Project Rescue Services</a></p>
+    <section id="project-rescue" class="mb-5 pb-4">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h2 class="h3 fw-bold mb-4">Rescuing Abandoned .NET Projects</h2>
+                <p class="lead">Project stalled? Developer disappeared? Code not working? I fix broken projects and get them back on track.</p>
+                
+                <p>Sometimes projects go sideways. The original developer leaves, deadlines get missed, or the code turns out to be unmaintainable. I step in, assess what's salvageable, and get things moving again.</p>
+                
+                <h4 class="mt-4 mb-3">How I Rescue Projects:</h4>
+                <ul class="mb-4">
+                    <li><strong>Code Assessment:</strong> Honest evaluation of what you're working with</li>
+                    <li><strong>Stabilization:</strong> Fixing critical bugs, getting things running</li>
+                    <li><strong>Documentation:</strong> Figuring out how everything actually works</li>
+                    <li><strong>Completion:</strong> Finishing features, deploying to production</li>
+                    <li><strong>Transition Planning:</strong> Setting up your team for long-term success</li>
+                </ul>
+
+                <p>I've taken over projects in every state imaginable—from "mostly works" to "won't even compile." No judgment, just honest assessment and practical solutions.</p>
+            </div>
+        </div>
     </section>
 
-    <section id="cloud-architecture-and-implementation" class="mb-5">
-        <h2 class="h3 fw-bold">Cloud Architecture & Implementation</h2>
-        <p>
-            The cloud offers incredible power and flexibility—but only if implemented right. I design and deliver <strong>cloud-native applications</strong> on platforms like Azure and AWS, using Infrastructure as Code, CI/CD pipelines, and best-in-class architecture to help you scale with confidence.
-        </p>
-        <p><a href="/services/cloud-implementation" class="btn btn-outline-primary">Explore Cloud Architecture Services</a></p>
-    </section>
-
-    <section id="azure-b2c-integration" class="mb-5">
-        <h2 class="h3 fw-bold">Azure B2C Integration</h2>
-        <p>
-            Managing user access doesn't have to be complicated. I implement secure, branded <strong>Azure AD B2C solutions</strong> that simplify sign-up and login experiences while maintaining enterprise-grade security and compliance.
-        </p>
-        <p><a href="/services/azure-b2c-integration" class="btn btn-outline-primary">Explore Azure B2C Services</a></p>
-    </section>
-
-    <section id="wordpress-hosting" class="mb-5">
-        <h2 class="h3 fw-bold">WordPress Hosting</h2>
-        <p>
-            Your website deserves hosting that works as hard as you do. I offer <strong>managed WordPress hosting</strong> designed for speed, reliability, and peace of mind—with performance tuning, backups, and proactive support baked in.
-        </p>
-        <p><a href="/services/wordpress-hosting" class="btn btn-outline-primary">Explore WordPress Hosting</a></p>
-    </section>
-
-    <section id="shopify-ecommerce-development" class="mb-5">
-        <h2 class="h3 fw-bold">Shopify E-Commerce Development</h2>
-        <p>
-            Launch your online store with confidence. I create <strong>custom Shopify storefronts</strong> designed for conversions, performance, and seamless integration—so you can focus on growing your brand.
-        </p>
-        <p><a href="/services/shopify-ecommerce-development" class="btn btn-outline-primary">Explore Shopify Services</a></p>
-    </section>
-
-    <hr />
+    <hr class="my-5" />
 
     <section id="why-work-with-me" class="mb-5">
-        <h2 class="h4 fw-bold">Why Work With Me?</h2>
-        <ul>
-            <li><strong>Proven Track Record:</strong> 20+ years of software architecture and consulting success</li>
-            <li><strong>Industry Experience:</strong> Healthcare, government, legal, and startup ecosystems</li>
-            <li><strong>Full-Stack Capability:</strong> From front-end design to secure cloud APIs</li>
-            <li><strong>Based in Minneapolis:</strong> Local presence with national reach</li>
-        </ul>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h2 class="h4 fw-bold mb-4">Why Work With Me?</h2>
+                <ul class="mb-4">
+                    <li><strong>Straight Approach:</strong> I tell you what's actually wrong and how to fix it</li>
+                    <li><strong>20+ Years Experience:</strong> I've seen most problems before and know how to fix things</li>
+                    <li><strong>Clear Communication:</strong> Regular updates, honest timelines, no surprises</li>
+                    <li><strong>Full Stack Capability:</strong> Frontend, backend, database, cloud. I do it all</li>
+                    <li><strong>Based in Minnesota:</strong> Central time zone, US-based</li>
+                </ul>
+            </div>
+        </div>
     </section>
 
-    <section id="call-to-action" class="text-center mt-5">
-        <h2 class="fw-bold">Let’s Build Something Great Together</h2>
-        <p class="lead">Ready to upgrade your systems, build a new app, or get a stalled project back on track?</p>
-        <a href="/contact" class="btn btn-primary btn-lg mt-3">Schedule a Free Consultation</a>
+    <section id="call-to-action" class="text-center mt-5 py-5 bg-light rounded">
+        <h2 class="fw-bold mb-3">Let's Talk About Your Project</h2>
+        <p class="lead mb-4">Whether you need development help, team leadership, or someone to fix what's broken - let's figure out if I'm a good fit.</p>
+        <a href="/contact" class="btn btn-primary btn-lg">Get in Touch</a>
     </section>
 </div>
-
