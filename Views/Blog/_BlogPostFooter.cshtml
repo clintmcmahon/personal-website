@@ -1,0 +1,97 @@
+@model Post
+
+<!-- Blog Post Footer -->
+<div class="blog-post-footer mt-5">
+    <!-- Share Section -->
+    <div class="share-section border-top border-bottom py-4 mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <h5 class="mb-0">Share this post</h5>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="https://twitter.com/intent/tweet?url=https://clintmcmahon.com/blog/@Model.Slug&text=@Uri.EscapeDataString(Model.Title)" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="btn btn-sm btn-outline-secondary me-2"
+                   aria-label="Share on Twitter">
+                    <i class="bi bi-twitter"></i> Twitter
+                </a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://clintmcmahon.com/blog/@Model.Slug" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="btn btn-sm btn-outline-secondary me-2"
+                   aria-label="Share on LinkedIn">
+                    <i class="bi bi-linkedin"></i> LinkedIn
+                </a>
+                <a href="https://www.reddit.com/submit?url=https://clintmcmahon.com/blog/@Model.Slug&title=@Uri.EscapeDataString(Model.Title)" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="btn btn-sm btn-outline-secondary"
+                   aria-label="Share on Reddit">
+                    <i class="bi bi-reddit"></i> Reddit
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Author Bio Section -->
+    <div class="author-bio bg-light p-4 rounded mb-4">
+        <div class="row">
+            <div class="col-md-2 text-center mb-3 mb-md-0">
+                <img src="/images/icon/me.jpg" alt="Clint McMahon" class="rounded-circle img-fluid" style="max-width: 80px;">
+            </div>
+            <div class="col-md-10">
+                <h5 class="mb-2">About Clint McMahon</h5>
+                <p class="mb-3">I'm a technology consultant with over 20 years of experience providing custom software, website, and mobile app development, as well as maintenance and security services for existing software.</p>
+                <div class="d-flex gap-2">
+                    <a href="/about" class="btn btn-sm btn-primary">Learn More</a>
+                    <a href="/contact" class="btn btn-sm btn-outline-primary">Get in Touch</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subscribe Section -->
+    <div class="subscribe-section bg-dark text-white p-4 rounded mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-8 mb-3 mb-md-0">
+                <h5 class="mb-2">Never miss a post</h5>
+                <p class="mb-0 small">Subscribe to the RSS feed to get updates on new posts about .NET development, legacy modernization, and software consulting.</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <a href="/rss" class="btn btn-light">
+                    <i class="bi bi-rss-fill"></i> Subscribe via RSS
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Topics -->
+    @if (Model.Tags != null && Model.Tags.Any())
+    {
+        <div class="related-topics mb-4">
+            <h5 class="mb-3">Topics covered in this post</h5>
+            <div class="d-flex flex-wrap gap-2">
+                @foreach (var tag in Model.Tags)
+                {
+                    <span class="badge bg-secondary">@tag</span>
+                }
+            </div>
+        </div>
+    }
+
+    <!-- Call to Action -->
+    <div class="blog-cta border p-4 rounded text-center">
+        <h5 class="mb-3">Need help with your project?</h5>
+        <p class="mb-3">I work with organizations to modernize their .Net applications, fix broken projects and create new software systems. </p>
+        <a href="/services" class="btn btn-primary me-2">View Services</a>
+        <a href="/portfolio" class="btn btn-outline-primary">See Portfolio</a>
+    </div>
+
+    <!-- Back to Blog -->
+    <div class="text-center mt-4">
+        <a href="/blog" class="text-decoration-none">
+            <i class="bi bi-arrow-left"></i> Back to all posts
+        </a>
+    </div>
+</div>

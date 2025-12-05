@@ -21,6 +21,9 @@
                 <div class="post-content">
                     @Html.Raw(Model.Content) <!-- Assuming Content has been parsed to HTML -->
                 </div>
+
+                <!-- Blog Post Footer -->
+                @await Html.PartialAsync("_BlogPostFooter", Model)
             </div>
         </div>
     </div>

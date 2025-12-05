@@ -206,3 +206,145 @@ a{
     padding-right: 0px !important;
   }
 }
+/* Footer Styles */
+.footer {
+  background-color: #f8f9fa;
+  margin-top: auto;
+}
+
+.footer h5 {
+  color: #183537;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.footer h6 {
+  color: #183537;
+  margin-bottom: 0.5rem;
+}
+
+.footer a {
+  transition: color 0.2s ease;
+}
+
+.footer a:hover {
+  color: #183537 !important;
+}
+
+.footer .bi {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.footer .bi:hover {
+  transform: translateY(-2px);
+  color: #183537 !important;
+}
+
+.footer .list-unstyled li {
+  line-height: 1.8;
+}
+
+.footer .small {
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .footer .col-md-6 {
+    text-align: center !important;
+  }
+  
+  .footer .row .col-lg-3,
+  .footer .row .col-lg-2 {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Blog Post Footer Styles */
+.blog-post-footer {
+  margin-top: 3rem;
+}
+
+.blog-post-footer .share-section h5 {
+  color: #183537;
+  font-weight: 600;
+}
+
+.blog-post-footer .btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+  transition: all 0.2s ease;
+}
+
+.blog-post-footer .btn-outline-secondary:hover {
+  background-color: #183537;
+  border-color: #183537;
+  color: white;
+}
+
+.blog-post-footer .author-bio {
+  border-left: 4px solid #183537;
+}
+
+.blog-post-footer .author-bio h5 {
+  color: #183537;
+  font-weight: 600;
+}
+
+.blog-post-footer .author-bio p {
+  color: #495057;
+  line-height: 1.6;
+}
+
+.blog-post-footer .subscribe-section {
+  background-color: #183537 !important;
+}
+
+.blog-post-footer .subscribe-section h5 {
+  font-weight: 600;
+}
+
+.blog-post-footer .related-topics h5 {
+  color: #183537;
+  font-weight: 600;
+}
+
+.blog-post-footer .related-topics .badge {
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+}
+
+.blog-post-footer .blog-cta {
+  border: 2px solid #183537 !important;
+}
+
+.blog-post-footer .blog-cta h5 {
+  color: #183537;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .blog-post-footer .share-section .col-md-6 {
+    text-align: center !important;
+  }
+  
+  .blog-post-footer .share-section .btn {
+    margin-bottom: 0.5rem;
+  }
+  
+  .blog-post-footer .author-bio .text-center {
+    margin-bottom: 1rem;
+  }
+}
+
+.btn-outline-primary {
+  border-color: #183537;
+  color: #183537;
+}
+
+.btn-outline-primary:hover {
+  background-color: #183537;
+  border-color: #183537;
+  color: white;
+}
