@@ -44,9 +44,9 @@ The NYC Coffee codebase is essentially identical to MN Coffee. I simply copied t
 
 With versions for data harvester, web, iOS, and Android, I'm currently maintaining four separate codebases - that's becoming unsustainable, especially when factoring in the data harvester, database, and other supporting utilities. Currently, data for each app is stored at the database level and then exported to JSON files that are embedded in each application. To streamline this, I plan to consolidate everything into a single database with a C# API as the integration point. By connecting OData to the API, I can use it as the single access point for all apps. This will be the first step in my consolidation plan.
 
-Consolidating the codebases will streamline the publishing process, allowing me to spend more time building new features rather than managing deployments across multiple platforms.
+Consolidating the codebases will streamline the publishing process, allowing me to spend more time building new features rather than managing deployments across multiple platforms. 
 
-<h3>Check out NYC Coffee</h3>
+NYC Coffee is stable and running so now my next step is going to be putting the code for both apps into a single project. More on all of that later, in the mean-time, take a look at NYC Coffee at the links below:
 
 Web - <a href="https://nyccoffeemap.com/">NYC Coffee Web</a> <br />
 iOS - <a href="https://apps.apple.com/us/app/nyc-coffee-map/id6755573635">NYC Coffee iOS App</a><br />
