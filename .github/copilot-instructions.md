@@ -79,6 +79,17 @@ dotnet watch      # Hot reload during development
 - **GLightbox**: Photo gallery lightbox (via `wwwroot/lib/glightbox/`)
 - **Prism.js**: Code syntax highlighting (CDN in `_Layout.cshtml`)
 
+## Writing Voice
+
+When writing or editing blog posts:
+
+- **Tone**: Conversational and approachable—like explaining something to a fellow developer over coffee
+- **POV**: First person for personal experiences and opinions; second person for tutorials and how-tos
+- **Audience**: Developers familiar with .NET, web development, and modern software practices
+- **Technical depth**: Include working code examples; explain the "why" not just the "how"
+- **Style**: Keep paragraphs short, use straight forward context, use headers to break up content, prefer paragraphs over bullet points for lists
+- **Personality**: Authentic and practical—share what worked, what didn't, and lessons learned
+
 ## Adding New Content
 
 ### New Blog Post
