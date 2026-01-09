@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: January 2025"
 description: "January 2025 coffee journal—Bella Vista from Verve, a Latin American coffee that finally made sense after some machine maintenance."
-date: "2025-01-19"
-draft: false
+date: "2026-01-14"
+draft: true
 slug: "coffee-journal-january-2025"
 tags: coffee, coffee-journal, verve
 ---

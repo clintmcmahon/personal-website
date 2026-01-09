@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: November 2024"
 description: "November 2024 brought Kiambu from S.K. Coffee—a Kenyan single origin that proved to be an absolute banger for espresso."
-date: "2024-11-24"
-draft: false
+date: "2026-01-12"
+draft: true
 slug: "coffee-journal-november-2024"
 tags: coffee, coffee-journal, s-k-coffee
 ---

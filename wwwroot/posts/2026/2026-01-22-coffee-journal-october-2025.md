@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: October 2025"
 description: "October 2025 coffee journal—Minimum Wage Tin delivers solid South American beans, B.K. Coffee disappoints, and a Honduras that fell flat."
-date: "2025-10-20"
-draft: false
+date: "2026-01-22"
+draft: true
 slug: "coffee-journal-october-2025"
 tags: coffee, coffee-journal, minimum-wage-tin, b-k-coffee
 ---

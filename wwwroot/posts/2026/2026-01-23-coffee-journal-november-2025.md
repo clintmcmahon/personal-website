@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: November 2025"
 description: "November 2025 coffee journal—Super Nova from Silver Bird, a hyped Minneapolis roaster that didn't live up to expectations."
-date: "2025-11-08"
-draft: false
+date: "2026-01-23"
+draft: true
 slug: "coffee-journal-november-2025"
 tags: coffee, coffee-journal, silver-bird
 ---

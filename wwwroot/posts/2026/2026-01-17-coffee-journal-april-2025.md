@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: April 2025"
 description: "April 2025 coffee journal—Montes De Oro from Verve, a Costa Rican that earned five stars with notes of green apple, plum, and butterscotch."
-date: "2025-04-22"
-draft: false
+date: "2026-01-17"
+draft: true
 slug: "coffee-journal-april-2025"
 tags: coffee, coffee-journal, verve
 ---

@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: July 2025"
 description: "July 2025 coffee journal—two forgettable roasters, a Portland Maine espresso, and El Casino from Sey that might be the best cold brew I've ever made."
-date: "2025-07-31"
-draft: false
+date: "2026-01-20"
+draft: true
 slug: "coffee-journal-july-2025"
 tags: coffee, coffee-journal, huckleberry, never-coffee, tandem, sey
 ---

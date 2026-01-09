@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: October 2024"
 description: "Three coffees in October 2024—a Papua New Guinea from S.K. Coffee, a Honduran from Verve, and my first frustrating encounter with Ethiopian beans."
-date: "2024-10-16"
-draft: false
+date: "2026-01-11"
+draft: true
 slug: "coffee-journal-october-2024"
 tags: coffee, coffee-journal, verve, s-k-coffee
 ---

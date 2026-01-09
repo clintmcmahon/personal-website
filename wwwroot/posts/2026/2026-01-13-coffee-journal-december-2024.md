@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: December 2024"
 description: "December 2024 coffee roundup—a Peruvian standout, Verve's Holiday Blend, and a frustrating Christmas Eve espresso session with Esperanza."
-date: "2024-12-29"
-draft: false
+date: "2026-01-13"
+draft: true
 slug: "coffee-journal-december-2024"
 tags: coffee, coffee-journal, verve
 ---

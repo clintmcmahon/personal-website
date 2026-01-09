@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: December 2025"
 description: "December 2025 coffee journal—Dogwood's Snow Emergency blend and a Verve Ethiopian that took some work to dial in."
-date: "2025-12-22"
-draft: false
+date: "2026-01-24"
+draft: true
 slug: "coffee-journal-december-2025"
 tags: coffee, coffee-journal, dogwood, verve
 ---

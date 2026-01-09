@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: September 2025"
 description: "September 2025 coffee journal—the worst cortado of 2025 at Five Watt, plus a dark roast from Crema that worked great in milk drinks."
-date: "2025-09-30"
-draft: false
+date: "2026-01-21"
+draft: true
 slug: "coffee-journal-september-2025"
 tags: coffee, coffee-journal, five-watt, crema
 ---

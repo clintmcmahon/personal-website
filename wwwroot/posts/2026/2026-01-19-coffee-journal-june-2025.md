@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: June 2025"
 description: "June 2025 coffee journal—Banko Taratu from Verve saves my subscription, while Dogwood's Mixed Tape has me questioning Minneapolis roasters."
-date: "2025-06-23"
-draft: false
+date: "2026-01-19"
+draft: true
 slug: "coffee-journal-june-2025"
 tags: coffee, coffee-journal, verve, dogwood
 ---

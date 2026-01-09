@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: February 2025"
 description: "February 2025 coffee journal—S.K. Guatemala Huehuetenango, a coffee that made excellent pour overs but gave me trouble on espresso."
-date: "2025-02-10"
-draft: false
+date: "2026-01-15"
+draft: true
 slug: "coffee-journal-february-2025"
 tags: coffee, coffee-journal, s-k-coffee
 ---

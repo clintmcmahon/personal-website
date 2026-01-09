@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: 2025 Year in Review"
 description: "A year of home coffee brewing summarized—26 bags, favorite roasters, lessons learned, and the coffees that earned five stars."
-date: "2025-12-31"
-draft: false
+date: "2026-01-25"
+draft: true
 slug: "coffee-journal-2025-summary"
 tags: coffee, coffee-journal, verve, s-k-coffee, minimum-wage-tin, sey
 ---

@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: May 2025"
 description: "May 2025 coffee journal—Mustefa Abakeno from Verve, an East African that made outstanding cold brew for teacher appreciation week."
-date: "2025-05-11"
-draft: false
+date: "2026-01-18"
+draft: true
 slug: "coffee-journal-may-2025"
 tags: coffee, coffee-journal, verve
 ---

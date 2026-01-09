@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: September 2024"
 description: "The first entry in my coffee journal—Kerehaklu from Verve, an Indian single origin that kicked off a year of home brewing notes."
-date: "2024-09-17"
-draft: false
+date: "2026-01-10"
+draft: true
 slug: "coffee-journal-september-2024"
 tags: coffee, coffee-journal, verve
 ---

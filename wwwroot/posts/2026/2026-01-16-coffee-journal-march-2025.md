@@ -1,8 +1,8 @@
 ---
 title: "Coffee Journal: March 2025"
 description: "March 2025 coffee journal—Manuel Vallecillo from Verve earns the first five-star rating. Smooth, chocolatey, and perfect for cortados."
-date: "2025-03-01"
-draft: false
+date: "2026-01-16"
+draft: true
 slug: "coffee-journal-march-2025"
 tags: coffee, coffee-journal, verve
 ---
