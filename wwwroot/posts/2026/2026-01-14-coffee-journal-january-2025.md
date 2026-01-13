@@ -9,16 +9,18 @@ tags: coffee, coffee-journal, verve
 
 New year, fresh start—and a reminder that sometimes the problem isn't the coffee.
 
+*New here? Check out [the intro post](/blog/coffee-journal-intro) for my equipment setup and rating system.*
+
 ---
 
 ## Bella Vista
 **Verve Coffee** · Latin America · ★★★★☆
 
+<!-- IMAGE: bella-vista.png -->
+
 *January 19, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Espresso | #7 → #11 (19g) |
+**Grind:** #7 → #11 espresso (19g dose) · **Water:** 205°F
 
 Cherry Dream. Black cherry, hazelnut, dark chocolate.
 

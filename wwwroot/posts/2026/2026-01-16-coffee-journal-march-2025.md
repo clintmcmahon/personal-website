@@ -9,16 +9,18 @@ tags: coffee, coffee-journal, verve
 
 Six months into this journal, I finally found a five-star coffee.
 
+*New here? Check out [the intro post](/blog/coffee-journal-intro) for my equipment setup and rating system.*
+
 ---
 
 ## Manuel Vallecillo ⭐
 **Verve** · Honduras · ★★★★★
 
+<!-- IMAGE: manuel-vallecillo.png -->
+
 *March 1, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Espresso | #10 |
+**Grind:** #10 espresso · **Water:** 205°F
 
 Straight five stars. It's smooth and chocolatey.
 

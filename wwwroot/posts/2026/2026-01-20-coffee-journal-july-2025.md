@@ -9,10 +9,14 @@ tags: coffee, coffee-journal, huckleberry, never-coffee, tandem, sey
 
 A busy month: two forgettable coffees, one Portland favorite, and a cold brew revelation.
 
+*New here? Check out [the intro post](/blog/coffee-journal-intro) for my equipment setup and rating system.*
+
 ---
 
 ## Huckleberry + Never Coffee
 **Blue Orchid & Boomerang** · ★★☆☆☆
+
+<!-- IMAGE: huckleberry-never-coffee.png -->
 
 *July 15, 2025*
 
@@ -27,11 +31,11 @@ Two stars. Sometimes a coffee just isn't for you, even when everyone else loves 
 ## West End Blues
 **Tandem Roasters** · Portland, Maine · ★★☆☆☆
 
+<!-- IMAGE: west-end-blues.png -->
+
 *July 31, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Espresso | #9-8 |
+**Grind:** #8-9 espresso · **Water:** 205°F
 
 Traditional Espresso - Original based on Seven. Blueberry hill, sugarfoot stomp, Herbie Srebles.
 
@@ -50,11 +54,11 @@ Two stars. The first bag was great; this one missed the mark. Could be the roast
 ## El Casino ⭐
 **Sey Coffee** · NYC · Pink Bourbon, Colombia · ★★★★☆
 
+<!-- IMAGE: el-casino.png -->
+
 *July 31, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Cold Brew | Max coarse (Baratza Encore) |
+**Grind:** max coarse cold brew (Baratza Encore) · **Water:** room temp (cold brew)
 
 Red fruit, lemon zest, fresh blueberry.
 

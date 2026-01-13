@@ -12,9 +12,19 @@ Back in 2024 my friend Jay got me a Field Notes journal pack to keep track of al
 Just about every bag of coffee that came through our kitchen got an entry: the roaster, origin, tasting notes, grind settings and my thoughts on how it came out.
 
 <img src="/images/2026/verve_coffee_losandes.jpeg" class="w-100 p-4" alt="Verve Coffee - Los Andes"/>
+
 ## The Setup
 
-My set up is a Chemex for pour overs and the mighty Barista Pro espresso machine. Generally during the week we do pour over and on the weekends we do espresso drinks. I use a Baratza Encore burr grinder and note the grind settings for each bag of coffee. There are usually dialing in that happens so I make a note of the grind settings I used and what the outcome of those settings were. This helps me narrow down what works with what type of roast.
+My set up is a Chemex for pour overs and a Breville Barista Pro espresso machine. Generally during the week we do pour over and on the weekends we do espresso drinks. I use a Baratza Encore burr grinder and note the grind settings for each bag of coffee.
+
+**Equipment:**
+- **Grinder:** Baratza Encore (40-step burr grinder, #1 = finest, #40 = coarsest)
+- **Pour Over:** Chemex 6-cup with Chemex bonded filters
+- **Espresso:** Breville Barista Pro
+- **Water Temp:** 205°F default for pour over, varies from roast to roast
+- **Pour Over Dose:** 42g coffee to ~650g water
+
+There are usually dialing in that happens so I make a note of the grind settings I used and what the outcome of those settings were. This helps me narrow down what works with what type of roast.
 
 ## The Rating System
 
@@ -30,4 +40,4 @@ Over the next several posts, I'll share my monthly roundups of every coffee I br
 
 I'll come back to this post to update the list as I post the reviews later on. This will serve as a nice table of contents for the year.
 
-<!--  Let's start with [September 2024](/blog/coffee-journal-september-2024). -->
+Let's start with [September 2024](/blog/coffee-journal-september-2024).

@@ -9,10 +9,14 @@ tags: coffee, coffee-journal, five-watt, crema
 
 Two very different experiences this month: a café cortado disaster and a surprisingly good dark roast.
 
+*New here? Check out [the intro post](/blog/coffee-journal-intro) for my equipment setup and rating system.*
+
 ---
 
 ## Five Watt Coffee / Lyndale
 **Cortado** · ★☆☆☆☆
+
+<!-- IMAGE: five-watt-cortado.png -->
 
 *September 23, 2025*
 
@@ -35,12 +39,11 @@ One star. Not much else to say. The people-watching observation was more interes
 ## Infusu
 **Crema** · Southern Italy Style · ★★★☆☆
 
+<!-- IMAGE: infusu.png -->
+
 *September 30, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Espresso | #13-12 |
-| Pour Over | #20 |
+**Grind:** #12-13 espresso · #20 pour over · **Water:** 205°F
 
 Southern Italy espresso. Dark roast.
 

@@ -9,17 +9,18 @@ tags: coffee, coffee-journal, minimum-wage-tin, b-k-coffee
 
 A mixed bag this month: one reliable performer, one disappointment from a hyped local roaster, and a Honduras that didn't quite land.
 
+*New here? Check out [the intro post](/blog/coffee-journal-intro) for my equipment setup and rating system.*
+
 ---
 
 ## Minimum Wage Tin
 **Nicaragua** · ★★★★☆
 
+<!-- IMAGE: minimum-wage-tin.png -->
+
 *October 1, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Espresso | varies |
-| Pour Over | varies |
+**Grind:** varies · **Water:** 205°F
 
 No tasting notes on this bag.
 
@@ -32,12 +33,11 @@ Four stars. Sometimes the best compliment is consistency. Minimum Wage Tin doesn
 ## Mantos Juntas
 **B.K. Coffee** · Colombian · ★★☆☆☆
 
+<!-- IMAGE: mantos-juntas.png -->
+
 *October 8, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Espresso | #12 |
-| Pour Over | #20 |
+**Grind:** #12 espresso · #20 pour over · **Water:** 205°F
 
 Natural process. Valle D Cauca. Mantas Juntes Micromill.
 
@@ -62,11 +62,11 @@ Two stars. The hype didn't match the reality, either at home or in their shop. M
 ## Finca La Guadalupe
 **Minimum Wage Tin** · Honduras · ★★★☆☆
 
+<!-- IMAGE: finca-la-guadalupe.png -->
+
 *October 20, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Pour Over | #18 |
+**Grind:** #18 pour over · **Water:** 205°F
 
 Roasted on 10-8-25.
 

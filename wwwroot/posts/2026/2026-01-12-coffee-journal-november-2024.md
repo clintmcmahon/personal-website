@@ -9,17 +9,18 @@ tags: coffee, coffee-journal, s-k-coffee
 
 Just one coffee this month, but it was a good one.
 
+*New here? Check out [the intro post](/blog/coffee-journal-intro) for my equipment setup and rating system.*
+
 ---
 
 ## Kiambu
 **S.K. Coffee** · Kenya · ★★★☆☆
 
+<!-- IMAGE: kiambu.png -->
+
 *November 24, 2024*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Espresso | #2 (between 18-ish) |
-| Pour Over | #20 |
+**Grind:** #2 espresso · #20 pour over · **Water:** 205°F
 
 Happy Thanksgiving!
 

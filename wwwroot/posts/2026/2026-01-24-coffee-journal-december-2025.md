@@ -9,16 +9,18 @@ tags: coffee, coffee-journal, dogwood, verve
 
 The final month of the journal. Two coffees to close out the year—one nostalgic, one challenging.
 
+*New here? Check out [the intro post](/blog/coffee-journal-intro) for my equipment setup and rating system.*
+
 ---
 
 ## Snow Emergency
 **Dogwood** · ★★☆☆☆
 
+<!-- IMAGE: snow-emergency.png -->
+
 *December 15, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Pour Over | #20-22 |
+**Grind:** #20-22 pour over · **Water:** 205°F
 
 Roasted on 11-25-25.
 
@@ -35,11 +37,11 @@ Two stars. Snow Emergency used to hit different when I'd get it at a café. Brew
 ## Gogojo
 **Verve** · Ethiopian - Washed - Heirloom · ★★★☆☆
 
+<!-- IMAGE: gogojo.png -->
+
 *December 22, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Pour Over | #26 |
+**Grind:** #26 pour over · **Water:** 198°F (lower for Ethiopian)
 
 East African. Peach, jasmine, simple syrup.
 

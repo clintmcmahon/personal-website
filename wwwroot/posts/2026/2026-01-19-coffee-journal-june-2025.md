@@ -9,16 +9,18 @@ tags: coffee, coffee-journal, verve, dogwood
 
 A tale of two coffees: one that saved a subscription, and one that reinforced some local roaster frustrations.
 
+*New here? Check out [the intro post](/blog/coffee-journal-intro) for my equipment setup and rating system.*
+
 ---
 
 ## Banko Taratu
 **Verve** · East African · ★★★★☆
 
+<!-- IMAGE: banko-taratu.png -->
+
 *June 23, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Cold Brew | #10 |
+**Grind:** #10 cold brew · **Water:** room temp (cold brew)
 
 Blood orange, black tea, raspberry leaf.
 
@@ -35,12 +37,11 @@ Four stars. When I stopped diluting the concentrate, everything clicked. Bold, c
 ## Mixed Tape
 **Dogwood Coffee** · ★★★☆☆
 
+<!-- IMAGE: mixed-tape.png -->
+
 *June 23, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Espresso | #3-4 |
-| Pour Over | #20 |
+**Grind:** #3-4 espresso · #20 pour over · **Water:** 205°F
 
 Chocolate & corny.
 

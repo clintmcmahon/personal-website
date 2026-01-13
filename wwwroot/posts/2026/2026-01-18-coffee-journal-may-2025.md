@@ -9,16 +9,18 @@ tags: coffee, coffee-journal, verve
 
 Cold brew season is here, and this East African was ready for it.
 
+*New here? Check out [the intro post](/blog/coffee-journal-intro) for my equipment setup and rating system.*
+
 ---
 
 ## Mustefa Abakeno
 **Verve** · East African · ★★★★☆
 
+<!-- IMAGE: mustefa-abakeno.png -->
+
 *May 11, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Cold Brew | Max coarse |
+**Grind:** max coarse cold brew · **Water:** room temp (cold brew)
 
 Light roast. Roast level 2-4. Pear, marmalade, pine.
 

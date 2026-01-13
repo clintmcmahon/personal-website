@@ -9,17 +9,18 @@ tags: coffee, coffee-journal, s-k-coffee
 
 Back to S.K. Coffee for a Guatemalan that reminded me: some coffees just prefer one brew method.
 
+*New here? Check out [the intro post](/blog/coffee-journal-intro) for my equipment setup and rating system.*
+
 ---
 
 ## S.K. Guatemala
 **S.K. Coffee** · Huehuetenango · ★★★☆☆
 
+<!-- IMAGE: sk-guatemala.png -->
+
 *February 10, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Espresso | #4 |
-| Pour Over | #20-19 |
+**Grind:** #4 espresso · #19-20 pour over · **Water:** 205°F
 
 This is a tricky one. Pour overs are really good. But espresso I could do without. Can't get the grind-pull to come out smooth for espresso. A lot of shakes and splashes.
 

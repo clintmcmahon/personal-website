@@ -9,17 +9,18 @@ tags: coffee, coffee-journal, verve
 
 The holiday season brought three Verve coffees, including their seasonal blend. Mixed results, but one clear winner.
 
+*New here? Check out [the intro post](/blog/coffee-journal-intro) for my equipment setup and rating system.*
+
 ---
 
 ## San Juan
 **Verve Coffee** · Peru · Light Roast · ★★★☆☆
 
+<!-- IMAGE: san-juan.png -->
+
 *December 7, 2024*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Espresso | #4 |
-| Pour Over | #18-19 (22g dose) |
+**Grind:** #4 espresso · #18-19 pour over (22g dose) · **Water:** 205°F
 
 Single origin. A sweet morning treat. Roast level 2-4.
 
@@ -34,12 +35,11 @@ Three stars, but honestly could have been four. The fudge notes were exactly wha
 ## Holiday Blend
 **Verve** · ★★★★☆
 
+<!-- IMAGE: holiday-blend.png -->
+
 *December 23, 2024*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Espresso | #5 |
-| Pour Over | #20ish |
+**Grind:** #5 espresso · #20ish pour over · **Water:** 205°F
 
 Primarily drank this as an espresso drink. Makes for really great egg nog latte. Grind size row but consistent.
 
@@ -52,11 +52,11 @@ Four stars. Holiday blends can be gimmicky, but this one delivered. Perfect for 
 ## Esperanza
 **Verve** · Costa Rica · ★★☆☆☆
 
+<!-- IMAGE: esperanza.png -->
+
 *December 29, 2024*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Espresso | #11 |
+**Grind:** #11 espresso · **Water:** 205°F
 
 Light roast. Rich & caramely. Raisin, candied hazelnut, milk chocolate.
 

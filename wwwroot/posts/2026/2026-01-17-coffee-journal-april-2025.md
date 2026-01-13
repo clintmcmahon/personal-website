@@ -9,17 +9,18 @@ tags: coffee, coffee-journal, verve
 
 Two months in a row? Yes. Another five-star coffee from Verve.
 
+*New here? Check out [the intro post](/blog/coffee-journal-intro) for my equipment setup and rating system.*
+
 ---
 
 ## Montes De Oro ⭐
 **Verve** · Costa Rica · ★★★★★
 
+<!-- IMAGE: montes-de-oro.png -->
+
 *April 22, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Espresso | #7 (too watery) |
-| Pour Over | #18-19 (22g dose) |
+**Grind:** #7 espresso (too watery) · #18-19 pour over (22g dose) · **Water:** 205°F
 
 Roasted April 15. Green apples, plum, butterscotch. Golden plum. Roast 2-4.
 

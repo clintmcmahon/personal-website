@@ -9,17 +9,18 @@ tags: coffee, coffee-journal, silver-bird
 
 Another local roaster, another disappointment. Sensing a theme here.
 
+*New here? Check out [the intro post](/blog/coffee-journal-intro) for my equipment setup and rating system.*
+
 ---
 
 ## Super Nova
 **Silver Bird** · Mixed (Brazil, Ethiopian, Guatemalan) · ★★☆☆☆
 
+<!-- IMAGE: super-nova.png -->
+
 *November 8, 2025*
 
-| Brew Method | Grind Setting |
-|-------------|---------------|
-| Espresso | #13 |
-| Pour Over | #20 |
+**Grind:** #13 espresso · #20 pour over · **Water:** 205°F
 
 Roast date 10-21-25.
 
