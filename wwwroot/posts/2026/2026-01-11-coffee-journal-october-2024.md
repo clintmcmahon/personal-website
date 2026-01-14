@@ -50,6 +50,5 @@ One star. Not because the coffee is bad, I bet it's probably excellent in capabl
 ---
 
 **Lessons learned:** Ethiopian beans need coarser grinds than I expected. Also, S.K. Coffee is doing great things for Minneapolis coffee roasters.
-<!--
+
 **Next up:** [November 2024](/blog/coffee-journal-november-2024)—a Kenyan that arrived just in time for Thanksgiving.
--->

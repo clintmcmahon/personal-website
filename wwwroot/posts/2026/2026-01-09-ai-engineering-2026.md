@@ -1,17 +1,11 @@
 ---
-title: "AI Engineering in 2026: How We Build Software with AI"
+title: "AI Engineering in 2026: How I Build Software with AI"
 date: "January 7, 2026"
 draft: true
 slug: "ai-engineering-2026"
 ---
 
-2025 wasn't the year of AI agents like a lot of the big tech giants would have liked it to be. Instead, it was the year AI became a pretty good engineering tool for software teams. Here's how we use AI to build software in 2026 and how that allows us to build, debug and ship faster for our clients.
-
-## The Shift from Hype to Engineering
-
-The software industry is super obsessed with autonomous agents that will replace developers. It's been the talk of AI company founders for years.  That didn't happen in 2025 and doesn't appear to be something that is going to happen in 2026. However, what did happen was that AI became a reliable collaborator in the software development process. We moved past the [AI hype cycle](/Blog/ai-integration-reality-check) and into productive daily use. It's become a tool that we as software developers can use along side us to improve the development process.
-
-The difference between 2024 and 2026 isn't that LLMs got dramatically smarter, but we learned how to work with it more effectively. Instead of looking at LLMs and AI, in general, as something that is going to run on it's own and run software teams out of the room - it's something that can make us better at doing our jobs.
+At the beginning of 2025 the big AI companies were telling us that 2025 was going to be the year of AI agents and there was going to be fully automated AI engineers. That wasn't the case at all, instead it was the year AI became a pretty good engineering tool for software engineers. This is a post about how I use AI to build software in 2026 and how that allows me to build and ship things faster - in some cases. 
 
 ## Starting with a Plan
 
