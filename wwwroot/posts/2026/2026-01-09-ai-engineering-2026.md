@@ -1,10 +1,11 @@
 ---
 title: "AI Engineering in 2026: How We Build Software with AI"
 date: "January 7, 2026"
+draft: true
 slug: "ai-engineering-2026"
 ---
 
-2025 wasn't the year of AI agents like a lot of the big tech giants would have liked it to be. Instead, it was the year AI became a practical engineering tool for software teams. Here's how we use AI to build software in 2026 and how that allows us to build, debug and ship faster for our clients.
+2025 wasn't the year of AI agents like a lot of the big tech giants would have liked it to be. Instead, it was the year AI became a pretty good engineering tool for software teams. Here's how we use AI to build software in 2026 and how that allows us to build, debug and ship faster for our clients.
 
 ## The Shift from Hype to Engineering
 
