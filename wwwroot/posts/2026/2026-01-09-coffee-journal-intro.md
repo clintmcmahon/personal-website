@@ -1,5 +1,5 @@
 ---
-title: "Coffee Journal: A Lookback at My Year of Brewing Chemex & Espressos"
+title: "Coffee Journal: A Lookback at My Year of Brewing Chemex & Espressos 2024-2025"
 description: "Introducing my 2024-2025 coffee journal of 26 bags of coffee brewed at home with a Chemex and Barista Pro espresso machine, documented in a Field Notes notebook."
 date: "2026-01-09"
 draft: false
@@ -34,10 +34,62 @@ Each coffee gets a simple 1-5 star rating. These are how I feel about the roast 
 
 Most of my coffee comes from a Verve Single Origin subscription. But I also explored local Minneapolis roasters like Dogwood, Spyhouse, Five Watt, S.K. Coffee and Minimum Wage Tim. There were some out of state roasters like Tandem that came through as well.
 
-## What's Ahead
+## The Complete Coffee Journal
 
-Over the next several posts, I'll share my monthly roundups of every coffee I brewed, what worked, what didn't, and the occasional tangent about cortados or cold brew experiments. If you're into home coffee brewing, I hope you find something useful. If nothing else, maybe you'll discover a roaster worth trying.
+Here's every coffee I brewed over the past year and a half, chronologically. Each entry includes grind settings, tasting notes, and my honest assessment of what worked and what didn't.
 
-I'll come back to this post to update the list as I post the reviews later on. This will serve as a nice table of contents for the year.
+### September 2024
+- [Kerehaklu from Verve](/blog/verve-kerehaklu) - India
 
-Let's start with [September 2024](/blog/coffee-journal-september-2024).
+### October 2024
+- [Wahgi Valley from S.K. Coffee](/blog/sk-coffee-wahgi-valley) - Papua New Guinea
+- [Baide from Verve](/blog/verve-baide) - Honduras
+- [Chelchele from Verve](/blog/verve-chelchele) - Ethiopia
+
+### November 2024
+- [Kiambu from S.K. Coffee](/blog/sk-coffee-kiambu) - Kenya
+
+### December 2024
+- [San Juan from Verve](/blog/verve-san-juan) - Peru
+- [Holiday Blend from Verve](/blog/verve-holiday-blend)
+- [Esperanza from Verve](/blog/verve-esperanza) - Costa Rica
+
+### January 2025
+- [Bella Vista from Verve](/blog/verve-bella-vista) - Latin America
+
+### February 2025
+- [S.K. Guatemala Huehuetenango](/blog/sk-coffee-guatemala-huehuetenango) - Guatemala
+
+### March 2025
+- [Manuel Vallecillo from Verve](/blog/verve-manuel-vallecillo) ⭐ - Honduras
+
+### April 2025
+- [Montes De Oro from Verve](/blog/verve-montes-de-oro) ⭐ - Costa Rica
+
+### May 2025
+- [Mustefa Abakeno from Verve](/blog/verve-mustefa-abakeno) - East Africa
+
+### June 2025
+- [Banko Taratu from Verve](/blog/verve-banko-taratu) - East Africa
+- [Mixed Tape from Dogwood](/blog/dogwood-mixed-tape)
+
+### July 2025
+- [Huckleberry & Never Coffee](/blog/huckleberry-never-coffee)
+- [West End Blues from Tandem](/blog/tandem-west-end-blues) - Portland
+- [El Casino from Sey Coffee](/blog/sey-el-casino) ⭐ - Colombia
+
+### September 2025
+- [Five Watt Coffee Cortado](/blog/five-watt-cortado) - Minneapolis
+- [Infusu from Crema](/blog/crema-infusu) - Italy
+
+### October 2025
+- [Nicaragua from Minimum Wage Tin](/blog/minimum-wage-tin-nicaragua)
+- [Mantos Juntas from B.K. Coffee](/blog/bk-coffee-mantos-juntas) - Colombia
+- [Finca La Guadalupe from Minimum Wage Tin](/blog/minimum-wage-tin-finca-la-guadalupe) - Honduras
+
+### November 2025
+- [Super Nova from Silver Bird](/blog/silver-bird-super-nova) - Minneapolis
+
+### December 2025
+- [Snow Emergency from Dogwood](/blog/dogwood-snow-emergency) - Minneapolis
+- [Gogojo from Verve](/blog/verve-gogojo) - Ethiopia
