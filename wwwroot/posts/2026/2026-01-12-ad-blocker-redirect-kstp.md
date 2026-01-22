@@ -1,56 +1,41 @@
 ---
-title: "This News Site's Ad Blocker Redirect is an Interesting Choice"
+title: "My local news site redirects you to a third party website for ad blockers"
 description: "A local news broadcaster redirects users with ad blockers to a third-party error page with oddly personal messaging."
-date: "2026-01-12"
-draft: true
+date: "2026-01-20"
+draft: false
 slug: "ad-blocker-redirect-kstp"
 tags: web, advertising, local-news
 ---
 
-I was trying to read an article on <a href="https://kstp.com" target="_blank">KSTP's website</a> earlier today and instead of seeing the news story, I got redirected to this:
+I was trying to read an article on a <a href="https://kstp.com" target="_blank">local Minnesota news org's website</a> earlier and instead of seeing the news story, I got redirected to this template ad blocker notification page:
 
-<div class="text-center pb-2">
+<div class="text-center pb-4">
     <img src="/images/2026/ad_block.png" alt="Ad blocker message from error-report.com" class="img-fluid" />
 </div>
 
-The message reads: "Ads help me cover the costs of running this site, and I work hard to keep them limited and respectful. Turning off your ad blocker just for this site should fix the issue. Thank you for your support."
+The message reads: "Ads help me cover the costs of running this site, and I work hard to keep them limited and respectful. Turning off your ad blocker just for this site should fix the issue. Thank you for your support." I've never seen this redirect before so I looked it up online. Turns out lots of other people have <a href="https://www.google.com/search?q=error-report.com" target="_blank">already reported on this site</a>.
 
-To put this as a nice Midwesterner, this is an interesting approach. 
+I thought redirecting the user to a third-party website that uses a generic template to ask the user to turn off their ad blocker was an interesting approach for a large news organization. There are a few reasons this stood out to me.
 
-There are a few reasons I think it's an interesting choice to redirect the entire page to a generic ad blocker page. One is that KSTP is a full television broadcaster owned by a big broadcasting company that's been around forever. They most likely have a full web developent team, so the choice to redirect to another site that's just text feels out of place for big organization. A subtle modal pop up while keeping the user on the web page would make the experience much more pleasant while still getting the message across.
+First, KSTP is a full television broadcaster owned by a big broadcasting company that's been around forever. There's probably a full web development team supporting this site, the redirect feels out of place for a big organization. A subtle modal popup while keeping the user on the web page would make the experience much more pleasant while still getting the message across. I would be more inclined to turn the ad blocker off if I were still on the page. But by pushing me to another domain makes me more inclined to move on to another site instead of staying on their page.
 
-Another is that the ad blocker references "Me" instead of "We". Makes sense to use the template if it's a small site or personal blog. 
+Second, the error message uses "Me" instead of "We". This makes sense for a template used by small sites or personal blogs, but that's not the case here. 
 
-The messaging feels like it was written for a completely different context—probably a small indie website or personal project. When a major broadcaster uses first-person singular pronouns like this, it comes across as disconnected. We're not talking about an individual creator here. We're talking about a company with broadcast towers and a newsroom.
+## What I Would Do Differently
+I get why someone would use this redirect, it's a lot easier than building something within their site. This option is more attractive if their website is hosted via off the shelf platform and not home grown. Their ability to generate revenue is important and ad revenue matters for publishers. Without it they have no way to pay their employees. And running a news operation costs money. From a technical standpoint, this approach has a few problems.
 
-## The Technical Side
-
-Looking at the URL I got redirected to, it's even stranger:
-
-```
-https://report.error-report.com/modal?eventId=&error=aWZyYW1lIG1zZyBlcnI6IHhocl9mYWlsZWQ=&domain=fb.html-load.com&url=...
-```
-
-That Base64 encoded error parameter decodes to `iframe msg err: xhr_failed`. So KSTP isn't hosting this page themselves. They're using a third-party service called error-report.com to handle ad blocker detection and the redirect.
-
-The redirect URL also includes the full original article URL encoded as a parameter, presumably so the service knows which page the user was trying to access. This setup means KSTP outsourced their ad blocker detection to a company that provides a generic one-size-fits-all message—complete with messaging written for solo creators.
-
-## The Real Issue
-
-I get it. Ad revenue matters for publishers. Running a news operation costs money. But this approach has a few problems.
-
-First, the redirect completely blocks access to the content. There's no option to continue reading with limited functionality or even see a preview. It's a hard wall.
+First, the redirect completely blocks access to the content. There's no option to continue reading with limited functionality or even see a preview. It's a hard redirect somewhere else. I would create a modal that disables the rest of the site but still keeps you on the main page. This would allow users to see that content exists and, with a simple click, turn off their ad blocker and enjoy the full experience within a few seconds.
 
 Second, the third-party redirect means KSTP's user experience is now controlled by error-report.com. Whatever generic messaging that service uses is what KSTP users see. The broadcaster apparently didn't customize it to reflect that they're an organization, not an individual.
 
-Third, it creates a weird trust situation. When you click a link to kstp.com and end up on report.error-report.com, that feels off. Most users would probably assume they hit a scam page.
+Third, it creates a weird trust situation. When you click a link to kstp.com and end up on report.error-report.com, that feels off. Most users would probably assume they hit a scam page. That's exactly how I felt before reading the content and realizing that this was in response to my ad blocker.
 
 ## What Would Be Better
 
-If you're going to ask users to disable their ad blocker, at least own the messaging. Host the page yourself. Write copy that matches your brand. Acknowledge that you're a professional news organization and explain why advertising supports your journalism.
+An upfront message explaining the problem and how to resolve it—all within the same domain, and ideally on the same landing page. The message should be customized to reflect the website, not the out-of-the-box text from the provider.
 
 Something like: "KSTP is committed to providing free local news coverage. Advertising helps fund our newsroom and keeps our content accessible to everyone. Please consider adding us to your ad blocker's allowlist."
 
-That's honest, professional, and actually sounds like it came from a news organization.
+That's honest, professional, and actually sounds like it came from a the organization.
 
-Instead, KSTP users get a page that sounds like it was written by a blogger with a WordPress site asking for help covering hosting costs. It's a strange choice for a broadcaster that's been on the air for nearly 80 years.
+If anyone at KSTP someday happens to read this post, I would be happy to implement this feature for you. Just <a href="/contact">reach out</a> and let's get that ad blocker messaging taken care of.
