@@ -1,0 +1,49 @@
+@model List<Website.Models.PhotoEntry>
+
+@{
+    var albumTitle = ViewBag.AlbumTitle as string;
+    var albumDescription = ViewBag.AlbumDescription as string;
+    var albumContent = ViewBag.AlbumContent as string;
+    ViewData["Title"] = $"{albumTitle} - Photos";
+}
+
+<div class="container mt-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/photos">Photos</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@albumTitle</li>
+                </ol>
+            </nav>
+            <h1 class="display-4">@albumTitle</h1>
+            @if (!string.IsNullOrEmpty(albumDescription))
+            {
+                <p class="lead text-muted">@albumDescription</p>
+            }
+            <p class="text-muted">@Model.Count @(Model.Count == 1 ? "photo" : "photos")</p>
+            @if (!string.IsNullOrEmpty(albumContent))
+            {
+                <div class="album-content mt-3">
+                    @Html.Raw(albumContent)
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Masonry Gallery -->
+    <div class="masonry-gallery">
+        @foreach (var photo in Model)
+        {
+            <a href="@photo.ImageUrl" class="glightbox masonry-item" 
+               data-gallery="month-photos">
+                <img src="@photo.ImageUrl" alt="" loading="lazy">
+            </a>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Styles already defined in site.css -->
+}

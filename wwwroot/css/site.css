@@ -155,7 +155,7 @@ a{
 
 /* True masonry layout for blog photo gallery */
 .masonry-gallery {
-  column-count: 2 !important;
+  column-count: 3 !important;
   column-gap: 1.5rem !important;
   width: 100% !important;
   margin: 0 auto !important;
@@ -179,7 +179,12 @@ a{
 .masonry-gallery img:hover {
   box-shadow: 0 4px 24px rgba(0,0,0,0.18);
 }
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
+  .masonry-gallery {
+    column-count: 2 !important;
+  }
+}
+@media (max-width: 768px) {
   .masonry-gallery {
     column-count: 1 !important;
   }

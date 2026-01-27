@@ -12,7 +12,7 @@ tags:
   "CMS": {
     "Global": {
       "Id": "",
-      "SanitizeTinyMce": true
+      "SanitizeTimyMce": true
     },
     "Content": {
       "AllowEditInvariantFromNonDefault": true,

@@ -1,0 +1,82 @@
+@model List<Website.Models.PhotoAlbum>
+
+@{
+    ViewData["Title"] = "Photos";
+    ViewData["Description"] = "A collection of my photography organized by album.";
+}
+
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-4">Photos</h1>
+            <p class="lead text-muted">Photography albums from my adventures and everyday life.</p>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-info" role="alert">
+                    <i class="bi bi-info-circle"></i> No albums available yet. Check back soon!
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var album in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <a href="/photos/@album.Slug" class="text-decoration-none">
+                        <div class="card h-100 shadow-sm hover-lift">
+                            @if (!string.IsNullOrEmpty(album.ThumbnailUrl))
+                            {
+                                <img src="@album.ThumbnailUrl" 
+                                     class="card-img-top" 
+                                     alt="@album.Title"
+                                     style="height: 300px; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
+                                     style="height: 300px;">
+                                    <i class="bi bi-camera text-muted" style="font-size: 4rem;"></i>
+                                </div>
+                            }
+                            <div class="card-body">
+                                <h5 class="card-title">@album.Title</h5>
+                                @if (!string.IsNullOrEmpty(album.Description))
+                                {
+                                    <p class="card-text text-muted small">@album.Description</p>
+                                }
+                                <p class="card-text text-muted">
+                                    <i class="bi bi-images"></i> @album.PhotoCount @(album.PhotoCount == 1 ? "photo" : "photos")
+                                    <span class="ms-2"><i class="bi bi-calendar"></i> @album.Date.ToString("MMMM yyyy")</span>
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <style>
+        .hover-lift {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        .card a {
+            color: inherit;
+        }
+    </style>
+}

@@ -1,5 +1,5 @@
 ---
-title: "Nicaragua from Minimum Wage Tin"
+title: "Nicaragua from Minimum Wage Tim"
 description: "Solid, consistent South American beans—sometimes the best compliment is reliability without surprises."
 date: "2025-10-01"
 draft: false
@@ -7,7 +7,7 @@ slug: "minimum-wage-tin-nicaragua"
 tags: coffee, coffee-journal, minimum-wage-tin, nicaragua
 ---
 
-**Minimum Wage Tin**  
+**Minimum Wage Tim**  
 **Nicaragua** · ★★★★☆
 
 <!-- IMAGE: minimum-wage-tin.png -->

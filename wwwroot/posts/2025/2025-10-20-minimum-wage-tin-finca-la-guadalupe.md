@@ -1,5 +1,5 @@
 ---
-title: "Finca La Guadalupe from Minimum Wage Tin"
+title: "Finca La Guadalupe from Minimum Wage Tim"
 description: "A Honduran with huge beans that made an okay cup—solid but unremarkable, not blow-you-away territory."
 date: "2025-10-20"
 draft: false
@@ -7,7 +7,7 @@ slug: "minimum-wage-tin-finca-la-guadalupe"
 tags: coffee, coffee-journal, minimum-wage-tin, honduras
 ---
 
-**Minimum Wage Tin** · Honduras · ★★★☆☆
+**Minimum Wage Tim** · Honduras · ★★★☆☆
 
 <!-- IMAGE: finca-la-guadalupe.png -->
 

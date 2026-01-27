@@ -83,9 +83,9 @@ Here's every coffee I brewed over the past year and a half, chronologically. Eac
 - [Infusu from Crema](/blog/crema-infusu) - Italy
 
 ### October 2025
-- [Nicaragua from Minimum Wage Tin](/blog/minimum-wage-tin-nicaragua)
-- [Mantos Juntas from B.K. Coffee](/blog/bk-coffee-mantos-juntas) - Colombia
-- [Finca La Guadalupe from Minimum Wage Tin](/blog/minimum-wage-tin-finca-la-guadalupe) - Honduras
+- [Nicaragua from Minimum Wage Tim](/blog/minimum-wage-tin-nicaragua)
+- [Mantos Juntas from B.K. Coffee](/blog/sk-coffee-mantos-juntas) - Colombia
+- [Finca La Guadalupe from Minimum Wage Tim](/blog/minimum-wage-tin-finca-la-guadalupe) - Honduras
 
 ### November 2025
 - [Super Nova from Silver Bird](/blog/silver-bird-super-nova) - Minneapolis
