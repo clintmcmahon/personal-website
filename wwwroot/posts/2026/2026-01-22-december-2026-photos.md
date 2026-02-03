@@ -2,7 +2,7 @@
 title: "Photos: August 2025"
 description: "Photo round up from August 2025"
 date: "2025-09-22"
-draft: false
+draft: true
 slug: "august-2025-photos"
 tags: [photos]
 ---
@@ -23,7 +23,7 @@ tags: [photos]
         <a href="/photos/2025/09/R0002282.jpeg" class="glightbox masonry-item" data-gallery="august2025" data-title="August 2025"><img src="/photos/2025/09/R0002282.jpeg" alt=""></a>
         <a href="/photos/2025/09/R0002292_VSCO.jpeg" class="glightbox masonry-item" data-gallery="august2025" data-title="August 2025"><img src="/photos/2025/09/R0002292_VSCO.jpeg" alt=""></a>
         <a href="/photos/2025/09/R0002293.jpeg" class="glightbox masonry-item" data-gallery="august2025" data-title="August 2025"><img src="/photos/2025/09/R0002293.jpeg" alt=""></a>
-        <a href="/photos/2025/09/R0002319.jpeg" class="glightbox masonry-item" data-gallery="august2025" data-title="August 2025"><img src="/photos/2025/09/R0002319.jpeg" alt=""></a>
+        <a href="" class="glightbox masonry-item" data-gallery="august2025" data-title="August 2025"><img src="/photos/2025/09/R0002319.jpeg" alt=""></a>
         <a href="/photos/2025/09/R0002321.jpeg" class="glightbox masonry-item" data-gallery="august2025" data-title="August 2025"><img src="/photos/2025/09/R0002321.jpeg" alt=""></a>
         <a href="/photos/2025/09/R0002384.jpeg" class="glightbox masonry-item" data-gallery="august2025" data-title="August 2025"><img src="/photos/2025/09/R0002384.jpeg" alt=""></a>
         <a href="/photos/2025/09/R0002399.jpeg" class="glightbox masonry-item" data-gallery="august2025" data-title="August 2025"><img src="/photos/2025/09/R0002399.jpeg" alt=""></a>
