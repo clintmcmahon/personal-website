@@ -293,7 +293,7 @@ public class PhotoRepository
             var fileName = Path.GetFileNameWithoutExtension(imagePath);
             var relativePath = imagePath.Replace(_photosDirectory, "/photos").Replace("\\", "/");
             
-            // Extract date from directory structure: photos/2025/04/image.jpg
+            // Extract date from directory structure: photos/2025-04/image.jpg
             var pathParts = imagePath.Split(Path.DirectorySeparatorChar);
             var dateFromPath = ExtractDateFromPath(pathParts);
             DateTime photoDate = dateFromPath ?? DateTime.Now;
