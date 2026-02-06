@@ -1,5 +1,5 @@
 ---
-title: "You gotta preheat your portafilter"
+title: "Why I preheat my portafilter when making espresso"
 description: "I couldn't dial in my espresso consistently until I discovered that I should be preheating my portafilter. Here's why preheating your portafilter changes everything for home espresso on the Breville Barista Pro."
 date: "2026-02-03"
 draft: false
