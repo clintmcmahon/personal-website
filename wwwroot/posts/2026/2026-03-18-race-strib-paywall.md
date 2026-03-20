@@ -1,7 +1,7 @@
 ---
 title: "Racing the Star Tribune's paywall system"
-description: "You can bypass the paywall that executes on the Star Tribune's website by scrolling to the bottom of the rendered content as soon as the page loads."
-date: "2026-03-18"
+description: "enerally, you can use reader mode to get around these paywalls to view the article. But the other day I mistakenly stumbled on a new way to do it for the Star Tribune: if you scroll down to the bottom of the page as soon as the content loads."
+date: "2026-03-20"
 draft: false
 slug: "race-strib-paywall"
 tags: web,javascript,css
@@ -9,7 +9,9 @@ tags: web,javascript,css
 
 <section>
 
-On the <a href="https://startribune.com" target="_blank">Minnesota Star Tribune website</a> there's a paywall system that blocks the user from viewing the full content of articles if they're not a subscribing member. In this case it's called a soft paywall. It's the same kind of paywall system that every news publisher has, so you've seen these a million times already. Generally, you can use reader mode to get around these paywalls to view the article. But the other day I mistakenly stumbled on a new way to do it for the Star Tribune: if you scroll down to the bottom of the page as soon as the content loads but before the paywall library loads the pop up you're still able to view the entire article along with the paywall pop up. Essentially you just got to race the paywall library to the bottom of the page before it can load.
+On the <a href="https://startribune.com" target="_blank">Minnesota Star Tribune website</a> there's a paywall system that blocks the user from viewing the full content of articles if they're not a subscribing member. In this case it's called a soft paywall. It's the same kind of paywall system that every news publisher has, so you've seen these a million times already. 
+
+Generally, you can use reader mode to get around these paywalls to view the article. But the other day I mistakenly stumbled on a new way to do it for the Star Tribune: if you scroll down to the bottom of the page as soon as the content loads but before the paywall library loads the pop up you're still able to view the entire article along with the paywall pop up. Essentially you just got to race the paywall library to the bottom of the page before it can load.
 
 In this post I'll break down how this is possible as well as talk about a couple solutions that could prevent this. This isn't a call to freeload content from the Strib or rip on their architecture. Far from it, they're an important organization with smart engineers who deserve all the revenue they can get. I'm writing this as an engineer who noticed an interesting timing issue and wanted to offer some possible fixes. My hope is that this is useful to other developers curious about how paywalls work and maybe helpful to the Strib's engineering team (or other teams using similar paywalls) if they want to tighten things up a bit. This is a common pattern across the publishing industry, so understanding it benefits anyone building or maintaining online subscriptions.
 
@@ -85,7 +87,7 @@ Adding the NewsArticle structured data would look something like this:
 ```
 
 ## Piano-specific fixes
-Since Piano is already being used and such a common paywall provider, here are a few Piano specific approaches that could close this race condition. None of these fixes are going to satisfy Google's SEO rules, however. In order for these to work you will need to implement the `NewsArticle` fix in conjunction with these Piano specific fixes.
+Since Piano is already being used and is a common paywall provider, here are a few Piano specific approaches that could close this race condition. None of these fixes alone will satisfy Google's SEO rules. To make them work, you need to implement the `NewsArticle` structured data fix in conjunction with these Piano specific fixes.
 
 <strong>CSS-first content lock</strong> - Hide paywalled content by default before Piano even loads. Add CSS in the `<head>` that hides the content, then let Piano reveal it for authorized users. This inverts the problem so the content is hidden by default rather than hidden after load.
 
@@ -108,5 +110,5 @@ tp.push(["init", function() {
 
 <strong>Server-side access check</strong> - Piano offers a server-side API that lets publishers determine access before rendering HTML. This moves the decision to the server, eliminating the client-side race entirely. It's more work to implement but closes the gap completely.
 
-All software and paywall systems will always have tradeoffs between SEO, user experience and security. These are just a few of the ways that organizations can protect their paywall content. I'm sure there are a hundred other methods available, these are just a few that came to mind. There's a balance that each business needs to decide to figure out what works best for their business.
+All software and paywall systems have tradeoffs between SEO, user experience and security. These are just a few ways organizations can protect their paywall content. I am sure there are many other methods available. These are just a few that came to mind. Each business needs to find the balance that works best for them.
 </section>
