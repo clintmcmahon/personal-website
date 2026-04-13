@@ -1,64 +1,101 @@
+
 using Website.Models;
 using Website.Repositories;
+using Website.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
-namespace Website.Services;
-
-public class PhotoService
+namespace Website.Services
 {
-    private readonly PhotoRepository _photoRepository;
-
-    public PhotoService(PhotoRepository photoRepository)
+    public class PhotoService
     {
-        _photoRepository = photoRepository;
-    }
+        private readonly PhotoRepository _photoRepository;
+        private readonly PhotoCommentDbContext _dbContext;
 
-    public PhotoViewModel GetLatestPhoto()
-    {
-        var photos = _photoRepository.GetAllPhotos();
-        if (!photos.Any())
+        public PhotoService(PhotoRepository photoRepository, PhotoCommentDbContext dbContext)
         {
-            return new PhotoViewModel();
+            _photoRepository = photoRepository;
+            _dbContext = dbContext;
         }
 
-        var latestPhoto = photos.First();
-        var index = photos.IndexOf(latestPhoto);
-        var previousPhoto = index + 1 < photos.Count ? photos[index + 1] : null;
-        var nextPhoto = index - 1 >= 0 ? photos[index - 1] : null;
-
-        return new PhotoViewModel
+        public PhotoViewModel GetLatestPhoto()
         {
-            CurrentPhoto = latestPhoto,
-            PreviousPhoto = previousPhoto,
-            NextPhoto = nextPhoto
-        };
+            var photos = _photoRepository.GetAllPhotos();
+            if (!photos.Any())
+            {
+                return new PhotoViewModel();
+            }
+
+            var latestPhoto = photos.First();
+            var index = photos.IndexOf(latestPhoto);
+            var previousPhoto = index + 1 < photos.Count ? photos[index + 1] : null;
+            var nextPhoto = index - 1 >= 0 ? photos[index - 1] : null;
+
+            var comments = _dbContext.PhotoComments
+                .Where(c => c.PhotoDate == latestPhoto.Date.ToString("yyyy-MM-dd"))
+                .OrderByDescending(c => c.CreatedAt)
+                .ToList();
+
+            return new PhotoViewModel
+            {
+                CurrentPhoto = latestPhoto,
+                PreviousPhoto = previousPhoto,
+                NextPhoto = nextPhoto,
+                Comments = comments
+            };
+        }
+
+        public PhotoViewModel? GetPhotoBySlug(string slug)
+        {
+            var photos = _photoRepository.GetAllPhotos();
+            var photo = photos.FirstOrDefault(p => p.Slug.Equals(slug, System.StringComparison.OrdinalIgnoreCase));
+
+            if (photo == null)
+            {
+                return null;
+            }
+
+            var index = photos.IndexOf(photo);
+            var previousPhoto = index < photos.Count - 1 ? photos[index + 1] : null;
+            var nextPhoto = index > 0 ? photos[index - 1] : null;
+
+            var comments = _dbContext.PhotoComments
+                .Where(c => c.PhotoDate == photo.Date.ToString("yyyy-MM-dd"))
+                .OrderByDescending(c => c.CreatedAt)
+                .ToList();
+
+            return new PhotoViewModel
+            {
+                CurrentPhoto = photo,
+                PreviousPhoto = previousPhoto,
+                NextPhoto = nextPhoto,
+                Comments = comments
+            };
+        }
+
+        public PhotoViewModel? GetPhotoByDate(System.DateTime date)
+        {
+            var photos = _photoRepository.GetAllPhotos();
+            var photo = photos.FirstOrDefault(p => p.Date.Date == date.Date);
+            if (photo == null)
+            {
+                return null;
+            }
+            var index = photos.IndexOf(photo);
+            var previousPhoto = index < photos.Count - 1 ? photos[index + 1] : null;
+            var nextPhoto = index > 0 ? photos[index - 1] : null;
+            var comments = _dbContext.PhotoComments
+                .Where(c => c.PhotoDate == photo.Date.ToString("yyyy-MM-dd"))
+                .OrderByDescending(c => c.CreatedAt)
+                .ToList();
+            return new PhotoViewModel
+            {
+                CurrentPhoto = photo,
+                PreviousPhoto = previousPhoto,
+                NextPhoto = nextPhoto,
+                Comments = comments
+            };
+        }
     }
-
-    public PhotoViewModel? GetPhotoBySlug(string slug)
-{
-    var photos = _photoRepository.GetAllPhotos();
-    var photo = photos.FirstOrDefault(p => p.Slug.Equals(slug, StringComparison.OrdinalIgnoreCase));
-
-    if (photo == null)
-    {
-        return null;
-    }
-
-    var index = photos.IndexOf(photo);
-
-    // Only assign previous if there is an older photo in the list
-    var previousPhoto = index < photos.Count - 1 ? photos[index + 1] : null;
-
-    // Only assign next if there is a newer photo in the list
-    var nextPhoto = index > 0 ? photos[index - 1] : null;
-
-    return new PhotoViewModel
-    {
-        CurrentPhoto = photo,
-        PreviousPhoto = previousPhoto,
-        NextPhoto = nextPhoto
-    };
-}
-
-
 }
 

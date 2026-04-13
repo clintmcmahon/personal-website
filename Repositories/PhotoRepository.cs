@@ -33,28 +33,52 @@ public class PhotoRepository
             })
             .ToList();
 
-        // Get markdown override files
-        var markdownFiles = Directory.GetFiles(_photosDirectory, "*.md", SearchOption.AllDirectories)
-            .ToDictionary(f => Path.GetFileNameWithoutExtension(f), f => f, StringComparer.OrdinalIgnoreCase);
+        // Get markdown override files using unique relative path as key
+        var markdownFiles = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var mdFile in Directory.GetFiles(_photosDirectory, "*.md", SearchOption.AllDirectories))
+        {
+            // Use relative path from photos root (without extension) as key
+            var relPath = Path.GetRelativePath(_photosDirectory, mdFile);
+            var key = relPath.Substring(0, relPath.Length - Path.GetExtension(relPath).Length).Replace("\\", "/");
+            if (!markdownFiles.ContainsKey(key))
+            {
+                markdownFiles[key] = mdFile;
+            }
+        }
 
         foreach (var imageFile in imageFiles)
         {
             var fileName = Path.GetFileNameWithoutExtension(imageFile);
-            
-            // Check if there's a markdown override
+            var relImagePath = Path.GetRelativePath(_photosDirectory, imageFile);
+            var mdKey = relImagePath.Substring(0, relImagePath.Length - Path.GetExtension(relImagePath).Length).Replace("\\", "/");
+
             PhotoEntry? entry = null;
-            if (markdownFiles.TryGetValue(fileName, out var mdFile))
+
+            // 1. Check for an image-specific .md override (e.g., soo-line.md)
+            if (markdownFiles.TryGetValue(mdKey, out var mdFile))
             {
                 var content = File.ReadAllText(mdFile);
-                entry = ParseMarkdown(content);
+                entry = ParseMarkdown(content, imageFile);
             }
-            
-            // If no markdown or parsing failed, create from image
+
+            // 2. Fall back to a folder-level .md (e.g., 2026-04-10/2026-04-10.md)
+            if (entry == null)
+            {
+                var dirName = Path.GetFileName(Path.GetDirectoryName(imageFile) ?? "");
+                var dirMdKey = $"{dirName}/{dirName}";
+                if (markdownFiles.TryGetValue(dirMdKey, out var dirMdFile))
+                {
+                    var content = File.ReadAllText(dirMdFile);
+                    entry = ParseMarkdown(content, imageFile);
+                }
+            }
+
+            // 3. Generate from image filename
             if (entry == null)
             {
                 entry = CreatePhotoFromImage(imageFile);
             }
-            
+
             if (entry != null)
             {
                 photos.Add(entry);
@@ -198,9 +222,7 @@ public class PhotoRepository
         var slug = metadata.ContainsKey("slug") ? metadata["slug"] : folderName;
         var description = metadata.ContainsKey("description") ? metadata["description"] : string.Empty;
         var thumbnail = metadata.ContainsKey("thumbnail") ? metadata["thumbnail"] : string.Empty;
-        var tags = metadata.ContainsKey("tags") 
-            ? metadata["tags"].Split(',').Select(tag => tag.Trim().Trim('"').Trim('\'')).ToList() 
-            : new List<string>();
+        var tags = ParseTagsValue(metadata.ContainsKey("tags") ? metadata["tags"] : "");
 
         // Parse markdown content (everything after YAML front matter)
         var markdownContent = string.Join('\n', contentLines).Trim();
@@ -359,7 +381,7 @@ public class PhotoRepository
         return cleaned.Trim();
     }
 
-    private PhotoEntry? ParseMarkdown(string content)
+    private PhotoEntry? ParseMarkdown(string content, string? imagePathFallback = null)
     {
         if (string.IsNullOrWhiteSpace(content)) return null;
 
@@ -376,31 +398,82 @@ public class PhotoRepository
         var yamlText = content.Substring(yamlBlock.Span.Start, yamlBlock.Span.Length).Trim();
         var metadata = ParseYamlMetadata(yamlText);
 
-        if (!metadata.TryGetValue("title", out var title) ||
-            !metadata.TryGetValue("date", out var dateString) ||
-            !metadata.TryGetValue("image", out var image) ||
+        // date is required
+        if (!metadata.TryGetValue("date", out var dateString) ||
             !DateTime.TryParse(dateString, out var date))
         {
             return null;
         }
 
-        var slug = metadata.ContainsKey("slug") ? metadata["slug"] : GenerateSlug(title);
-        var tags = metadata.ContainsKey("tags") 
-            ? metadata["tags"].Split(',').Select(tag => tag.Trim().Trim('"').Trim('\'')).ToList() 
-            : new List<string>();
+        // title is optional — fall back to the date, never to description
+        metadata.TryGetValue("title", out var title);
+        if (string.IsNullOrWhiteSpace(title))
+            title = date.ToString("MMMM d, yyyy");
 
-        var markdownContent = content.Substring(yamlBlock.Span.End).Trim();
-        var htmlContent = Markdown.ToHtml(markdownContent, pipeline);
+        // image: single string  OR  images: [file.jpg, ...]  OR  derive from the actual image file
+        string? imageUrl = null;
+        if (metadata.TryGetValue("image", out var singleImage) && !string.IsNullOrWhiteSpace(singleImage))
+        {
+            imageUrl = singleImage;
+        }
+        else if (metadata.TryGetValue("images", out var imagesValue))
+        {
+            var first = imagesValue.Trim('[', ']').Split(',').FirstOrDefault()?.Trim().Trim('"').Trim('\'');
+            if (!string.IsNullOrWhiteSpace(first))
+                imageUrl = first;
+        }
+
+        // If image is a bare filename, build the path from the folder
+        if (!string.IsNullOrWhiteSpace(imageUrl) && !imageUrl.StartsWith("/") && !imageUrl.StartsWith("http"))
+        {
+            var folderName = imagePathFallback != null
+                ? Path.GetFileName(Path.GetDirectoryName(imagePathFallback) ?? "")
+                : "";
+            imageUrl = $"/photos/{folderName}/{imageUrl}";
+        }
+
+        // Last resort: use the actual image file we were called with
+        if (string.IsNullOrWhiteSpace(imageUrl) && imagePathFallback != null)
+        {
+            imageUrl = imagePathFallback.Replace(_photosDirectory, "/photos").Replace("\\", "/");
+        }
+
+        if (string.IsNullOrWhiteSpace(imageUrl)) return null;
+
+        var slug = metadata.ContainsKey("slug") ? metadata["slug"] : GenerateSlug(title);
+        var tags = ParseTagsValue(metadata.ContainsKey("tags") ? metadata["tags"] : "");
+
+        // Find the closing --- and take everything after it to avoid
+        // Span.End landing on the last dash and generating a stray list item
+        var bodyContent = string.Empty;
+        var closingDelimiter = content.IndexOf("\n---", 3);
+        if (closingDelimiter >= 0)
+        {
+            var lineEnd = content.IndexOf('\n', closingDelimiter + 1);
+            bodyContent = lineEnd >= 0 ? content.Substring(lineEnd + 1) : string.Empty;
+        }
+        var htmlContent = Markdown.ToHtml(bodyContent.Trim(), pipeline);
 
         return new PhotoEntry
         {
             Title = title,
             Slug = slug,
             Date = date,
-            ImageUrl = image,
+            ImageUrl = imageUrl,
             Content = htmlContent,
             Tags = tags
         };
+    }
+
+    // Handles both "tag1, tag2" strings and "[tag1, tag2]" YAML inline arrays
+    private static List<string> ParseTagsValue(string raw)
+    {
+        if (string.IsNullOrWhiteSpace(raw)) return new List<string>();
+        return raw.Trim('[', ']')
+                  .Split(',')
+                  .Select(t => t.Trim().Trim('"').Trim('\''))
+                  .Where(t => !string.IsNullOrWhiteSpace(t))
+                  .ToList();
     }
 
     private static Dictionary<string, string> ParseYamlMetadata(string yaml)

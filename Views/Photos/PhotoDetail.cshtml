@@ -1,39 +1,115 @@
 @model PhotoViewModel
 
 @{
-    ViewData["Title"] = Model.CurrentPhoto.Title + " | Clint McMahon";
+    Layout = null;
+    ViewData["Title"] = Model.CurrentPhoto.Title + " — Clint McMahon";
+    var canonicalUrl = $"https://photos.clintmcmahon.com/{Model.CurrentPhoto.Date:yyyy-MM-dd}";
+    ViewData["PhotoDate"] = Model.CurrentPhoto.Date.ToString("yyyy-MM-dd");
 }
 
-<div class="container text-center mt-4" style="max-width: 1000px;">
-    <div class="photo-header">
-        <h1 class="fw-bold text-uppercase photo-title"><small>@Model.CurrentPhoto.Title</small></h1>
-        <p class="photo-date"><em>@Model.CurrentPhoto.Date.ToString("MMMM dd, yyyy")</em></p>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="@Model.CurrentPhoto.Title" />
+    <meta property="og:title" content="@Model.CurrentPhoto.Title" />
+    <meta property="og:image" content="@Model.CurrentPhoto.ImageUrl" />
+    <meta property="og:url" content="@canonicalUrl" />
+    <meta property="og:type" content="article" />
+    <link rel="canonical" href="@canonicalUrl" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="/css/classic-photoblog.css?v=3" />
+</head>
+<body>
+    <header class="pb-header">
+        <a href="https://photos.clintmcmahon.com" class="pb-site-name">Clint McMahon</a>
+        <span class="pb-header-byline">photographs from the life of <a href="https://clintmcmahon.com" class="pb-header-byline-link">clintmcmahon.com</a></span>
+        <span class="pb-header-date">@Model.CurrentPhoto.Date.ToString("MMMM d, yyyy")</span>
+    </header>
 
-    <img src="@Model.CurrentPhoto.ImageUrl" class="img-fluid rounded shadow-lg" alt="@Model.CurrentPhoto.Title" title="@Model.CurrentPhoto.Title">
+    <main class="pb-main">
+        <div class="pb-image-wrap">
+            <img src="@Model.CurrentPhoto.ImageUrl"
+                 class="pb-image"
+                 alt="@Model.CurrentPhoto.Title" />
+        </div>
 
-    <div class="mt-3 photo-detail">
-        @Html.Raw(Model.CurrentPhoto.Content)
-    </div>
+        <div class="pb-meta">
+            <div class="pb-caption-area">
+                @if (!string.IsNullOrWhiteSpace(Model.CurrentPhoto.Title))
+                {
+                    <p class="pb-title">@Model.CurrentPhoto.Title</p>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.CurrentPhoto.Content))
+                {
+                    <div class="pb-caption">@Html.Raw(Model.CurrentPhoto.Content)</div>
+                }
+            </div>
 
-    <div class="d-flex justify-content-between mt-4">
-        @if (Model.PreviousPhoto != null)
-        {
-            <a href="/photos/@Model.PreviousPhoto.Slug" class="btn btn-outline-primary">&larr; Previous</a>
-        }
-        else
-        {
-            <div></div>
-        }
+            <nav class="pb-nav" aria-label="Photo navigation">
+                @if (Model.PreviousPhoto != null)
+                {
+                    <a href="/@Model.PreviousPhoto.Date.ToString("yyyy-MM-dd")"
+                       class="pb-nav-prev"
+                       title="@Model.PreviousPhoto.Title">&#8592; prev</a>
+                }
+                @if (Model.NextPhoto != null)
+                {
+                    <a href="/@Model.NextPhoto.Date.ToString("yyyy-MM-dd")"
+                       class="pb-nav-next"
+                       title="@Model.NextPhoto.Title">next &#8594;</a>
+                }
+            </nav>
+        </div>
 
-        @if (Model.NextPhoto != null)
-        {
-            <a href="/photos/@Model.NextPhoto.Slug" class="btn btn-outline-primary">Next &rarr;</a>
-        }
-        else
-        {
-            <div></div>
-        }
-    </div>
-</div>
+        <div class="pb-comments" id="comments">
+            @await Html.PartialAsync("_PhotoComments", Model.Comments)
+        </div>
 
+        <footer class="pb-footer">
+            <nav class="pb-footer-nav">
+                <a href="/photos/about" class="pb-footer-link">About</a>
+                <a href="/photos/rss" class="pb-footer-link">RSS</a>
+                <a href="https://clintmcmahon.com" class="pb-footer-link">clintmcmahon.com</a>
+            </nav>
+        </footer>
+    </main>
+
+    <div class="pb-keys" aria-hidden="true">&#8592; &#8594;</div>
+
+    <script>
+        // Image fade-in on load
+        (function () {
+            var img = document.querySelector('.pb-image');
+            if (!img) return;
+            function show() { img.classList.add('is-loaded'); }
+            img.complete ? show() : img.addEventListener('load', show);
+        }());
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft') {
+                var a = document.querySelector('.pb-nav-prev');
+                if (a) window.location.href = a.href;
+            } else if (e.key === 'ArrowRight') {
+                var a = document.querySelector('.pb-nav-next');
+                if (a) window.location.href = a.href;
+            }
+        });
+
+        // Touch swipe navigation
+        var _tx = 0;
+        document.addEventListener('touchstart', function (e) {
+            _tx = e.touches[0].clientX;
+        }, { passive: true });
+        document.addEventListener('touchend', function (e) {
+            var dx = e.changedTouches[0].clientX - _tx;
+            if (Math.abs(dx) < 60) return;
+            var sel = dx > 0 ? '.pb-nav-prev' : '.pb-nav-next';
+            var a = document.querySelector(sel);
+            if (a) window.location.href = a.href;
+        }, { passive: true });
+    </script>
+</body>
+</html>

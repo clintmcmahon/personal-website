@@ -21,6 +21,18 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        // If subdomain is photos.*, render the latest photo directly
+        var host = Request.Host.Host;
+        if (host.StartsWith("photos."))
+        {
+            var photoService = HttpContext.RequestServices.GetService(typeof(Website.Services.PhotoService)) as Website.Services.PhotoService;
+            var viewModel = photoService?.GetLatestPhoto();
+            if (viewModel == null || string.IsNullOrEmpty(viewModel.CurrentPhoto.Title))
+            {
+                return NotFound("No photos found.");
+            }
+            return View("~/Views/Photos/PhotoDetail.cshtml", viewModel);
+        }
         var posts = _postRepository.GetAllPosts()
            .Where(post => !post.Draft)
            .OrderByDescending(post => post.Date)

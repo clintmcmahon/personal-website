@@ -1,8 +1,14 @@
+using Website.Data;
+using Microsoft.EntityFrameworkCore;
 using Website.Middleware;
 using Website.Repositories;
 using Website.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add SQLite for photo comments
+builder.Services.AddDbContext<PhotoCommentDbContext>(options =>
+    options.UseSqlite("Data Source=photocomments.db"));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -10,7 +16,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IPostRepository, PostRepository>();
 builder.Services.AddSingleton<PhotoRepository>(provider =>
     new PhotoRepository(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos")));
-builder.Services.AddSingleton<PhotoService>();
+builder.Services.AddScoped<PhotoService>();
 builder.Services.AddSession();
 
 var app = builder.Build();

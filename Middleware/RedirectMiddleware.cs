@@ -14,7 +14,16 @@ public class RedirectMiddleware
 
     public async Task Invoke(HttpContext context)
     {
+
         var path = context.Request.Path.Value?.Trim('/') ?? string.Empty;
+        var host = context.Request.Host.Host;
+
+        // Skip redirect logic for photos.* subdomain
+        if (host.StartsWith("photos."))
+        {
+            await _next(context);
+            return;
+        }
 
         // Define paths that should not be redirected (controller routes)
         var excludedPaths = new[] { "photos", "projects", "about", "contact", "home", "blog", "now", "portfolio", "services", "rss", "sitemap" };
