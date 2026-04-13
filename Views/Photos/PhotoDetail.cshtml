@@ -5,6 +5,12 @@
     ViewData["Title"] = Model.CurrentPhoto.Title + " — Clint McMahon";
     var canonicalUrl = $"https://photos.clintmcmahon.com/{Model.CurrentPhoto.Date:yyyy-MM-dd}";
     ViewData["PhotoDate"] = Model.CurrentPhoto.Date.ToString("yyyy-MM-dd");
+
+    var isSubdomain = Context.Request.Host.Host.StartsWith("photos.", StringComparison.OrdinalIgnoreCase);
+    var photoBase  = isSubdomain ? "/"         : "/photos/";  // base for /{date} links
+    var homeHref   = isSubdomain ? "/"         : "/photos";   // site-name link
+    var aboutHref  = isSubdomain ? "/about"    : "/photos/about";
+    var rssHref    = isSubdomain ? "/rss"      : "/photos/rss";
 }
 
 <!DOCTYPE html>
@@ -23,7 +29,7 @@
 </head>
 <body>
     <header class="pb-header">
-        <a href="https://photos.clintmcmahon.com" class="pb-site-name">Clint McMahon</a>
+        <a href="@homeHref" class="pb-site-name">Clint McMahon</a>
         <span class="pb-header-byline">photographs from the life of <a href="https://clintmcmahon.com" class="pb-header-byline-link">clintmcmahon.com</a></span>
         <span class="pb-header-date">@Model.CurrentPhoto.Date.ToString("MMMM d, yyyy")</span>
     </header>
@@ -50,13 +56,13 @@
             <nav class="pb-nav" aria-label="Photo navigation">
                 @if (Model.PreviousPhoto != null)
                 {
-                    <a href="/@Model.PreviousPhoto.Date.ToString("yyyy-MM-dd")"
+                    <a href="@photoBase@Model.PreviousPhoto.Date.ToString("yyyy-MM-dd")"
                        class="pb-nav-prev"
                        title="@Model.PreviousPhoto.Title">&#8592; prev</a>
                 }
                 @if (Model.NextPhoto != null)
                 {
-                    <a href="/@Model.NextPhoto.Date.ToString("yyyy-MM-dd")"
+                    <a href="@photoBase@Model.NextPhoto.Date.ToString("yyyy-MM-dd")"
                        class="pb-nav-next"
                        title="@Model.NextPhoto.Title">next &#8594;</a>
                 }
@@ -69,8 +75,8 @@
 
         <footer class="pb-footer">
             <nav class="pb-footer-nav">
-                <a href="/photos/about" class="pb-footer-link">About</a>
-                <a href="/photos/rss" class="pb-footer-link">RSS</a>
+                <a href="@aboutHref" class="pb-footer-link">About</a>
+                <a href="@rssHref" class="pb-footer-link">RSS</a>
                 <a href="https://clintmcmahon.com" class="pb-footer-link">clintmcmahon.com</a>
             </nav>
         </footer>
@@ -79,7 +85,6 @@
     <div class="pb-keys" aria-hidden="true">&#8592; &#8594;</div>
 
     <script>
-        // Image fade-in on load
         (function () {
             var img = document.querySelector('.pb-image');
             if (!img) return;
@@ -87,7 +92,6 @@
             img.complete ? show() : img.addEventListener('load', show);
         }());
 
-        // Keyboard navigation
         document.addEventListener('keydown', function (e) {
             if (e.key === 'ArrowLeft') {
                 var a = document.querySelector('.pb-nav-prev');
@@ -98,7 +102,6 @@
             }
         });
 
-        // Touch swipe navigation
         var _tx = 0;
         document.addEventListener('touchstart', function (e) {
             _tx = e.touches[0].clientX;

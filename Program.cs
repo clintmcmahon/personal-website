@@ -33,7 +33,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseMiddleware<RedirectMiddleware>();
-
+app.UseMiddleware<SubdomainMiddleware>();
 
 app.UseRouting();
 

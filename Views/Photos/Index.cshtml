@@ -1,82 +1,146 @@
-@model List<Website.Models.PhotoAlbum>
+@model List<Website.Models.PhotoEntry>
 
 @{
-    ViewData["Title"] = "Photos";
-    ViewData["Description"] = "A collection of my photography organized by album.";
+    ViewData["Title"] = "Photos - Clint McMahon";
+    ViewData["Description"] = "Photographs from the life of Clint McMahon.";
 }
 
-<div class="container mt-5">
-    <div class="row mb-4">
-        <div class="col-12">
-            <h1 class="display-4">Photos</h1>
-            <p class="lead text-muted">Photography albums from my adventures and everyday life.</p>
-        </div>
-    </div>
+<div class="photo-feed">
 
     @if (!Model.Any())
     {
-        <div class="row">
-            <div class="col-12">
-                <div class="alert alert-info" role="alert">
-                    <i class="bi bi-info-circle"></i> No albums available yet. Check back soon!
-                </div>
-            </div>
-        </div>
+        <p class="photo-feed-empty">No photos yet. Check back soon.</p>
     }
     else
     {
-        <div class="row g-4">
-            @foreach (var album in Model)
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var photo = Model[i];
+            <article class="photo-entry">
+                <a href="/photos/@photo.Date.ToString("yyyy-MM-dd")" class="photo-entry-link">
+                    <img src="@photo.ImageUrl"
+                         alt="@photo.Title"
+                         class="photo-entry-img"
+                         loading="@(i < 3 ? "eager" : "lazy")" />
+                </a>
+                <div class="photo-entry-meta">
+                    <time class="photo-entry-date" datetime="@photo.Date.ToString("yyyy-MM-dd")">
+                        @photo.Date.ToString("MMMM d, yyyy")
+                    </time>
+                    @if (!string.IsNullOrWhiteSpace(photo.Title))
+                    {
+                        <a href="/photos/@photo.Date.ToString("yyyy-MM-dd")" class="photo-entry-title">@photo.Title</a>
+                    }
+                </div>
+            </article>
+
+            @if (i < Model.Count - 1)
             {
-                <div class="col-lg-4 col-md-6">
-                    <a href="/photos/@album.Slug" class="text-decoration-none">
-                        <div class="card h-100 shadow-sm hover-lift">
-                            @if (!string.IsNullOrEmpty(album.ThumbnailUrl))
-                            {
-                                <img src="@album.ThumbnailUrl" 
-                                     class="card-img-top" 
-                                     alt="@album.Title"
-                                     style="height: 300px; object-fit: cover;">
-                            }
-                            else
-                            {
-                                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
-                                     style="height: 300px;">
-                                    <i class="bi bi-camera text-muted" style="font-size: 4rem;"></i>
-                                </div>
-                            }
-                            <div class="card-body">
-                                <h5 class="card-title">@album.Title</h5>
-                                @if (!string.IsNullOrEmpty(album.Description))
-                                {
-                                    <p class="card-text text-muted small">@album.Description</p>
-                                }
-                                <p class="card-text text-muted">
-                                    <i class="bi bi-images"></i> @album.PhotoCount @(album.PhotoCount == 1 ? "photo" : "photos")
-                                    <span class="ms-2"><i class="bi bi-calendar"></i> @album.Date.ToString("MMMM yyyy")</span>
-                                </p>
-                            </div>
-                        </div>
-                    </a>
+                <div class="photo-separator" aria-hidden="true">
+                    <span class="photo-separator-line"></span>
+                    <span class="photo-separator-dot"></span>
+                    <span class="photo-separator-line"></span>
                 </div>
             }
-        </div>
+        }
     }
+
 </div>
 
 @section Scripts {
-    <style>
-        .hover-lift {
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+<style>
+    /* Pull out of Bootstrap's container padding and center at 1000px */
+    .photo-feed {
+        max-width: 1000px;
+        margin: 2rem auto 4rem;
+        padding: 0;
+    }
+
+    .photo-feed-empty {
+        font-size: 0.82rem;
+        color: #bbb;
+        text-align: center;
+        padding: 4rem 0;
+    }
+
+    /* Each photo post */
+    .photo-entry {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .photo-entry-link {
+        display: block;
+        line-height: 0; /* removes gap below img */
+    }
+
+    .photo-entry-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: opacity 0.2s ease;
+    }
+
+    .photo-entry-link:hover .photo-entry-img {
+        opacity: 0.93;
+    }
+
+    /* Date + title row */
+    .photo-entry-meta {
+        display: flex;
+        align-items: baseline;
+        gap: 1.25rem;
+        margin-top: 0.75rem;
+    }
+
+    .photo-entry-date {
+        font-size: 0.69rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #bbb;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .photo-entry-title {
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: #111;
+        text-decoration: none;
+        transition: color 0.15s;
+    }
+
+    .photo-entry-title:hover {
+        color: #555;
+    }
+
+    /* Separator */
+    .photo-separator {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        margin: 3rem 0;
+    }
+
+    .photo-separator-line {
+        flex: 1;
+        height: 1px;
+        background: #e8e8e8;
+    }
+
+    .photo-separator-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #d0d0d0;
+        margin: 0 0.9rem;
+        flex-shrink: 0;
+    }
+
+    @@media (max-width: 1040px) {
+        .photo-feed {
+            margin: 1.5rem 1.25rem 3rem;
         }
-        
-        .hover-lift:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-        }
-        
-        .card a {
-            color: inherit;
-        }
-    </style>
+    }
+</style>
 }

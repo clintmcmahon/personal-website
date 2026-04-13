@@ -19,10 +19,10 @@ public class PhotosController : Controller
     [Route("photos")]
     public IActionResult Index()
     {
-        var albums = _photoRepository.GetAllAlbums();
-        ViewData["Title"] = "Photos - Clint McMahon";
-        ViewData["Description"] = "A collection of my photography organized by album.";
-        return View(albums);
+        var viewModel = _photoService.GetLatestPhoto();
+        if (viewModel == null || string.IsNullOrEmpty(viewModel.CurrentPhoto.ImageUrl))
+            return NotFound("No photos found.");
+        return View("PhotoDetail", viewModel);
     }
 
     [Route("photos/about")]
@@ -75,33 +75,7 @@ public class PhotosController : Controller
         return Content(rss.ToString(), "application/rss+xml", Encoding.UTF8);
     }
 
-    [Route("photos/{slug}")]
-    public IActionResult Album(string slug)
-    {
-        var albums = _photoRepository.GetAllAlbums();
-        var album = albums.FirstOrDefault(a => a.Slug.Equals(slug, StringComparison.OrdinalIgnoreCase));
-
-        if (album == null)
-        {
-            return NotFound("Album not found.");
-        }
-
-        var photos = _photoRepository.GetPhotosForAlbum(slug);
-        if (photos.Count == 0)
-        {
-            return NotFound("No photos found in this album.");
-        }
-
-        ViewData["Title"] = $"{album.Title} - Photos - Clint McMahon";
-        ViewData["Description"] = album.Description;
-        ViewBag.AlbumTitle = album.Title;
-        ViewBag.AlbumDescription = album.Description;
-        ViewBag.AlbumContent = album.Content;
-
-        return View("Month", photos);
-    }
-
-    [Route("{date:regex(^\\d{{4}}-\\d{{2}}-\\d{{2}}$)}")]
+    [Route("photos/{date:regex(^\\d{{4}}-\\d{{2}}-\\d{{2}}$)}")]
     public IActionResult PhotoByDate(string date)
     {
         if (!DateTime.TryParseExact(date, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out var parsedDate))
