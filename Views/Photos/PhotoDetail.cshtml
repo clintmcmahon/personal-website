@@ -35,10 +35,20 @@
     </header>
 
     <main class="pb-main">
-        <div class="pb-image-wrap">
-            <img src="@Model.CurrentPhoto.ImageUrl"
-                 class="pb-image"
-                 alt="@Model.CurrentPhoto.Title" />
+        <div class="pb-rows">
+            @foreach (var row in Model.CurrentPhoto.Rows)
+            {
+                <div class="pb-row">
+                    @foreach (var img in row)
+                    {
+                        var altText = string.IsNullOrEmpty(img.Alt) ? Model.CurrentPhoto.Title : img.Alt;
+                        <img src="@img.Url"
+                             class="pb-image"
+                             alt="@altText"
+                             title="@altText" />
+                    }
+                </div>
+            }
         </div>
 
         <div class="pb-meta">
@@ -85,12 +95,10 @@
     <div class="pb-keys" aria-hidden="true">&#8592; &#8594;</div>
 
     <script>
-        (function () {
-            var img = document.querySelector('.pb-image');
-            if (!img) return;
+        document.querySelectorAll('.pb-image').forEach(function (img) {
             function show() { img.classList.add('is-loaded'); }
             img.complete ? show() : img.addEventListener('load', show);
-        }());
+        });
 
         document.addEventListener('keydown', function (e) {
             if (e.key === 'ArrowLeft') {

@@ -116,7 +116,8 @@ public class PhotoRepository
                 Date = photoDate,
                 ImageUrl = relativePath,
                 Content = string.Empty,
-                Tags = new List<string>()
+                Tags = new List<string>(),
+                Rows = new List<List<PhotoImage>> { new List<PhotoImage> { new PhotoImage(relativePath, string.Empty) } }
             };
         }
         catch
@@ -196,35 +197,44 @@ public class PhotoRepository
         if (string.IsNullOrWhiteSpace(title))
             title = date.ToString("MMMM d, yyyy");
 
-        // image: single string  OR  images: [file.jpg, ...]  OR  derive from the actual image file
+        // rows: explicit multi-row layout  OR  image:/images:  OR  derive from image file
+        var rows = ParseRowsFromYaml(yamlText);
         string? imageUrl = null;
-        if (metadata.TryGetValue("image", out var singleImage) && !string.IsNullOrWhiteSpace(singleImage))
-        {
-            imageUrl = singleImage;
-        }
-        else if (metadata.TryGetValue("images", out var imagesValue))
-        {
-            var first = imagesValue.Trim('[', ']').Split(',').FirstOrDefault()?.Trim().Trim('"').Trim('\'');
-            if (!string.IsNullOrWhiteSpace(first))
-                imageUrl = first;
-        }
+        List<List<PhotoImage>> resolvedRows;
 
-        // If image is a bare filename, build the path from the folder
-        if (!string.IsNullOrWhiteSpace(imageUrl) && !imageUrl.StartsWith("/") && !imageUrl.StartsWith("http"))
+        if (rows.Any())
         {
-            var folderName = imagePathFallback != null
-                ? Path.GetFileName(Path.GetDirectoryName(imagePathFallback) ?? "")
-                : "";
-            imageUrl = $"/photos/{folderName}/{imageUrl}";
+            resolvedRows = rows
+                .Select(row => row
+                    .Select(img => new PhotoImage(ResolvePhotoUrl(img.RawUrl, imagePathFallback), img.Alt))
+                    .ToList())
+                .ToList();
+            imageUrl = resolvedRows.First().First().Url;
         }
-
-        // Last resort: use the actual image file we were called with
-        if (string.IsNullOrWhiteSpace(imageUrl) && imagePathFallback != null)
+        else
         {
-            imageUrl = imagePathFallback.Replace(_photosDirectory, "/photos").Replace("\\", "/");
-        }
+            if (metadata.TryGetValue("image", out var singleImage) && !string.IsNullOrWhiteSpace(singleImage))
+            {
+                imageUrl = singleImage;
+            }
+            else if (metadata.TryGetValue("images", out var imagesValue))
+            {
+                var first = imagesValue.Trim('[', ']').Split(',').FirstOrDefault()?.Trim().Trim('"').Trim('\'');
+                if (!string.IsNullOrWhiteSpace(first))
+                    imageUrl = first;
+            }
 
-        if (string.IsNullOrWhiteSpace(imageUrl)) return null;
+            if (!string.IsNullOrWhiteSpace(imageUrl))
+                imageUrl = ResolvePhotoUrl(imageUrl, imagePathFallback);
+
+            // Last resort: use the actual image file
+            if (string.IsNullOrWhiteSpace(imageUrl) && imagePathFallback != null)
+                imageUrl = imagePathFallback.Replace(_photosDirectory, "/photos").Replace("\\", "/");
+
+            if (string.IsNullOrWhiteSpace(imageUrl)) return null;
+
+            resolvedRows = new List<List<PhotoImage>> { new List<PhotoImage> { new PhotoImage(imageUrl, string.Empty) } };
+        }
 
         var slug = metadata.ContainsKey("slug") ? metadata["slug"] : GenerateSlug(title);
         var tags = ParseTagsValue(metadata.ContainsKey("tags") ? metadata["tags"] : "");
@@ -247,8 +257,72 @@ public class PhotoRepository
             Date = date,
             ImageUrl = imageUrl,
             Content = htmlContent,
-            Tags = tags
+            Tags = tags,
+            Rows = resolvedRows
         };
+    }
+
+    // Parses the rows: block from YAML frontmatter.
+    // Expected format:
+    //   rows:
+    //     - [portrait1.jpg | Alt text, portrait2.jpg]
+    //     - [landscape.jpg | Another description]
+    // The "| Alt text" part is optional — omit it and the alt falls back to the post title in the view.
+    private static List<List<(string RawUrl, string Alt)>> ParseRowsFromYaml(string yaml)
+    {
+        var rows = new List<List<(string, string)>>();
+        var lines = yaml.Split('\n');
+        bool inRows = false;
+
+        foreach (var line in lines)
+        {
+            var trimmed = line.Trim();
+
+            if (trimmed == "rows:" || trimmed.StartsWith("rows: "))
+            {
+                inRows = true;
+                continue;
+            }
+
+            if (inRows)
+            {
+                if (trimmed.StartsWith("- [") && trimmed.EndsWith("]"))
+                {
+                    var inner = trimmed.Substring(3, trimmed.Length - 4);
+                    var images = inner.Split(',')
+                        .Select(s =>
+                        {
+                            var parts = s.Split('|', 2);
+                            var rawUrl = parts[0].Trim().Trim('"').Trim('\'');
+                            var alt = parts.Length > 1 ? parts[1].Trim() : string.Empty;
+                            return (rawUrl, alt);
+                        })
+                        .Where(t => !string.IsNullOrWhiteSpace(t.rawUrl))
+                        .ToList();
+                    if (images.Any())
+                        rows.Add(images);
+                }
+                else if (!string.IsNullOrWhiteSpace(trimmed) && !trimmed.StartsWith("-") && trimmed.Contains(":"))
+                {
+                    inRows = false; // hit a new YAML key
+                }
+            }
+        }
+
+        return rows;
+    }
+
+    // Resolves a bare filename to a full /photos/{folder}/{file} path.
+    // Absolute paths and http URLs are returned unchanged.
+    private string ResolvePhotoUrl(string rawUrl, string? imagePathFallback)
+    {
+        if (rawUrl.StartsWith("/") || rawUrl.StartsWith("http"))
+            return rawUrl;
+
+        var folderName = imagePathFallback != null
+            ? Path.GetFileName(Path.GetDirectoryName(imagePathFallback) ?? "")
+            : "";
+        return $"/photos/{folderName}/{rawUrl}";
     }
 
     // Handles both "tag1, tag2" strings and "[tag1, tag2]" YAML inline arrays

@@ -73,16 +73,28 @@ html, body {
   padding: 1rem 2.5rem 4rem;
 }
 
-/* ---- Image ------------------------------------------------- */
+/* ---- Image rows ------------------------------------------- */
 
-.pb-image-wrap {
+.pb-rows {
   width: 100%;
   max-width: min(92vw, 1000px);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Each row is a horizontal strip — one or more images side by side */
+.pb-row {
+  display: flex;
+  gap: 4px;
+  width: 100%;
 }
 
 .pb-image {
+  flex: 1;
+  min-width: 0;
   display: block;
-  width: 100%;
+  width: 0;        /* forces equal flex distribution regardless of natural size */
   height: auto;
   opacity: 0;
   transition: opacity 0.55s ease;
@@ -117,7 +129,6 @@ html, body {
   font-size: 0.8rem;
   color: #222;
   line-height: 1.7;
-  max-width: 55ch;
   margin: 0;
 }
 .pb-caption p { margin: 0 0 0.5em; }
