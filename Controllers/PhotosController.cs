@@ -5,6 +5,8 @@ using Website.Services;
 using Website.Repositories;
 
 namespace Website.Controllers;
+
+[IgnoreAntiforgeryToken]
 public class PhotosController : Controller
 {
     private readonly PhotoService _photoService;
@@ -16,6 +18,7 @@ public class PhotosController : Controller
         _photoRepository = photoRepository;
     }
 
+    [HttpGet]
     [Route("photos")]
     public IActionResult Index()
     {
@@ -25,6 +28,7 @@ public class PhotosController : Controller
         return View("PhotoDetail", viewModel);
     }
 
+    [HttpGet]
     [Route("photos/about")]
     public IActionResult About()
     {
@@ -32,6 +36,7 @@ public class PhotosController : Controller
         return View("PhotoAbout");
     }
 
+    [HttpGet]
     [Route("photos/rss")]
     public IActionResult Rss()
     {
@@ -75,6 +80,7 @@ public class PhotosController : Controller
         return Content(rss.ToString(), "application/rss+xml", Encoding.UTF8);
     }
 
+    [HttpGet]
     [Route("photos/{date:regex(^\\d{{4}}-\\d{{2}}-\\d{{2}}$)}")]
     public IActionResult PhotoByDate(string date)
     {
