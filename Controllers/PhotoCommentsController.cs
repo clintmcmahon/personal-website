@@ -18,22 +18,9 @@ namespace Website.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromForm] string photoDate, [FromForm] string name, [FromForm] string content)
+        public IActionResult Post()
         {
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(content))
-            {
-                return BadRequest("Name and comment are required.");
-            }
-            var comment = new PhotoComment
-            {
-                PhotoDate = photoDate,
-                Name = name,
-                Content = content,
-                CreatedAt = DateTime.UtcNow
-            };
-            _context.PhotoComments.Add(comment);
-            await _context.SaveChangesAsync();
-            return Redirect(Request.Headers["Referer"].ToString());
+            return StatusCode(403);
         }
     }
 }
