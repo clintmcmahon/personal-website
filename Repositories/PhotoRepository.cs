@@ -46,6 +46,8 @@ public class PhotoRepository
             }
         }
 
+        var processedFolderMarkdowns = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
         foreach (var imageFile in imageFiles)
         {
             var fileName = Path.GetFileNameWithoutExtension(imageFile);
@@ -68,6 +70,11 @@ public class PhotoRepository
                 var dirMdKey = $"{dirName}/{dirName}";
                 if (markdownFiles.TryGetValue(dirMdKey, out var dirMdFile))
                 {
+                    // Only create one entry per folder-level markdown — skip subsequent images in the same folder
+                    if (processedFolderMarkdowns.Contains(dirMdKey))
+                        continue;
+
+                    processedFolderMarkdowns.Add(dirMdKey);
                     var content = File.ReadAllText(dirMdFile);
                     entry = ParseMarkdown(content, imageFile);
                 }

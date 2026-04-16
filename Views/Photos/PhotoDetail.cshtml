@@ -35,6 +35,21 @@
     </header>
 
     <main class="pb-main">
+        <nav class="pb-nav pb-nav--top" aria-label="Photo navigation">
+            @if (Model.PreviousPhoto != null)
+            {
+                <a href="@photoBase@Model.PreviousPhoto.Date.ToString("yyyy-MM-dd")"
+                   class="pb-nav-prev"
+                   title="@Model.PreviousPhoto.Title">&#8592; prev</a>
+            }
+            @if (Model.NextPhoto != null)
+            {
+                <a href="@photoBase@Model.NextPhoto.Date.ToString("yyyy-MM-dd")"
+                   class="pb-nav-next"
+                   title="@Model.NextPhoto.Title">next &#8594;</a>
+            }
+        </nav>
+
         <div class="pb-rows">
             @foreach (var row in Model.CurrentPhoto.Rows)
             {
