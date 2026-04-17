@@ -137,9 +137,13 @@ html, body {
 
 .pb-nav {
   display: flex;
-  gap: 1.75rem;
+  justify-content: space-between;
   flex-shrink: 0;
   padding-top: 0.1rem;
+}
+
+.pb-nav-next {
+  margin-left: auto;
 }
 
 .pb-nav a {
@@ -155,7 +159,6 @@ html, body {
 .pb-nav--top {
   width: 100%;
   max-width: min(92vw, 1000px);
-  justify-content: flex-end;
   margin-bottom: 0.75rem;
 }
 

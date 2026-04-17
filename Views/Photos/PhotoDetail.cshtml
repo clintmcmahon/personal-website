@@ -42,6 +42,10 @@
                    class="pb-nav-prev"
                    title="@Model.PreviousPhoto.Title">&#8592; prev</a>
             }
+            else
+            {
+                <span></span>
+            }
             @if (Model.NextPhoto != null)
             {
                 <a href="@photoBase@Model.NextPhoto.Date.ToString("yyyy-MM-dd")"
@@ -77,22 +81,26 @@
                     <div class="pb-caption">@Html.Raw(Model.CurrentPhoto.Content)</div>
                 }
             </div>
-
-            <nav class="pb-nav" aria-label="Photo navigation">
-                @if (Model.PreviousPhoto != null)
-                {
-                    <a href="@photoBase@Model.PreviousPhoto.Date.ToString("yyyy-MM-dd")"
-                       class="pb-nav-prev"
-                       title="@Model.PreviousPhoto.Title">&#8592; prev</a>
-                }
-                @if (Model.NextPhoto != null)
-                {
-                    <a href="@photoBase@Model.NextPhoto.Date.ToString("yyyy-MM-dd")"
-                       class="pb-nav-next"
-                       title="@Model.NextPhoto.Title">next &#8594;</a>
-                }
-            </nav>
         </div>
+
+        <nav class="pb-nav pb-nav--top" aria-label="Photo navigation">
+            @if (Model.PreviousPhoto != null)
+            {
+                <a href="@photoBase@Model.PreviousPhoto.Date.ToString("yyyy-MM-dd")"
+                   class="pb-nav-prev"
+                   title="@Model.PreviousPhoto.Title">&#8592; prev</a>
+            }
+            else
+            {
+                <span></span>
+            }
+            @if (Model.NextPhoto != null)
+            {
+                <a href="@photoBase@Model.NextPhoto.Date.ToString("yyyy-MM-dd")"
+                   class="pb-nav-next"
+                   title="@Model.NextPhoto.Title">next &#8594;</a>
+            }
+        </nav>
 
         <div class="pb-comments" id="comments">
             @await Html.PartialAsync("_PhotoComments", Model.Comments)
