@@ -36,7 +36,9 @@
     var el = document.getElementById('webmentions');
     if (!el) return;
     var pageUrl = el.getAttribute('data-url');
-    var token = 'yeKte-nqCwLbMTMTmiNUaQ';
+    var token = pageUrl.indexOf('photos.clintmcmahon.com') !== -1
+        ? '4hC8cRKtvkq8zuYb78AXbw'
+        : 'yeKte-nqCwLbMTMTmiNUaQ';
     var api = 'https://webmention.io/api/mentions.jf2?token=' + token + '&per-page=100&target=' + encodeURIComponent(pageUrl);
 
     fetch(api)
