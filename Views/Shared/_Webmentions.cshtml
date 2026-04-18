@@ -1,7 +1,9 @@
 @model string
 @* Model = canonical URL of the current page *@
 
-<div class="webmentions mt-5" id="webmentions" data-url="@Model">
+<p class="wm-notice">This page supports <a href="https://indieweb.org/Webmention" target="_blank" rel="noopener">webmentions</a>. If you write a response on your own site, send a webmention and it'll appear below.</p>
+
+<div class="webmentions mt-3" id="webmentions" data-url="@Model">
     <div id="wm-likes" class="wm-facepile mb-3" style="display:none">
         <p class="wm-label">Likes</p>
         <div class="wm-faces"></div>
@@ -17,7 +19,9 @@
 </div>
 
 <style>
-    .webmentions { border-top: 1px solid #e8e8e8; padding-top: 1.5rem; }
+    .wm-notice { font-size: 0.78rem; color: #888; margin-bottom: 1.25rem; border-top: 1px solid #e8e8e8; padding-top: 1.5rem; }
+    .wm-notice a { color: #666; }
+    .webmentions { }
     .wm-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #888; margin-bottom: 0.6rem; }
     .wm-facepile .wm-faces { display: flex; flex-wrap: wrap; gap: 6px; }
     .wm-face img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 0 0 1px #ddd; }
