@@ -1,0 +1,94 @@
+@model string
+@* Model = canonical URL of the current page *@
+
+<div class="webmentions mt-5" id="webmentions" data-url="@Model">
+    <div id="wm-likes" class="wm-facepile mb-3" style="display:none">
+        <p class="wm-label">Likes</p>
+        <div class="wm-faces"></div>
+    </div>
+    <div id="wm-reposts" class="wm-facepile mb-3" style="display:none">
+        <p class="wm-label">Reposts</p>
+        <div class="wm-faces"></div>
+    </div>
+    <div id="wm-replies" style="display:none">
+        <p class="wm-label">Replies</p>
+        <ul class="wm-reply-list list-unstyled"></ul>
+    </div>
+</div>
+
+<style>
+    .webmentions { border-top: 1px solid #e8e8e8; padding-top: 1.5rem; }
+    .wm-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #888; margin-bottom: 0.6rem; }
+    .wm-facepile .wm-faces { display: flex; flex-wrap: wrap; gap: 6px; }
+    .wm-face img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 0 0 1px #ddd; }
+    .wm-reply { padding: 0.75rem 0; border-bottom: 1px solid #f2f2f2; }
+    .wm-reply:last-child { border-bottom: none; }
+    .wm-reply-author { display: flex; align-items: center; gap: 8px; margin-bottom: 0.4rem; }
+    .wm-reply-author img { width: 28px; height: 28px; border-radius: 50%; }
+    .wm-reply-author-name { font-size: 0.8rem; font-weight: 500; color: #333; text-decoration: none; }
+    .wm-reply-author-name:hover { color: #111; }
+    .wm-reply-date { font-size: 0.72rem; color: #999; margin-left: auto; }
+    .wm-reply-content { font-size: 0.82rem; color: #444; line-height: 1.6; }
+</style>
+
+<script>
+(function () {
+    var el = document.getElementById('webmentions');
+    if (!el) return;
+    var pageUrl = el.getAttribute('data-url');
+    var token = 'yeKte-nqCwLbMTMTmiNUaQ';
+    var api = 'https://webmention.io/api/mentions.jf2?token=' + token + '&per-page=100&target=' + encodeURIComponent(pageUrl);
+
+    fetch(api)
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+            var mentions = (data.children || []);
+            var likes    = mentions.filter(function (m) { return m['wm-property'] === 'like-of'; });
+            var reposts  = mentions.filter(function (m) { return m['wm-property'] === 'repost-of'; });
+            var replies  = mentions.filter(function (m) {
+                return m['wm-property'] === 'in-reply-to' || m['wm-property'] === 'mention-of';
+            });
+
+            function avatar(m) {
+                var author = m.author || {};
+                var src = author.photo || '';
+                var name = author.name || 'Anonymous';
+                var url = author.url || m.url || '#';
+                return '<a href="' + url + '" target="_blank" rel="noopener" title="' + name + '" class="wm-face"><img src="' + src + '" alt="' + name + '" onerror="this.style.display=\'none\'"></a>';
+            }
+
+            if (likes.length) {
+                var section = document.getElementById('wm-likes');
+                section.querySelector('.wm-faces').innerHTML = likes.map(avatar).join('');
+                section.style.display = 'block';
+            }
+            if (reposts.length) {
+                var section = document.getElementById('wm-reposts');
+                section.querySelector('.wm-faces').innerHTML = reposts.map(avatar).join('');
+                section.style.display = 'block';
+            }
+            if (replies.length) {
+                var section = document.getElementById('wm-replies');
+                var html = replies.map(function (m) {
+                    var author = m.author || {};
+                    var name = author.name || 'Anonymous';
+                    var photo = author.photo ? '<img src="' + author.photo + '" alt="' + name + '" onerror="this.style.display=\'none\'">' : '';
+                    var url = m.url || '#';
+                    var date = m.published ? new Date(m.published).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+                    var text = (m.content && m.content.text) ? m.content.text : '';
+                    return '<li class="wm-reply">' +
+                        '<div class="wm-reply-author">' +
+                        photo +
+                        '<a href="' + url + '" target="_blank" rel="noopener" class="wm-reply-author-name">' + name + '</a>' +
+                        (date ? '<span class="wm-reply-date">' + date + '</span>' : '') +
+                        '</div>' +
+                        (text ? '<div class="wm-reply-content">' + text + '</div>' : '') +
+                        '</li>';
+                }).join('');
+                section.querySelector('.wm-reply-list').innerHTML = html;
+                section.style.display = 'block';
+            }
+        })
+        .catch(function () { /* silently fail if no mentions */ });
+})();
+</script>

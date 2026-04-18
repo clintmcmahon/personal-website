@@ -63,11 +63,13 @@ public class PhotoRepository
                 entry = ParseMarkdown(content, imageFile);
             }
 
-            // 2. Fall back to a folder-level .md (e.g., 2026-04-10/2026-04-10.md)
+            // 2. Fall back to a folder-level .md (e.g., 2026/2026-04-10/2026-04-10.md)
             if (entry == null)
             {
-                var dirName = Path.GetFileName(Path.GetDirectoryName(imageFile) ?? "");
-                var dirMdKey = $"{dirName}/{dirName}";
+                var dirPath = Path.GetDirectoryName(imageFile) ?? "";
+                var dirName = Path.GetFileName(dirPath);
+                var relDirPath = Path.GetRelativePath(_photosDirectory, dirPath).Replace("\\", "/");
+                var dirMdKey = $"{relDirPath}/{dirName}";
                 if (markdownFiles.TryGetValue(dirMdKey, out var dirMdFile))
                 {
                     // Only create one entry per folder-level markdown — skip subsequent images in the same folder
@@ -106,7 +108,7 @@ public class PhotoRepository
         try
         {
             var fileName = Path.GetFileNameWithoutExtension(imagePath);
-            var relativePath = imagePath.Replace(_photosDirectory, "/photos").Replace("\\", "/");
+            var relativePath = "/photos/" + Path.GetRelativePath(_photosDirectory, imagePath).Replace("\\", "/");
             
             // Extract date from directory structure: photos/2025-04/image.jpg
             var pathParts = imagePath.Split(Path.DirectorySeparatorChar);
@@ -326,10 +328,10 @@ public class PhotoRepository
         if (rawUrl.StartsWith("/") || rawUrl.StartsWith("http"))
             return rawUrl;
 
-        var folderName = imagePathFallback != null
-            ? Path.GetFileName(Path.GetDirectoryName(imagePathFallback) ?? "")
+        var folderPath = imagePathFallback != null
+            ? Path.GetRelativePath(_photosDirectory, Path.GetDirectoryName(imagePathFallback) ?? "").Replace("\\", "/")
             : "";
-        return $"/photos/{folderName}/{rawUrl}";
+        return $"/photos/{folderPath}/{rawUrl}";
     }
 
     // Handles both "tag1, tag2" strings and "[tag1, tag2]" YAML inline arrays

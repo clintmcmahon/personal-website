@@ -26,12 +26,13 @@
     <link rel="canonical" href="@canonicalUrl" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="/css/classic-photoblog.css?v=3" />
+    <link rel="webmention" href="https://webmention.io/photos.clintmcmahon.com/webmention" />
+    <link rel="me" href="https://github.com/clintmcmahon" />
 </head>
 <body>
     <header class="pb-header">
         <a href="@homeHref" class="pb-site-name">Clint McMahon</a>
         <span class="pb-header-byline">photographs from the life of <a href="https://clintmcmahon.com" class="pb-header-byline-link">clintmcmahon.com</a></span>
-        <span class="pb-header-date">@Model.CurrentPhoto.Date.ToString("MMMM d, yyyy")</span>
     </header>
 
     <main class="pb-main">
@@ -54,6 +55,8 @@
             }
         </nav>
 
+        <p class="pb-date-above">@Model.CurrentPhoto.Date.ToString("MMMM d, yyyy")</p>
+
         <div class="pb-rows">
             @foreach (var row in Model.CurrentPhoto.Rows)
             {
@@ -72,10 +75,6 @@
 
         <div class="pb-meta">
             <div class="pb-caption-area">
-                @if (!string.IsNullOrWhiteSpace(Model.CurrentPhoto.Title))
-                {
-                    <p class="pb-title">@Model.CurrentPhoto.Title</p>
-                }
                 @if (!string.IsNullOrWhiteSpace(Model.CurrentPhoto.Content))
                 {
                     <div class="pb-caption">@Html.Raw(Model.CurrentPhoto.Content)</div>
@@ -106,10 +105,15 @@
             @await Html.PartialAsync("_PhotoComments", Model.Comments)
         </div>
 
+        <div style="width:100%;max-width:min(92vw,1000px)">
+            @await Html.PartialAsync("_Webmentions", canonicalUrl)
+        </div>
+
         <footer class="pb-footer">
             <nav class="pb-footer-nav">
                 <a href="@aboutHref" class="pb-footer-link">About</a>
                 <a href="@rssHref" class="pb-footer-link">RSS</a>
+                <a href="https://www.instagram.com/cwmcmhn/" class="pb-footer-link" target="_blank">Instagram</a>
                 <a href="https://clintmcmahon.com" class="pb-footer-link">clintmcmahon.com</a>
             </nav>
         </footer>
