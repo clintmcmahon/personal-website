@@ -12,13 +12,28 @@ public class PhotoRepository
     private readonly string _photosDirectory;
     private static readonly string[] ImageExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
 
+    private List<PhotoEntry>? _cache;
+    private DateTime _cacheExpiry = DateTime.MinValue;
+    private static readonly TimeSpan CacheDuration = TimeSpan.FromMinutes(10);
+
     public PhotoRepository(string photosDirectory)
     {
         _photosDirectory = photosDirectory;
     }
 
+    public List<PhotoEntry> GetPhotosByTag(string tag)
+    {
+        var normalized = tag.ToLowerInvariant().Trim();
+        return GetAllPhotos()
+            .Where(p => p.Tags.Any(t => t.ToLowerInvariant().Trim() == normalized))
+            .ToList();
+    }
+
     public List<PhotoEntry> GetAllPhotos()
     {
+        if (_cache != null && DateTime.UtcNow < _cacheExpiry)
+            return _cache;
+
         var photos = new List<PhotoEntry>();
 
         if (!Directory.Exists(_photosDirectory))
@@ -94,7 +109,9 @@ public class PhotoRepository
             }
         }
 
-        return photos.OrderByDescending(p => p.Date).ToList();
+        _cache = photos.OrderByDescending(p => p.Date).ToList();
+        _cacheExpiry = DateTime.UtcNow.Add(CacheDuration);
+        return _cache;
     }
 
     public PhotoEntry? GetPhotoBySlug(string slug)

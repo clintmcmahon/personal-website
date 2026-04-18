@@ -1,0 +1,117 @@
+@model Website.Models.PhotoIndexViewModel
+
+@{
+    Layout = null;
+    var tag = Model.ActiveTag ?? "";
+    var displayTag = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(tag);
+    ViewData["Title"] = $"#{displayTag} — Photos — Clint McMahon";
+
+    var isSubdomain = Context.Request.Host.Host.StartsWith("photos.", StringComparison.OrdinalIgnoreCase);
+    var photoBase  = isSubdomain ? "/"         : "/photos/";
+    var homeHref   = isSubdomain ? "/"         : "/photos";
+    var aboutHref  = isSubdomain ? "/about"    : "/photos/about";
+    var rssHref    = isSubdomain ? "/rss"      : "/photos/rss";
+    var tagBase    = isSubdomain ? "/tag/"     : "/photos/tag/";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="@Model.TotalCount photos tagged "@tag" by Clint McMahon." />
+    <meta property="og:title" content="#@tag — Photos — Clint McMahon" />
+    <meta property="og:type" content="website" />
+    <link rel="webmention" href="https://webmention.io/photos.clintmcmahon.com/webmention" />
+    <link rel="me" href="https://github.com/clintmcmahon" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="/css/classic-photoblog.css?v=4" />
+</head>
+<body>
+
+<header class="pb-header">
+    <a href="@homeHref" class="pb-site-name">Clint McMahon</a>
+    <span class="pb-header-byline">photographs from the life of <a href="https://clintmcmahon.com" class="pb-header-byline-link">clintmcmahon.com</a></span>
+</header>
+
+@if (Model.TopTags.Any())
+{
+    <div class="pb-tag-strip pb-tag-strip--standalone" aria-label="Browse tags">
+        @foreach (var (t, count) in Model.TopTags)
+        {
+            <a href="@tagBase@Uri.EscapeDataString(t)" class="pb-tag-pill @(Model.ActiveTag == t ? "is-active" : "")">
+                @t
+                <span class="pb-tag-pill-count">@count</span>
+            </a>
+        }
+    </div>
+}
+
+<div class="pb-tag-page-header">
+    <a href="@homeHref" class="pb-tag-page-back">&#8592; All photos</a>
+    <h1 class="pb-tag-page-title">#@tag</h1>
+    <p class="pb-tag-page-count">@Model.TotalCount photo@(Model.TotalCount == 1 ? "" : "s")</p>
+</div>
+
+<main class="pb-archive-main">
+    @foreach (var year in Model.Years)
+    {
+        <section id="year-@year" class="pb-year-section">
+            <h2 class="pb-year-heading">
+                @year
+                <span class="pb-year-total">— @Model.PhotosByYear[year].Count photo@(Model.PhotosByYear[year].Count == 1 ? "" : "s")</span>
+            </h2>
+            <div class="pb-grid">
+                @foreach (var photo in Model.PhotosByYear[year])
+                {
+                    <a href="@photoBase@photo.Date.ToString("yyyy-MM-dd")"
+                       class="pb-grid-item"
+                       data-src="@photo.ImageUrl"
+                       aria-label="@photo.Date.ToString("MMMM d, yyyy")">
+                        <img class="pb-grid-img" alt="@photo.Title" />
+                        <div class="pb-grid-overlay" aria-hidden="true">
+                            <div class="pb-grid-overlay-inner">
+                                <time class="pb-grid-date" datetime="@photo.Date.ToString("yyyy-MM-dd")">
+                                    @photo.Date.ToString("MMM d, yyyy")
+                                </time>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </section>
+    }
+</main>
+
+<footer class="pb-footer">
+    <nav class="pb-footer-nav">
+        <a href="@aboutHref" class="pb-footer-link">About</a>
+        <a href="@rssHref" class="pb-footer-link">RSS</a>
+        <a href="https://www.instagram.com/cwmcmhn/" class="pb-footer-link" target="_blank">Instagram</a>
+        <a href="https://clintmcmahon.com" class="pb-footer-link">clintmcmahon.com</a>
+    </nav>
+</footer>
+
+<script>
+(function () {
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            var item = entry.target;
+            var img = item.querySelector('.pb-grid-img');
+            if (img && !img.src) {
+                img.src = item.dataset.src;
+                img.addEventListener('load', function () { img.classList.add('is-loaded'); });
+            }
+            observer.unobserve(item);
+        });
+    }, { rootMargin: '400px 0px' });
+
+    document.querySelectorAll('.pb-grid-item[data-src]').forEach(function (el) {
+        observer.observe(el);
+    });
+})();
+</script>
+
+</body>
+</html>

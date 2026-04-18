@@ -22,10 +22,20 @@ public class PhotosController : Controller
     [Route("photos")]
     public IActionResult Index()
     {
-        var viewModel = _photoService.GetLatestPhoto();
-        if (viewModel == null || string.IsNullOrEmpty(viewModel.CurrentPhoto.ImageUrl))
-            return NotFound("No photos found.");
-        return View("PhotoDetail", viewModel);
+        var viewModel = _photoService.GetPhotosForIndex();
+        return View("Index", viewModel);
+    }
+
+    [HttpGet]
+    [Route("photos/tag/{tag}")]
+    public IActionResult Tag(string tag)
+    {
+        if (string.IsNullOrWhiteSpace(tag))
+            return NotFound();
+        var viewModel = _photoService.GetPhotosByTag(tag);
+        if (viewModel.TotalCount == 0)
+            return NotFound($"No photos found for tag '{tag}'.");
+        return View("TagIndex", viewModel);
     }
 
     [HttpGet]

@@ -9,6 +9,44 @@ namespace Website.Services
 {
     public class PhotoService
     {
+        public PhotoIndexViewModel GetPhotosForIndex()
+        {
+            return BuildIndexViewModel(_photoRepository.GetAllPhotos(), null);
+        }
+
+        public PhotoIndexViewModel GetPhotosByTag(string tag)
+        {
+            var all = _photoRepository.GetAllPhotos();
+            var filtered = _photoRepository.GetPhotosByTag(tag);
+            return BuildIndexViewModel(filtered, tag, all);
+        }
+
+        private PhotoIndexViewModel BuildIndexViewModel(List<PhotoEntry> photos, string? activeTag, List<PhotoEntry>? tagSource = null)
+        {
+            var byYear = photos
+                .GroupBy(p => p.Date.Year)
+                .OrderByDescending(g => g.Key)
+                .ToDictionary(g => g.Key, g => g.OrderByDescending(p => p.Date).ToList());
+
+            var topTags = (tagSource ?? photos)
+                .SelectMany(p => p.Tags)
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .GroupBy(t => t.ToLowerInvariant().Trim())
+                .OrderByDescending(g => g.Count())
+                .Take(20)
+                .Select(g => (Tag: g.Key, Count: g.Count()))
+                .ToList();
+
+            return new PhotoIndexViewModel
+            {
+                PhotosByYear = byYear,
+                TopTags = topTags,
+                TotalCount = photos.Count,
+                Years = byYear.Keys.OrderByDescending(y => y).ToList(),
+                ActiveTag = activeTag?.ToLowerInvariant().Trim()
+            };
+        }
+
         private readonly PhotoRepository _photoRepository;
         private readonly PhotoCommentDbContext _dbContext;
 

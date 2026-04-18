@@ -1,146 +1,157 @@
-@model List<Website.Models.PhotoEntry>
+@model Website.Models.PhotoIndexViewModel
+@using System.Web
 
 @{
-    ViewData["Title"] = "Photos - Clint McMahon";
-    ViewData["Description"] = "Photographs from the life of Clint McMahon.";
+    Layout = null;
+    ViewData["Title"] = "Photos — Clint McMahon";
+    var canonicalUrl = "https://photos.clintmcmahon.com/";
+
+    var isSubdomain = Context.Request.Host.Host.StartsWith("photos.", StringComparison.OrdinalIgnoreCase);
+    var photoBase  = isSubdomain ? "/"         : "/photos/";
+    var homeHref   = isSubdomain ? "/"         : "/photos";
+    var aboutHref  = isSubdomain ? "/about"    : "/photos/about";
+    var rssHref    = isSubdomain ? "/rss"      : "/photos/rss";
+    var tagBase    = isSubdomain ? "/tag/"     : "/photos/tag/";
 }
 
-<div class="photo-feed">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Photographs from the life of Clint McMahon — @Model.TotalCount photos spanning Minneapolis and beyond." />
+    <meta property="og:title" content="Photos — Clint McMahon" />
+    <meta property="og:url" content="@canonicalUrl" />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="@canonicalUrl" />
+    <link rel="webmention" href="https://webmention.io/photos.clintmcmahon.com/webmention" />
+    <link rel="me" href="https://github.com/clintmcmahon" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="/css/classic-photoblog.css?v=4" />
+</head>
+<body>
 
-    @if (!Model.Any())
-    {
-        <p class="photo-feed-empty">No photos yet. Check back soon.</p>
-    }
-    else
-    {
-        @for (int i = 0; i < Model.Count; i++)
+<header class="pb-header">
+    <a href="@homeHref" class="pb-site-name">Clint McMahon</a>
+    <span class="pb-header-byline">photographs from the life of <a href="https://clintmcmahon.com" class="pb-header-byline-link">clintmcmahon.com</a></span>
+</header>
+
+<nav class="pb-archive-nav" aria-label="Archive navigation">
+    <div class="pb-year-nav" role="tablist">
+        <span class="pb-year-nav-total">@Model.TotalCount photos</span>
+        @foreach (var year in Model.Years)
         {
-            var photo = Model[i];
-            <article class="photo-entry">
-                <a href="/photos/@photo.Date.ToString("yyyy-MM-dd")" class="photo-entry-link">
-                    <img src="@photo.ImageUrl"
-                         alt="@photo.Title"
-                         class="photo-entry-img"
-                         loading="@(i < 3 ? "eager" : "lazy")" />
-                </a>
-                <div class="photo-entry-meta">
-                    <time class="photo-entry-date" datetime="@photo.Date.ToString("yyyy-MM-dd")">
-                        @photo.Date.ToString("MMMM d, yyyy")
-                    </time>
-                    @if (!string.IsNullOrWhiteSpace(photo.Title))
-                    {
-                        <a href="/photos/@photo.Date.ToString("yyyy-MM-dd")" class="photo-entry-title">@photo.Title</a>
-                    }
-                </div>
-            </article>
-
-            @if (i < Model.Count - 1)
+            <a href="#year-@year" class="pb-year-link" role="tab">
+                @year
+                <span class="pb-year-count">@Model.PhotosByYear[year].Count</span>
+            </a>
+        }
+    </div>
+    @if (Model.TopTags.Any())
+    {
+        <div class="pb-tag-strip" aria-label="Filter by tag">
+            @foreach (var (tag, count) in Model.TopTags)
             {
-                <div class="photo-separator" aria-hidden="true">
-                    <span class="photo-separator-line"></span>
-                    <span class="photo-separator-dot"></span>
-                    <span class="photo-separator-line"></span>
-                </div>
+                <a href="@tagBase@Uri.EscapeDataString(tag)" class="pb-tag-pill @(Model.ActiveTag == tag ? "is-active" : "")">
+                    @tag
+                    <span class="pb-tag-pill-count">@count</span>
+                </a>
             }
-        }
+        </div>
     }
+</nav>
 
-</div>
-
-@section Scripts {
-<style>
-    /* Pull out of Bootstrap's container padding and center at 1000px */
-    .photo-feed {
-        max-width: 1000px;
-        margin: 2rem auto 4rem;
-        padding: 0;
+<main class="pb-archive-main">
+    @foreach (var year in Model.Years)
+    {
+        <section id="year-@year" class="pb-year-section">
+            <h2 class="pb-year-heading">
+                @year
+                <span class="pb-year-total">— @Model.PhotosByYear[year].Count photo@(Model.PhotosByYear[year].Count == 1 ? "" : "s")</span>
+            </h2>
+            <div class="pb-grid">
+                @foreach (var photo in Model.PhotosByYear[year])
+                {
+                    <a href="@photoBase@photo.Date.ToString("yyyy-MM-dd")"
+                       class="pb-grid-item"
+                       data-src="@photo.ImageUrl"
+                       aria-label="@photo.Date.ToString("MMMM d, yyyy")">
+                        <img class="pb-grid-img" alt="@photo.Title" />
+                        <div class="pb-grid-overlay" aria-hidden="true">
+                            <div class="pb-grid-overlay-inner">
+                                <time class="pb-grid-date" datetime="@photo.Date.ToString("yyyy-MM-dd")">
+                                    @photo.Date.ToString("MMM d, yyyy")
+                                </time>
+                                @if (photo.Tags.Any())
+                                {
+                                    <span class="pb-grid-tag">@photo.Tags.First()</span>
+                                }
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </section>
     }
+</main>
 
-    .photo-feed-empty {
-        font-size: 0.82rem;
-        color: #bbb;
-        text-align: center;
-        padding: 4rem 0;
-    }
+<footer class="pb-footer">
+    <nav class="pb-footer-nav">
+        <a href="@aboutHref" class="pb-footer-link">About</a>
+        <a href="@rssHref" class="pb-footer-link">RSS</a>
+        <a href="https://www.instagram.com/cwmcmhn/" class="pb-footer-link" target="_blank">Instagram</a>
+        <a href="https://clintmcmahon.com" class="pb-footer-link">clintmcmahon.com</a>
+    </nav>
+</footer>
 
-    /* Each photo post */
-    .photo-entry {
-        display: flex;
-        flex-direction: column;
-    }
+<script>
+(function () {
+    // Lazy-load images via IntersectionObserver
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            var item = entry.target;
+            var img = item.querySelector('.pb-grid-img');
+            if (img && !img.src) {
+                img.src = item.dataset.src;
+                img.addEventListener('load', function () { img.classList.add('is-loaded'); });
+                img.addEventListener('error', function () { item.classList.add('pb-grid-item--error'); });
+            }
+            observer.unobserve(item);
+        });
+    }, { rootMargin: '400px 0px' });
 
-    .photo-entry-link {
-        display: block;
-        line-height: 0; /* removes gap below img */
-    }
+    document.querySelectorAll('.pb-grid-item[data-src]').forEach(function (el) {
+        observer.observe(el);
+    });
 
-    .photo-entry-img {
-        width: 100%;
-        height: auto;
-        display: block;
-        transition: opacity 0.2s ease;
-    }
+    // Highlight active year in nav as user scrolls
+    var yearLinks = Array.from(document.querySelectorAll('.pb-year-link'));
+    var sections = Array.from(document.querySelectorAll('.pb-year-section'));
 
-    .photo-entry-link:hover .photo-entry-img {
-        opacity: 0.93;
-    }
+    var sectionObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                var id = entry.target.id;
+                yearLinks.forEach(function (link) {
+                    link.classList.toggle('is-active', link.getAttribute('href') === '#' + id);
+                });
+            }
+        });
+    }, { rootMargin: '-40% 0px -55% 0px' });
 
-    /* Date + title row */
-    .photo-entry-meta {
-        display: flex;
-        align-items: baseline;
-        gap: 1.25rem;
-        margin-top: 0.75rem;
-    }
+    sections.forEach(function (s) { sectionObserver.observe(s); });
 
-    .photo-entry-date {
-        font-size: 0.69rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: #bbb;
-        white-space: nowrap;
-        font-variant-numeric: tabular-nums;
-    }
+    // Smooth scroll for year nav links
+    yearLinks.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            var target = document.querySelector(link.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+})();
+</script>
 
-    .photo-entry-title {
-        font-size: 0.82rem;
-        font-weight: 500;
-        color: #111;
-        text-decoration: none;
-        transition: color 0.15s;
-    }
-
-    .photo-entry-title:hover {
-        color: #555;
-    }
-
-    /* Separator */
-    .photo-separator {
-        display: flex;
-        align-items: center;
-        gap: 0;
-        margin: 3rem 0;
-    }
-
-    .photo-separator-line {
-        flex: 1;
-        height: 1px;
-        background: #e8e8e8;
-    }
-
-    .photo-separator-dot {
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background: #d0d0d0;
-        margin: 0 0.9rem;
-        flex-shrink: 0;
-    }
-
-    @@media (max-width: 1040px) {
-        .photo-feed {
-            margin: 1.5rem 1.25rem 3rem;
-        }
-    }
-</style>
-}
+</body>
+</html>
