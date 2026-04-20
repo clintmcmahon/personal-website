@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://photos.clintmcmahon.com/sitemap.xml
+Sitemap: https://clintmcmahon.com/sitemap.xml

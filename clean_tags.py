@@ -8,64 +8,16 @@ import os, re, glob
 
 # ── Canonical location tags to KEEP (case-insensitive match) ──────────────────
 LOCATION_TAGS = {
-    # Cities
-    "minneapolis", "mpls", "minneaoplis", "minnepaolis",
-    "st. paul", "saint paul", "st paul", "st. anothony main", "st. anthony main",
-    "new york city", "nyc", "manhattan", "chicago", "nashville", "austin",
-    "venice", "hamburg", "dusseldorf", "fergus falls", "newark", "moab",
-    "los angeles", "losangeles", "grand marais", "new york",
-
-    # States / countries / regions
-    "minnesota", "california", "utah", "texas", "tennessee", "tn",
-    "colorado", "wisconsin", "new jersey", "germany", "ghana", "caribbean",
-    "turks and caicos", "tci",
-
-    # Minneapolis neighbourhoods / districts
-    "north loop", "northloop", "uptown", "uptown minneapolis", "uptown mpls",
-    "downtown", "northeast", "south minneapolis", "mill district",
-    "warehouse district", "elliot park", "stevens square", "longfellow",
-    "whittier", "sheffield", "lyndale", "mill city", "loring park",
-    "powderhorn park", "riverside", "cedar riverside",
-
-    # Minneapolis streets / bridges
-    "hennepin avenue", "hennepin ave", "hennepin", "nicollet mall",
-    "washington avenue", "marquette avenue", "lake street",
-    "hennepin avenue bridge", "hennepin ave bridge", "cedar",
-    "6th avenue", "sixth avenue",
-
-    # Minneapolis landmarks / buildings / venues
-    "foshay", "foshay tower", "ids center", "ids", "capella tower",
-    "wells fargo center", "wells fargo tower", "ford center",
-    "target field", "target field station", "metrodome", "vikings stadium",
-    "guthrie theater", "guthrie", "first avenue", "stone arch bridge",
-    "spoon bridge", "spoon and cherry", "basilica",
-    "minneapolis institute of arts", "mia", "hennepin county library", "hclib",
-    "northrup king", "nicollet island", "minnehaha falls", "minnehaha",
-    "soo line", "skyway", "state fair",
-
-    # Minneapolis transit lines (specific named routes)
-    "green line", "blue line", "light rail", "lrt", "light rail transit",
-
-    # Minneapolis / Minnesota lakes & waterways
-    "lake calhoun", "lake of the isles", "lake harriet", "lake superior",
-    "mississippi river", "lake street",
-
-    # Greater Minnesota
-    "north shore", "gunflint trail", "boundary waters", "bwca",
-    "otter tail county", "ottertail county",
-
-    # NYC landmarks / neighbourhoods
-    "lower east side", "chelsea", "flatiron", "rockefeller center",
-    "empire state building", "world trade center", "freedom tower",
-    "john hancock", "john hancock building", "chrysler building",
-    "30 rock", "avenue of the americas", "14th street", "union squre",
-
-    # Turks & Caicos
-    "chalk sound", "providenciales",
-
-    # National parks / natural areas
-    "canyonlands", "arches", "national park", "half moon bay",
-    "beaver creek", "blue hills", "north shore",
+    "wisconsin",
+    "minneapolis", "mpls",
+    "california",
+    "new york city", "nyc",
+    "lake superior",
+    "los angeles", "losangeles",
+    "chicago",
+    "germany",
+    "caribbean",
+    "north loop", "northloop",
 }
 
 # Normalise for comparison

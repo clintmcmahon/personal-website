@@ -47,6 +47,54 @@ public class PhotosController : Controller
     }
 
     [HttpGet]
+    [Route("photos/sitemap.xml")]
+    public IActionResult Sitemap()
+    {
+        var photos = _photoRepository.GetAllPhotos();
+        var baseUrl = "https://photos.clintmcmahon.com";
+
+        var allTags = photos
+            .SelectMany(p => p.Tags)
+            .Where(t => !string.IsNullOrWhiteSpace(t))
+            .Select(t => t.ToLowerInvariant().Trim())
+            .Distinct();
+
+        XNamespace ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
+
+        var urls = new List<XElement>
+        {
+            new XElement(ns + "url",
+                new XElement(ns + "loc", baseUrl + "/"),
+                new XElement(ns + "changefreq", "weekly"),
+                new XElement(ns + "priority", "1.0"))
+        };
+
+        foreach (var photo in photos)
+        {
+            urls.Add(new XElement(ns + "url",
+                new XElement(ns + "loc", $"{baseUrl}/{photo.Date:yyyy-MM-dd}"),
+                new XElement(ns + "lastmod", photo.Date.ToString("yyyy-MM-dd")),
+                new XElement(ns + "changefreq", "yearly"),
+                new XElement(ns + "priority", "0.7")));
+        }
+
+        foreach (var tag in allTags)
+        {
+            urls.Add(new XElement(ns + "url",
+                new XElement(ns + "loc", $"{baseUrl}/tag/{Uri.EscapeDataString(tag)}"),
+                new XElement(ns + "changefreq", "monthly"),
+                new XElement(ns + "priority", "0.5")));
+        }
+
+        var sitemap = new XDocument(
+            new XDeclaration("1.0", "utf-8", null),
+            new XElement(ns + "urlset", urls)
+        );
+
+        return Content(sitemap.ToString(), "application/xml", System.Text.Encoding.UTF8);
+    }
+
+    [HttpGet]
     [Route("photos/rss")]
     public IActionResult Rss()
     {

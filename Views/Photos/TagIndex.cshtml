@@ -22,6 +22,11 @@
     <meta name="description" content="@Model.TotalCount photos tagged "@tag" by Clint McMahon." />
     <meta property="og:title" content="#@tag — Photos — Clint McMahon" />
     <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@@cwmcmhn" />
+    <meta name="twitter:title" content="#@tag — Photos — Clint McMahon" />
+    <meta name="twitter:description" content="@Model.TotalCount photos tagged "@tag" by Clint McMahon." />
+    <link rel="canonical" href="https://photos.clintmcmahon.com/tag/@Uri.EscapeDataString(tag)" />
     <link rel="webmention" href="https://webmention.io/photos.clintmcmahon.com/webmention" />
     <link rel="me" href="https://github.com/clintmcmahon" />
     <title>@ViewData["Title"]</title>
