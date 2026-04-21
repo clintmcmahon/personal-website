@@ -78,13 +78,15 @@ public class PhotoRepository
                 entry = ParseMarkdown(content, imageFile);
             }
 
-            // 2. Fall back to a folder-level .md (e.g., 2026/2026-04-10/2026-04-10.md)
+            // 2. Fall back to a folder-level .md (info.md preferred, date-named .md for legacy)
             if (entry == null)
             {
                 var dirPath = Path.GetDirectoryName(imageFile) ?? "";
                 var dirName = Path.GetFileName(dirPath);
                 var relDirPath = Path.GetRelativePath(_photosDirectory, dirPath).Replace("\\", "/");
-                var dirMdKey = $"{relDirPath}/{dirName}";
+                var infoKey = $"{relDirPath}/info";
+                var dateMdKey = $"{relDirPath}/{dirName}";
+                var dirMdKey = markdownFiles.ContainsKey(infoKey) ? infoKey : dateMdKey;
                 if (markdownFiles.TryGetValue(dirMdKey, out var dirMdFile))
                 {
                     // Only create one entry per folder-level markdown — skip subsequent images in the same folder
