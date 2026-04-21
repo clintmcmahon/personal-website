@@ -3,8 +3,8 @@
 
 @{
     Layout = null;
-    ViewData["Title"] = "Photos — Clint McMahon";
-    var canonicalUrl = "https://photos.clintmcmahon.com/";
+    ViewData["Title"] = "Archive — Clint McMahon Photos";
+    var canonicalUrl = "https://photos.clintmcmahon.com/archive";
 
     var isSubdomain = Context.Request.Host.Host.StartsWith("photos.", StringComparison.OrdinalIgnoreCase);
     var photoBase  = isSubdomain ? "/"         : "/photos/";

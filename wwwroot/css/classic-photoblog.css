@@ -149,10 +149,17 @@ html, body {
   justify-content: space-between;
   flex-shrink: 0;
   padding-top: 0.1rem;
+  position: relative;
 }
 
 .pb-nav-next {
   margin-left: auto;
+}
+
+.pb-nav-archive {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .pb-nav a {

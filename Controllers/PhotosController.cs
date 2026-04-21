@@ -22,6 +22,15 @@ public class PhotosController : Controller
     [Route("photos")]
     public IActionResult Index()
     {
+        var latest = _photoService.GetLatestPhoto();
+        if (latest == null) return NotFound();
+        return RedirectToAction("PhotoByDate", new { date = latest.CurrentPhoto.Date.ToString("yyyy-MM-dd") });
+    }
+
+    [HttpGet]
+    [Route("photos/archive")]
+    public IActionResult Archive()
+    {
         var viewModel = _photoService.GetPhotosForIndex();
         return View("Index", viewModel);
     }

@@ -7,11 +7,12 @@
     ViewData["PhotoDate"] = photo.Date.ToString("yyyy-MM-dd");
 
     var isSubdomain = Context.Request.Host.Host.StartsWith("photos.", StringComparison.OrdinalIgnoreCase);
-    var photoBase = isSubdomain ? "/"      : "/photos/";
-    var homeHref  = isSubdomain ? "/"      : "/photos";
-    var aboutHref = isSubdomain ? "/about" : "/photos/about";
-    var rssHref   = isSubdomain ? "/rss"   : "/photos/rss";
-    var tagBase   = isSubdomain ? "/tag/"  : "/photos/tag/";
+    var photoBase   = isSubdomain ? "/"         : "/photos/";
+    var homeHref    = isSubdomain ? "/"         : "/photos";
+    var archiveHref = isSubdomain ? "/archive"  : "/photos/archive";
+    var aboutHref   = isSubdomain ? "/about"    : "/photos/about";
+    var rssHref     = isSubdomain ? "/rss"      : "/photos/rss";
+    var tagBase     = isSubdomain ? "/tag/"     : "/photos/tag/";
 
     // Absolute image URL for OG / Twitter / JSON-LD
     var absoluteImage = photo.ImageUrl.StartsWith("http")
@@ -115,6 +116,7 @@
             {
                 <span></span>
             }
+            <a href="@archiveHref" class="pb-nav-archive">archive</a>
             @if (Model.NextPhoto != null)
             {
                 <a href="@photoBase@Model.NextPhoto.Date.ToString("yyyy-MM-dd")"
@@ -188,6 +190,7 @@
 
         <footer class="pb-footer">
             <nav class="pb-footer-nav">
+                <a href="@archiveHref" class="pb-footer-link">Archive</a>
                 <a href="@aboutHref" class="pb-footer-link">About</a>
                 <a href="@rssHref" class="pb-footer-link">RSS</a>
                 <a href="https://www.instagram.com/cwmcmhn/" class="pb-footer-link" target="_blank">Instagram</a>
