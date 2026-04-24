@@ -146,6 +146,10 @@
 
         <div class="pb-meta">
             <div class="pb-caption-area">
+                @if (!string.IsNullOrWhiteSpace(photo.Title))
+                {
+                    <p class="pb-title">@photo.Title</p>
+                }
                 @if (!string.IsNullOrWhiteSpace(photo.Content))
                 {
                     <div class="pb-caption">@Html.Raw(photo.Content)</div>
