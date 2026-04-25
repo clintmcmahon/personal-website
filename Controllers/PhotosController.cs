@@ -107,11 +107,19 @@ public class PhotosController : Controller
     [Route("photos/rss")]
     public IActionResult Rss()
     {
+        var host = Request.Host.Host;
+        var isLocalhost = host.Equals("localhost", StringComparison.OrdinalIgnoreCase)
+            || host.Equals("127.0.0.1", StringComparison.OrdinalIgnoreCase);
+        var isPhotosSubdomain = host.StartsWith("photos.", StringComparison.OrdinalIgnoreCase);
+
+        if (!isLocalhost && !isPhotosSubdomain)
+            return NotFound();
+
         var photos = _photoRepository.GetAllPhotos()
             .OrderByDescending(p => p.Date)
             .Take(30);
 
-        var baseUrl = $"{Request.Scheme}://{Request.Host}";
+        var baseUrl = "https://photos.clintmcmahon.com";
 
         var rss = new XDocument(
             new XElement("rss",
@@ -151,6 +159,14 @@ public class PhotosController : Controller
     [Route("photos/{date:regex(^\\d{{4}}-\\d{{2}}-\\d{{2}}$)}")]
     public IActionResult PhotoByDate(string date)
     {
+        var host = Request.Host.Host;
+        var isLocalhost = host.Equals("localhost", StringComparison.OrdinalIgnoreCase)
+            || host.Equals("127.0.0.1", StringComparison.OrdinalIgnoreCase);
+        var isPhotosSubdomain = host.StartsWith("photos.", StringComparison.OrdinalIgnoreCase);
+
+        if (!isLocalhost && !isPhotosSubdomain)
+            return Redirect($"https://photos.clintmcmahon.com/{date}");
+
         if (!DateTime.TryParseExact(date, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out var parsedDate))
         {
             return NotFound("Invalid date format.");
