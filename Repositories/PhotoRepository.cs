@@ -10,15 +10,17 @@ using Website.Models;
 public class PhotoRepository
 {
     private readonly string _photosDirectory;
+    private readonly bool _isDevelopment;
     private static readonly string[] ImageExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
 
     private List<PhotoEntry>? _cache;
     private DateTime _cacheExpiry = DateTime.MinValue;
     private static readonly TimeSpan CacheDuration = TimeSpan.FromMinutes(10);
 
-    public PhotoRepository(string photosDirectory)
+    public PhotoRepository(string photosDirectory, bool isDevelopment = false)
     {
         _photosDirectory = photosDirectory;
+        _isDevelopment = isDevelopment;
     }
 
     public List<PhotoEntry> GetPhotosByTag(string tag)
@@ -31,7 +33,7 @@ public class PhotoRepository
 
     public List<PhotoEntry> GetAllPhotos()
     {
-        if (_cache != null && DateTime.UtcNow < _cacheExpiry)
+        if (!_isDevelopment && _cache != null && DateTime.UtcNow < _cacheExpiry)
             return _cache;
 
         var photos = new List<PhotoEntry>();

@@ -103,6 +103,24 @@ html, body {
 }
 .pb-image.is-loaded { opacity: 1; }
 
+.pb-masonry {
+  columns: 2;
+  column-gap: 4px;
+  margin-top: 4px;
+}
+
+.pb-masonry-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  break-inside: avoid;
+  margin-bottom: 4px;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+
+.pb-masonry-img.is-loaded { opacity: 1; }
+
 /* ---- Metadata row below image ----------------------------- */
 
 .pb-meta {

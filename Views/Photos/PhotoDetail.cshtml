@@ -71,7 +71,7 @@
 
     <link rel="canonical" href="@canonicalUrl" />
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="/css/classic-photoblog.css?v=4" />
+    <link rel="stylesheet" href="/css/classic-photoblog.css?v=5" />
     <script defer data-domain="clintmcmahon.com" src="https://plausible.io/js/script.js"></script>
     <link rel="webmention" href="https://webmention.io/photos.clintmcmahon.com/webmention" />
     <link rel="me" href="https://github.com/clintmcmahon" />
@@ -129,14 +129,32 @@
         <p class="pb-date-above">@Model.CurrentPhoto.Date.ToString("MMMM d, yyyy")</p>
 
         <div class="pb-rows">
-            @foreach (var row in Model.CurrentPhoto.Rows)
+            @{
+                var allRows = Model.CurrentPhoto.Rows.ToList();
+                var firstRow = allRows.FirstOrDefault();
+                var remainingImages = allRows.Skip(1).SelectMany(r => r).ToList();
+            }
+            @if (firstRow != null)
             {
                 <div class="pb-row">
-                    @foreach (var img in row)
+                    @foreach (var img in firstRow)
                     {
                         var altText = string.IsNullOrEmpty(img.Alt) ? Model.CurrentPhoto.Title : img.Alt;
                         <img src="@img.Url"
                              class="pb-image"
+                             alt="@altText"
+                             title="@altText" />
+                    }
+                </div>
+            }
+            @if (remainingImages.Any())
+            {
+                <div class="pb-masonry">
+                    @foreach (var img in remainingImages)
+                    {
+                        var altText = string.IsNullOrEmpty(img.Alt) ? Model.CurrentPhoto.Title : img.Alt;
+                        <img src="@img.Url"
+                             class="pb-masonry-img"
                              alt="@altText"
                              title="@altText" />
                     }
@@ -207,7 +225,7 @@
     <div class="pb-keys" aria-hidden="true">&#8592; &#8594;</div>
 
     <script>
-        document.querySelectorAll('.pb-image').forEach(function (img) {
+        document.querySelectorAll('.pb-image, .pb-masonry-img').forEach(function (img) {
             function show() { img.classList.add('is-loaded'); }
             img.complete ? show() : img.addEventListener('load', show);
         });

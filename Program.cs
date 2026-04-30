@@ -16,7 +16,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IPostRepository, PostRepository>();
 builder.Services.AddSingleton<PhotoRepository>(provider =>
-    new PhotoRepository(Path.Combine(builder.Environment.ContentRootPath, "wwwroot", "photos")));
+    new PhotoRepository(Path.Combine(builder.Environment.ContentRootPath, "wwwroot", "photos"), builder.Environment.IsDevelopment()));
 builder.Services.AddScoped<PhotoService>();
 builder.Services.AddSession();
 
