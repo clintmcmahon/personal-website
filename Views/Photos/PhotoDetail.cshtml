@@ -129,36 +129,53 @@
         <p class="pb-date-above">@Model.CurrentPhoto.Date.ToString("MMMM d, yyyy")</p>
 
         <div class="pb-rows">
-            @{
-                var allRows = Model.CurrentPhoto.Rows.ToList();
+            @if (photo.FullRows)
+            {
+                foreach (var row in photo.Rows)
+                {
+                    <div class="pb-row">
+                        @foreach (var img in row)
+                        {
+                            var altText = string.IsNullOrEmpty(img.Alt) ? photo.Title : img.Alt;
+                            <img src="@img.Url"
+                                 class="pb-image"
+                                 alt="@altText"
+                                 title="@altText" />
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                var allRows = photo.Rows.ToList();
                 var firstRow = allRows.FirstOrDefault();
                 var remainingImages = allRows.Skip(1).SelectMany(r => r).ToList();
-            }
-            @if (firstRow != null)
-            {
-                <div class="pb-row">
-                    @foreach (var img in firstRow)
-                    {
-                        var altText = string.IsNullOrEmpty(img.Alt) ? Model.CurrentPhoto.Title : img.Alt;
-                        <img src="@img.Url"
-                             class="pb-image"
-                             alt="@altText"
-                             title="@altText" />
-                    }
-                </div>
-            }
-            @if (remainingImages.Any())
-            {
-                <div class="pb-masonry">
-                    @foreach (var img in remainingImages)
-                    {
-                        var altText = string.IsNullOrEmpty(img.Alt) ? Model.CurrentPhoto.Title : img.Alt;
-                        <img src="@img.Url"
-                             class="pb-masonry-img"
-                             alt="@altText"
-                             title="@altText" />
-                    }
-                </div>
+                if (firstRow != null)
+                {
+                    <div class="pb-row">
+                        @foreach (var img in firstRow)
+                        {
+                            var altText = string.IsNullOrEmpty(img.Alt) ? photo.Title : img.Alt;
+                            <img src="@img.Url"
+                                 class="pb-image"
+                                 alt="@altText"
+                                 title="@altText" />
+                        }
+                    </div>
+                }
+                if (remainingImages.Any())
+                {
+                    <div class="pb-masonry">
+                        @foreach (var img in remainingImages)
+                        {
+                            var altText = string.IsNullOrEmpty(img.Alt) ? photo.Title : img.Alt;
+                            <img src="@img.Url"
+                                 class="pb-masonry-img"
+                                 alt="@altText"
+                                 title="@altText" />
+                        }
+                    </div>
+                }
             }
         </div>
 
