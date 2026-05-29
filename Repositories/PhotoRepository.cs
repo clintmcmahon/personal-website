@@ -113,6 +113,9 @@ public class PhotoRepository
             }
         }
 
+        if (!_isDevelopment)
+            photos = photos.Where(p => !p.Draft).ToList();
+
         _cache = photos.OrderByDescending(p => p.Date).ToList();
         _cacheExpiry = DateTime.UtcNow.Add(CacheDuration);
         return _cache;
@@ -270,6 +273,8 @@ public class PhotoRepository
         var tags = ParseTagsValue(metadata.ContainsKey("tags") ? metadata["tags"] : "");
         var fullRows = metadata.TryGetValue("layout", out var layout) &&
                        layout.Equals("rows", StringComparison.OrdinalIgnoreCase);
+        var draft = metadata.TryGetValue("draft", out var draftValue) &&
+                    draftValue.Equals("true", StringComparison.OrdinalIgnoreCase);
 
         // Find the closing --- and take everything after it to avoid
         // Span.End landing on the last dash and generating a stray list item
@@ -291,7 +296,8 @@ public class PhotoRepository
             Content = htmlContent,
             Tags = tags,
             Rows = resolvedRows,
-            FullRows = fullRows
+            FullRows = fullRows,
+            Draft = draft
         };
     }
 

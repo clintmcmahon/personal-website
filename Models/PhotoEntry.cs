@@ -15,4 +15,5 @@ public class PhotoEntry
     public List<List<PhotoImage>> Rows { get; set; } = new();
     // When true (layout: rows in frontmatter), every row renders full-width instead of rows 2+ going to masonry.
     public bool FullRows { get; set; }
+    public bool Draft { get; set; }
 }
