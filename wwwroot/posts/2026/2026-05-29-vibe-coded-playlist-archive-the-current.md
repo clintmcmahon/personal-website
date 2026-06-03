@@ -2,7 +2,7 @@
 title: "Vibe coded 20 year playlist archive for 89.3 The Current"
 date: "2026-05-29"
 description: "I built a website that's completely vibe coded using Claude to display analytics, track plays and artist information for 89.3 The Current. Built in React, C# and MySQL."
-draft: false
+draft: true
 slug: "vibe-coded-playlist-archive-the-current"
 ---
 
