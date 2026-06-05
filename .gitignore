@@ -43,3 +43,6 @@ msbuild.err
 msbuild.wrn
 
 .fake
+
+# Local secrets
+appsettings.local.json

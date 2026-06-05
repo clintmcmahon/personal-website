@@ -3,6 +3,7 @@ date: "2026-06-05"
 title: "Memorial Day Weekend in Chicago"
 tags: [chicago, street]
 rows:
+  - [untitled-554.jpeg | PNW vibes]
   - [untitled-604.jpeg | Marina City - Chicago]
   - [untitled-601.jpeg | Chicago Boat Tour]
   - [untitled-600.jpeg | Chicago Loop]
@@ -16,7 +17,6 @@ rows:
   - [untitled-563.jpeg | Guy laying in the lawn of Maggie Daley Park - Chicago]
   - [untitled-562.jpeg | View of cloudy downtown Chicago]
   - [untitled-555.jpeg | Clouds surround the AON building - Chicago]
-  - [untitled-554.jpeg | PNW vibes]
   - [untitled-550.jpeg | Chicago river tours]
   - [untitled-549.jpeg | Marina City in the clouds - Chicago]
   - [untitled-544.jpeg | Chicago boat tours in the rain]

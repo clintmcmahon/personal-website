@@ -10,6 +10,23 @@ namespace Website.Controllers
 {
     public class AuthController : Controller
     {
+        private readonly IWebHostEnvironment _env;
+
+        public AuthController(IWebHostEnvironment env)
+        {
+            _env = env;
+        }
+
+        [HttpGet("/auth/dev-login")]
+        public IActionResult DevLogin()
+        {
+            if (!_env.IsDevelopment())
+                return NotFound();
+
+            HttpContext.Session.SetString(SessionKey, "dev-token");
+            return Redirect("/admin/photos/new");
+        }
+
         private const string IndieAuthAuthorizeEndpoint = "https://indieauth.com/auth";
         private const string IndieAuthTokenEndpoint = "https://indieauth.com/token";
         private const string Me = "https://clintmcmahon.com/";
@@ -76,7 +93,7 @@ namespace Website.Controllers
             }
 
             HttpContext.Session.SetString(SessionKey, accessToken!);
-            return Redirect("/");
+            return Redirect("/admin/photos/new");
         }
 
         [HttpGet("/auth/logout")]

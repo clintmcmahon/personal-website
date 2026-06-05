@@ -1,0 +1,183 @@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "New Photo Post";
+}
+
+<style>
+    #dropZone {
+        border: 2px dashed #adb5bd;
+        border-radius: 8px;
+        padding: 2.5rem 1rem;
+        text-align: center;
+        color: #6c757d;
+        cursor: pointer;
+        transition: border-color .15s, background .15s;
+        user-select: none;
+    }
+    #dropZone.drag-over {
+        border-color: #212529;
+        background: #f8f9fa;
+        color: #212529;
+    }
+    .image-slot .preview-img {
+        max-width: 100%;
+        max-height: 220px;
+        object-fit: contain;
+        border-radius: 4px;
+        display: block;
+    }
+</style>
+
+<div class="container mt-4" style="max-width:680px">
+    <h2 class="mb-4">New Photo Post</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <div>@error.ErrorMessage</div>
+            }
+        </div>
+    }
+
+    <form method="post" enctype="multipart/form-data" id="photoForm">
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Title <span class="text-danger">*</span></label>
+            <input type="text" name="title" class="form-control" required placeholder="e.g. US Bank Plaza - Downtown Minneapolis" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Date <span class="text-muted fw-normal">(optional — defaults to today)</span></label>
+            <input type="date" name="postDate" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Tags <span class="text-muted fw-normal">(optional, comma-separated)</span></label>
+            <input type="text" name="tags" class="form-control" placeholder="e.g. minneapolis, street" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Body <span class="text-muted fw-normal">(optional)</span></label>
+            <textarea name="body" class="form-control" rows="4" placeholder="Write a caption or description..."></textarea>
+        </div>
+
+        <div class="mb-3 d-flex gap-4">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="layoutRows" value="true" id="layoutRows" />
+                <label class="form-check-label" for="layoutRows">Stack images in rows</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="draft" value="true" id="draft" />
+                <label class="form-check-label" for="draft">Save as draft</label>
+            </div>
+        </div>
+
+        <hr class="my-4" />
+
+        <div id="dropZone" role="button" aria-label="Drop images here or click to select">
+            <div style="font-size:2rem;margin-bottom:.5rem;">&#128247;</div>
+            <div class="fw-semibold">Drop images here</div>
+            <div class="small mt-1">or click to select — you can drop multiple at once</div>
+        </div>
+        <input type="file" id="filePickerInput" accept="image/*" multiple style="display:none" />
+
+        <div id="imageSlots" class="mt-3"></div>
+
+        <button type="button" class="btn btn-outline-secondary btn-sm mb-4" id="addImage">+ Add another image</button>
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-dark btn-lg" id="submitBtn">Publish Post</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    var slotCount = 0;
+
+    function createSlot(file) {
+        slotCount++;
+        var slot = document.createElement('div');
+        slot.className = 'image-slot card mb-3 p-3';
+
+        var preview = document.createElement('img');
+        preview.className = 'preview-img mb-2';
+        preview.src = URL.createObjectURL(file);
+
+        var header = document.createElement('div');
+        header.className = 'd-flex justify-content-between align-items-center mb-2';
+        header.innerHTML = `<span class="fw-semibold">Image ${slotCount} <span class="text-muted fw-normal small">${file.name}</span></span>`;
+        var removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'btn btn-sm btn-outline-danger';
+        removeBtn.textContent = 'Remove';
+        removeBtn.addEventListener('click', function () { slot.remove(); });
+        header.appendChild(removeBtn);
+
+        var fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.name = 'images';
+        fileInput.accept = 'image/*';
+        fileInput.style.display = 'none';
+
+        var altInput = document.createElement('input');
+        altInput.type = 'text';
+        altInput.name = 'altTexts';
+        altInput.className = 'form-control mt-2';
+        altInput.required = true;
+        altInput.placeholder = 'Alt text — describe this image';
+
+        slot.appendChild(header);
+        slot.appendChild(preview);
+        slot.appendChild(altInput);
+        slot.appendChild(fileInput);
+
+        // Attach the File object via DataTransfer so it submits with the form
+        var dt = new DataTransfer();
+        dt.items.add(file);
+        fileInput.files = dt.files;
+
+        document.getElementById('imageSlots').appendChild(slot);
+        altInput.focus();
+    }
+
+    function addFiles(files) {
+        Array.from(files).forEach(function (file) {
+            if (file.type.startsWith('image/')) createSlot(file);
+        });
+    }
+
+    // Drop zone
+    var dropZone = document.getElementById('dropZone');
+    var filePicker = document.getElementById('filePickerInput');
+
+    dropZone.addEventListener('click', function () { filePicker.click(); });
+    filePicker.addEventListener('change', function () { addFiles(filePicker.files); filePicker.value = ''; });
+
+    dropZone.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        dropZone.classList.add('drag-over');
+    });
+    dropZone.addEventListener('dragleave', function () {
+        dropZone.classList.remove('drag-over');
+    });
+    dropZone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        dropZone.classList.remove('drag-over');
+        addFiles(e.dataTransfer.files);
+    });
+
+    // Manual add button (opens picker for one more file)
+    document.getElementById('addImage').addEventListener('click', function () { filePicker.click(); });
+
+    document.getElementById('photoForm').addEventListener('submit', function () {
+        var btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.textContent = 'Publishing…';
+    });
+</script>

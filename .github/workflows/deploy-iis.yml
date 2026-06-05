@@ -48,9 +48,9 @@ jobs:
           if ((Get-WebAppPoolState -Name $appPool).Value -ne 'Stopped') {
             Stop-WebAppPool -Name $appPool
           }
-          # app_offline.htm prevents file locks while copying
+          # app_offline.htm prevents file locks while copying and shows a maintenance page
           $sitePath = 'C:\websites\clintmcmahon.com'
-          Set-Content -Path (Join-Path $sitePath 'app_offline.htm') -Value '<html><body><h3>Updating… back in a moment.</h3></body></html>'
+          Copy-Item -Path (Join-Path $env:GITHUB_WORKSPACE 'app_offline.htm') -Destination (Join-Path $sitePath 'app_offline.htm') -Force
 
       - name: Backup current site (zip)
         shell: powershell
