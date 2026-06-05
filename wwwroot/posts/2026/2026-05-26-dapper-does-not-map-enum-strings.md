@@ -2,7 +2,7 @@
 title: "Dapper does not map strings to enums."
 date: "2026-05-26"
 description: "Claude mistakenly writes a new feature for me based on it's idea that Dapper will automatically map string results to enums implicitly. It does not."
-draft: false
+draft: true
 slug: "dapper-does-not-map-enum-strings"
 ---
 

@@ -44,13 +44,18 @@ jobs:
         shell: powershell
         run: |
           $appPool = 'clintmcmahon.com'
+          $sitePath = 'C:\websites\clintmcmahon.com'
+
+          # Copy the file FIRST while the app is still running so ANCM serves it.
+          # ANCM detects app_offline.htm and takes over immediately — users never see the raw IIS 503.
+          Copy-Item -Path (Join-Path $env:GITHUB_WORKSPACE 'app_offline.htm') -Destination (Join-Path $sitePath 'app_offline.htm') -Force
+          Start-Sleep -Seconds 1
+
+          # Now stop the AppPool to release file locks for the copy step
           Import-Module WebAdministration
           if ((Get-WebAppPoolState -Name $appPool).Value -ne 'Stopped') {
             Stop-WebAppPool -Name $appPool
           }
-          # app_offline.htm prevents file locks while copying and shows a maintenance page
-          $sitePath = 'C:\websites\clintmcmahon.com'
-          Copy-Item -Path (Join-Path $env:GITHUB_WORKSPACE 'app_offline.htm') -Destination (Join-Path $sitePath 'app_offline.htm') -Force
 
       - name: Backup current site (zip)
         shell: powershell
