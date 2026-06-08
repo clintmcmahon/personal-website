@@ -1,99 +1,45 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web;
-using System;
-using System.Text.Json;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Website.Controllers
 {
     public class AuthController : Controller
     {
         private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _config;
+        private const string SessionKey = "Admin_Authenticated";
 
-        public AuthController(IWebHostEnvironment env)
+        public AuthController(IWebHostEnvironment env, IConfiguration config)
         {
             _env = env;
+            _config = config;
         }
-
-        [HttpGet("/auth/dev-login")]
-        public IActionResult DevLogin()
-        {
-            if (!_env.IsDevelopment())
-                return NotFound();
-
-            HttpContext.Session.SetString(SessionKey, "dev-token");
-            return Redirect("/admin/photos/new");
-        }
-
-        private const string IndieAuthAuthorizeEndpoint = "https://indieauth.com/auth";
-        private const string IndieAuthTokenEndpoint = "https://indieauth.com/token";
-        private const string Me = "https://clintmcmahon.com/";
-        private const string ClientId = "https://clintmcmahon.com/";
-        private const string RedirectUri = "https://clintmcmahon.com/auth/callback";
-        private const string SessionKey = "IndieAuth_AccessToken";
 
         [HttpGet("/auth/login")]
-        public IActionResult Login()
+        public IActionResult Login(string? returnUrl = null)
         {
-            var state = Guid.NewGuid().ToString();
-            HttpContext.Session.SetString("IndieAuth_State", state);
-            var url = $"{IndieAuthAuthorizeEndpoint}?me={Uri.EscapeDataString(Me)}&client_id={Uri.EscapeDataString(ClientId)}&redirect_uri={Uri.EscapeDataString(RedirectUri)}&state={state}&response_type=code";
-            return Redirect(url);
+            if (IsLoggedIn(HttpContext))
+                return Redirect(returnUrl ?? "/admin/photos/new");
+
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
         }
 
-        [HttpGet("/auth/callback")]
-        public async Task<IActionResult> Callback(string code, string state)
+        [HttpPost("/auth/login")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(string password, string? returnUrl = null)
         {
-            var expectedState = HttpContext.Session.GetString("IndieAuth_State");
-            if (state != expectedState)
+            var storedHash = _config["Admin:PasswordHash"];
+            if (!string.IsNullOrEmpty(storedHash) && HashPassword(password) == storedHash)
             {
-                return Unauthorized("Invalid state");
+                HttpContext.Session.SetString(SessionKey, "1");
+                return Redirect(returnUrl ?? "/admin/photos/new");
             }
 
-            using var client = new HttpClient();
-            var content = new FormUrlEncodedContent(new[]
-            {
-                new KeyValuePair<string, string>("code", code),
-                new KeyValuePair<string, string>("client_id", ClientId),
-                new KeyValuePair<string, string>("redirect_uri", RedirectUri),
-            });
-            var response = await client.PostAsync(IndieAuthTokenEndpoint, content);
-            var responseString = await response.Content.ReadAsStringAsync();
-            if (!response.IsSuccessStatusCode)
-            {
-                return Unauthorized("Token exchange failed: " + responseString);
-            }
-
-            // IndieAuth returns application/json or application/x-www-form-urlencoded
-            string? accessToken = null;
-            string? me = null;
-            try
-            {
-                var json = JsonDocument.Parse(responseString);
-                accessToken = json.RootElement.GetProperty("access_token").GetString();
-                me = json.RootElement.GetProperty("me").GetString();
-            }
-            catch
-            {
-                var parsed = HttpUtility.ParseQueryString(responseString);
-                accessToken = parsed["access_token"];
-                me = parsed["me"];
-            }
-
-            if (string.IsNullOrEmpty(accessToken) || string.IsNullOrEmpty(me))
-            {
-                return Unauthorized("Token or user missing");
-            }
-
-            if (me != Me)
-            {
-                return Unauthorized("Authenticated as wrong user");
-            }
-
-            HttpContext.Session.SetString(SessionKey, accessToken!);
-            return Redirect("/admin/photos/new");
+            ViewData["ReturnUrl"] = returnUrl;
+            ViewData["Error"] = "Incorrect password.";
+            return View();
         }
 
         [HttpGet("/auth/logout")]
@@ -103,9 +49,33 @@ namespace Website.Controllers
             return Redirect("/");
         }
 
-        public static bool IsLoggedIn(HttpContext context)
+        // Dev-only: visit /auth/gen-hash?password=yourpassword to get the hash to paste into appsettings.local.json
+        [HttpGet("/auth/gen-hash")]
+        public IActionResult GenHash(string password)
         {
-            return !string.IsNullOrEmpty(context.Session.GetString(SessionKey));
+            if (!_env.IsDevelopment())
+                return NotFound();
+
+            return Content(HashPassword(password));
+        }
+
+        [HttpGet("/auth/dev-login")]
+        public IActionResult DevLogin()
+        {
+            if (!_env.IsDevelopment())
+                return NotFound();
+
+            HttpContext.Session.SetString(SessionKey, "1");
+            return Redirect("/admin/photos/new");
+        }
+
+        public static bool IsLoggedIn(HttpContext context) =>
+            context.Session.GetString(SessionKey) == "1";
+
+        private static string HashPassword(string password)
+        {
+            var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));
+            return Convert.ToHexString(bytes).ToLowerInvariant();
         }
     }
 }
