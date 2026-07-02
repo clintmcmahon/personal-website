@@ -1,59 +1,40 @@
-﻿@{
-   
-    ViewData["Title"] = "Clint McMahon – I Build Things for the Internet";
+@{
+    ViewData["Title"] = "Clint McMahon – Software Engineer & Architect";
     ViewData["Description"] = "Software engineer and architect in Minneapolis, designing and building systems for the legal industry. Specializing in .NET, Azure, and solving complex technical problems.";
 }
- @model IEnumerable<Post>
+@model IEnumerable<Post>
 
-<div class="p-5 mb-4 bg-body-tertiary rounded-3 top">
-    <div class="container-fluid py-5">
-        <div><strong><small>Hi, I'm Clint</small></strong></div>
-        <h1 class="display-5 fw-bold">I build things for the Internet</h1>
-        <p class="col-12 fs-4">
-            I'm a software engineer and architect in Minneapolis, currently designing and building systems for the legal industry. I specialize in .NET, Azure, and solving complex technical problems. I also write about software development, trying to perfect my home espresso and ride a snowboard a few times per year.
-        </p>
-        <a class="btn btn-primary btn-lg" href="/contact" type="button">Contact Me</a>
-    </div>
-</div>
-<div class="row align-items-md-stretch">
-      <div class="col-md-6">
-        <div class="h-100 p-5 text-bg-dark border rounded-3">
-          <h2>Work</h2>
-          <p>An overview of my professional projects and collaborations. From developing custom web applications for the healthcare and legal sectors to building data visualization tools and mobile apps, my work focuses on creating impactful, user-centered solutions.</p>
-          <a class="btn btn-outline-light" type="button" href="/portfolio">View work portfolio</a>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-          <h2>Projects</h2>
-          <p>A variety of my side projects, both active and retired. These include apps like Today's Record High, a data visualization tool for record high temperatures, and MPLS Coffee, a mobile app designed to help users discover quality coffee shops.  </p>
-          <a class="btn btn-outline-secondary" type="button" href="/projects">See all projects</a>
-        </div>
-      </div>
-    </div>
-<div class="home">
-<hr class="my-5"/>
-
-<section class="py-3">
-    <div class="container blog">
-        <h1 class="display-4 fw-bold text-center mb-4">Blog</h1>
-
-        <div class="row">
-           <div class="col-12">
-
-                @foreach (var post in Model)
-                {
-                    <div>
-                        <h3><a href="@Url.Action("Details", "Blog", new { slug = post.Slug })">@post.Title</a>
-                        </h3>
-                        <p>@post.Description</p>
-                        <small>@post.Date.ToString("MMMM dd, yyyy")</small>
-                        <hr />
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
+<section class="hero">
+    <p class="hero-label">Hi, I'm Clint</p>
+    <h1 class="hero-heading">I build things<br>for the Internet.</h1>
+    <p class="hero-body">
+        Software engineer and architect in Minneapolis. I design and build systems for the legal industry, specializing in .NET and Azure. I also write about software, espresso, and whatever side project has my attention.
+    </p>
+    <a class="btn-hero" href="/contact">Get in touch &rarr;</a>
 </section>
 
+<div class="home-cards">
+    <a href="/portfolio" class="home-card featured">
+        <h2>Work</h2>
+        <p>Custom software for healthcare, legal, and government. Data platforms, legacy modernization, integrations that actually hold up in production.</p>
+        <span class="card-cta">View portfolio &rarr;</span>
+    </a>
+    <a href="/projects" class="home-card">
+        <h2>Projects</h2>
+        <p>Side projects built to scratch my own itches: coffee maps, weather data tools, browser extensions, and a few things I haven't shipped yet.</p>
+        <span class="card-cta">See all projects &rarr;</span>
+    </a>
 </div>
+
+<section class="blog-list">
+    <p class="blog-list-heading">Recent Posts</p>
+    @foreach (var post in Model)
+    {
+        <a class="post-row" href="@Url.Action("Details", "Blog", new { slug = post.Slug })">
+            <span class="post-date">@post.Date.ToString("MMM dd")</span>
+            <span class="post-arrow">&rarr;</span>
+            <span class="post-title">@post.Title</span>
+        </a>
+    }
+    <a href="/blog" class="blog-see-all">All posts &rarr;</a>
+</section>

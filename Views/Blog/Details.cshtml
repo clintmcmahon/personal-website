@@ -5,26 +5,13 @@
 
 @model Post
 
-<section class="blog-post py-5">
-    <div class="container" style="max-width:800px">
-        <h1>@Model.Title</h1>
-        <div class="row g-4">
-            <div class="col">
+<div class="blog-post">
+    <h1>@Model.Title</h1>
+    <span class="post-date">@Model.Date.ToString("MMMM d, yyyy")</span>
 
-                <p class="post-date">@Model.Date.ToString("MMMM dd, yyyy")</p>
-                <div class="post-tags">
-                    @foreach (var tag in Model.Tags)
-                    {
-                        <!--span class="tag">@tag</span-->
-                    }
-                </div>
-                <div class="post-content">
-                    @Html.Raw(Model.Content) <!-- Assuming Content has been parsed to HTML -->
-                </div>
-
-                <!-- Blog Post Footer -->
-                @await Html.PartialAsync("_BlogPostFooter", Model)
-            </div>
-        </div>
+    <div class="post-content">
+        @Html.Raw(Model.Content)
     </div>
-</section>
+
+    @await Html.PartialAsync("_BlogPostFooter", Model)
+</div>

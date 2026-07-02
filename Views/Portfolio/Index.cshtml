@@ -1,289 +1,156 @@
 @{
-  ViewData["Title"] = "Portfolio | Law Firm Technology Projects | Clint McMahon";
-  ViewData["Description"] = "Portfolio of technology projects for law firms and enterprise organizations. Custom development, system integrations, legacy modernization, and data platforms. 20+ years experience.";
+  ViewData["Title"] = "Portfolio | Clint McMahon";
+  ViewData["Description"] = "Selected client work spanning healthcare data platforms, government systems, e-commerce, and enterprise integrations. 20+ years building software that lasts.";
 }
-<section class="portfolio py-5">
-  <div class="container">
-     <h1 class="display-4 fw-bold text-center mb-4">Portfolio</h1>
-     <div class="row">
-      <div class="col-12">
-        <p class="lead">
-          This portfolio showcases a selection of custom software development projects that I have led through Parka Software, 
-          spanning healthcare data platforms, large law firms, government system upgrades, and high-performance e-commerce solutions. 
-          From modernizing legacy systems with .NET and Umbraco to building 
-          interactive data visualizations and integrating 
-          full-scale Shopify e-commerce platforms, 
-          each project reflects a deep commitment to performance, usability, and long-term maintainability. 
-          </p>
-        <p class="lead">
-          Whether it's enhancing patient access to transplant data, upgrading state-level digital infrastructure, 
-          or developing robust B2B order workflows, these projects represent real-world results delivered through clean, 
-          scalable code and trusted collaboration.
-        </p>
-      </div>
-     </div>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
-      <!-- SRTR Patient-Friendly Website -->
-      <div class="col">
-        <div class="card h-100 shadow-sm d-flex flex-column">
-          <a href="https://preview.srtr.org/" target="_blank" rel="noopener noreferrer">
-            <img src="/images/pfwebsite.png" class="card-img-top" alt="SRTR Patient-Friendly Website">
-          </a>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">SRTR Patient-Friendly Website</h5>
-            <p class="card-text">
-              Developed a platform with SRTR featuring tools like a transplant journey map and videos to enhance patient
-              engagement. The design introduces a more intuitive UI and prepares for future enhancements.
-            </p>
-            <small class="text-uppercase">Tech Stack</small>
-            <div class="fw-bold mb-5">
-              C#, .Net, Umbraco, SQL Server, JavaScript, jQuery
-            </div>
+<div class="page-intro">
+    <h1>Portfolio</h1>
+    <p>Projects for clients across healthcare, government, and e-commerce. Most of the projects I work on are not publically available. These are the ones that are public.</p>
+</div>
 
-            <a href="https://preview.srtr.org/" class="btn btn-primary mt-auto" target="_blank"
-              rel="noopener noreferrer">View Project</a>
-          </div>
-        </div>
-      </div>
+<span class="portfolio-section-label" style="margin-top:0">Healthcare &amp; Life Sciences</span>
+<div class="portfolio-grid">
 
-      <!-- SRTR Interactive Reports -->
-      <div class="col">
-        <div class="card h-100 shadow-sm d-flex flex-column">
-          <a href="https://www.srtr.org/transplant-centers/interactive-report?center=NYUC&type=TX1&organ=ki"
-            target="_blank" rel="noopener noreferrer">
-            <img src="/images/transplantcentersearch.png" class="card-img-top" alt="SRTR Interactive Reports">
-          </a>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">SRTR Interactive Reports</h5>
-            <p class="card-text">
-              Built a site with interactive charts displaying transplant program data, leveraging R datasets and High
-              Charts to improve load times and user experience.
-            </p>
-            <small class="text-uppercase">Tech Stack</small>
-            <div class="fw-bold mb-5">
-              C#, .Net, React, HighCharts, SQL Server, JavaScript, Mapbox
+    <a href="https://preview.srtr.org/" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+        <img src="/images/pfwebsite.png" class="portfolio-card-img" alt="SRTR Patient-Friendly Website">
+        <div class="portfolio-card-body">
+            <h3 class="portfolio-card-title">SRTR.org</h3>
+            <p class="portfolio-card-text">Overhaul of the entire SRTR.org website with a transplant journey map and educational resources to help people navigate a complex, high-stakes medical process.</p>
+            <div class="card-tech">
+                <span>C#</span><span>.NET</span><span>Umbraco</span><span>SQL Server</span><span>JavaScript</span>
             </div>
-            <a href="https://www.srtr.org/transplant-centers/interactive-report?center=NYUC&type=TX1&organ=ki"
-              class="btn btn-primary mt-auto" target="_blank" rel="noopener noreferrer">View Project</a>
-          </div>
         </div>
-      </div>
+    </a>
 
-      <!-- Organ Procurement Report -->
-      <div class="col">
-        <div class="card h-100 shadow-sm d-flex flex-column">
-          <a href="https://www.srtr.org/reports/opo-specific-reports/interactive-report" target="_blank"
-            rel="noopener noreferrer">
-            <img src="/images/oporeports.png" class="card-img-top" alt="Organ Procurement Report">
-          </a>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">Organ Procurement Report</h5>
-            <p class="card-text">
-              Collaborated with SRTR to create interactive OPO performance reports, transforming complex data into
-              accessible insights to drive transparency in organ donation practices.
-            </p>
-            <small class="text-uppercase">Tech Stack</small>
-            <div class="fw-bold mb-5">
-              C#, .Net, HighCharts, SQL Server, JavaScript, Mapbox
+    <a href="https://www.srtr.org/transplant-centers/interactive-report?center=NYUC&type=TX1&organ=ki" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+        <img src="/images/transplantcentersearch.png" class="portfolio-card-img" alt="SRTR Interactive Reports">
+        <div class="portfolio-card-body">
+            <h3 class="portfolio-card-title">SRTR Interactive Reports</h3>
+            <p class="portfolio-card-text">Interactive charts displaying transplant program outcomes using R datasets and HighCharts. A significant performance and usability improvement over prior static reports.</p>
+            <div class="card-tech">
+                <span>C#</span><span>.NET</span><span>React</span><span>HighCharts</span><span>SQL Server</span><span>Mapbox</span>
             </div>
-            <a href="https://www.srtr.org/reports/opo-specific-reports/interactive-report"
-              class="btn btn-primary mt-auto" target="_blank" rel="noopener noreferrer">View Project</a>
-          </div>
         </div>
-      </div>
+    </a>
 
-      <!-- Minnesota Secretary of State: Umbraco Upgrade -->
-      <div class="col">
-        <div class="card h-100 shadow-sm d-flex flex-column">
-          <a href="https://www.sos.state.mn.us" target="_blank" rel="noopener noreferrer">
-            <img src="/images/oss_home.png" class="card-img-top" alt="Minnesota Secretary of State: Umbraco Upgrade">
-          </a>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">Minnesota Secretary of State: Umbraco Upgrade</h5>
-            <p class="card-text">
-              Led a migration from Umbraco 7 to 14 and .NET Framework to .NET Core, modernizing the platform for
-              scalability, security, and improved user experience.
-            </p>
-            <small class="text-uppercase">Tech Stack</small>
-            <div class="fw-bold mb-5">
-              C#, .Net, Umbraco, SQL Server, JavaScript, jQuery, CI/CD
+    <a href="https://www.srtr.org/reports/opo-specific-reports/interactive-report" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+        <img src="/images/oporeports.png" class="portfolio-card-img" alt="Organ Procurement Report">
+        <div class="portfolio-card-body">
+            <h3 class="portfolio-card-title">Organ Procurement Report</h3>
+            <p class="portfolio-card-text">Interactive OPO performance reports that turn dense organ procurement data into accessible visualizations for clinicians and policymakers.</p>
+            <div class="card-tech">
+                <span>C#</span><span>.NET</span><span>HighCharts</span><span>SQL Server</span><span>Mapbox</span>
             </div>
-            <a href="https://www.sos.state.mn.us" class="btn btn-primary mt-auto" target="_blank"
-              rel="noopener noreferrer">View Project</a>
-          </div>
         </div>
-      </div>
-      <!-- Artful Living: Magazine -->
-      <div class="col">
-        <div class="card h-100 shadow-sm d-flex flex-column">
-          <a href="https://artfulliving.com" target="_blank" rel="noopener noreferrer">
-            <img src="/images/artfulliving.png" class="card-img-top" alt="Artful Living: Website management">
-          </a>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">Artful Living: Website Management & Custom Development</h5>
-            <p class="card-text">
-              Provide management and custom development for Artful Living's website, ensuring a seamless and visually
-              compelling digital experience. Work includes implementing tailored features, performance, and maintaining
-              a high-end online presence that aligns with the brand's aesthetic and editorial standards.
-            </p>
-            <small class="text-uppercase">Tech Stack</small>
-            <div class="fw-bold mb-5">
-              WordPress, MySQL, WP Engine, Javascript, jQuery
-            </div>
-            <a href="https://artfulliving.com" class="btn btn-primary mt-auto" target="_blank"
-              rel="noopener noreferrer">View Project</a>
-          </div>
-        </div>
-      </div>
-      <!-- USRDS Annual Data Report -->
-      <div class="col">
-        <div class="card h-100 shadow-sm d-flex flex-column">
-          <a href="https://usrds-adr.niddk.nih.gov" target="_blank" rel="noopener noreferrer">
-            <img src="/images/usrds_adr.png" class="card-img-top" alt="USRDS Annual Data Report">
-          </a>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">USRDS Annual Data Report</h5>
-            <p class="card-text">
-              Partnered with the USRDS to develop an interactive data visualization platform, enabling healthcare
-              professionals and researchers to explore kidney disease trends with dynamic filtering and in-depth
-              analytics.
-            </p>
-            <small class="text-uppercase">Tech Stack</small>
-            <div class="fw-bold mb-5">
-              C#, .NET, HighCharts, SQL Server, JavaScript, Tableau
-            </div>
-            <a href="https://usrds-adr.niddk.nih.gov" class="btn btn-primary mt-auto" target="_blank"
-              rel="noopener noreferrer">View Project</a>
-          </div>
-        </div>
-      </div>
-      <!-- Transplant Center Search -->
-      <div class="col">
-        <div class="card h-100 shadow-sm d-flex flex-column">
-          <a href="https://www.transplantcentersearch.org" target="_blank" rel="noopener noreferrer">
-            <img src="/images/ahrq.png" class="card-img-top" alt="Transplant Center Search">
-          </a>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">Transplant Center Search</h5>
-            <p class="card-text">
-              Developed a user-friendly search platform for patients and providers to compare transplant center
-              outcomes, leveraging interactive data visualization and real-time filtering to enhance decision-making.
-            </p>
-            <small class="text-uppercase">Tech Stack</small>
-            <div class="fw-bold mb-5">
-              C#, .NET, React, MySQL, Azure, Bootstrap
-            </div>
-            <a href="https://www.transplantcentersearch.org" class="btn btn-primary mt-auto" target="_blank"
-              rel="noopener noreferrer">View Project</a>
-          </div>
-        </div>
-      </div>
-      <!-- Liver Waiting List Outcomes Calculator -->
-      <div class="col">
-        <div class="card h-100 shadow-sm d-flex flex-column">
-          <a href="https://www.srtr.org/tools/liver-waiting-list-outcomes-calculator" target="_blank"
-            rel="noopener noreferrer">
-            <img src="/images/liver_waitlist.png" class="card-img-top" alt="Liver Waiting List Outcomes Calculator">
-          </a>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">Liver Waiting List Outcomes Calculator</h5>
-            <p class="card-text">
-              Built an interactive tool that visualizes actual patient outcomes from the past two years, helping
-              patients and healthcare providers understand liver transplant waitlist trends and survival rates.
-            </p>
-            <small class="text-uppercase">Tech Stack</small>
-            <div class="fw-bold mb-5">
-              C#, .NET, React, SQL Server, Bootstrap, R
-            </div>
-            <a href="https://www.srtr.org/tools/liver-waiting-list-outcomes-calculator" class="btn btn-primary mt-auto"
-              target="_blank" rel="noopener noreferrer">View Project</a>
-          </div>
-        </div>
-      </div>
-      <!-- Master Supplements E-Commerce Platform -->
-      <div class="col">
-        <div class="card h-100 shadow-sm d-flex flex-column">
-          <a href="https://www.master-supplements.com" target="_blank" rel="noopener noreferrer">
-            <img src="/images/master-supplements.png" class="card-img-top" alt="Master Supplements E-Commerce Platform">
-          </a>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">Master Supplements E-Commerce Platform</h5>
-            <p class="card-text">
-              Developed a full-scale Shopify e-commerce platform to streamline product sales, enhance user experience,
-              and optimize order fulfillment for a leading health supplement brand.
-            </p>
-            <small class="text-uppercase">Tech Stack</small>
-            <div class="fw-bold mb-5">
-              Shopify, Liquid, JavaScript, HTML/CSS, Klaviyo, Google Analytics
-            </div>
-            <a href="https://www.master-supplements.com" class="btn btn-primary mt-auto" target="_blank"
-              rel="noopener noreferrer">View Project</a>
-          </div>
-        </div>
-      </div>
-      <!-- US Enzymes E-Commerce & Shipping Integration -->
-      <div class="col">
-        <div class="card h-100 shadow-sm d-flex flex-column">
-          <a href="https://www.usenzymes.com" target="_blank" rel="noopener noreferrer">
-            <img src="/images/use.png" class="card-img-top" alt="US Enzymes E-Commerce & Shipping Integration">
-          </a>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">US Enzymes E-Commerce & Shipping Integration</h5>
-            <p class="card-text">
-              Built a full-scale Shopify platform with a custom ETL shipping integration, optimizing order processing
-              and fulfillment for a leading enzyme-based supplement brand.
-            </p>
-            <small class="text-uppercase">Tech Stack</small>
-            <div class="fw-bold mb-5">
-              Shopify, Liquid, JavaScript, Python, SQL Server, API Integrations
-            </div>
-            <a href="https://www.usenzymes.com" class="btn btn-primary mt-auto" target="_blank"
-              rel="noopener noreferrer">View Project</a>
-          </div>
-        </div>
-      </div>
-      <!-- Local Media Network -->
-      <div class="col">
-        <div class="card h-100 shadow-sm d-flex flex-column">
-          <a href="https://www.localmedia.co/" target="_blank" rel="noopener noreferrer">
-            <img src="/images/local.png" class="card-img-top" alt="Local Media Network">
-          </a>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">Local Media Network</h5>
-            <p class="card-text">
-              Designed and developed a synchronized network of 10 managed websites with a unified CMS, ensuring seamless
-              content distribution, performance optimization, and secure managed hosting.
-            </p>
-            <small class="text-uppercase">Tech Stack</small>
-            <div class="fw-bold mb-5">
-              C#, .NET, WordPress Multisite, SQL Server, Azure, API Integrations
-            </div>
-            <a href="https://www.localmedia.co/" class="btn btn-primary mt-auto" target="_blank"
-              rel="noopener noreferrer">View Project</a>
-          </div>
-        </div>
-      </div>
-    <!-- AGC of Minnesota Event Management System -->
-      <div class="col">
-        <div class="card h-100 shadow-sm d-flex flex-column">
-          <a href="https://www.agcmn.org" target="_blank" rel="noopener noreferrer">
-            <img src="/images/agc.png" class="card-img-top" alt="AGC of Minnesota Event Management System">
-          </a>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">AGC of Minnesota Event Management System</h5>
-            <p class="card-text">
-              Developed a custom admin frontend and backend to power event registration, membership management, and the public-facing website for Minnesota’s leading construction trade association.
-            </p>
-           <small class="text-uppercase">Tech Stack</small>
-            <div class="fw-bold mb-5">
-              C#, .NET, SQL Server, JavaScript, Bootstrap, AWS, Quickbooks, Constant Contact
-              </div>
-            <a href="https://www.agcmn.org" class="btn btn-primary mt-auto" target="_blank" rel="noopener noreferrer">View Project</a>
-          </div>
-        </div>
-      </div>
+    </a>
 
-    </div>
-  </div>
-</section>
+    <a href="https://usrds-adr.niddk.nih.gov" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+        <img src="/images/usrds_adr.png" class="portfolio-card-img" alt="USRDS Annual Data Report">
+        <div class="portfolio-card-body">
+            <h3 class="portfolio-card-title">USRDS Annual Data Report</h3>
+            <p class="portfolio-card-text">Interactive data visualization platform for the USRDS Annual Data Report, used by healthcare professionals and researchers to explore kidney disease trends nationwide.</p>
+            <div class="card-tech">
+                <span>C#</span><span>.NET</span><span>HighCharts</span><span>SQL Server</span><span>Tableau</span>
+            </div>
+        </div>
+    </a>
+
+    <a href="https://www.transplantcentersearch.org" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+        <img src="/images/ahrq.png" class="portfolio-card-img" alt="Transplant Center Search">
+        <div class="portfolio-card-body">
+            <h3 class="portfolio-card-title">Transplant Center Search</h3>
+            <p class="portfolio-card-text">Search tool for patients and providers to compare transplant center outcomes, with interactive visualizations and real-time filtering built to support real clinical decisions.</p>
+            <div class="card-tech">
+                <span>C#</span><span>.NET</span><span>React</span><span>MySQL</span><span>Azure</span>
+            </div>
+        </div>
+    </a>
+
+    <a href="https://www.srtr.org/tools/liver-waiting-list-outcomes-calculator" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+        <img src="/images/liver_waitlist.png" class="portfolio-card-img" alt="Liver Waiting List Outcomes Calculator">
+        <div class="portfolio-card-body">
+            <h3 class="portfolio-card-title">Liver Waiting List Calculator</h3>
+            <p class="portfolio-card-text">Interactive tool visualizing two years of actual patient outcomes to help patients and providers understand what liver transplant waitlist trends mean for them.</p>
+            <div class="card-tech">
+                <span>C#</span><span>.NET</span><span>React</span><span>SQL Server</span><span>R</span>
+            </div>
+        </div>
+    </a>
+
+</div>
+
+<span class="portfolio-section-label">Government &amp; Media</span>
+<div class="portfolio-grid">
+
+    <a href="https://www.sos.state.mn.us" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+        <img src="/images/oss_home.png" class="portfolio-card-img" alt="Minnesota Secretary of State">
+        <div class="portfolio-card-body">
+            <h3 class="portfolio-card-title">Minnesota Secretary of State</h3>
+            <p class="portfolio-card-text">Led the full migration of Minnesota's official state website from Umbraco 7 to 14 and .NET Framework to .NET Core. Modernized for security, performance, and long-term maintainability.</p>
+            <div class="card-tech">
+                <span>C#</span><span>.NET</span><span>Umbraco</span><span>SQL Server</span><span>CI/CD</span>
+            </div>
+        </div>
+    </a>
+
+    <a href="https://artfulliving.com" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+        <img src="/images/artfulliving.png" class="portfolio-card-img" alt="Artful Living">
+        <div class="portfolio-card-body">
+            <h3 class="portfolio-card-title">Artful Living</h3>
+            <p class="portfolio-card-text">Ongoing management and custom development for an upscale lifestyle magazine's website — custom features, performance tuning, and a digital experience that matches the brand's editorial standards.</p>
+            <div class="card-tech">
+                <span>WordPress</span><span>MySQL</span><span>WP Engine</span><span>JavaScript</span>
+            </div>
+        </div>
+    </a>
+
+    <a href="https://www.localmedia.co/" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+        <img src="/images/local.png" class="portfolio-card-img" alt="Local Media Network">
+        <div class="portfolio-card-body">
+            <h3 class="portfolio-card-title">Local Media Network</h3>
+            <p class="portfolio-card-text">Ten managed websites on a unified CMS with synchronized content distribution and centralized hosting for a regional media company.</p>
+            <div class="card-tech">
+                <span>C#</span><span>.NET</span><span>WordPress Multisite</span><span>SQL Server</span><span>Azure</span>
+            </div>
+        </div>
+    </a>
+
+</div>
+
+<span class="portfolio-section-label">E-Commerce &amp; Enterprise</span>
+<div class="portfolio-grid" style="margin-bottom: 4rem;">
+
+    <a href="https://www.master-supplements.com" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+        <img src="/images/master-supplements.png" class="portfolio-card-img" alt="Master Supplements">
+        <div class="portfolio-card-body">
+            <h3 class="portfolio-card-title">Master Supplements</h3>
+            <p class="portfolio-card-text">Full Shopify build for a health supplement brand — product catalog, custom checkout flows, Klaviyo integration, and order fulfillment optimization.</p>
+            <div class="card-tech">
+                <span>Shopify</span><span>Liquid</span><span>JavaScript</span><span>Klaviyo</span>
+            </div>
+        </div>
+    </a>
+
+    <a href="https://www.usenzymes.com" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+        <img src="/images/use.png" class="portfolio-card-img" alt="US Enzymes">
+        <div class="portfolio-card-body">
+            <h3 class="portfolio-card-title">US Enzymes</h3>
+            <p class="portfolio-card-text">Shopify storefront with a custom Python ETL pipeline connecting to their shipping and fulfillment systems, automating what had been a manual daily process.</p>
+            <div class="card-tech">
+                <span>Shopify</span><span>Liquid</span><span>Python</span><span>SQL Server</span>
+            </div>
+        </div>
+    </a>
+
+    <a href="https://www.agcmn.org" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+        <img src="/images/agc.png" class="portfolio-card-img" alt="AGC of Minnesota">
+        <div class="portfolio-card-body">
+            <h3 class="portfolio-card-title">AGC of Minnesota</h3>
+            <p class="portfolio-card-text">Custom frontend and backend for Minnesota's leading construction trade association — event registration, membership management, and integrations with QuickBooks and Constant Contact.</p>
+            <div class="card-tech">
+                <span>C#</span><span>.NET</span><span>SQL Server</span><span>AWS</span><span>QuickBooks</span>
+            </div>
+        </div>
+    </a>
+
+</div>

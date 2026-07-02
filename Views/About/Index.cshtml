@@ -1,29 +1,147 @@
-﻿@{
-    ViewData["Title"] = "About | Law Firm Technology Consultant | Clint McMahon";
-    ViewData["Description"] = "Senior .NET architect and technology consultant specializing in Big Law and AmLaw 200 firms. 20+ years enterprise experience. Staff augmentation and technical leadership for legal technology initiatives.";
+@{
+    ViewData["Title"] = "About | Clint McMahon";
+    ViewData["Description"] = "Software engineer and architect in Minneapolis. 20+ years building systems for legal, healthcare, and government.";
 }
 
-<div class="about page container py-5">
-    <section class="mb-5">
-        <h1 class="display-4 fw-bold text-center mb-4">About Me</h1>
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <p class="lead">
-                    I got my first programming job at 19 without a college degree. My dad let me hack on his Visual Basic projects, I put that on my resume and a job fair my roommate dragged me to turned into an offer at Wells Fargo. I didn't graduate college until I was 29.
-                </p>
-                <p class="lead">
-                    I've been writing code ever since in mostly .NET where I'm an architect now. I've worked in Chicago and New York before ending up back in Minneapolis, where I run my own consulting practice now.
-                </p>
-                <p class="lead">
-                    Early in my career I destroyed a production database. Watched helplessly as a migration script rewrote everything. A senior engineer just said "OK, let's go fix this" and we walked to the data center together. That taught me more about software engineering than any class: everyone screws up, most things can be fixed, and the people who helped you along the way are the ones worth remembering. I try to pay that forward when I can.
-                </p>
-                <p class="lead">
-                    Outside of consulting, I build things to scratch my own itches. <a href="https://mncoffeemap.com">MN Coffee</a> because I wanted a dead-simple way to find good coffee shops nearby. I make espresso, write about what I'm learning, and spend time with my family.
-                </p>
-                <p class="lead">
-                    Check out the <a href="/blog">blog</a> for what I'm thinking about, <a href="/portfolio">portfolio</a> for what I've built or <a href="/contact">get in touch</a> if you need help with something.
-                </p>
-            </div>
-        </div>
-    </section>
+<!--
+==========================================================================
+ABOUT PAGE — WRITING PROMPTS
+==========================================================================
+This page has five sections. Each section has a comment block below that
+explains what to write, why it matters, and questions to work through.
+Replace the [FILL IN] placeholder text with your own words, then delete
+the comment block above each section.
+
+What makes a personal About page work:
+- Specific details beat vague claims. "Wells Fargo" > "a Fortune 500 bank."
+- One short real story reveals more character than three paragraphs of credentials.
+- Mention something you do outside of work. It signals you're a person, not a job title.
+- Don't summarize your resume. The portfolio page does that.
+- Write the way you'd describe yourself to someone at a conference, not in a cover letter.
+==========================================================================
+-->
+
+<div class="page-intro is-centered">
+    <h1>About</h1>
+
+    <!--
+    SECTION: SUBTITLE (one line under the heading)
+    ----------------------------------------------------------------
+    What it is: A single sentence that frames who you are and what
+    the reader will find on this page. NOT a job title.
+
+    Questions to work through:
+    - If someone asked "so what's your deal?" at a conference, how
+      would you answer in one sentence?
+    - What's the thing about you that surprises people?
+
+    Examples of what works:
+    - "How I got into software, what I've learned, and what I'm
+       building when I'm not on client work."
+    - "Software engineer in Minneapolis. I also make espresso and
+       build things no one asked for."
+
+    Examples of what doesn't work:
+    - "Experienced professional with a passion for technology." (too generic)
+    - "Full-stack developer specializing in enterprise solutions." (sounds like a LinkedIn summary)
+    ----------------------------------------------------------------
+    -->
+    <p>[FILL IN: Your one-liner — see prompt above]</p>
+</div>
+
+<div class="page-body is-centered">
+
+    <!--
+    SECTION 1: ORIGIN STORY
+    ----------------------------------------------------------------
+    What it is: How you got into programming. The shorter and more
+    specific the better. This is not your career timeline — it's the
+    detail that makes you real to a reader.
+
+    Questions to work through:
+    - What was the very first program you remember writing or hacking on?
+    - How old were you when you first got paid to write code?
+    - What was the thing that made you think "I could actually do this"?
+    - Was there anything unconventional about how you got started?
+
+    Keep it to 2–3 sentences. Name actual things: languages, companies,
+    people, ages. Those specifics are what readers remember.
+    ----------------------------------------------------------------
+    -->
+    <p>[FILL IN: How you got into programming — see prompt above]</p>
+
+    <!--
+    SECTION 2: WHAT YOU DO NOW
+    ----------------------------------------------------------------
+    What it is: What your work actually looks like today. Not a list
+    of skills — a description of the problems you solve and who you
+    solve them for.
+
+    Questions to work through:
+    - Who do you work with? (industry, size of company, type of role)
+    - What is the thing clients call you for specifically?
+    - What's a one-sentence description of a recent project you can
+      talk about publicly?
+    - Where are you based, and does that matter to your work?
+
+    Tip: Lead with the client's problem, not your technology stack.
+    "I help law firms modernize legacy systems" lands better than
+    "I work in .NET and Azure." The tech can follow.
+    ----------------------------------------------------------------
+    -->
+    <p>[FILL IN: What your work looks like today — see prompt above]</p>
+
+    <!--
+    SECTION 3: THE HUMAN MOMENT (optional but worth it)
+    ----------------------------------------------------------------
+    What it is: One short story that reveals something about how you
+    think or what you've learned. A mistake, a lesson, a thing that
+    changed how you work. This is the section that makes people trust you.
+
+    Questions to work through:
+    - What's a mistake you made early in your career that you still
+      think about?
+    - Is there a moment where something went badly and you learned
+      something from it?
+    - What's something you'd tell a 22-year-old version of yourself?
+
+    This should be 3–5 sentences. Name the situation specifically —
+    "I destroyed a production database" > "I made a serious mistake."
+    The lesson should follow naturally from the story. Don't editorialize
+    it heavily — let the story do the work.
+
+    If you can't think of one, skip this section entirely rather than
+    writing something generic about "always learning."
+    ----------------------------------------------------------------
+    -->
+    <p>[FILL IN: Your human moment / lesson — see prompt above, or delete this paragraph]</p>
+
+    <!--
+    SECTION 4: OUTSIDE OF WORK
+    ----------------------------------------------------------------
+    What it is: 2–3 things you do outside of client work. This is where
+    readers decide whether they want to actually meet you.
+
+    Questions to work through:
+    - What's a side project you've shipped, even if it's small?
+    - What do you do on Saturday mornings?
+    - What are you currently learning that has nothing to do with work?
+    - Is there something you're into that would surprise people?
+
+    Be specific. "I make espresso" is fine. "I pull shots on a [machine]
+    and I'm currently dialing in a [bean]" is better. Specificity signals
+    you actually do this thing, rather than listing it as a personality trait.
+
+    One or two sentences max on the side project(s). Keep it human.
+    ----------------------------------------------------------------
+    -->
+    <p>[FILL IN: Side projects and personal interests — see prompt above]</p>
+
+    <!--
+    CALL TO ACTION — keep this, just update the phrasing if you want
+    -->
+    <p>
+        The <a href="/blog">blog</a> has what I'm thinking about, the <a href="/portfolio">portfolio</a> has what I've built, and the <a href="/contact">contact page</a> is there if you want to talk.
+    </p>
+
 </div>

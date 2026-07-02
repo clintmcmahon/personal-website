@@ -3,42 +3,62 @@
 }
 @model IEnumerable<Post>
 
-<section class="contact py-5">
-  <div class="container" style="max-width:800px">
- <h1 class="display-4 fw-bold text-center mb-4">Blog</h1>    <div class="row g-4">
-    <div class="col">
-        <p class="lead">I write about the tech I'm building, the coffee I'm drinking, and the photos I take along the way. Sometimes it's code, sometimes it's travel, and sometimes it's just whatever's been on my mind.</p>
-        @foreach (var post in Model)
+@{
+    var groupedPosts = Model.GroupBy(p => p.Date.Year).OrderByDescending(g => g.Key);
+    var currentPage = ViewData["CurrentPage"] as int? ?? 1;
+    var totalPages = ViewData["TotalPages"] as int? ?? 1;
+}
+
+<section class="blog-post" style="max-width: 680px;">
+    <h1 class="hero-heading" style="font-size: clamp(2rem, 5vw, 2.75rem); margin-bottom: 0.5rem;">Blog</h1>
+    <p class="hero-body" style="margin-bottom: 2.5rem;">This is a blog about software engineering, consulting, coffee and other things that I find interesting.</p>
+
+    <div style="margin-top: 0;">
+        @foreach (var yearGroup in groupedPosts)
         {
-            <div class="post-summary numbered">
-                <h3><a href="@Url.Action("Details", "Blog", new { slug = post.Slug })">@post.Title</a>
-                </h3>
-                <p>@post.Description</p>
-                <small>@post.Date.ToString("MMMM dd, yyyy")</small>
-                <hr />
+            <div class="post-year-group">
+                <span class="post-year-label">@yearGroup.Key</span>
+                @foreach (var post in yearGroup)
+                {
+                    <a class="post-entry" href="@Url.Action("Details", "Blog", new { slug = post.Slug })">
+                        <h3 class="post-entry-title">@post.Title</h3>
+                        <span class="post-date">@post.Date.ToString("MMMM d, yyyy")</span>
+                        @if (!string.IsNullOrWhiteSpace(post.Description))
+                        {
+                            <p class="post-entry-desc">@post.Description</p>
+                        }
+                        @if (post.Tags != null && post.Tags.Any(t => !string.IsNullOrWhiteSpace(t)))
+                        {
+                            <div class="post-entry-tags">
+                                @foreach (var tag in post.Tags.Where(t => !string.IsNullOrWhiteSpace(t)))
+                                {
+                                    <span>#@tag</span>
+                                }
+                            </div>
+                        }
+                    </a>
+                }
             </div>
         }
     </div>
-    <nav aria-label="Blog pagination">
-        <ul class="pagination justify-content-center mt-4">
-            @{
-                var currentPage = ViewData["CurrentPage"] as int? ?? 1;
-                var totalPages = ViewData["TotalPages"] as int? ?? 1;
-            }
-            <li class="page-item @(currentPage == 1 ? "disabled" : "")">
-                <a class="page-link" href="@Url.Action("Index", new { page = currentPage - 1 })" tabindex="-1">Previous</a>
-            </li>
-            @for (int i = 1; i <= totalPages; i++)
-            {
-                <li class="page-item @(i == currentPage ? "active" : "")">
-                    <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
-                </li>
-            }
-            <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
-                <a class="page-link" href="@Url.Action("Index", new { page = currentPage + 1 })">Next</a>
-            </li>
-        </ul>
-    </nav>
-    </div>
-</section>
 
+    @if (totalPages > 1)
+    {
+        <nav aria-label="Blog pagination">
+            <ul class="pagination justify-content-center mt-4">
+                <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = currentPage - 1 })" tabindex="-1">Previous</a>
+                </li>
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                    </li>
+                }
+                <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = currentPage + 1 })">Next</a>
+                </li>
+            </ul>
+        </nav>
+    }
+</section>
