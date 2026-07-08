@@ -1,0 +1,62 @@
+@model Website.Models.Post
+@{
+    ViewData["Title"] = $"Edit: {Model.Title} — Admin";
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-toolbar">
+    <h1>Edit Post</h1>
+    <div style="display:flex; gap:1rem; align-items:center;">
+        @if (!Model.Draft)
+        {
+            <a href="/Blog/@Model.Slug" target="_blank" class="admin-link">View live →</a>
+        }
+        <a href="/admin/blog" class="admin-link">← All posts</a>
+    </div>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="admin-flash admin-flash--success">@TempData["Success"]</div>
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="admin-flash admin-flash--error">
+        @foreach (var err in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div>@err.ErrorMessage</div>
+        }
+    </div>
+}
+
+@section Scripts {
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css" />
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+    <script>
+        new EasyMDE({
+            element: document.getElementById("Content"),
+            spellChecker: false,
+            autosave: { enabled: true, uniqueId: "post-@Model.Id" },
+            uploadImage: true,
+            imageUploadEndpoint: "/admin/blog/upload-image",
+            toolbar: ["bold","italic","heading","|","quote","unordered-list","ordered-list","|","link","image","upload-image","code","table","|","preview","side-by-side","fullscreen","|","guide"],
+            minHeight: "420px"
+        });
+    </script>
+}
+
+<form method="post" action="/admin/blog/@Model.Id/edit" class="admin-form">
+    @Html.AntiForgeryToken()
+    @await Html.PartialAsync("_PostForm", Model)
+    <div class="admin-form-actions">
+        <button type="submit" class="admin-btn admin-btn--primary">Save changes</button>
+    </div>
+</form>
+
+<form method="post" action="/admin/blog/@Model.Id/publish" style="margin-top: 0.5rem;">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="admin-btn @(Model.Draft ? "admin-btn--publish" : "admin-btn--ghost")">
+        @(Model.Draft ? "Publish" : "Unpublish")
+    </button>
+</form>

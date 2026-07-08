@@ -1,0 +1,69 @@
+@model IEnumerable<Website.Models.PhotoEntry>
+@{
+    ViewData["Title"] = "Photos — Admin";
+    Layout = "_AdminLayout";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="admin-flash admin-flash--success">@TempData["Success"]</div>
+}
+
+<div class="admin-toolbar">
+    <h1>Photos</h1>
+    <a href="/admin/photos/new" class="admin-btn admin-btn--primary">+ New Photo</a>
+</div>
+
+<table class="admin-table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Tags</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var photo in Model)
+        {
+            <tr class="@(photo.Draft ? "row--draft" : "")">
+                <td style="width:56px; padding: 0.5rem 0.5rem 0.5rem 1rem;">
+                    @if (!string.IsNullOrWhiteSpace(photo.ImageUrl))
+                    {
+                        <img src="@photo.ImageUrl" alt=""
+                             style="width:48px; height:48px; object-fit:cover; border-radius:4px; display:block;" />
+                    }
+                </td>
+                <td>@photo.Title</td>
+                <td class="mono">@photo.Date.ToString("yyyy-MM-dd")</td>
+                <td>
+                    <form method="post" action="/admin/photos/@photo.Id/publish" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="admin-pill @(photo.Draft ? "admin-pill--draft" : "admin-pill--live")">
+                            @(photo.Draft ? "Draft" : "Live")
+                        </button>
+                    </form>
+                </td>
+                <td class="mono text-muted" style="font-size:0.75rem;">
+                    @string.Join(", ", photo.Tags ?? new List<string>())
+                </td>
+                <td class="admin-actions">
+                    <a href="/admin/photos/@photo.Id/edit" class="admin-link">Edit</a>
+                    <form method="post" action="/admin/photos/@photo.Id/delete"
+                          onsubmit="return confirm('Delete \'@photo.Title.Replace("'", "\\'")\'?')">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="admin-link admin-link--danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+    <a href="/admin/photos/migrate" style="font-size:0.8125rem; color: var(--text-muted);">
+        Import photos from filesystem →
+    </a>
+</div>

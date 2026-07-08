@@ -3,6 +3,7 @@ using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Website.Services;
 using Website.Repositories;
+using Website.Models;
 
 namespace Website.Controllers;
 
@@ -10,9 +11,9 @@ namespace Website.Controllers;
 public class PhotosController : Controller
 {
     private readonly PhotoService _photoService;
-    private readonly PhotoRepository _photoRepository;
+    private readonly IPhotoRepository _photoRepository;
 
-    public PhotosController(PhotoService photoService, PhotoRepository photoRepository)
+    public PhotosController(PhotoService photoService, IPhotoRepository photoRepository)
     {
         _photoService = photoService;
         _photoRepository = photoRepository;
@@ -70,19 +71,31 @@ public class PhotosController : Controller
 
         XNamespace ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
 
+        var mostRecentDate = photos.Any() ? photos.Max(p => p.Date).ToString("yyyy-MM-dd") : DateTime.UtcNow.ToString("yyyy-MM-dd");
+
         var urls = new List<XElement>
         {
             new XElement(ns + "url",
                 new XElement(ns + "loc", baseUrl + "/"),
+                new XElement(ns + "lastmod", mostRecentDate),
                 new XElement(ns + "changefreq", "weekly"),
-                new XElement(ns + "priority", "1.0"))
+                new XElement(ns + "priority", "1.0")),
+            new XElement(ns + "url",
+                new XElement(ns + "loc", baseUrl + "/archive"),
+                new XElement(ns + "lastmod", mostRecentDate),
+                new XElement(ns + "changefreq", "weekly"),
+                new XElement(ns + "priority", "0.9")),
+            new XElement(ns + "url",
+                new XElement(ns + "loc", baseUrl + "/about"),
+                new XElement(ns + "changefreq", "monthly"),
+                new XElement(ns + "priority", "0.4"))
         };
 
         foreach (var photo in photos)
         {
             urls.Add(new XElement(ns + "url",
                 new XElement(ns + "loc", $"{baseUrl}/{photo.Date:yyyy-MM-dd}"),
-                new XElement(ns + "lastmod", photo.Date.ToString("yyyy-MM-dd")),
+                new XElement(ns + "lastmod", photo.UpdatedAt != default ? photo.UpdatedAt.ToString("yyyy-MM-dd") : photo.Date.ToString("yyyy-MM-dd")),
                 new XElement(ns + "changefreq", "yearly"),
                 new XElement(ns + "priority", "0.7")));
         }
@@ -91,6 +104,7 @@ public class PhotosController : Controller
         {
             urls.Add(new XElement(ns + "url",
                 new XElement(ns + "loc", $"{baseUrl}/tag/{Uri.EscapeDataString(tag)}"),
+                new XElement(ns + "lastmod", mostRecentDate),
                 new XElement(ns + "changefreq", "monthly"),
                 new XElement(ns + "priority", "0.5")));
         }

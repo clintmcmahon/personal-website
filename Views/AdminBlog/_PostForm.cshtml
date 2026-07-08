@@ -1,0 +1,43 @@
+@model Website.Models.Post
+
+<div class="admin-field">
+    <label for="Title">Title</label>
+    <input type="text" id="Title" name="Title" value="@Model.Title" class="admin-input" required autofocus />
+</div>
+
+<div class="admin-field-row">
+    <div class="admin-field">
+        <label for="Slug">Slug</label>
+        <input type="text" id="Slug" name="Slug" value="@Model.Slug" class="admin-input admin-input--mono"
+               placeholder="auto-generated from title if blank" />
+    </div>
+    <div class="admin-field">
+        <label for="Date">Date</label>
+        <input type="date" id="Date" name="Date" value="@Model.Date.ToString("yyyy-MM-dd")" class="admin-input admin-input--mono" />
+    </div>
+    <div class="admin-field admin-field--narrow">
+        <label for="Draft">Draft</label>
+        <input type="checkbox" id="Draft" name="Draft" value="true" @(Model.Draft ? "checked" : "") class="admin-checkbox" />
+    </div>
+</div>
+
+<div class="admin-field">
+    <label for="Description">Description <span class="admin-hint">(used in meta tags and blog list)</span></label>
+    <textarea id="Description" name="Description" class="admin-input" rows="2">@Model.Description</textarea>
+</div>
+
+<div class="admin-field">
+    <label for="Keywords">Keywords <span class="admin-hint">(comma-separated, for SEO)</span></label>
+    <input type="text" id="Keywords" name="Keywords" value="@Model.Keywords" class="admin-input" />
+</div>
+
+<div class="admin-field">
+    <label for="TagsRaw">Tags <span class="admin-hint">(comma-separated)</span></label>
+    <input type="text" id="TagsRaw" name="TagsRaw" value="@Model.TagsRaw" class="admin-input" placeholder="ai, dotnet, coffee" />
+</div>
+
+<div class="admin-field admin-field--editor">
+    <label for="Content">Content <span class="admin-hint">(markdown)</span></label>
+    <textarea id="Content" name="Content">@Model.Content</textarea>
+</div>
+

@@ -1,0 +1,67 @@
+@model IEnumerable<Website.Models.Post>
+@{
+    ViewData["Title"] = "Blog Posts — Admin";
+    Layout = "_AdminLayout";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="admin-flash admin-flash--success">@TempData["Success"]</div>
+}
+@if (TempData["Errors"] != null)
+{
+    <div class="admin-flash admin-flash--error">@TempData["Errors"]</div>
+}
+
+<div class="admin-toolbar">
+    <h1>Posts</h1>
+    <a href="/admin/blog/new" class="admin-btn admin-btn--primary">+ New Post</a>
+</div>
+
+<table class="admin-table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Tags</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var post in Model)
+        {
+            <tr class="@(post.Draft ? "row--draft" : "")">
+                <td>
+                    <a href="/admin/blog/@post.Id/edit">@post.Title</a>
+                </td>
+                <td class="mono">@post.Date.ToString("yyyy-MM-dd")</td>
+                <td>
+                    <form method="post" action="/admin/blog/@post.Id/publish" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="admin-pill @(post.Draft ? "admin-pill--draft" : "admin-pill--live")">
+                            @(post.Draft ? "Draft" : "Live")
+                        </button>
+                    </form>
+                </td>
+                <td class="mono text-muted" style="font-size:0.75rem;">
+                    @string.Join(", ", post.Tags ?? new List<string>())
+                </td>
+                <td class="admin-actions">
+                    <a href="/admin/blog/@post.Id/edit">Edit</a>
+                    <form method="post" action="/admin/blog/@post.Id/delete"
+                          onsubmit="return confirm('Delete \'@post.Title.Replace("'", "\\'")\'?')">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="admin-link admin-link--danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+    <a href="/admin/blog/migrate" style="font-size:0.8125rem; color: var(--text-muted);">
+        Import posts from markdown files →
+    </a>
+</div>

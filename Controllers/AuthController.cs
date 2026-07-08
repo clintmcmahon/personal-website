@@ -20,7 +20,7 @@ namespace Website.Controllers
         public IActionResult Login(string? returnUrl = null)
         {
             if (IsLoggedIn(HttpContext))
-                return Redirect(returnUrl ?? "/admin/photos/new");
+                return Redirect(returnUrl ?? "/admin");
 
             ViewData["ReturnUrl"] = returnUrl;
             return View();
@@ -34,7 +34,7 @@ namespace Website.Controllers
             if (!string.IsNullOrEmpty(storedHash) && HashPassword(password) == storedHash)
             {
                 HttpContext.Session.SetString(SessionKey, "1");
-                return Redirect(returnUrl ?? "/admin/photos/new");
+                return Redirect(returnUrl ?? "/admin");
             }
 
             ViewData["ReturnUrl"] = returnUrl;

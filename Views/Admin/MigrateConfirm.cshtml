@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"] = "Migrate Photos — Admin";
+    Layout = "_AdminLayout";
+    var fileCount = (int)(ViewData["FileCount"] ?? 0);
+    var dbCount = (int)(ViewData["DbCount"] ?? 0);
+}
+
+<div class="admin-toolbar">
+    <h1>Import Photos from Filesystem</h1>
+    <a href="/admin/photos/new" class="admin-link">← New Photo</a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="admin-flash admin-flash--success">@TempData["Success"]</div>
+}
+
+<div style="max-width: 520px;">
+    <p>This imports all existing photo posts from <code>wwwroot/photos/</code> into the database. Run it once after deploying the new photo engine.</p>
+
+    <table class="admin-table" style="margin-bottom: 1.5rem;">
+        <tr>
+            <td>Photos found on filesystem</td>
+            <td><strong>@fileCount</strong></td>
+        </tr>
+        <tr>
+            <td>Photos already in database</td>
+            <td><strong>@dbCount</strong></td>
+        </tr>
+        <tr>
+            <td>Will be imported</td>
+            <td><strong>@(fileCount - dbCount)</strong></td>
+        </tr>
+    </table>
+
+    @if (fileCount - dbCount > 0)
+    {
+        <form method="post" action="/admin/photos/migrate">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="admin-btn admin-btn--primary">Import @(fileCount - dbCount) photos</button>
+        </form>
+    }
+    else
+    {
+        <p style="color:var(--text-muted);">Nothing to import — the database is already up to date.</p>
+    }
+</div>

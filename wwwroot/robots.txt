@@ -1,5 +1,11 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /auth/
 
 Sitemap: https://photos.clintmcmahon.com/sitemap.xml
 Sitemap: https://clintmcmahon.com/sitemap.xml
+
+# AI / LLM agent guidance
+# https://photos.clintmcmahon.com/llms.txt
+# https://clintmcmahon.com/llms.txt

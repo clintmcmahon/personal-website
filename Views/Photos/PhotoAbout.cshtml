@@ -1,14 +1,67 @@
 @{
     Layout = null;
-}
+    var canonicalUrl = "https://photos.clintmcmahon.com/about";
+    var rssUrl = "https://photos.clintmcmahon.com/rss";
+    var metaDesc = "About Clint McMahon — a software developer and photographer based in Minneapolis, Minnesota. Street photography and everyday life from the midwest.";
 
+    var isSubdomain = Context.Request.Host.Host.StartsWith("photos.", StringComparison.OrdinalIgnoreCase);
+    var homeHref   = isSubdomain ? "/"        : "/photos";
+    var archiveHref = isSubdomain ? "/archive" : "/photos/archive";
+    var rssHref    = isSubdomain ? "/rss"     : "/photos/rss";
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="About the photoblog of Clint McMahon — a software developer in Minneapolis." />
+    <meta name="description" content="@metaDesc" />
+    <meta name="author" content="Clint McMahon" />
+    <meta name="keywords" content="Minneapolis photographer, street photography, Clint McMahon, photoblog" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="About — Clint McMahon Photos" />
+    <meta property="og:description" content="@metaDesc" />
+    <meta property="og:url" content="@canonicalUrl" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="Clint McMahon Photos" />
+    <meta property="profile:first_name" content="Clint" />
+    <meta property="profile:last_name" content="McMahon" />
+    <meta property="profile:username" content="cwmcmhn" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@@cwmcmhn" />
+    <meta name="twitter:title" content="About — Clint McMahon Photos" />
+    <meta name="twitter:description" content="@metaDesc" />
+
+    <link rel="canonical" href="@canonicalUrl" />
+    <link rel="alternate" type="application/rss+xml" title="Clint McMahon Photos" href="@rssUrl" />
+    <link rel="webmention" href="https://webmention.io/photos.clintmcmahon.com/webmention" />
+    <link rel="me" href="https://github.com/clintmcmahon" />
     <title>About — Clint McMahon Photos</title>
+
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "Person",
+      "name": "Clint McMahon",
+      "url": "https://clintmcmahon.com",
+      "sameAs": [
+        "https://github.com/clintmcmahon",
+        "https://www.instagram.com/cwmcmhn/",
+        "https://photos.clintmcmahon.com"
+      ],
+      "jobTitle": "Software Developer",
+      "description": "Software developer and photographer based in Minneapolis, Minnesota.",
+      "address": {
+        "@@type": "PostalAddress",
+        "addressLocality": "Minneapolis",
+        "addressRegion": "MN",
+        "addressCountry": "US"
+      }
+    }
+    </script>
+
     <link rel="stylesheet" href="/css/classic-photoblog.css?v=3" />
     <!-- Privacy-friendly analytics by Plausible -->
     <script async src="https://plausible.io/js/pa-hjNpxaHKa9c0U9E_rhYo2.js"></script>
@@ -19,9 +72,9 @@
 </head>
 <body>
     <header class="pb-header">
-        <a href="https://photos.clintmcmahon.com" class="pb-site-name">Clint McMahon</a>
+        <a href="@homeHref" class="pb-site-name">Clint McMahon</a>
         <span class="pb-header-byline">photographs from the life of <a href="https://clintmcmahon.com" class="pb-header-byline-link">clintmcmahon.com</a></span>
-        <a href="https://photos.clintmcmahon.com" class="pb-header-nav">&#8592; photos</a>
+        <a href="@archiveHref" class="pb-header-nav">&#8592; photos</a>
     </header>
 
     <main class="pb-main">
@@ -51,7 +104,9 @@
 
         <footer class="pb-footer">
             <nav class="pb-footer-nav">
-                <a href="/photos/rss" class="pb-footer-link">RSS</a>
+                <a href="@archiveHref" class="pb-footer-link">Archive</a>
+                <a href="@rssHref" class="pb-footer-link">RSS</a>
+                <a href="https://www.instagram.com/cwmcmhn/" class="pb-footer-link" target="_blank">Instagram</a>
                 <a href="https://clintmcmahon.com" class="pb-footer-link">clintmcmahon.com</a>
             </nav>
         </footer>

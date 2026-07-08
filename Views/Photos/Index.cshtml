@@ -5,6 +5,8 @@
     Layout = null;
     ViewData["Title"] = "Archive — Clint McMahon Photos";
     var canonicalUrl = "https://photos.clintmcmahon.com/archive";
+    var rssUrl = "https://photos.clintmcmahon.com/rss";
+    var metaDesc = $"Photography archive by Clint McMahon — {Model.TotalCount} photos from Minneapolis and beyond. Street, urban, and everyday life photography spanning {(Model.Years.Any() ? Model.Years.Last() + "–" + Model.Years.First() : "multiple years")}.";
 
     var isSubdomain = Context.Request.Host.Host.StartsWith("photos.", StringComparison.OrdinalIgnoreCase);
     var photoBase  = isSubdomain ? "/"         : "/photos/";
@@ -12,6 +14,11 @@
     var aboutHref  = isSubdomain ? "/about"    : "/photos/about";
     var rssHref    = isSubdomain ? "/rss"      : "/photos/rss";
     var tagBase    = isSubdomain ? "/tag/"     : "/photos/tag/";
+
+    var latestPhoto = Model.Years.Any() ? Model.PhotosByYear[Model.Years.First()].FirstOrDefault() : null;
+    var ogImage = latestPhoto?.ImageUrl != null
+        ? (latestPhoto.ImageUrl.StartsWith("http") ? latestPhoto.ImageUrl : $"https://photos.clintmcmahon.com{latestPhoto.ImageUrl}")
+        : "";
 }
 
 <!DOCTYPE html>
@@ -19,14 +26,57 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Photographs from the life of Clint McMahon — @Model.TotalCount photos spanning Minneapolis and beyond." />
+    <meta name="description" content="@metaDesc" />
+    <meta name="author" content="Clint McMahon" />
+    <meta name="keywords" content="Minneapolis photography, street photography, urban photography, photoblog, Clint McMahon" />
+
+    <!-- Open Graph -->
     <meta property="og:title" content="Photos — Clint McMahon" />
+    <meta property="og:description" content="@metaDesc" />
     <meta property="og:url" content="@canonicalUrl" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Clint McMahon Photos" />
+    @if (!string.IsNullOrEmpty(ogImage))
+    {
+        <meta property="og:image" content="@ogImage" />
+        <meta property="og:image:alt" content="Recent photograph by Clint McMahon" />
+    }
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@@cwmcmhn" />
+    <meta name="twitter:title" content="Photos — Clint McMahon" />
+    <meta name="twitter:description" content="@metaDesc" />
+    @if (!string.IsNullOrEmpty(ogImage))
+    {
+        <meta name="twitter:image" content="@ogImage" />
+        <meta name="twitter:image:alt" content="Recent photograph by Clint McMahon" />
+    }
+
     <link rel="canonical" href="@canonicalUrl" />
+    <link rel="alternate" type="application/rss+xml" title="Clint McMahon Photos" href="@rssUrl" />
     <link rel="webmention" href="https://webmention.io/photos.clintmcmahon.com/webmention" />
     <link rel="me" href="https://github.com/clintmcmahon" />
     <title>@ViewData["Title"]</title>
+
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "CollectionPage",
+      "name": "Photos — Clint McMahon",
+      "description": "@metaDesc",
+      "url": "@canonicalUrl",
+      "author": {
+        "@@type": "Person",
+        "name": "Clint McMahon",
+        "url": "https://clintmcmahon.com"
+      },
+      "about": {
+        "@@type": "Place",
+        "name": "Minneapolis, Minnesota"
+      }
+    }
+    </script>
     <link rel="stylesheet" href="/css/classic-photoblog.css?v=5" />
     <!-- Privacy-friendly analytics by Plausible -->
     <script async src="https://plausible.io/js/pa-hjNpxaHKa9c0U9E_rhYo2.js"></script>

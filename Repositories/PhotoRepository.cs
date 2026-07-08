@@ -7,7 +7,7 @@ using Markdig.Syntax;
 using System.Text.RegularExpressions;
 using Website.Models;
 
-public class PhotoRepository
+public class PhotoRepository : IPhotoRepository
 {
     private readonly string _photosDirectory;
     private readonly bool _isDevelopment;

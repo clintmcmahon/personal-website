@@ -4,7 +4,7 @@
     Layout = null;
     var tag = Model.ActiveTag ?? "";
     var displayTag = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(tag);
-    ViewData["Title"] = $"#{displayTag} — Photos — Clint McMahon";
+    ViewData["Title"] = $"#{displayTag} Photos — Clint McMahon";
 
     var isSubdomain = Context.Request.Host.Host.StartsWith("photos.", StringComparison.OrdinalIgnoreCase);
     var photoBase  = isSubdomain ? "/"         : "/photos/";
@@ -12,6 +12,13 @@
     var aboutHref  = isSubdomain ? "/about"    : "/photos/about";
     var rssHref    = isSubdomain ? "/rss"      : "/photos/rss";
     var tagBase    = isSubdomain ? "/tag/"     : "/photos/tag/";
+
+    var canonicalUrl = $"https://photos.clintmcmahon.com/tag/{Uri.EscapeDataString(tag)}";
+    var metaDesc = $"{Model.TotalCount} photo{(Model.TotalCount == 1 ? "" : "s")} tagged \"{tag}\" by Clint McMahon — Minneapolis photographer.";
+    var latestTagPhoto = Model.Years.Any() ? Model.PhotosByYear[Model.Years.First()].FirstOrDefault() : null;
+    var ogImage = latestTagPhoto?.ImageUrl != null
+        ? (latestTagPhoto.ImageUrl.StartsWith("http") ? latestTagPhoto.ImageUrl : $"https://photos.clintmcmahon.com{latestTagPhoto.ImageUrl}")
+        : "";
 }
 
 <!DOCTYPE html>
@@ -19,14 +26,35 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="@Model.TotalCount photos tagged "@tag" by Clint McMahon." />
-    <meta property="og:title" content="#@tag — Photos — Clint McMahon" />
+    <meta name="description" content="@metaDesc" />
+    <meta name="author" content="Clint McMahon" />
+    <meta name="keywords" content="@tag photography, @tag photos, Clint McMahon, Minneapolis photographer" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="#@displayTag Photos — Clint McMahon" />
+    <meta property="og:description" content="@metaDesc" />
+    <meta property="og:url" content="@canonicalUrl" />
     <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:site_name" content="Clint McMahon Photos" />
+    @if (!string.IsNullOrEmpty(ogImage))
+    {
+        <meta property="og:image" content="@ogImage" />
+        <meta property="og:image:alt" content="@displayTag photo by Clint McMahon" />
+    }
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="@(string.IsNullOrEmpty(ogImage) ? "summary" : "summary_large_image")" />
     <meta name="twitter:site" content="@@cwmcmhn" />
-    <meta name="twitter:title" content="#@tag — Photos — Clint McMahon" />
-    <meta name="twitter:description" content="@Model.TotalCount photos tagged "@tag" by Clint McMahon." />
-    <link rel="canonical" href="https://photos.clintmcmahon.com/tag/@Uri.EscapeDataString(tag)" />
+    <meta name="twitter:title" content="#@displayTag Photos — Clint McMahon" />
+    <meta name="twitter:description" content="@metaDesc" />
+    @if (!string.IsNullOrEmpty(ogImage))
+    {
+        <meta name="twitter:image" content="@ogImage" />
+        <meta name="twitter:image:alt" content="@displayTag photo by Clint McMahon" />
+    }
+
+    <link rel="canonical" href="@canonicalUrl" />
+    <link rel="alternate" type="application/rss+xml" title="Clint McMahon Photos" href="https://photos.clintmcmahon.com/rss" />
     <link rel="webmention" href="https://webmention.io/photos.clintmcmahon.com/webmention" />
     <link rel="me" href="https://github.com/clintmcmahon" />
     <title>@ViewData["Title"]</title>

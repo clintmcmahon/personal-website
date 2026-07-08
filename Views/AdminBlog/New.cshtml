@@ -1,0 +1,45 @@
+@model Website.Models.Post
+@{
+    ViewData["Title"] = "New Post — Admin";
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-toolbar">
+    <h1>New Post</h1>
+    <a href="/admin/blog" class="admin-link">← All posts</a>
+</div>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="admin-flash admin-flash--error">
+        @foreach (var err in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div>@err.ErrorMessage</div>
+        }
+    </div>
+}
+
+<form method="post" action="/admin/blog/new" class="admin-form">
+    @Html.AntiForgeryToken()
+    @await Html.PartialAsync("_PostForm", Model)
+    <div class="admin-form-actions">
+        <button type="submit" class="admin-btn admin-btn--primary">Save</button>
+        <a href="/admin/blog" class="admin-btn admin-btn--ghost">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css" />
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+    <script>
+        new EasyMDE({
+            element: document.getElementById("Content"),
+            spellChecker: false,
+            autosave: { enabled: true, uniqueId: "post-new" },
+            uploadImage: true,
+            imageUploadEndpoint: "/admin/blog/upload-image",
+            toolbar: ["bold","italic","heading","|","quote","unordered-list","ordered-list","|","link","image","upload-image","code","table","|","preview","side-by-side","fullscreen","|","guide"],
+            minHeight: "420px"
+        });
+    </script>
+}

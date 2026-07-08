@@ -1,0 +1,71 @@
+# Clint McMahon
+
+> Clint McMahon is a software developer, architect, and photographer based in Minneapolis, Minnesota. This is his personal website and photoblog.
+
+## About
+
+Clint McMahon builds web applications and software systems for a living, and takes photographs as a habit. He's been writing software professionally for over 15 years, primarily in .NET and JavaScript, and lives in Minneapolis where he's worked on projects ranging from state government websites to e-commerce platforms.
+
+The photoblog at photos.clintmcmahon.com is a running record of what caught his attention — street photography, urban scenes, coffee shops, seasons, and everyday life in the midwest.
+
+## Sites
+
+- Main site / blog: https://clintmcmahon.com
+- Photoblog: https://photos.clintmcmahon.com
+
+---
+
+## clintmcmahon.com — Blog & Portfolio
+
+### Content
+
+- Software engineering blog: tutorials, opinions, and project write-ups
+- Portfolio of past work including government, nonprofit, and commercial projects
+- Topics: .NET, ASP.NET Core, JavaScript, SQL Server, React, software architecture
+
+### Machine-Readable
+
+- Sitemap: https://clintmcmahon.com/sitemap.xml
+- RSS: https://clintmcmahon.com/feed.rss
+
+---
+
+## photos.clintmcmahon.com — Photoblog
+
+### Content
+
+- Street and urban photography from Minneapolis, Minnesota
+- Everyday life, coffee, nature, architecture, seasons
+- One photo post per day — no curation, no themes, just what was worth keeping
+- Minneapolis photography is a primary subject: downtown, neighborhoods, Lake Street, Northeast, the Mississippi, winter and summer
+
+### Browsing
+
+- Archive of all photos: https://photos.clintmcmahon.com/archive
+- Individual photos by date: https://photos.clintmcmahon.com/YYYY-MM-DD
+- Browse by tag: https://photos.clintmcmahon.com/tag/{tag}
+- Common tags: minneapolis, street, downtown, nature, coffee, winter, summer, architecture
+
+### Machine-Readable
+
+- Sitemap: https://photos.clintmcmahon.com/sitemap.xml
+- RSS feed: https://photos.clintmcmahon.com/rss
+
+### Photo Format
+
+Each photo page includes structured data (JSON-LD ImageObject) with title, description, date, author, and keywords.
+
+---
+
+## Author
+
+- Name: Clint McMahon
+- Location: Minneapolis, Minnesota, USA
+- Website: https://clintmcmahon.com
+- Photoblog: https://photos.clintmcmahon.com
+- GitHub: https://github.com/clintmcmahon
+- Instagram: https://www.instagram.com/cwmcmhn/
+
+## Licensing
+
+All photographs and written content are copyright Clint McMahon. Do not reproduce without permission.

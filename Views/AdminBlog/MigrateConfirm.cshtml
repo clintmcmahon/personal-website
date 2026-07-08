@@ -1,0 +1,24 @@
+@{
+    ViewData["Title"] = "Import Markdown Posts — Admin";
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-toolbar">
+    <h1>Import from Markdown Files</h1>
+    <a href="/admin/blog" class="admin-link">← All posts</a>
+</div>
+
+<div style="max-width: 520px;">
+    <p>This will read every <code>.md</code> file from <code>wwwroot/posts/</code> and insert them into the database. Posts that already exist (matched by slug) are skipped.</p>
+
+    <table class="admin-table" style="margin: 1.5rem 0;">
+        <tr><td>Markdown files found</td><td class="mono">@ViewData["FileCount"]</td></tr>
+        <tr><td>Posts already in database</td><td class="mono">@ViewData["DbCount"]</td></tr>
+    </table>
+
+    <form method="post" action="/admin/blog/migrate">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="admin-btn admin-btn--primary">Run import</button>
+        <a href="/admin/blog" class="admin-btn admin-btn--ghost">Cancel</a>
+    </form>
+</div>

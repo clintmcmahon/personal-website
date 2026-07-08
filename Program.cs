@@ -12,21 +12,30 @@ var dbPath = Path.Combine(builder.Environment.ContentRootPath, "photocomments.db
 builder.Services.AddDbContext<PhotoCommentDbContext>(options =>
     options.UseSqlite($"Data Source={dbPath}"));
 
+// Add SQLite for blog posts
+var blogDbPath = Path.Combine(builder.Environment.ContentRootPath, "blog.db");
+builder.Services.AddDbContext<BlogDbContext>(options =>
+    options.UseSqlite($"Data Source={blogDbPath}"));
+
+// Add SQLite for photo posts
+var photoDbPath = Path.Combine(builder.Environment.ContentRootPath, "photos.db");
+builder.Services.AddDbContext<PhotoDbContext>(options =>
+    options.UseSqlite($"Data Source={photoDbPath}"));
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddTransient<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IPostRepository, DatabasePostRepository>();
+builder.Services.AddScoped<IPhotoRepository, DatabasePhotoRepository>();
+
+// Keep the filesystem-based repo registered as a concrete type for the one-time migration route
 builder.Services.AddSingleton<PhotoRepository>(provider =>
-    new PhotoRepository(Path.Combine(builder.Environment.ContentRootPath, "wwwroot", "photos"), builder.Environment.IsDevelopment()));
+    new PhotoRepository(
+        Path.Combine(builder.Environment.ContentRootPath, "wwwroot", "photos"),
+        builder.Environment.IsDevelopment()));
+
 builder.Services.AddScoped<PhotoService>();
 builder.Services.AddScoped<ImageProcessingService>();
-
-var ghConfig = builder.Configuration.GetSection("GitHub");
-var ghPat = ghConfig["PersonalAccessToken"] ?? string.Empty;
-var ghOwner = ghConfig["Owner"] ?? "clintmcmahon";
-var ghRepo = ghConfig["Repo"] ?? "personal-website";
-builder.Services.AddScoped<GitHubService>(_ => new GitHubService(ghPat, ghOwner, ghRepo));
-builder.Services.AddScoped<PhotoPostService>();
 
 builder.Services.AddSession();
 
@@ -36,13 +45,18 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<PhotoCommentDbContext>();
     db.Database.Migrate();
+
+    var blogDb = scope.ServiceProvider.GetRequiredService<BlogDbContext>();
+    blogDb.Database.Migrate();
+
+    var photoDb = scope.ServiceProvider.GetRequiredService<PhotoDbContext>();
+    photoDb.Database.Migrate();
 }
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

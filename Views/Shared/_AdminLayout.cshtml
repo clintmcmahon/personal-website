@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        body { padding: 0; background: var(--bg-subtle); }
+
+        .admin-nav {
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .admin-nav-brand {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+        .admin-nav-links { display: flex; gap: 1.5rem; }
+        .admin-nav-links a {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        .admin-nav-links a:hover { color: var(--text); }
+        .admin-nav-links a.active { color: var(--accent); font-weight: 500; }
+        .admin-nav-logout { margin-left: auto; font-size: 0.8125rem; color: var(--text-muted); }
+
+        .admin-main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem 4rem;
+        }
+
+        .admin-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.75rem;
+        }
+        .admin-toolbar h1 {
+            font-size: 1.375rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .admin-flash {
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .admin-flash--success { background: #d1fae5; color: #065f46; }
+        .admin-flash--error   { background: #fee2e2; color: #991b1b; }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        .admin-table th {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-subtle);
+        }
+        .admin-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        .admin-table tr:last-child td { border-bottom: none; }
+        .admin-table tr.row--draft td { color: var(--text-muted); }
+        .admin-table a { color: var(--accent); text-decoration: none; }
+        .admin-table a:hover { text-decoration: underline; }
+
+        .admin-pill {
+            display: inline-block;
+            padding: 0.2rem 0.625rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+        .admin-pill--live  { background: #d1fae5; color: #065f46; }
+        .admin-pill--draft { background: var(--bg-subtle); color: var(--text-muted); border: 1px solid var(--border); }
+
+        .admin-actions { display: flex; gap: 1rem; align-items: center; white-space: nowrap; }
+        .admin-link { font-size: 0.875rem; color: var(--text-muted); text-decoration: none; background: none; border: none; cursor: pointer; padding: 0; }
+        .admin-link:hover { color: var(--text); text-decoration: underline; }
+        .admin-link--danger:hover { color: #dc2626; }
+
+        .admin-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1.125rem;
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .admin-btn--primary { background: var(--accent); color: #fff; }
+        .admin-btn--primary:hover { background: var(--accent-dark); }
+        .admin-btn--publish { background: #059669; color: #fff; }
+        .admin-btn--publish:hover { background: #047857; }
+        .admin-btn--ghost { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+        .admin-btn--ghost:hover { background: var(--bg-subtle); }
+
+        .admin-form { max-width: 820px; }
+        .admin-field { margin-bottom: 1.25rem; }
+        .admin-field label { display: block; font-size: 0.8125rem; font-weight: 600; margin-bottom: 0.375rem; color: var(--text); }
+        .admin-hint { font-weight: 400; color: var(--text-muted); }
+        .admin-field-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: end; }
+        .admin-field--narrow { width: auto; }
+        .admin-input {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-family: var(--font);
+            font-size: 0.9375rem;
+            background: var(--bg);
+            color: var(--text);
+        }
+        .admin-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
+        .admin-input--mono { font-family: var(--font-mono); font-size: 0.875rem; }
+        .admin-checkbox { width: 1.125rem; height: 1.125rem; accent-color: var(--accent); cursor: pointer; }
+        .admin-field--editor .CodeMirror, .admin-field--editor .EasyMDEContainer { border-radius: var(--radius); }
+        .admin-form-actions { display: flex; gap: 0.75rem; align-items: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+
+        .mono { font-family: var(--font-mono); }
+        .text-muted { color: var(--text-muted); }
+    </style>
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <nav class="admin-nav">
+        <a href="/" class="admin-nav-brand">Clint McMahon</a>
+        <div class="admin-nav-links">
+            <a href="/admin" class="@(Context.Request.Path.Value == "/admin" ? "active" : "")">Home</a>
+            <a href="/admin/blog" class="@(Context.Request.Path.StartsWithSegments("/admin/blog") ? "active" : "")">Posts</a>
+            <a href="/admin/photos" class="@(Context.Request.Path.StartsWithSegments("/admin/photos") ? "active" : "")">Photos</a>
+        </div>
+        <a href="/auth/logout" class="admin-nav-logout">Log out</a>
+    </nav>
+
+    <main class="admin-main">
+        @RenderBody()
+    </main>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

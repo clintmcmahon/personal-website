@@ -15,6 +15,12 @@ public class PostRepository : IPostRepository
         return files.Select(ParseMarkdownFile);
     }
 
+    // Returns posts with raw markdown content (not rendered) — used for DB migration
+    public IEnumerable<Post> GetAllPostsRaw()
+    {
+        return GetMarkdownFiles().Select(ParseMarkdownFileRaw);
+    }
+
     public IEnumerable<Post> GetLatestPosts()
     {
         var files = GetMarkdownFiles();
@@ -41,9 +47,23 @@ public class PostRepository : IPostRepository
 
     private Post ParseMarkdownFile(string filePath)
     {
+        var (post, markdownContent) = ParseMarkdownFileInternal(filePath);
+        var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+        post.Content = Markdown.ToHtml(markdownContent, pipeline);
+        return post;
+    }
+
+    private Post ParseMarkdownFileRaw(string filePath)
+    {
+        var (post, markdownContent) = ParseMarkdownFileInternal(filePath);
+        post.Content = markdownContent;
+        return post;
+    }
+
+    private (Post post, string markdownContent) ParseMarkdownFileInternal(string filePath)
+    {
         var content = File.ReadAllText(filePath);
 
-        // Use regex to extract front matter and Markdown content
         var frontMatterMatch = Regex.Match(content, @"^---\s*(.*?)\s*---\s*(.*)", RegexOptions.Singleline);
         if (!frontMatterMatch.Success)
             throw new Exception($"Invalid front matter format -- {filePath}");
@@ -51,14 +71,7 @@ public class PostRepository : IPostRepository
         var frontMatter = frontMatterMatch.Groups[1].Value;
         var markdownContent = frontMatterMatch.Groups[2].Value;
 
-        // Parse front matter
-        var post = ParseFrontMatter(frontMatter);
-
-        // Set the HTML content after rendering Markdown
-        var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-        post.Content = Markdown.ToHtml(markdownContent, pipeline);
-
-        return post;
+        return (ParseFrontMatter(frontMatter), markdownContent);
     }
 
     private Post ParseFrontMatter(string frontMatter)
@@ -93,6 +106,9 @@ var value = parts[1].Trim().Trim('"', '\''); // Remove both single and double qu
                     break;
                 case "slug":
                     post.Slug = value;
+                    break;
+                case "keywords":
+                    post.Keywords = value;
                     break;
                 case "tags":
                     post.Tags = value.Split(',').Select(tag => tag.Trim()).ToList();
