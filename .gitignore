@@ -46,3 +46,8 @@ msbuild.wrn
 
 # Local secrets
 appsettings.local.json
+
+# SQLite databases — live on the server, must not be committed
+*.db
+*.db-shm
+*.db-wal
