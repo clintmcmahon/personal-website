@@ -12,17 +12,20 @@ public class AdminController : Controller
     private readonly ImageProcessingService _imageProcessor;
     private readonly IWebHostEnvironment _env;
     private readonly PhotoRepository _fileRepo;
+    private readonly MastodonService _mastodon;
 
     public AdminController(
         PhotoDbContext db,
         ImageProcessingService imageProcessor,
         IWebHostEnvironment env,
-        PhotoRepository fileRepo)
+        PhotoRepository fileRepo,
+        MastodonService mastodon)
     {
         _db = db;
         _imageProcessor = imageProcessor;
         _env = env;
         _fileRepo = fileRepo;
+        _mastodon = mastodon;
     }
 
     // ── Admin landing ────────────────────────────────────────────────────────
@@ -63,6 +66,7 @@ public class AdminController : Controller
         var photo = _db.Photos.Find(id);
         if (photo == null) return NotFound();
 
+        var wasDraft = photo.Draft;
         photo.Draft = !photo.Draft;
         photo.UpdatedAt = DateTime.UtcNow;
         await _db.SaveChangesAsync();
@@ -70,6 +74,9 @@ public class AdminController : Controller
         TempData["Success"] = photo.Draft
             ? $"\"{photo.Title}\" unpublished."
             : $"\"{photo.Title}\" published.";
+
+        if (wasDraft && !photo.Draft)
+            await _mastodon.PostPhotoAsync(photo);
 
         return RedirectToAction(nameof(Photos));
     }
@@ -279,6 +286,10 @@ public class AdminController : Controller
         await _db.SaveChangesAsync();
 
         TempData["Success"] = $"Photo post \"{title}\" saved.";
+
+        if (!draft)
+            await _mastodon.PostPhotoAsync(entry);
+
         return RedirectToAction(nameof(NewPhoto));
     }
 

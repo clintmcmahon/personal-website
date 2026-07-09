@@ -36,6 +36,8 @@ builder.Services.AddSingleton<PhotoRepository>(provider =>
 
 builder.Services.AddScoped<PhotoService>();
 builder.Services.AddScoped<ImageProcessingService>();
+builder.Services.AddHttpClient("Mastodon");
+builder.Services.AddScoped<MastodonService>();
 
 builder.Services.AddSession();
 

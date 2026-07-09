@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Website.Data;
 using Website.Models;
 using Website.Repositories;
+using Website.Services;
 
 namespace Website.Controllers;
 
@@ -10,11 +11,13 @@ public class AdminBlogController : Controller
 {
     private readonly BlogDbContext _db;
     private readonly IWebHostEnvironment _env;
+    private readonly MastodonService _mastodon;
 
-    public AdminBlogController(BlogDbContext db, IWebHostEnvironment env)
+    public AdminBlogController(BlogDbContext db, IWebHostEnvironment env, MastodonService mastodon)
     {
         _db = db;
         _env = env;
+        _mastodon = mastodon;
     }
 
     // ── List ────────────────────────────────────────────────────────────────
@@ -135,11 +138,16 @@ public class AdminBlogController : Controller
         var post = _db.Posts.Find(id);
         if (post == null) return NotFound();
 
+        var wasDraft = post.Draft;
         post.Draft = !post.Draft;
         post.UpdatedAt = DateTime.UtcNow;
         await _db.SaveChangesAsync();
 
         TempData["Success"] = post.Draft ? $"\"{post.Title}\" unpublished." : $"\"{post.Title}\" published.";
+
+        if (wasDraft && !post.Draft)
+            await _mastodon.PostBlogPostAsync(post);
+
         return RedirectToAction(nameof(Index));
     }
 
