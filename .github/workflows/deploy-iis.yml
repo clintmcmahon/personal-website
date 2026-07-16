@@ -32,12 +32,14 @@ jobs:
           Write-Host "Publish folder: $pub"
           echo "PUBLISH_DIR=$pub" | Out-File -FilePath $env:GITHUB_ENV -Append
 
-      - name: Ensure IIS site folder permissions (once)
+      - name: Ensure IIS site folder permissions
         shell: powershell
         run: |
           $site = 'C:\websites\clintmcmahon.com'
           if (-not (Test-Path $site)) { New-Item -Path $site -ItemType Directory -Force | Out-Null }
-          icacls $site /grant "NT AUTHORITY\NETWORK SERVICE:(OI)(CI)M" /T
+          # Grant both identities — app pools may run as either NETWORK SERVICE or the pool's built-in identity
+          icacls $site /grant "NT AUTHORITY\NETWORK SERVICE:(OI)(CI)M" /T /C
+          icacls $site /grant "IIS AppPool\clintmcmahon.com:(OI)(CI)M" /T /C
 
       - name: Backup current site (zip)
         shell: powershell
@@ -50,7 +52,22 @@ jobs:
           Add-Type -AssemblyName System.IO.Compression.FileSystem
           [IO.Compression.ZipFile]::CreateFromDirectory($sitePath, $dest)
 
-      - name: Deploy publish output (live, no downtime)
+      - name: Stop AppPool
+        shell: powershell
+        run: |
+          $appPool = 'clintmcmahon.com'
+          Import-Module WebAdministration
+          if ((Get-WebAppPoolState -Name $appPool).Value -ne 'Stopped') {
+            Stop-WebAppPool -Name $appPool
+            # Wait for the process to release file locks
+            $deadline = (Get-Date).AddSeconds(15)
+            while ((Get-WebAppPoolState -Name $appPool).Value -ne 'Stopped' -and (Get-Date) -lt $deadline) {
+              Start-Sleep -Milliseconds 200
+            }
+          }
+          Write-Host "AppPool stopped."
+
+      - name: Deploy publish output
         shell: powershell
         run: |
           $src = "$env:PUBLISH_DIR\"
@@ -59,9 +76,9 @@ jobs:
           if (-not (Test-Path $src)) { throw "Publish dir not found: $src" }
           if (-not (Test-Path $dst)) { throw "Destination not found: $dst" }
 
-          # Shadow copy (enabled in web.config) means DLLs are loaded from a temp dir,
-          # so originals are unlocked and can be overwritten while the app is running.
-          # /XF and /XD protect server-side content that is never committed to git.
+          # /XF and /XD protect server-side content that lives only on the server.
+          # After this deploy lands web.config with shadow copy enabled, future deploys
+          # can skip the stop/start and just recycle.
           robocopy $src $dst /MIR /XJ /R:2 /W:2 /XF appsettings.local.json *.db *.db-shm *.db-wal `
             /XD "$dst\.well-known" "$dst\logs" "$dst\uploads" "$dst\wwwroot\images" "$dst\wwwroot\photos"
 
@@ -70,20 +87,13 @@ jobs:
 
           if ($rc -gt 3) { throw "robocopy failed with exit code $rc" }
 
-      - name: Graceful recycle (zero-downtime restart)
+      - name: Start AppPool
         shell: powershell
         run: |
           $appPool = 'clintmcmahon.com'
           Import-Module WebAdministration
-
-          # If pool was stopped for any reason, start it; otherwise recycle (graceful handoff).
-          if ((Get-WebAppPoolState -Name $appPool).Value -eq 'Stopped') {
-            Start-WebAppPool -Name $appPool
-            Write-Host "AppPool was stopped — started."
-          } else {
-            Restart-WebAppPool -Name $appPool
-            Write-Host "AppPool recycled gracefully."
-          }
+          Start-WebAppPool -Name $appPool
+          Write-Host "AppPool started."
 
       - name: Smoke check
         shell: powershell
