@@ -62,30 +62,34 @@ public class MastodonService
 
         var status = BuildStatus(title, url, tags);
 
-        // Upload the first image
-        string? mediaId = null;
-        if (!string.IsNullOrWhiteSpace(photo.ImageUrl))
+        // Upload up to 4 images (Mastodon's maximum per post)
+        var allImages = (photo.Rows ?? new List<List<PhotoImage>>())
+            .SelectMany(r => r)
+            .Take(4)
+            .ToList();
+
+        var mediaIds = new List<string>();
+        foreach (var img in allImages)
         {
+            if (string.IsNullOrWhiteSpace(img.Url)) continue;
+
             var localPath = Path.Combine(
                 _env.WebRootPath,
-                photo.ImageUrl.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
+                img.Url.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
 
-            if (File.Exists(localPath))
-            {
-                var altText = photo.Rows?.FirstOrDefault()?.FirstOrDefault()?.Alt;
-                if (string.IsNullOrWhiteSpace(altText))
-                    altText = photo.Title;
-
-                mediaId = await UploadMediaAsync(localPath, altText ?? title);
-            }
-            else
+            if (!File.Exists(localPath))
             {
                 _logger.LogWarning("Mastodon photo upload: image not found at {Path}", localPath);
+                continue;
             }
+
+            var altText = string.IsNullOrWhiteSpace(img.Alt) ? title : img.Alt;
+            var mediaId = await UploadMediaAsync(localPath, altText);
+            if (mediaId != null)
+                mediaIds.Add(mediaId);
         }
 
-        var mediaIds = mediaId != null ? new List<string> { mediaId } : null;
-        await PublishStatusAsync(status, mediaIds);
+        await PublishStatusAsync(status, mediaIds.Any() ? mediaIds : null);
     }
 
     private async Task<string?> UploadMediaAsync(string filePath, string altText)
