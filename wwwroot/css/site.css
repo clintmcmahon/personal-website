@@ -458,6 +458,14 @@ header {
   margin: 1.5rem 0;
 }
 
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  display: block;
+  margin: 1.5rem auto;
+}
+
 .post-content code:not(pre code) {
   font-family: var(--font-mono);
   font-size: 0.875em;

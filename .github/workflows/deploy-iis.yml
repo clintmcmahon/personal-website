@@ -18,17 +18,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Restore
-        run: dotnet restore .\Website.csproj
-
-      - name: Build (Release)
-        run: dotnet build .\Website.csproj -c Release --no-restore
-
-      - name: Publish (self-contained folder)
+      - name: Publish
         shell: powershell
         run: |
           $pub = Join-Path $env:RUNNER_TEMP "publish"
-          dotnet publish .\Website.csproj -c Release -o $pub --no-build
+          dotnet publish .\Website.csproj -c Release -o $pub
           Write-Host "Publish folder: $pub"
           echo "PUBLISH_DIR=$pub" | Out-File -FilePath $env:GITHUB_ENV -Append
 
@@ -40,17 +34,6 @@ jobs:
           # Grant both identities — app pools may run as either NETWORK SERVICE or the pool's built-in identity
           icacls $site /grant "NT AUTHORITY\NETWORK SERVICE:(OI)(CI)M" /T /C
           icacls $site /grant "IIS AppPool\clintmcmahon.com:(OI)(CI)M" /T /C
-
-      - name: Backup current site (zip)
-        shell: powershell
-        run: |
-          $sitePath = 'C:\websites\clintmcmahon.com'
-          $backupRoot = 'C:\websites\_backups'
-          if (-not (Test-Path $backupRoot)) { New-Item $backupRoot -ItemType Directory | Out-Null }
-          $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
-          $dest = Join-Path $backupRoot "site-$stamp.zip"
-          Add-Type -AssemblyName System.IO.Compression.FileSystem
-          [IO.Compression.ZipFile]::CreateFromDirectory($sitePath, $dest)
 
       - name: Stop AppPool
         shell: powershell
@@ -66,6 +49,17 @@ jobs:
             }
           }
           Write-Host "AppPool stopped."
+
+      - name: Backup current site (zip)
+        shell: powershell
+        run: |
+          $sitePath = 'C:\websites\clintmcmahon.com'
+          $backupRoot = 'C:\websites\_backups'
+          if (-not (Test-Path $backupRoot)) { New-Item $backupRoot -ItemType Directory | Out-Null }
+          $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+          $dest = Join-Path $backupRoot "site-$stamp.zip"
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          [IO.Compression.ZipFile]::CreateFromDirectory($sitePath, $dest)
 
       - name: Deploy publish output
         shell: powershell
