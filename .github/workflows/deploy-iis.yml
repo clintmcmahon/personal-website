@@ -2,7 +2,7 @@ name: Build & Deploy to IIS (self-hosted)
 
 on:
   push:
-    branches: [ main ]   # <-- change if your branch isn't literally "main"
+    branches: [ main ]
   workflow_dispatch:
 
 concurrency:
@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: [ self-hosted, Windows, X64 ]  # matches your runner labels
+    runs-on: [ self-hosted, Windows, X64 ]
     timeout-minutes: 30
 
     steps:
@@ -37,25 +37,7 @@ jobs:
         run: |
           $site = 'C:\websites\clintmcmahon.com'
           if (-not (Test-Path $site)) { New-Item -Path $site -ItemType Directory -Force | Out-Null }
-          # Runner service is running as NETWORK SERVICE on your box
           icacls $site /grant "NT AUTHORITY\NETWORK SERVICE:(OI)(CI)M" /T
-
-      - name: Stop AppPool + take site offline
-        shell: powershell
-        run: |
-          $appPool = 'clintmcmahon.com'
-          $sitePath = 'C:\websites\clintmcmahon.com'
-
-          # Copy the file FIRST while the app is still running so ANCM serves it.
-          # ANCM detects app_offline.htm and takes over immediately — users never see the raw IIS 503.
-          Copy-Item -Path (Join-Path $env:GITHUB_WORKSPACE 'app_offline.htm') -Destination (Join-Path $sitePath 'app_offline.htm') -Force
-          Start-Sleep -Seconds 1
-
-          # Now stop the AppPool to release file locks for the copy step
-          Import-Module WebAdministration
-          if ((Get-WebAppPoolState -Name $appPool).Value -ne 'Stopped') {
-            Stop-WebAppPool -Name $appPool
-          }
 
       - name: Backup current site (zip)
         shell: powershell
@@ -68,45 +50,46 @@ jobs:
           Add-Type -AssemblyName System.IO.Compression.FileSystem
           [IO.Compression.ZipFile]::CreateFromDirectory($sitePath, $dest)
 
-      - name: Deploy publish output (robocopy mirror)
+      - name: Deploy publish output (live, no downtime)
         shell: powershell
         run: |
           $src = "$env:PUBLISH_DIR\"
           $dst = 'C:\websites\clintmcmahon.com\'
-      
+
           if (-not (Test-Path $src)) { throw "Publish dir not found: $src" }
           if (-not (Test-Path $dst)) { throw "Destination not found: $dst" }
-      
-          # Mirror while keeping certain server-side folders (add more as needed)
-          robocopy $src $dst /MIR /XJ /R:2 /W:2 /XF app_offline.htm appsettings.local.json *.db *.db-shm *.db-wal `
+
+          # Shadow copy (enabled in web.config) means DLLs are loaded from a temp dir,
+          # so originals are unlocked and can be overwritten while the app is running.
+          # /XF and /XD protect server-side content that is never committed to git.
+          robocopy $src $dst /MIR /XJ /R:2 /W:2 /XF appsettings.local.json *.db *.db-shm *.db-wal `
             /XD "$dst\.well-known" "$dst\logs" "$dst\uploads" "$dst\wwwroot\images" "$dst\wwwroot\photos"
-      
+
           $rc = $LASTEXITCODE
           Write-Host "robocopy exit code: $rc"
-      
-          if ($rc -le 3) {
-            Write-Host "Treating robocopy code $rc as SUCCESS."
-            exit 0
-          } else {
-            throw "robocopy failed with exit code $rc"
-          }
 
+          if ($rc -gt 3) { throw "robocopy failed with exit code $rc" }
 
-
-      - name: Bring site online + start AppPool
+      - name: Graceful recycle (zero-downtime restart)
         shell: powershell
         run: |
           $appPool = 'clintmcmahon.com'
-          $sitePath = 'C:\websites\clintmcmahon.com'
-          Remove-Item (Join-Path $sitePath 'app_offline.htm') -ErrorAction SilentlyContinue
           Import-Module WebAdministration
-          Start-WebAppPool -Name $appPool
 
-      - name: Smoke check (optional)
+          # If pool was stopped for any reason, start it; otherwise recycle (graceful handoff).
+          if ((Get-WebAppPoolState -Name $appPool).Value -eq 'Stopped') {
+            Start-WebAppPool -Name $appPool
+            Write-Host "AppPool was stopped — started."
+          } else {
+            Restart-WebAppPool -Name $appPool
+            Write-Host "AppPool recycled gracefully."
+          }
+
+      - name: Smoke check
         shell: powershell
         continue-on-error: true
         run: |
-          # replace with your site URL or local binding if you want a quick ping
+          Start-Sleep -Seconds 3
           try {
             $resp = Invoke-WebRequest http://localhost/ -UseBasicParsing -TimeoutSec 10
             Write-Host "HTTP $($resp.StatusCode)"
