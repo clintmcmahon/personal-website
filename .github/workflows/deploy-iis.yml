@@ -78,8 +78,8 @@ jobs:
           if (-not (Test-Path $dst)) { throw "Destination not found: $dst" }
       
           # Mirror while keeping certain server-side folders (add more as needed)
-          robocopy $src $dst /MIR /XJ /R:2 /W:2 /XF app_offline.htm appsettings.local.json `
-            /XD "$dst\.well-known" "$dst\logs" "$dst\uploads"
+          robocopy $src $dst /MIR /XJ /R:2 /W:2 /XF app_offline.htm appsettings.local.json *.db *.db-shm *.db-wal `
+            /XD "$dst\.well-known" "$dst\logs" "$dst\uploads" "$dst\wwwroot\images" "$dst\wwwroot\photos"
       
           $rc = $LASTEXITCODE
           Write-Host "robocopy exit code: $rc"
