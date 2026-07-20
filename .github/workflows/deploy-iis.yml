@@ -50,17 +50,6 @@ jobs:
           }
           Write-Host "AppPool stopped."
 
-      - name: Backup current site (zip)
-        shell: powershell
-        run: |
-          $sitePath = 'C:\websites\clintmcmahon.com'
-          $backupRoot = 'C:\websites\_backups'
-          if (-not (Test-Path $backupRoot)) { New-Item $backupRoot -ItemType Directory | Out-Null }
-          $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
-          $dest = Join-Path $backupRoot "site-$stamp.zip"
-          Add-Type -AssemblyName System.IO.Compression.FileSystem
-          [IO.Compression.ZipFile]::CreateFromDirectory($sitePath, $dest)
-
       - name: Deploy publish output
         shell: powershell
         run: |
