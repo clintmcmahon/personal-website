@@ -152,7 +152,7 @@ public class AdminBlogController : Controller
             post.SyndicationUrl = await _mastodon.PostBlogPostAsync(post);
             await _db.SaveChangesAsync();
 
-            await _webmention.SendWebmentionsAsync(CanonicalUrlHelper.BlogPost(post.Slug), post.Content ?? "");
+            await _webmention.ScheduleAsync("Blog", post.Slug, CanonicalUrlHelper.BlogPost(post.Slug));
         }
 
         return RedirectToAction(nameof(Index));

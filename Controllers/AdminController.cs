@@ -83,7 +83,7 @@ public class AdminController : Controller
             photo.SyndicationUrl = await _mastodon.PostPhotoAsync(photo);
             await _db.SaveChangesAsync();
 
-            await _webmention.SendWebmentionsAsync(CanonicalUrlHelper.Photo(photo.Date), photo.Content);
+            await _webmention.ScheduleAsync("Photo", photo.Date.ToString("yyyy-MM-dd"), CanonicalUrlHelper.Photo(photo.Date));
         }
 
         return RedirectToAction(nameof(Photos));
@@ -300,7 +300,7 @@ public class AdminController : Controller
             entry.SyndicationUrl = await _mastodon.PostPhotoAsync(entry);
             await _db.SaveChangesAsync();
 
-            await _webmention.SendWebmentionsAsync(CanonicalUrlHelper.Photo(entry.Date), entry.Content);
+            await _webmention.ScheduleAsync("Photo", entry.Date.ToString("yyyy-MM-dd"), CanonicalUrlHelper.Photo(entry.Date));
         }
 
         return RedirectToAction(nameof(NewPhoto));

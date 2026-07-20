@@ -2,6 +2,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
+using Website.Data;
+using Website.Models;
 
 namespace Website.Services;
 
@@ -34,13 +36,34 @@ public class WebmentionService
     private const int MaxRedirects = 5;
     private const int MaxBodyBytes = 100_000;
 
+    // Gives typos/broken links a chance to get fixed before anyone downstream is notified —
+    // see https://en.andros.dev/blog/0b8e451e/i-joined-the-indieweb-heres-what-i-learned/
+    public static readonly TimeSpan SendDelay = TimeSpan.FromHours(24);
+
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly WebmentionDbContext _db;
     private readonly ILogger<WebmentionService> _logger;
 
-    public WebmentionService(IHttpClientFactory httpClientFactory, ILogger<WebmentionService> logger)
+    public WebmentionService(IHttpClientFactory httpClientFactory, WebmentionDbContext db, ILogger<WebmentionService> logger)
     {
         _httpClientFactory = httpClientFactory;
+        _db = db;
         _logger = logger;
+    }
+
+    // Queues a webmention send for `SendDelay` from now instead of sending immediately.
+    // WebmentionDispatcherService picks these up and re-reads the entity's *current*
+    // content at send time, so edits/corrections made during the delay are reflected.
+    public async Task ScheduleAsync(string entityType, string entityKey, string sourceUrl)
+    {
+        _db.PendingWebmentions.Add(new PendingWebmention
+        {
+            EntityType = entityType,
+            EntityKey = entityKey,
+            SourceUrl = sourceUrl,
+            ScheduledFor = DateTime.UtcNow + SendDelay
+        });
+        await _db.SaveChangesAsync();
     }
 
     public async Task SendWebmentionsAsync(string sourceUrl, string htmlContent)

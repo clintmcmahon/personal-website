@@ -22,6 +22,11 @@ var photoDbPath = Path.Combine(builder.Environment.ContentRootPath, "photos.db")
 builder.Services.AddDbContext<PhotoDbContext>(options =>
     options.UseSqlite($"Data Source={photoDbPath}"));
 
+// Add SQLite for the delayed webmention send queue
+var webmentionDbPath = Path.Combine(builder.Environment.ContentRootPath, "webmentions.db");
+builder.Services.AddDbContext<WebmentionDbContext>(options =>
+    options.UseSqlite($"Data Source={webmentionDbPath}"));
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -46,6 +51,7 @@ builder.Services.AddHttpClient("Webmention", c =>
 })
 .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
 builder.Services.AddScoped<WebmentionService>();
+builder.Services.AddHostedService<WebmentionDispatcherService>();
 
 builder.Services.AddMemoryCache();
 builder.Services.AddHttpClient("MastodonPublic", c =>
@@ -69,6 +75,9 @@ using (var scope = app.Services.CreateScope())
 
     var photoDb = scope.ServiceProvider.GetRequiredService<PhotoDbContext>();
     photoDb.Database.Migrate();
+
+    var webmentionDb = scope.ServiceProvider.GetRequiredService<WebmentionDbContext>();
+    webmentionDb.Database.Migrate();
 }
 
 // Configure the HTTP request pipeline.
