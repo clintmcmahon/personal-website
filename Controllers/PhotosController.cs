@@ -171,7 +171,7 @@ public class PhotosController : Controller
 
     [HttpGet]
     [Route("photos/{date:regex(^\\d{{4}}-\\d{{2}}-\\d{{2}}$)}")]
-    public IActionResult PhotoByDate(string date)
+    public async Task<IActionResult> PhotoByDate(string date)
     {
         var host = Request.Host.Host;
         var isLocalhost = host.Equals("localhost", StringComparison.OrdinalIgnoreCase)
@@ -185,7 +185,7 @@ public class PhotosController : Controller
         {
             return NotFound("Invalid date format.");
         }
-        var viewModel = _photoService.GetPhotoByDate(parsedDate);
+        var viewModel = await _photoService.GetPhotoByDateAsync(parsedDate);
         if (viewModel == null)
         {
             return NotFound("Photo not found.");

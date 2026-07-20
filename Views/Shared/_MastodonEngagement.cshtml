@@ -1,0 +1,54 @@
+@model Website.Models.MastodonEngagement
+@* Reuses .wm-* classes defined in _Webmentions.cshtml, which is always rendered on the same page. *@
+
+@if (Model.Likers.Any() || Model.Boosters.Any() || Model.Replies.Any())
+{
+    <div class="webmentions mastodon-engagement mt-3">
+        @if (Model.Likers.Any())
+        {
+            <div class="wm-facepile mb-3">
+                <p class="wm-label">Liked on Mastodon</p>
+                <div class="wm-faces">
+                    @foreach (var a in Model.Likers)
+                    {
+                        <a href="@a.Url" target="_blank" rel="noopener" title="@a.Name" class="wm-face"><img src="@a.Avatar" alt="@a.Name" onerror="this.style.display='none'"></a>
+                    }
+                </div>
+            </div>
+        }
+        @if (Model.Boosters.Any())
+        {
+            <div class="wm-facepile mb-3">
+                <p class="wm-label">Boosted on Mastodon</p>
+                <div class="wm-faces">
+                    @foreach (var a in Model.Boosters)
+                    {
+                        <a href="@a.Url" target="_blank" rel="noopener" title="@a.Name" class="wm-face"><img src="@a.Avatar" alt="@a.Name" onerror="this.style.display='none'"></a>
+                    }
+                </div>
+            </div>
+        }
+        @if (Model.Replies.Any())
+        {
+            <div>
+                <p class="wm-label">Replies on Mastodon</p>
+                <ul class="wm-reply-list list-unstyled">
+                    @foreach (var reply in Model.Replies.OrderBy(r => r.PublishedAt))
+                    {
+                        <li class="wm-reply">
+                            <div class="wm-reply-author">
+                                @if (!string.IsNullOrEmpty(reply.AuthorAvatar))
+                                {
+                                    <img src="@reply.AuthorAvatar" alt="@reply.AuthorName" onerror="this.style.display='none'" />
+                                }
+                                <a href="@reply.Url" target="_blank" rel="noopener" class="wm-reply-author-name">@reply.AuthorName</a>
+                                <span class="wm-reply-date">@reply.PublishedAt.ToString("MMM d, yyyy")</span>
+                            </div>
+                            <div class="wm-reply-content">@reply.Content</div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+}

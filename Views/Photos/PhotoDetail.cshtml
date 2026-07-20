@@ -251,6 +251,10 @@
 
         <div style="width:100%;max-width:min(92vw,1000px)">
             @await Html.PartialAsync("_Webmentions", canonicalUrl)
+            @if (Model.Engagement != null)
+            {
+                @await Html.PartialAsync("_MastodonEngagement", Model.Engagement)
+            }
         </div>
 
         <footer class="pb-footer">

@@ -47,6 +47,14 @@ builder.Services.AddHttpClient("Webmention", c =>
 .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
 builder.Services.AddScoped<WebmentionService>();
 
+builder.Services.AddMemoryCache();
+builder.Services.AddHttpClient("MastodonPublic", c =>
+{
+    c.Timeout = TimeSpan.FromSeconds(8);
+    c.DefaultRequestHeaders.UserAgent.ParseAdd("clintmcmahon.com-engagement/1.0");
+});
+builder.Services.AddScoped<MastodonEngagementService>();
+
 builder.Services.AddSession();
 
 var app = builder.Build();

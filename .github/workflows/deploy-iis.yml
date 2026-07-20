@@ -79,7 +79,14 @@ jobs:
           $rc = $LASTEXITCODE
           Write-Host "robocopy exit code: $rc"
 
-          if ($rc -gt 3) { throw "robocopy failed with exit code $rc" }
+          # Robocopy exit codes are a bitmask, not a pass/fail flag: 0-7 all mean
+          # success (1 = files copied, 2 = extra files present, 4 = mismatches).
+          # Only 8+ indicates an actual copy failure.
+          if ($rc -ge 8) { throw "robocopy failed with exit code $rc" }
+
+          # Reset $LASTEXITCODE — otherwise PowerShell/Actions sees robocopy's
+          # nonzero "success" code at the end of this step and fails it anyway.
+          $LASTEXITCODE = 0
 
       - name: Start AppPool
         shell: powershell

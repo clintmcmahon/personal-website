@@ -7,4 +7,5 @@ public class PhotoViewModel
     public PhotoEntry? PreviousPhoto { get; set; }
     public PhotoEntry? NextPhoto { get; set; }
     public IEnumerable<PhotoComment> Comments { get; set; } = new List<PhotoComment>();
+    public MastodonEngagement? Engagement { get; set; }
 }

@@ -8,11 +8,13 @@ public class PhotoService
 {
     private readonly IPhotoRepository _photoRepository;
     private readonly PhotoCommentDbContext _dbContext;
+    private readonly MastodonEngagementService _mastodonEngagement;
 
-    public PhotoService(IPhotoRepository photoRepository, PhotoCommentDbContext dbContext)
+    public PhotoService(IPhotoRepository photoRepository, PhotoCommentDbContext dbContext, MastodonEngagementService mastodonEngagement)
     {
         _photoRepository = photoRepository;
         _dbContext = dbContext;
+        _mastodonEngagement = mastodonEngagement;
     }
 
     public PhotoIndexViewModel GetPhotosForIndex() =>
@@ -65,7 +67,7 @@ public class PhotoService
         };
     }
 
-    public PhotoViewModel? GetPhotoByDate(DateTime date)
+    public async Task<PhotoViewModel?> GetPhotoByDateAsync(DateTime date)
     {
         var photos = _photoRepository.GetAllPhotos();
         var photo = photos.FirstOrDefault(p => p.Date.Date == date.Date);
@@ -80,7 +82,8 @@ public class PhotoService
             Comments = _dbContext.PhotoComments
                 .Where(c => c.PhotoDate == photo.Date.ToString("yyyy-MM-dd"))
                 .OrderByDescending(c => c.CreatedAt)
-                .ToList()
+                .ToList(),
+            Engagement = await _mastodonEngagement.GetEngagementAsync(photo.SyndicationUrl)
         };
     }
 
