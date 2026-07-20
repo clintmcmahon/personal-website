@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject Website.Services.WeatherService WeatherService
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -60,6 +61,10 @@
 <body class="d-flex flex-column min-vh-100">
     @await Html.PartialAsync("_HCard")
 
+    @{
+        var weather = await WeatherService.GetCurrentAsync();
+    }
+
     <!-- Sticky Sidebar with Icons -->
     <div class="sticky-sidebar">
         <a href="https://github.com/clintmcmahon" target="_blank" aria-label="GitHub">
@@ -84,6 +89,10 @@
         <nav class="navbar navbar-expand-md w-100">
             <div class="container">
                 <a href="/" class="navbar-brand me-auto">Clint McMahon</a>
+                @if (weather != null)
+                {
+                    @await Html.PartialAsync("_WeatherWidget", weather)
+                }
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

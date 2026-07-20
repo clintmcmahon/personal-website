@@ -24,10 +24,20 @@ public class WebmentionDispatcherService : BackgroundService
         // Catch up on anything that came due while the app was stopped/recycled.
         await DispatchDueAsync(stoppingToken);
 
-        using var timer = new PeriodicTimer(PollInterval);
-        while (!stoppingToken.IsCancellationRequested && await timer.WaitForNextTickAsync(stoppingToken))
+        try
         {
-            await DispatchDueAsync(stoppingToken);
+            using var timer = new PeriodicTimer(PollInterval);
+            while (await timer.WaitForNextTickAsync(stoppingToken))
+            {
+                await DispatchDueAsync(stoppingToken);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // Expected on normal shutdown — PeriodicTimer.WaitForNextTickAsync throws
+            // rather than returning false when the token is cancelled. Left unhandled,
+            // this would be treated as a fatal BackgroundService failure and crash the
+            // whole host (BackgroundServiceExceptionBehavior defaults to StopHost).
         }
     }
 

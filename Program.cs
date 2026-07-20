@@ -61,6 +61,13 @@ builder.Services.AddHttpClient("MastodonPublic", c =>
 });
 builder.Services.AddScoped<MastodonEngagementService>();
 
+builder.Services.AddHttpClient("Weather", c =>
+{
+    c.Timeout = TimeSpan.FromSeconds(6);
+    c.DefaultRequestHeaders.UserAgent.ParseAdd("clintmcmahon.com-weather/1.0");
+});
+builder.Services.AddScoped<WeatherService>();
+
 builder.Services.AddSession();
 
 var app = builder.Build();

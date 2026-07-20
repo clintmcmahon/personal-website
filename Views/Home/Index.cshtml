@@ -1,18 +1,115 @@
 @using Website.Services
+@inject WeatherService WeatherService
 @{
     ViewData["Title"] = "Clint McMahon – Freelance Software Engineer & Architect - C# | .Net | AI";
     ViewData["Description"] = "Freelance software engineer and architect in Minneapolis, designing and building systems for the legal industry. Specializing in .NET, C#, AI, Azure and solving complex technical problems.";
+    var weather = await WeatherService.GetCurrentAsync();
+    var tempSign = weather != null && weather.TempF >= 0 ? "+" : "";
+
+    var terminalLines = new List<object>
+    {
+        new { cmd = "ls ~/stack", output = ".NET  C#  Azure  AI" },
+    };
+    if (!string.IsNullOrWhiteSpace(NowStatus.Blurb))
+        terminalLines.Add(new { cmd = "cat ~/now", output = NowStatus.Blurb });
+    if (!string.IsNullOrWhiteSpace(NowStatus.CurrentlyBrewing))
+        terminalLines.Add(new { cmd = "cat ~/brewing", output = NowStatus.CurrentlyBrewing });
+    if (weather != null)
+        terminalLines.Add(new { cmd = "curl wttr.in/msp", output = $"Minneapolis: {weather.Icon} {tempSign}{weather.TempF}°F" });
+
+    var terminalJson = System.Text.Json.JsonSerializer.Serialize(terminalLines);
 }
 @model IEnumerable<Post>
 
 <section class="hero">
-    <p class="hero-label">Hi, I'm Clint</p>
-    <h1 class="hero-heading">I build things<br>for the Internet.</h1>
-    <p class="hero-body">
-        Freelance software engineer and architect in Minneapolis. I design and build systems for the legal industry, specializing in .NET, C#, AI and Azure. I also write about software, espresso, and whatever side project has my attention.
-    </p>
-    <a class="btn-hero" href="/contact">Get in touch &rarr;</a>
+    <div class="hero-content">
+        <p class="hero-label">Hi, I'm Clint</p>
+        <h1 class="hero-heading">I build things<br>for the Internet.</h1>
+        <p class="hero-body">
+            Freelance software engineer and architect in Minneapolis. I design and build systems for the legal industry, specializing in .NET, C#, AI and Azure. I also write about software, espresso, and whatever side project has my attention.
+        </p>
+        <a class="btn-hero" href="/contact">Get in touch &rarr;</a>
+    </div>
+    <div class="hero-terminal" aria-hidden="true">
+        <div class="hero-terminal-bar">
+            <span class="hero-terminal-dot dot-red"></span>
+            <span class="hero-terminal-dot dot-yellow"></span>
+            <span class="hero-terminal-dot dot-green"></span>
+        </div>
+        <div class="hero-terminal-body" id="heroTerminalBody">
+            <noscript>
+                @foreach (dynamic line in terminalLines)
+                {
+                    <p><span class="hero-terminal-prompt">$</span>@line.cmd</p>
+                    <p class="hero-terminal-output">@line.output</p>
+                }
+                <p><span class="hero-terminal-prompt">$</span></p>
+            </noscript>
+        </div>
+    </div>
 </section>
+
+<script type="application/json" id="heroTerminalData">@Html.Raw(terminalJson)</script>
+<script>
+(function () {
+    var container = document.getElementById('heroTerminalBody');
+    var dataEl = document.getElementById('heroTerminalData');
+    if (!container || !dataEl) return;
+
+    var lines;
+    try { lines = JSON.parse(dataEl.textContent); } catch (e) { return; }
+    if (!lines || !lines.length) return;
+
+    var CHAR_DELAY = 32;
+    var AFTER_CMD = 500;
+    var AFTER_OUTPUT = 650;
+
+    function typeInto(el, text, i, done) {
+        el.textContent = text.slice(0, i);
+        if (i >= text.length) { done(); return; }
+        setTimeout(function () { typeInto(el, text, i + 1, done); }, CHAR_DELAY);
+    }
+
+    function finish() {
+        var p = document.createElement('p');
+        var prompt = document.createElement('span');
+        prompt.className = 'hero-terminal-prompt';
+        prompt.textContent = '$';
+        var cursor = document.createElement('span');
+        cursor.className = 'hero-terminal-cursor';
+        p.appendChild(prompt);
+        p.appendChild(cursor);
+        container.appendChild(p);
+    }
+
+    function runLine(index) {
+        if (index >= lines.length) { finish(); return; }
+
+        var line = lines[index];
+        var cmdP = document.createElement('p');
+        var prompt = document.createElement('span');
+        prompt.className = 'hero-terminal-prompt';
+        prompt.textContent = '$';
+        var cmdSpan = document.createElement('span');
+        cmdP.appendChild(prompt);
+        cmdP.appendChild(cmdSpan);
+        container.appendChild(cmdP);
+
+        typeInto(cmdSpan, line.cmd, 0, function () {
+            setTimeout(function () {
+                var outP = document.createElement('p');
+                outP.className = 'hero-terminal-output';
+                outP.textContent = line.output;
+                container.appendChild(outP);
+                setTimeout(function () { runLine(index + 1); }, AFTER_OUTPUT);
+            }, AFTER_CMD);
+        });
+    }
+
+    container.innerHTML = '';
+    runLine(0);
+})();
+</script>
 
 <div class="home-cards">
     <a href="/portfolio" class="home-card featured">
