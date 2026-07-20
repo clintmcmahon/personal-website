@@ -12,12 +12,14 @@ public class AdminBlogController : Controller
     private readonly BlogDbContext _db;
     private readonly IWebHostEnvironment _env;
     private readonly MastodonService _mastodon;
+    private readonly WebmentionService _webmention;
 
-    public AdminBlogController(BlogDbContext db, IWebHostEnvironment env, MastodonService mastodon)
+    public AdminBlogController(BlogDbContext db, IWebHostEnvironment env, MastodonService mastodon, WebmentionService webmention)
     {
         _db = db;
         _env = env;
         _mastodon = mastodon;
+        _webmention = webmention;
     }
 
     // ── List ────────────────────────────────────────────────────────────────
@@ -146,7 +148,12 @@ public class AdminBlogController : Controller
         TempData["Success"] = post.Draft ? $"\"{post.Title}\" unpublished." : $"\"{post.Title}\" published.";
 
         if (wasDraft && !post.Draft)
-            await _mastodon.PostBlogPostAsync(post);
+        {
+            post.SyndicationUrl = await _mastodon.PostBlogPostAsync(post);
+            await _db.SaveChangesAsync();
+
+            await _webmention.SendWebmentionsAsync(CanonicalUrlHelper.BlogPost(post.Slug), post.Content ?? "");
+        }
 
         return RedirectToAction(nameof(Index));
     }

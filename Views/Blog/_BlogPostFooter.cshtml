@@ -57,9 +57,18 @@
             <div class="d-flex flex-wrap gap-2">
                 @foreach (var tag in Model.Tags)
                 {
-                    <span class="badge bg-secondary">@tag</span>
+                    <span class="badge bg-secondary p-category">@tag</span>
                 }
             </div>
+        </div>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.SyndicationUrl))
+    {
+        <div class="syndication-link mb-4">
+            <a class="u-syndication" href="@Model.SyndicationUrl" target="_blank" rel="noopener noreferrer">
+                <i class="bi bi-mastodon"></i> View on Mastodon
+            </a>
         </div>
     }
 

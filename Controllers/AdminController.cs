@@ -13,19 +13,22 @@ public class AdminController : Controller
     private readonly IWebHostEnvironment _env;
     private readonly PhotoRepository _fileRepo;
     private readonly MastodonService _mastodon;
+    private readonly WebmentionService _webmention;
 
     public AdminController(
         PhotoDbContext db,
         ImageProcessingService imageProcessor,
         IWebHostEnvironment env,
         PhotoRepository fileRepo,
-        MastodonService mastodon)
+        MastodonService mastodon,
+        WebmentionService webmention)
     {
         _db = db;
         _imageProcessor = imageProcessor;
         _env = env;
         _fileRepo = fileRepo;
         _mastodon = mastodon;
+        _webmention = webmention;
     }
 
     // ── Admin landing ────────────────────────────────────────────────────────
@@ -76,7 +79,12 @@ public class AdminController : Controller
             : $"\"{photo.Title}\" published.";
 
         if (wasDraft && !photo.Draft)
-            await _mastodon.PostPhotoAsync(photo);
+        {
+            photo.SyndicationUrl = await _mastodon.PostPhotoAsync(photo);
+            await _db.SaveChangesAsync();
+
+            await _webmention.SendWebmentionsAsync(CanonicalUrlHelper.Photo(photo.Date), photo.Content);
+        }
 
         return RedirectToAction(nameof(Photos));
     }
@@ -288,7 +296,12 @@ public class AdminController : Controller
         TempData["Success"] = $"Photo post \"{title}\" saved.";
 
         if (!draft)
-            await _mastodon.PostPhotoAsync(entry);
+        {
+            entry.SyndicationUrl = await _mastodon.PostPhotoAsync(entry);
+            await _db.SaveChangesAsync();
+
+            await _webmention.SendWebmentionsAsync(CanonicalUrlHelper.Photo(entry.Date), entry.Content);
+        }
 
         return RedirectToAction(nameof(NewPhoto));
     }

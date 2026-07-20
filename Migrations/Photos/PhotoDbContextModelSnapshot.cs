@@ -51,6 +51,9 @@ namespace Website.Migrations.Photos
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("SyndicationUrl")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Tags")
                         .IsRequired()
                         .HasColumnType("TEXT");

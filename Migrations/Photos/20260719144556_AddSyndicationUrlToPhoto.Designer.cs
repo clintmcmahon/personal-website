@@ -2,28 +2,32 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Website.Data;
 
 #nullable disable
 
-namespace Website.Migrations.Blog
+namespace Website.Migrations.Photos
 {
-    [DbContext(typeof(BlogDbContext))]
-    partial class BlogDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(PhotoDbContext))]
+    [Migration("20260719144556_AddSyndicationUrlToPhoto")]
+    partial class AddSyndicationUrlToPhoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.17");
 
-            modelBuilder.Entity("Website.Models.Post", b =>
+            modelBuilder.Entity("Website.Models.PhotoEntry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
@@ -32,13 +36,18 @@ namespace Website.Migrations.Blog
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("Draft")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Keywords")
+                    b.Property<bool>("FullRows")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Rows")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Slug")
@@ -61,10 +70,12 @@ namespace Website.Migrations.Blog
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Date");
+
                     b.HasIndex("Slug")
                         .IsUnique();
 
-                    b.ToTable("Posts");
+                    b.ToTable("Photos");
                 });
 #pragma warning restore 612, 618
         }

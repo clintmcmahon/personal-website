@@ -1,4 +1,5 @@
 @model Website.Models.PhotoIndexViewModel
+@using Website.Services
 
 @{
     Layout = null;
@@ -57,8 +58,9 @@
     <link rel="alternate" type="application/rss+xml" title="Clint McMahon Photos" href="https://photos.clintmcmahon.com/rss" />
     <link rel="webmention" href="https://webmention.io/photos.clintmcmahon.com/webmention" />
     <link rel="me" href="https://github.com/clintmcmahon" />
+    <link rel="me" href="https://indieweb.social/@@clint" />
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="/css/classic-photoblog.css?v=4" />
+    <link rel="stylesheet" href="/css/classic-photoblog.css?v=6" />
     <!-- Privacy-friendly analytics by Plausible -->
     <script async src="https://plausible.io/js/pa-hjNpxaHKa9c0U9E_rhYo2.js"></script>
     <script>
@@ -67,6 +69,7 @@
     </script>
 </head>
 <body>
+@await Html.PartialAsync("_HCard")
 
 <header class="pb-header">
     <a href="@homeHref" class="pb-site-name">Clint McMahon</a>
@@ -92,7 +95,7 @@
     <p class="pb-tag-page-count">@Model.TotalCount photo@(Model.TotalCount == 1 ? "" : "s")</p>
 </div>
 
-<main class="pb-archive-main">
+<main class="pb-archive-main h-feed">
     @foreach (var year in Model.Years)
     {
         <section id="year-@year" class="pb-year-section">
@@ -104,13 +107,19 @@
                 @foreach (var photo in Model.PhotosByYear[year])
                 {
                     <a href="@photoBase@photo.Date.ToString("yyyy-MM-dd")"
-                       class="pb-grid-item"
+                       class="pb-grid-item h-entry"
                        data-src="@photo.ImageUrl"
                        aria-label="@photo.Date.ToString("MMMM d, yyyy")">
                         <img class="pb-grid-img" alt="@photo.Title" />
+                        <span class="u-url" hidden>@CanonicalUrlHelper.Photo(photo.Date)</span>
+                        <img class="u-photo" src="@photo.ImageUrl" alt="" hidden />
+                        @if (!string.IsNullOrWhiteSpace(photo.Title))
+                        {
+                            <span class="p-name" hidden>@photo.Title</span>
+                        }
                         <div class="pb-grid-overlay" aria-hidden="true">
                             <div class="pb-grid-overlay-inner">
-                                <time class="pb-grid-date" datetime="@photo.Date.ToString("yyyy-MM-dd")">
+                                <time class="pb-grid-date dt-published" datetime="@photo.Date.ToString("yyyy-MM-dd")">
                                     @photo.Date.ToString("MMM d, yyyy")
                                 </time>
                             </div>

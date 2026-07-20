@@ -12,8 +12,6 @@ public class MastodonService
     private readonly ILogger<MastodonService> _logger;
     private readonly string _instanceUrl;
     private readonly string _accessToken;
-    private readonly string _blogBaseUrl;
-    private readonly string _photoBaseUrl;
 
     public MastodonService(
         IHttpClientFactory httpClientFactory,
@@ -26,29 +24,27 @@ public class MastodonService
         _logger = logger;
         _instanceUrl = (config["Mastodon:InstanceUrl"] ?? "").TrimEnd('/');
         _accessToken = config["Mastodon:AccessToken"] ?? "";
-        _blogBaseUrl = (config["Mastodon:BlogBaseUrl"] ?? "https://clintmcmahon.com").TrimEnd('/');
-        _photoBaseUrl = (config["Mastodon:PhotoBaseUrl"] ?? "https://photos.clintmcmahon.com").TrimEnd('/');
     }
 
     public bool IsConfigured =>
         !string.IsNullOrWhiteSpace(_instanceUrl) && !string.IsNullOrWhiteSpace(_accessToken);
 
-    public async Task PostBlogPostAsync(Post post)
+    public async Task<string?> PostBlogPostAsync(Post post)
     {
-        if (!IsConfigured) return;
+        if (!IsConfigured) return null;
 
-        var url = $"{_blogBaseUrl}/Blog/{post.Slug}";
+        var url = CanonicalUrlHelper.BlogPost(post.Slug);
         var tags = FormatTags(post.Tags ?? new List<string>());
         var status = BuildStatus(post.Title, url, tags);
 
-        await PublishStatusAsync(status);
+        return await PublishStatusAsync(status);
     }
 
-    public async Task PostPhotoAsync(PhotoEntry photo)
+    public async Task<string?> PostPhotoAsync(PhotoEntry photo)
     {
-        if (!IsConfigured) return;
+        if (!IsConfigured) return null;
 
-        var url = $"{_photoBaseUrl}/{photo.Date:yyyy-MM-dd}";
+        var url = CanonicalUrlHelper.Photo(photo.Date);
 
         // Always include #photography for discoverability
         var tagList = (photo.Tags ?? new List<string>()).ToList();
@@ -89,7 +85,7 @@ public class MastodonService
                 mediaIds.Add(mediaId);
         }
 
-        await PublishStatusAsync(status, mediaIds.Any() ? mediaIds : null);
+        return await PublishStatusAsync(status, mediaIds.Any() ? mediaIds : null);
     }
 
     private async Task<string?> UploadMediaAsync(string filePath, string altText)
@@ -126,7 +122,7 @@ public class MastodonService
         }
     }
 
-    private async Task PublishStatusAsync(string content, List<string>? mediaIds = null)
+    private async Task<string?> PublishStatusAsync(string content, List<string>? mediaIds = null)
     {
         try
         {
@@ -147,14 +143,21 @@ public class MastodonService
                 new FormUrlEncodedContent(form));
 
             if (!response.IsSuccessStatusCode)
+            {
                 _logger.LogWarning("Mastodon status post failed ({Status}): {Body}",
                     response.StatusCode, await response.Content.ReadAsStringAsync());
-            else
-                _logger.LogInformation("Mastodon: posted — {Content}", content[..Math.Min(content.Length, 80)]);
+                return null;
+            }
+
+            _logger.LogInformation("Mastodon: posted — {Content}", content[..Math.Min(content.Length, 80)]);
+
+            using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+            return doc.RootElement.TryGetProperty("url", out var urlProp) ? urlProp.GetString() : null;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Mastodon status post threw");
+            return null;
         }
     }
 

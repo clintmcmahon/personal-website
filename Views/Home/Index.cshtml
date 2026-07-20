@@ -1,3 +1,4 @@
+@using Website.Services
 @{
     ViewData["Title"] = "Clint McMahon – Freelance Software Engineer & Architect - C# | .Net | AI";
     ViewData["Description"] = "Freelance software engineer and architect in Minneapolis, designing and building systems for the legal industry. Specializing in .NET, C#, AI, Azure and solving complex technical problems.";
@@ -26,14 +27,15 @@
     </a>
 </div>
 
-<section class="blog-list">
+<section class="blog-list h-feed">
     <p class="blog-list-heading">Recent Posts</p>
     @foreach (var post in Model)
     {
-        <a class="post-row" href="@Url.Action("Details", "Blog", new { slug = post.Slug })">
-            <span class="post-date">@post.Date.ToString("MMM dd")</span>
+        <a class="post-row h-entry" href="@Url.Action("Details", "Blog", new { slug = post.Slug })">
+            <span class="u-url" hidden>@CanonicalUrlHelper.BlogPost(post.Slug)</span>
+            <time class="post-date dt-published" datetime="@post.Date.ToString("yyyy-MM-dd")">@post.Date.ToString("MMM dd")</time>
             <span class="post-arrow">&rarr;</span>
-            <span class="post-title">@post.Title</span>
+            <span class="post-title p-name">@post.Title</span>
         </a>
     }
     <a href="/blog" class="blog-see-all">All posts &rarr;</a>

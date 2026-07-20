@@ -1,3 +1,4 @@
+@using Website.Services
 @{
     ViewData["Title"] = "Blog | Clint McMahon";
 }
@@ -13,26 +14,27 @@
     <h1 class="hero-heading" style="font-size: clamp(2rem, 5vw, 2.75rem); margin-bottom: 0.5rem;">Blog</h1>
     <p class="hero-body" style="margin-bottom: 2.5rem;">This is a blog about software engineering, consulting, coffee and other things that I find interesting.</p>
 
-    <div style="margin-top: 0;">
+    <div class="h-feed" style="margin-top: 0;">
         @foreach (var yearGroup in groupedPosts)
         {
             <div class="post-year-group">
                 <span class="post-year-label">@yearGroup.Key</span>
                 @foreach (var post in yearGroup)
                 {
-                    <a class="post-entry" href="@Url.Action("Details", "Blog", new { slug = post.Slug })">
-                        <h3 class="post-entry-title">@post.Title</h3>
-                        <span class="post-date">@post.Date.ToString("MMMM d, yyyy")</span>
+                    <a class="post-entry h-entry" href="@Url.Action("Details", "Blog", new { slug = post.Slug })">
+                        <span class="u-url" hidden>@CanonicalUrlHelper.BlogPost(post.Slug)</span>
+                        <h3 class="post-entry-title p-name">@post.Title</h3>
+                        <time class="post-date dt-published" datetime="@post.Date.ToString("yyyy-MM-dd")">@post.Date.ToString("MMMM d, yyyy")</time>
                         @if (!string.IsNullOrWhiteSpace(post.Description))
                         {
-                            <p class="post-entry-desc">@post.Description</p>
+                            <p class="post-entry-desc p-summary">@post.Description</p>
                         }
                         @if (post.Tags != null && post.Tags.Any(t => !string.IsNullOrWhiteSpace(t)))
                         {
                             <div class="post-entry-tags">
                                 @foreach (var tag in post.Tags.Where(t => !string.IsNullOrWhiteSpace(t)))
                                 {
-                                    <span>#@tag</span>
+                                    <span>#<span class="p-category">@tag</span></span>
                                 }
                             </div>
                         }

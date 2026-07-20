@@ -8,11 +8,15 @@
     <title>@ViewData["Title"]</title>
     <meta name="description" content="@ViewData["Description"]" />
 
+    @{
+        var canonicalUrl = ViewData["CanonicalUrl"] as string ?? "https://clintmcmahon.com/";
+    }
+
     <!-- Open Graph and Twitter Card Meta Tags -->
     <meta property="og:title" content="@ViewData["Title"]" />
     <meta property="og:description" content="@ViewData["Description"]" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://clintmcmahon.com/" />
+    <meta property="og:url" content="@canonicalUrl" />
     <meta property="og:image" content="https://clintmcmahon.com/images/default-image.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="@ViewData["Title"]" />
@@ -46,16 +50,15 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
     
     <link rel="stylesheet" href="~/lib/glightbox/glightbox.min.css" />
+    <link rel="canonical" href="@canonicalUrl" />
     <link rel="me" href="https://github.com/clintmcmahon" />
+    <link rel="me" href="https://indieweb.social/@@clint" />
+    <link rel="authorization_endpoint" href="https://indielogin.com/auth" />
     <link rel="webmention" href="https://webmention.io/clintmcmahon.com/webmention" />
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-    <!-- Representative h-card for IndieWeb/microformats -->
-    <div class="h-card d-none">
-        <a class="p-name u-url" rel="me" href="https://clintmcmahon.com/">Clint McMahon</a>
-        <img class="u-photo" src="/images/icon/me.jpg" alt="Clint McMahon" />
-    </div>
+    @await Html.PartialAsync("_HCard")
 
     <!-- Sticky Sidebar with Icons -->
     <div class="sticky-sidebar">

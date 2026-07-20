@@ -1,7 +1,9 @@
+@using Website.Services
 @model Post
 
-<a class="post-row" href="@Url.Action("Details", "Blog", new { slug = Model.Slug })">
-    <span class="post-date">@Model.Date.ToString("MMM dd")</span>
+<a class="post-row h-entry" href="@Url.Action("Details", "Blog", new { slug = Model.Slug })">
+    <span class="u-url" hidden>@CanonicalUrlHelper.BlogPost(Model.Slug)</span>
+    <time class="post-date dt-published" datetime="@Model.Date.ToString("yyyy-MM-dd")">@Model.Date.ToString("MMM dd")</time>
     <span class="post-arrow">&rarr;</span>
-    <span class="post-title">@Model.Title</span>
+    <span class="post-title p-name">@Model.Title</span>
 </a>

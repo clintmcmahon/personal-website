@@ -80,7 +80,7 @@
         <link rel="next" href="https://photos.clintmcmahon.com/@Model.NextPhoto.Date.ToString("yyyy-MM-dd")" />
     }
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="/css/classic-photoblog.css?v=5" />
+    <link rel="stylesheet" href="/css/classic-photoblog.css?v=6" />
     <!-- Privacy-friendly analytics by Plausible -->
     <script async src="https://plausible.io/js/pa-hjNpxaHKa9c0U9E_rhYo2.js"></script>
     <script>
@@ -89,6 +89,7 @@
     </script>
     <link rel="webmention" href="https://webmention.io/photos.clintmcmahon.com/webmention" />
     <link rel="me" href="https://github.com/clintmcmahon" />
+    <link rel="me" href="https://indieweb.social/@@clint" />
 
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
@@ -114,12 +115,15 @@
     </script>
 </head>
 <body>
+    @await Html.PartialAsync("_HCard")
     <header class="pb-header">
         <a href="@homeHref" class="pb-site-name">Clint McMahon</a>
         <span class="pb-header-byline">photographs from the life of <a href="https://clintmcmahon.com" class="pb-header-byline-link">clintmcmahon.com</a></span>
     </header>
 
-    <main class="pb-main">
+    <main class="pb-main h-entry">
+        <a class="u-url" href="@canonicalUrl" hidden></a>
+        <a class="u-author" href="https://clintmcmahon.com/" hidden></a>
         <nav class="pb-nav pb-nav--top" aria-label="Photo navigation">
             @if (Model.PreviousPhoto != null)
             {
@@ -140,7 +144,7 @@
             }
         </nav>
 
-        <p class="pb-date-above">@Model.CurrentPhoto.Date.ToString("MMMM d, yyyy")</p>
+        <time class="pb-date-above dt-published" datetime="@Model.CurrentPhoto.Date.ToString("yyyy-MM-dd")">@Model.CurrentPhoto.Date.ToString("MMMM d, yyyy")</time>
 
         <div class="pb-rows">
             @if (photo.FullRows)
@@ -152,9 +156,10 @@
                         {
                             var altText = string.IsNullOrEmpty(img.Alt) ? photo.Title : img.Alt;
                             <img src="@img.Url"
-                                 class="pb-image"
+                                 class="pb-image u-photo"
                                  alt="@altText"
-                                 title="@altText" />
+                                 title="@altText"
+                                 data-caption="@img.Alt" />
                         }
                     </div>
                 }
@@ -171,9 +176,10 @@
                         {
                             var altText = string.IsNullOrEmpty(img.Alt) ? photo.Title : img.Alt;
                             <img src="@img.Url"
-                                 class="pb-image"
+                                 class="pb-image u-photo"
                                  alt="@altText"
-                                 title="@altText" />
+                                 title="@altText"
+                                 data-caption="@img.Alt" />
                         }
                     </div>
                 }
@@ -184,9 +190,10 @@
                         {
                             var altText = string.IsNullOrEmpty(img.Alt) ? photo.Title : img.Alt;
                             <img src="@img.Url"
-                                 class="pb-masonry-img"
+                                 class="pb-masonry-img u-photo"
                                  alt="@altText"
-                                 title="@altText" />
+                                 title="@altText"
+                                 data-caption="@img.Alt" />
                         }
                     </div>
                 }
@@ -197,20 +204,24 @@
             <div class="pb-caption-area">
                 @if (!string.IsNullOrWhiteSpace(photo.Title))
                 {
-                    <p class="pb-title">@photo.Title</p>
+                    <p class="pb-title p-name">@photo.Title</p>
                 }
                 @if (!string.IsNullOrWhiteSpace(photo.Content))
                 {
-                    <div class="pb-caption">@Html.Raw(photo.Content)</div>
+                    <div class="pb-caption e-content">@Html.Raw(photo.Content)</div>
                 }
                 @if (photo.Tags.Any())
                 {
                     <div class="pb-detail-tags">
                         @foreach (var tag in photo.Tags)
                         {
-                            <a href="@tagBase@Uri.EscapeDataString(tag)" class="pb-tag-pill">@tag</a>
+                            <a href="@tagBase@Uri.EscapeDataString(tag)" class="pb-tag-pill p-category">@tag</a>
                         }
                     </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(photo.SyndicationUrl))
+                {
+                    <a class="u-syndication pb-tag-pill" href="@photo.SyndicationUrl" target="_blank" rel="noopener noreferrer">View on Mastodon</a>
                 }
             </div>
         </div>
@@ -255,33 +266,172 @@
 
     <div class="pb-keys" aria-hidden="true">&#8592; &#8594;</div>
 
+    <div class="pb-lightbox" id="pbLightbox" aria-hidden="true">
+        <button type="button" class="pb-lightbox-close" aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <button type="button" class="pb-lightbox-prev" aria-label="Previous image">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <button type="button" class="pb-lightbox-next" aria-label="Next image">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+        <div class="pb-lightbox-stage">
+            <img class="pb-lightbox-img" src="" alt="" />
+        </div>
+        <div class="pb-lightbox-info">
+            <p class="pb-lightbox-caption"></p>
+            <span class="pb-lightbox-counter"></span>
+        </div>
+    </div>
+
     <script>
-        document.querySelectorAll('.pb-image, .pb-masonry-img').forEach(function (img) {
+    (function () {
+        var images = Array.prototype.slice.call(document.querySelectorAll('.pb-image, .pb-masonry-img'));
+
+        images.forEach(function (img) {
             function show() { img.classList.add('is-loaded'); }
             img.complete ? show() : img.addEventListener('load', show);
         });
 
+        // ---- Lightbox --------------------------------------------
+        var lightbox  = document.getElementById('pbLightbox');
+        var stage     = lightbox.querySelector('.pb-lightbox-stage');
+        var stageImg  = lightbox.querySelector('.pb-lightbox-img');
+        var captionEl = lightbox.querySelector('.pb-lightbox-caption');
+        var counterEl = lightbox.querySelector('.pb-lightbox-counter');
+        var closeBtn  = lightbox.querySelector('.pb-lightbox-close');
+        var prevBtn   = lightbox.querySelector('.pb-lightbox-prev');
+        var nextBtn   = lightbox.querySelector('.pb-lightbox-next');
+
+        var items = images.map(function (img) {
+            return { src: img.src, alt: img.alt || '', caption: img.getAttribute('data-caption') || '' };
+        });
+
+        var index = 0;
+        var isOpen = false;
+        var lastFocused = null;
+
+        if (items.length < 2) lightbox.classList.add('pb-lightbox--single');
+
+        function preload(i) {
+            if (i < 0 || i >= items.length) return;
+            var im = new Image();
+            im.src = items[i].src;
+        }
+
+        function render() {
+            var item = items[index];
+            stageImg.classList.remove('is-visible');
+            requestAnimationFrame(function () {
+                stageImg.src = item.src;
+                stageImg.alt = item.alt;
+                var show = function () { stageImg.classList.add('is-visible'); };
+                if (stageImg.complete && stageImg.naturalWidth) show();
+                else stageImg.addEventListener('load', show, { once: true });
+            });
+            captionEl.textContent = item.caption;
+            captionEl.style.display = item.caption ? '' : 'none';
+            counterEl.textContent = items.length > 1 ? (index + 1) + ' / ' + items.length : '';
+            preload(index + 1);
+            preload(index - 1);
+        }
+
+        function openLightbox(i) {
+            index = i;
+            isOpen = true;
+            lastFocused = document.activeElement;
+            document.body.classList.add('pb-lightbox-open');
+            lightbox.classList.add('is-open');
+            lightbox.setAttribute('aria-hidden', 'false');
+            render();
+            closeBtn.focus();
+        }
+
+        function closeLightbox() {
+            isOpen = false;
+            document.body.classList.remove('pb-lightbox-open');
+            lightbox.classList.remove('is-open');
+            lightbox.setAttribute('aria-hidden', 'true');
+            stageImg.classList.remove('is-visible');
+            if (lastFocused && lastFocused.focus) lastFocused.focus();
+        }
+
+        function nextImage() {
+            if (items.length < 2) return;
+            index = (index + 1) % items.length;
+            render();
+        }
+
+        function prevImage() {
+            if (items.length < 2) return;
+            index = (index - 1 + items.length) % items.length;
+            render();
+        }
+
+        images.forEach(function (img, i) {
+            img.setAttribute('tabindex', '0');
+            img.setAttribute('role', 'button');
+            img.addEventListener('click', function () { openLightbox(i); });
+            img.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openLightbox(i);
+                }
+            });
+        });
+
+        closeBtn.addEventListener('click', closeLightbox);
+        nextBtn.addEventListener('click', nextImage);
+        prevBtn.addEventListener('click', prevImage);
+
+        stage.addEventListener('click', function (e) {
+            if (e.target === stage) closeLightbox();
+        });
+
+        var lbTouchX = 0, lbTouchY = 0;
+        lightbox.addEventListener('touchstart', function (e) {
+            lbTouchX = e.touches[0].clientX;
+            lbTouchY = e.touches[0].clientY;
+        }, { passive: true });
+        lightbox.addEventListener('touchend', function (e) {
+            var dx = e.changedTouches[0].clientX - lbTouchX;
+            var dy = e.changedTouches[0].clientY - lbTouchY;
+            if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+            if (dx > 0) prevImage(); else nextImage();
+        }, { passive: true });
+
+        // ---- Keyboard / swipe (page-level, yields to an open lightbox) ----
         document.addEventListener('keydown', function (e) {
+            if (isOpen) {
+                if (e.key === 'Escape') closeLightbox();
+                else if (e.key === 'ArrowRight') nextImage();
+                else if (e.key === 'ArrowLeft') prevImage();
+                return;
+            }
             if (e.key === 'ArrowLeft') {
                 var a = document.querySelector('.pb-nav-prev');
                 if (a) window.location.href = a.href;
             } else if (e.key === 'ArrowRight') {
-                var a = document.querySelector('.pb-nav-next');
-                if (a) window.location.href = a.href;
+                var b = document.querySelector('.pb-nav-next');
+                if (b) window.location.href = b.href;
             }
         });
 
         var _tx = 0;
         document.addEventListener('touchstart', function (e) {
+            if (isOpen) return;
             _tx = e.touches[0].clientX;
         }, { passive: true });
         document.addEventListener('touchend', function (e) {
+            if (isOpen) return;
             var dx = e.changedTouches[0].clientX - _tx;
             if (Math.abs(dx) < 60) return;
             var sel = dx > 0 ? '.pb-nav-prev' : '.pb-nav-next';
             var a = document.querySelector(sel);
             if (a) window.location.href = a.href;
         }, { passive: true });
+    })();
     </script>
 </body>
 </html>

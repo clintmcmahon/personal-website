@@ -17,6 +17,7 @@ public class PhotoEntry
     public List<List<PhotoImage>> Rows { get; set; } = new();
     public bool FullRows { get; set; }
     public bool Draft { get; set; }
+    public string? SyndicationUrl { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }

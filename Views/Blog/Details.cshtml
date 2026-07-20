@@ -1,15 +1,24 @@
+@using Website.Services
 @{
     ViewData["Title"] = @Model.Title + " | Clint McMahon";
     ViewData["Description"] = @Model.Description;
+    var canonicalUrl = CanonicalUrlHelper.BlogPost(Model.Slug);
+    ViewData["CanonicalUrl"] = canonicalUrl;
 }
 
 @model Post
 
-<div class="blog-post">
-    <h1>@Model.Title</h1>
-    <span class="post-date">@Model.Date.ToString("MMMM d, yyyy")</span>
+<div class="blog-post h-entry">
+    <a class="u-url" href="@canonicalUrl" hidden></a>
+    <a class="u-author" href="https://clintmcmahon.com/" hidden></a>
+    @if (!string.IsNullOrWhiteSpace(Model.Description))
+    {
+        <p class="p-summary" hidden>@Model.Description</p>
+    }
+    <h1 class="p-name">@Model.Title</h1>
+    <time class="post-date dt-published" datetime="@Model.Date.ToString("yyyy-MM-dd")">@Model.Date.ToString("MMMM d, yyyy")</time>
 
-    <div class="post-content">
+    <div class="post-content e-content">
         @Html.Raw(Model.Content)
     </div>
 

@@ -38,6 +38,7 @@
     <link rel="alternate" type="application/rss+xml" title="Clint McMahon Photos" href="@rssUrl" />
     <link rel="webmention" href="https://webmention.io/photos.clintmcmahon.com/webmention" />
     <link rel="me" href="https://github.com/clintmcmahon" />
+    <link rel="me" href="https://indieweb.social/@@clint" />
     <title>About — Clint McMahon Photos</title>
 
     <script type="application/ld+json">
@@ -62,7 +63,7 @@
     }
     </script>
 
-    <link rel="stylesheet" href="/css/classic-photoblog.css?v=3" />
+    <link rel="stylesheet" href="/css/classic-photoblog.css?v=6" />
     <!-- Privacy-friendly analytics by Plausible -->
     <script async src="https://plausible.io/js/pa-hjNpxaHKa9c0U9E_rhYo2.js"></script>
     <script>
@@ -71,6 +72,7 @@
     </script>
 </head>
 <body>
+    @await Html.PartialAsync("_HCard")
     <header class="pb-header">
         <a href="@homeHref" class="pb-site-name">Clint McMahon</a>
         <span class="pb-header-byline">photographs from the life of <a href="https://clintmcmahon.com" class="pb-header-byline-link">clintmcmahon.com</a></span>

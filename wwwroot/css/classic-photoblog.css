@@ -381,6 +381,154 @@ html, body {
 }
 .pb-about-body a:hover { text-decoration-color: #111; }
 
+/* ---- Lightbox ----------------------------------------------
+   Click any photo to view it large; step through the set with
+   arrows, swipe, or the keyboard.
+   ------------------------------------------------------------ */
+
+.pb-image,
+.pb-masonry-img {
+  cursor: zoom-in;
+}
+
+body.pb-lightbox-open {
+  overflow: hidden;
+}
+
+.pb-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 8, 8, 0);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, background 0.3s ease, visibility 0s linear 0.3s;
+  touch-action: none;
+}
+
+.pb-lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  background: rgba(8, 8, 8, 0.95);
+  transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+.pb-lightbox-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4.5rem 5.5rem;
+}
+
+.pb-lightbox-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.pb-lightbox-img.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.pb-lightbox-close,
+.pb-lightbox-prev,
+.pb-lightbox-next {
+  position: absolute;
+  z-index: 1;
+  background: none;
+  border: none;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.18s ease, opacity 0.18s ease;
+}
+.pb-lightbox-close:hover,
+.pb-lightbox-prev:hover,
+.pb-lightbox-next:hover {
+  color: #fff;
+}
+.pb-lightbox-close svg,
+.pb-lightbox-prev svg,
+.pb-lightbox-next svg {
+  width: 100%;
+  height: 100%;
+}
+
+.pb-lightbox-close {
+  top: 1.25rem;
+  right: 1.5rem;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.pb-lightbox-prev,
+.pb-lightbox-next {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.6rem;
+  height: 1.6rem;
+}
+.pb-lightbox-prev { left: 1.25rem; }
+.pb-lightbox-next { right: 1.25rem; }
+
+.pb-lightbox--single .pb-lightbox-prev,
+.pb-lightbox--single .pb-lightbox-next {
+  display: none;
+}
+
+.pb-lightbox-info {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+.pb-lightbox-caption {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.pb-lightbox-counter {
+  font-size: 0.63rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.4);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .pb-lightbox-stage { padding: 3.5rem 1rem; }
+  .pb-lightbox-close {
+    top: 0.9rem;
+    right: 0.9rem;
+  }
+  .pb-lightbox-prev { left: 0.6rem; }
+  .pb-lightbox-next { right: 0.6rem; }
+  .pb-lightbox-info { bottom: 1rem; max-width: 90%; }
+}
+
 /* ---- Keyboard hint ---------------------------------------- */
 
 .pb-keys {
