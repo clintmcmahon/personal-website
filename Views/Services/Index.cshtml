@@ -1,12 +1,38 @@
 @{
-    ViewData["Title"] = "Law Firm Technology Consulting | .NET Development for Legal | Clint McMahon";
-    ViewData["Description"] = "Technology consulting for Big Law and AmLaw 200 firms. Staff augmentation, technical leadership, document management integrations, practice management systems, and e-discovery solutions. 20+ years enterprise .NET experience.";
+    ViewData["Title"] = "Technology Consulting Services | .NET, Legacy Rescue & Modernization | Clint McMahon";
+    ViewData["Description"] = "20+ years of enterprise .NET consulting for healthcare, legal, and government organizations. Custom development, legacy modernization, cloud architecture, and project rescue for stalled or failing initiatives.";
 }
+
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "ProfessionalService",
+  "name": "Clint McMahon Technology Consulting",
+  "url": "https://clintmcmahon.com/services",
+  "description": "@ViewData["Description"]",
+  "areaServed": "US",
+  "founder": { "@@type": "Person", "name": "Clint McMahon", "url": "https://clintmcmahon.com" },
+  "hasOfferCatalog": {
+    "@@type": "OfferCatalog",
+    "name": "Technology Consulting Services",
+    "itemListElement": [
+      { "@@type": "Offer", "itemOffered": { "@@type": "Service", "name": "Rescue & Recovery", "url": "https://clintmcmahon.com/services/rescue-recovery" } },
+      { "@@type": "Offer", "itemOffered": { "@@type": "Service", "name": "Legacy System Modernization", "url": "https://clintmcmahon.com/services/legacy-systems" } },
+      { "@@type": "Offer", "itemOffered": { "@@type": "Service", "name": "Custom Software Development", "url": "https://clintmcmahon.com/services/custom-software-development" } },
+      { "@@type": "Offer", "itemOffered": { "@@type": "Service", "name": "Azure B2C Integration", "url": "https://clintmcmahon.com/services/azure-b2c-integration" } },
+      { "@@type": "Offer", "itemOffered": { "@@type": "Service", "name": "Cloud Architecture & Implementation", "url": "https://clintmcmahon.com/services/cloud-implementation" } },
+      { "@@type": "Offer", "itemOffered": { "@@type": "Service", "name": "Umbraco Consulting", "url": "https://clintmcmahon.com/services/umbraco-consulting" } },
+      { "@@type": "Offer", "itemOffered": { "@@type": "Service", "name": "Shopify E-Commerce Development", "url": "https://clintmcmahon.com/services/shopify-ecommerce-development" } },
+      { "@@type": "Offer", "itemOffered": { "@@type": "Service", "name": "WordPress Hosting & Development", "url": "https://clintmcmahon.com/services/wordpress-hosting" } }
+    ]
+  }
+}
+</script>
 
 <div class="services page container py-5">
     <section class="mb-5">
-        <h1 class="display-4 fw-bold text-center mb-3">Technology Consulting for Law Firms</h1>
-        <p class="lead text-center mb-5">I help Big Law and AmLaw 200 firms with their technology initiatives. Staff augmentation, technical leadership, custom development—enterprise-grade expertise without the enterprise-grade overhead.</p>
+        <h1 class="display-4 fw-bold text-center mb-3">Technology Consulting Services</h1>
+        <p class="lead text-center mb-5">20+ years building and rescuing software for healthcare, legal, and government organizations — plus custom development, cloud, and e-commerce work for businesses that need it done right the first time.</p>
 
         <!-- Service Badges -->
         <div class="row text-center my-5">
@@ -19,17 +45,72 @@
             </div>
             <div class="col-md-4 mb-3">
                 <div class="border p-4 rounded bg-light">
-                    <i class="bi bi-people fs-1 mb-3 d-block" style="color: #183537;"></i>
-                    <strong>Staff Augmentation</strong><br />
-                    <span class="text-muted">Senior technical leadership on demand</span>
+                    <i class="bi bi-shield-check fs-1 mb-3 d-block" style="color: #183537;"></i>
+                    <strong>Regulated & High-Stakes Industries</strong><br />
+                    <span class="text-muted">Healthcare, legal, and government systems</span>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
                 <div class="border p-4 rounded bg-light">
-                    <i class="bi bi-building fs-1 mb-3 d-block" style="color: #183537;"></i>
-                    <strong>Legal Technology Focus</strong><br />
-                    <span class="text-muted">DMS, practice management, e-discovery</span>
+                    <i class="bi bi-life-preserver fs-1 mb-3 d-block" style="color: #183537;"></i>
+                    <strong>Rescue & Modernization Specialist</strong><br />
+                    <span class="text-muted">Stalled projects and legacy systems, stabilized</span>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Directory -->
+    <section id="all-services" class="mb-5 pb-4 border-bottom">
+        <h2 class="h3 fw-bold text-center mb-4">All Services</h2>
+        <div class="row g-3">
+            <div class="col-md-6 col-lg-3">
+                <a href="/services/rescue-recovery" class="d-block h-100 p-3 border rounded text-decoration-none">
+                    <strong class="d-block mb-1">Rescue &amp; Recovery</strong>
+                    <span class="text-muted small">Stalled, broken, or abandoned .NET projects, stabilized and delivered.</span>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a href="/services/legacy-systems" class="d-block h-100 p-3 border rounded text-decoration-none">
+                    <strong class="d-block mb-1">Legacy System Modernization</strong>
+                    <span class="text-muted small">Upgrade aging .NET Framework and outdated platforms without disrupting operations.</span>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a href="/services/custom-software-development" class="d-block h-100 p-3 border rounded text-decoration-none">
+                    <strong class="d-block mb-1">Custom Software Development</strong>
+                    <span class="text-muted small">Tailored .NET and React applications built around how your business works.</span>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a href="/services/azure-b2c-integration" class="d-block h-100 p-3 border rounded text-decoration-none">
+                    <strong class="d-block mb-1">Azure B2C Integration</strong>
+                    <span class="text-muted small">Identity, SSO, and MFA for compliance-heavy applications.</span>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a href="/services/cloud-implementation" class="d-block h-100 p-3 border rounded text-decoration-none">
+                    <strong class="d-block mb-1">Cloud Architecture &amp; Implementation</strong>
+                    <span class="text-muted small">Azure-native infrastructure, IaC, and cost-optimized deployments.</span>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a href="/services/umbraco-consulting" class="d-block h-100 p-3 border rounded text-decoration-none">
+                    <strong class="d-block mb-1">Umbraco Consulting</strong>
+                    <span class="text-muted small">Umbraco CMS builds, upgrades, and version migrations.</span>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a href="/services/shopify-ecommerce-development" class="d-block h-100 p-3 border rounded text-decoration-none">
+                    <strong class="d-block mb-1">Shopify E-Commerce Development</strong>
+                    <span class="text-muted small">Custom storefronts, checkout flows, and integrations that scale.</span>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a href="/services/wordpress-hosting" class="d-block h-100 p-3 border rounded text-decoration-none">
+                    <strong class="d-block mb-1">WordPress Hosting &amp; Development</strong>
+                    <span class="text-muted small">Fast, secure, actively managed hosting and custom work.</span>
+                </a>
             </div>
         </div>
     </section>
@@ -40,9 +121,9 @@
             <div class="col-md-8 offset-md-2">
                 <h2 class="h3 fw-bold mb-4">Legal Technology Development</h2>
                 <p class="lead">Custom development for law firm systems—document management integrations, practice management extensions, client portals, and workflow automation.</p>
-                
+
                 <p>Law firms run on specialized software. I build the custom pieces that connect your systems, automate manual workflows, and give attorneys the tools they actually need. Whether it's integrating with iManage, extending your practice management system, or building a client-facing portal, I deliver code that works reliably in demanding legal environments.</p>
-                
+
                 <h4 class="mt-4 mb-3">What I Build for Firms:</h4>
                 <ul class="mb-4">
                     <li><strong>DMS Integrations:</strong> Custom integrations with iManage, NetDocuments, and other document management systems</li>
@@ -62,9 +143,9 @@
             <div class="col-md-8 offset-md-2">
                 <h2 class="h3 fw-bold mb-4">Staff Augmentation & Technical Leadership</h2>
                 <p class="lead">Senior technical leadership without the overhead of a full-time hire. I work with your IT team to drive technology initiatives forward.</p>
-                
+
                 <p>Big Law has enterprise-scale complexity but often without enterprise-scale IT departments. I bring twenty years of experience leading technical teams to firms that need senior leadership for specific initiatives—whether that's a DMS migration, a new client portal, or modernizing legacy systems.</p>
-                
+
                 <h4 class="mt-4 mb-3">How I Help Law Firm IT Teams:</h4>
                 <ul class="mb-4">
                     <li><strong>Technical Leadership:</strong> Architecture decisions, vendor evaluation, implementation strategy</li>
@@ -84,9 +165,9 @@
             <div class="col-md-8 offset-md-2">
                 <h2 class="h3 fw-bold mb-4">Legal Technology Modernization</h2>
                 <p class="lead">Upgrade aging systems without disrupting firm operations. I modernize incrementally to minimize risk.</p>
-                
+
                 <p>Law firms often run critical systems that are years behind current technology—but can't afford downtime during migration. I specialize in gradual modernization that keeps everything running while moving to modern platforms.</p>
-                
+
                 <h4 class="mt-4 mb-3">Modernization Services:</h4>
                 <ul class="mb-4">
                     <li><strong>Platform Upgrades:</strong> Moving from legacy .NET Framework to modern .NET</li>
@@ -106,9 +187,9 @@
             <div class="col-md-8 offset-md-2">
                 <h2 class="h3 fw-bold mb-4">Technology Initiative Rescue</h2>
                 <p class="lead">Technology project stalled? Vendor disappeared? I step in, assess the situation, and get things back on track.</p>
-                
+
                 <p>Sometimes technology initiatives go sideways. The original vendor underdelivered, the project lost momentum, or the scope expanded beyond what the team could handle. I provide rapid assessment and practical recovery plans.</p>
-                
+
                 <h4 class="mt-4 mb-3">How I Rescue Projects:</h4>
                 <ul class="mb-4">
                     <li><strong>Rapid Assessment:</strong> Honest evaluation of where things stand</li>
@@ -118,7 +199,7 @@
                     <li><strong>Transition:</strong> Setting up your team for long-term success</li>
                 </ul>
 
-                <p>No judgment about how things got here. Just practical solutions to move forward. More on <a href="/services/rescue-recovery">rescue &amp; recovery engagements</a>.</p>
+                <p>No judgment about how things got here. Just practical solutions to move forward. More on <a href="/services/rescue-recovery">rescue &amp; recovery engagements</a>, including the flat-fee audit.</p>
             </div>
         </div>
     </section>
@@ -128,10 +209,10 @@
     <section id="why-work-with-me" class="mb-5">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <h2 class="h4 fw-bold mb-4">Why Law Firms Work With Me</h2>
+                <h2 class="h4 fw-bold mb-4">Why Clients Work With Me</h2>
                 <ul class="mb-4">
                     <li><strong>Enterprise Experience:</strong> 20+ years building systems for complex organizations</li>
-                    <li><strong>Legal Industry Focus:</strong> I understand the security, compliance, and reliability requirements</li>
+                    <li><strong>Regulated Industry Focus:</strong> I understand the security, compliance, and reliability requirements of healthcare, legal, and government work</li>
                     <li><strong>Senior Leadership:</strong> Architect-level thinking, hands-on execution</li>
                     <li><strong>Clear Communication:</strong> Regular updates, honest timelines, no surprises</li>
                     <li><strong>US-Based:</strong> Central time zone, available during business hours</li>
@@ -142,7 +223,7 @@
 
     <section id="call-to-action" class="text-center mt-5 py-5 bg-light rounded">
         <h2 class="fw-bold mb-3">Let's Discuss Your Technology Initiative</h2>
-        <p class="lead mb-4">Whether you need staff augmentation, technical leadership, or someone to rescue a stalled project—let's talk about how I can help your firm.</p>
+        <p class="lead mb-4">Whether you need staff augmentation, technical leadership, or someone to rescue a stalled project—let's talk about how I can help.</p>
         <a href="/contact" class="btn btn-primary btn-lg">Get in Touch</a>
     </section>
 </div>
