@@ -45,6 +45,6 @@ Address the most critical issues first. What's costing the business money or sto
 </p>
 
 <p>
-If you’re dealing with a legacy .NET app, the process above will help you get control and move forward. The goal is to reduce risk, deliver value quickly, and make the system work for the business again. If you need help getting a legacy .NET project back on track, <a href="/contact">get in touch</a>.
+If you’re dealing with a legacy .NET app, the process above will help you get control and move forward. The goal is to reduce risk, deliver value quickly, and make the system work for the business again. If you need help getting a legacy .NET project back on track, <a href="/contact">get in touch</a>. This is also the exact process behind my <a href="/services/rescue-recovery">rescue and recovery engagements</a>.
 </p>
 

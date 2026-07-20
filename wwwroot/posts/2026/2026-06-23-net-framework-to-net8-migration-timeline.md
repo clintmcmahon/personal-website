@@ -31,4 +31,5 @@ STRUCTURE SUGGESTION:
 
 LENGTH: 650–750 words
 AVOID: Microsoft compatibility tool screenshots, rewriting the official migration docs, underplaying how painful this actually is
+CLOSING CTA: end with one line pointing to /services/rescue-recovery for readers who want the audit instead of doing the scoping themselves
 -->

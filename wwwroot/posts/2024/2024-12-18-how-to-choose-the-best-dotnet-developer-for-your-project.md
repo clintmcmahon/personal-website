@@ -136,4 +136,7 @@ tags:
     <p>
         If you’re ready to take the next step and are looking for an experienced C# .NET consultant, I’d love to hear about your project. <a href="/contact">Drop me a note to get started</a>.
     </p>
+    <p>
+        If the project you're hiring for is already stalled or behind rather than just starting, that's a different conversation — <a href="/services/rescue-recovery">here's how I approach a rescue</a>.
+    </p>
 </section>

@@ -31,4 +31,5 @@ STRUCTURE SUGGESTION:
 
 LENGTH: 600–700 words
 AVOID: "read the tests" as a standalone tip, generic advice about version control history (obvious), framing this as a horror story
+CLOSING CTA: end with one line pointing to /services/rescue-recovery for readers already past the point of doing this themselves
 -->

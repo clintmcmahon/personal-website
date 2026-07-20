@@ -50,4 +50,7 @@ tags: consulting
 <p>
     In conclusion, being a software architect is a lot of responsibility. It's 50% technology and 50% soft skills, so having the ability to work with other people is equally as important as writing good code. I'm a firm believer that anyone can learn syntax pretty quickly without too much repetition, but learning how to deal with the business and stakeholders takes time and more effort to become an expert.
 </p>
+<p>
+    If you're looking for that kind of judgment on a project that's already off track, <a href="/services/rescue-recovery">that's the kind of work I do</a>.
+</p>
 </section>

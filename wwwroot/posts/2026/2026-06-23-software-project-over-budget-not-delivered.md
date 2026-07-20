@@ -31,4 +31,5 @@ STRUCTURE SUGGESTION:
 
 LENGTH: 600–700 words
 AVOID: victim framing, blaming "bad vendors" generically, turning this into a how-to-hire-better post (that's a separate post)
+CLOSING CTA: end with one line pointing to /services/rescue-recovery — this post's reader is the most ready-to-buy of any post on the site
 -->
