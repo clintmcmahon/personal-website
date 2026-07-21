@@ -51,3 +51,7 @@ appsettings.local.json
 *.db
 *.db-shm
 *.db-wal
+
+# Photo content — server-managed (uploaded via /admin, tracked in photos.db),
+# not deploy-time content. See deploy-iis.yml's robocopy /XD exclusion.
+wwwroot/photos/
