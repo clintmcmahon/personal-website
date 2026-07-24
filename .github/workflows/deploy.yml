@@ -1,0 +1,74 @@
+name: Build & Deploy to Vultr
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-clintmcmahon
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Publish
+        run: dotnet publish Website.csproj -c Release -o ./publish
+
+      - name: Stop service
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: sudo systemctl stop clintmcmahon
+
+      - name: Deploy publish output (protecting server-only content)
+        uses: burnett01/rsync-deployments@6.0.0
+        with:
+          switches: >-
+            -avzr --delete
+            --exclude=.well-known
+            --exclude=logs
+            --exclude=uploads
+            --exclude=wwwroot/images
+            --exclude=wwwroot/photos
+            --exclude=appsettings.local.json
+            --exclude=*.db
+            --exclude=*.db-shm
+            --exclude=*.db-wal
+          path: ./publish/
+          remote_path: /var/www/clintmcmahon.com/
+          remote_host: ${{ secrets.DEPLOY_HOST }}
+          remote_user: ${{ secrets.DEPLOY_USER }}
+          remote_key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Start service
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: sudo systemctl start clintmcmahon
+
+      - name: Smoke check
+        continue-on-error: true
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            sleep 3
+            curl -sS -o /dev/null -w "HTTP %{http_code}\n" http://localhost:5001/ || true
