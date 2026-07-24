@@ -7,6 +7,7 @@
 <div class="admin-toolbar">
     <h1>Edit Post</h1>
     <div style="display:flex; gap:1rem; align-items:center;">
+        <a href="/admin/blog/@Model.Id/preview" target="_blank" class="admin-link">Preview</a>
         @if (!Model.Draft)
         {
             <a href="/Blog/@Model.Slug" target="_blank" class="admin-link">View live →</a>

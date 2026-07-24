@@ -59,23 +59,69 @@ jobs:
           if (-not (Test-Path $src)) { throw "Publish dir not found: $src" }
           if (-not (Test-Path $dst)) { throw "Destination not found: $dst" }
 
-          # /XF and /XD protect server-side content that lives only on the server.
-          # After this deploy lands web.config with shadow copy enabled, future deploys
-          # can skip the stop/start and just recycle.
-          robocopy $src $dst /MIR /XJ /R:2 /W:2 /XF appsettings.local.json *.db *.db-shm *.db-wal `
-            /XD "$dst\.well-known" "$dst\logs" "$dst\uploads" "$dst\wwwroot\images" "$dst\wwwroot\photos"
+          # Server-only content (uploads, logs, live databases, secrets, and
+          # user-uploaded photos) never exists in $src, since it's gitignored.
+          # /XD and /XF do NOT reliably protect destination-only content from
+          # /MIR's implied /PURGE — Microsoft's own docs don't guarantee it, and
+          # this is the one case that was never actually exercised before now
+          # (these paths used to exist in both source and destination). So
+          # instead of trusting the exclusion flags, physically move this
+          # content out of $dst before the mirror runs and move it straight
+          # back after — nothing for /PURGE to ever see, regardless of flag
+          # semantics. Wrapped in try/finally so it's restored even if the
+          # copy step fails.
+          $stagingRoot = Join-Path $env:RUNNER_TEMP "deploy-staging"
+          if (Test-Path $stagingRoot) { Remove-Item $stagingRoot -Recurse -Force }
+          New-Item -Path $stagingRoot -ItemType Directory -Force | Out-Null
 
-          $rc = $LASTEXITCODE
-          Write-Host "robocopy exit code: $rc"
+          $protectedDirs = @('.well-known', 'logs', 'uploads', 'wwwroot\images', 'wwwroot\photos')
+          $protectedFilePatterns = @('appsettings.local.json', '*.db', '*.db-shm', '*.db-wal')
 
-          # Robocopy exit codes are a bitmask, not a pass/fail flag: 0-7 all mean
-          # success (1 = files copied, 2 = extra files present, 4 = mismatches).
-          # Only 8+ indicates an actual copy failure.
-          if ($rc -ge 8) { throw "robocopy failed with exit code $rc" }
+          $movedDirs = @()
+          foreach ($rel in $protectedDirs) {
+            $full = Join-Path $dst $rel
+            if (Test-Path $full) {
+              $stagePath = Join-Path $stagingRoot ($rel -replace '[\\/]', '_')
+              Move-Item -Path $full -Destination $stagePath -Force
+              $movedDirs += [PSCustomObject]@{ Original = $full; Staged = $stagePath }
+            }
+          }
 
-          # Reset $LASTEXITCODE — otherwise PowerShell/Actions sees robocopy's
-          # nonzero "success" code at the end of this step and fails it anyway.
-          $LASTEXITCODE = 0
+          $movedFiles = @()
+          foreach ($pattern in $protectedFilePatterns) {
+            Get-ChildItem -Path $dst -Filter $pattern -File -ErrorAction SilentlyContinue | ForEach-Object {
+              $stagePath = Join-Path $stagingRoot $_.Name
+              Move-Item -Path $_.FullName -Destination $stagePath -Force
+              $movedFiles += [PSCustomObject]@{ Original = $_.FullName; Staged = $stagePath }
+            }
+          }
+
+          try {
+            robocopy $src $dst /MIR /XJ /R:2 /W:2
+
+            $rc = $LASTEXITCODE
+            Write-Host "robocopy exit code: $rc"
+
+            # Robocopy exit codes are a bitmask, not a pass/fail flag: 0-7 all mean
+            # success (1 = files copied, 2 = extra files present, 4 = mismatches).
+            # Only 8+ indicates an actual copy failure.
+            if ($rc -ge 8) { throw "robocopy failed with exit code $rc" }
+
+            # Reset $LASTEXITCODE — otherwise PowerShell/Actions sees robocopy's
+            # nonzero "success" code at the end of this step and fails it anyway.
+            $LASTEXITCODE = 0
+          }
+          finally {
+            foreach ($item in $movedDirs) {
+              $parent = Split-Path $item.Original -Parent
+              if (-not (Test-Path $parent)) { New-Item -Path $parent -ItemType Directory -Force | Out-Null }
+              Move-Item -Path $item.Staged -Destination $item.Original -Force
+            }
+            foreach ($item in $movedFiles) {
+              Move-Item -Path $item.Staged -Destination $item.Original -Force
+            }
+            Remove-Item -Path $stagingRoot -Recurse -Force -ErrorAction SilentlyContinue
+          }
 
       - name: Start AppPool
         shell: powershell

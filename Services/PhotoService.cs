@@ -87,6 +87,24 @@ public class PhotoService
         };
     }
 
+    public async Task<PhotoViewModel?> GetPhotoPreviewByIdAsync(int id)
+    {
+        var photo = _photoRepository.GetPhotoByIdIncludingDrafts(id);
+        if (photo == null) return null;
+
+        return new PhotoViewModel
+        {
+            CurrentPhoto = photo,
+            PreviousPhoto = null,
+            NextPhoto = null,
+            Comments = _dbContext.PhotoComments
+                .Where(c => c.PhotoDate == photo.Date.ToString("yyyy-MM-dd"))
+                .OrderByDescending(c => c.CreatedAt)
+                .ToList(),
+            Engagement = await _mastodonEngagement.GetEngagementAsync(photo.SyndicationUrl)
+        };
+    }
+
     private static PhotoIndexViewModel BuildIndexViewModel(
         List<PhotoEntry> photos, string? activeTag, List<PhotoEntry>? tagSource = null)
     {

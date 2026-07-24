@@ -162,6 +162,7 @@
             <a href="/admin" class="@(Context.Request.Path.Value == "/admin" ? "active" : "")">Home</a>
             <a href="/admin/blog" class="@(Context.Request.Path.StartsWithSegments("/admin/blog") ? "active" : "")">Posts</a>
             <a href="/admin/photos" class="@(Context.Request.Path.StartsWithSegments("/admin/photos") ? "active" : "")">Photos</a>
+            <a href="/admin/backup" class="@(Context.Request.Path.StartsWithSegments("/admin/backup") ? "active" : "")">Backup</a>
         </div>
         <a href="/auth/logout" class="admin-nav-logout">Log out</a>
     </nav>

@@ -40,5 +40,17 @@ public class BlogController : Controller
         return View(post);
     }
 
+    [HttpGet("/admin/blog/{id:int}/preview")]
+    public IActionResult Preview(int id)
+    {
+        if (!AuthController.IsLoggedIn(HttpContext))
+            return Redirect($"/auth/login?returnUrl=/admin/blog/{id}/preview");
+
+        var post = _postRepository.GetPostByIdIncludingDrafts(id);
+        if (post == null) return NotFound();
+
+        ViewData["IsPreview"] = true;
+        return View("Details", post);
+    }
 
 }

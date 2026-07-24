@@ -30,4 +30,7 @@ public class DatabasePhotoRepository : IPhotoRepository
     public PhotoEntry? GetPhotoBySlug(string slug) =>
         _db.Photos.AsNoTracking()
             .FirstOrDefault(p => p.Slug == slug && !p.Draft);
+
+    public PhotoEntry? GetPhotoByIdIncludingDrafts(int id) =>
+        _db.Photos.AsNoTracking().FirstOrDefault(p => p.Id == id);
 }

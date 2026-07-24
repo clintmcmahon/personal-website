@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -8,7 +11,6 @@ namespace Website.Controllers
     {
         private readonly IWebHostEnvironment _env;
         private readonly IConfiguration _config;
-        private const string SessionKey = "Admin_Authenticated";
 
         public AuthController(IWebHostEnvironment env, IConfiguration config)
         {
@@ -28,12 +30,12 @@ namespace Website.Controllers
 
         [HttpPost("/auth/login")]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(string password, string? returnUrl = null)
+        public async Task<IActionResult> Login(string password, string? returnUrl = null)
         {
             var storedHash = _config["Admin:PasswordHash"];
             if (!string.IsNullOrEmpty(storedHash) && HashPassword(password) == storedHash)
             {
-                HttpContext.Session.SetString(SessionKey, "1");
+                await SignInAsync();
                 return Redirect(returnUrl ?? "/admin");
             }
 
@@ -43,9 +45,9 @@ namespace Website.Controllers
         }
 
         [HttpGet("/auth/logout")]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            HttpContext.Session.Remove(SessionKey);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Redirect("/");
         }
 
@@ -60,17 +62,29 @@ namespace Website.Controllers
         }
 
         [HttpGet("/auth/dev-login")]
-        public IActionResult DevLogin()
+        public async Task<IActionResult> DevLogin()
         {
             if (!_env.IsDevelopment())
                 return NotFound();
 
-            HttpContext.Session.SetString(SessionKey, "1");
+            await SignInAsync();
             return Redirect("/admin/photos/new");
         }
 
         public static bool IsLoggedIn(HttpContext context) =>
-            context.Session.GetString(SessionKey) == "1";
+            context.User?.Identity?.IsAuthenticated == true;
+
+        private Task SignInAsync()
+        {
+            var identity = new ClaimsIdentity(
+                new[] { new Claim(ClaimTypes.Name, "admin") },
+                CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(identity),
+                new AuthenticationProperties { IsPersistent = true });
+        }
 
         private static string HashPassword(string password)
         {

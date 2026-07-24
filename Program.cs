@@ -1,5 +1,6 @@
 using Website.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Website.Middleware;
 using Website.Repositories;
 using Website.Services;
@@ -68,7 +69,20 @@ builder.Services.AddHttpClient("Weather", c =>
 });
 builder.Services.AddScoped<WeatherService>();
 
-builder.Services.AddSession();
+// Persistent, signed auth cookie — not server-side session state. This is what actually
+// survives (a) being away from the keyboard for a long stretch, via sliding expiration,
+// and (b) deploys, since every push recycles the app pool and would otherwise wipe any
+// in-memory session instantly regardless of idle timeout.
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/auth/login";
+        options.Cookie.Name = "clintmcmahon_admin";
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SameSite = SameSiteMode.Lax;
+        options.ExpireTimeSpan = TimeSpan.FromDays(30);
+        options.SlidingExpiration = true;
+    });
 
 var app = builder.Build();
 
@@ -102,8 +116,8 @@ app.UseMiddleware<SubdomainMiddleware>();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
-app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

@@ -192,4 +192,18 @@ public class PhotosController : Controller
         }
         return View("PhotoDetail", viewModel);
     }
+
+    [HttpGet]
+    [Route("admin/photos/{id:int}/preview")]
+    public async Task<IActionResult> Preview(int id)
+    {
+        if (!AuthController.IsLoggedIn(HttpContext))
+            return Redirect($"/auth/login?returnUrl=/admin/photos/{id}/preview");
+
+        var viewModel = await _photoService.GetPhotoPreviewByIdAsync(id);
+        if (viewModel == null) return NotFound();
+
+        ViewData["IsPreview"] = true;
+        return View("PhotoDetail", viewModel);
+    }
 }

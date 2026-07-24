@@ -56,6 +56,12 @@ public class DatabasePostRepository : IPostRepository
             .Select(RenderContent);
     }
 
+    public Post? GetPostByIdIncludingDrafts(int id)
+    {
+        var post = _db.Posts.AsNoTracking().FirstOrDefault(p => p.Id == id);
+        return post != null ? RenderContent(post) : null;
+    }
+
     private static Post RenderContent(Post post)
     {
         post.Content = Markdown.ToHtml(post.Content ?? string.Empty, _pipeline);

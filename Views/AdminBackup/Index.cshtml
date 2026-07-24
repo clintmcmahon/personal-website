@@ -1,0 +1,54 @@
+@model List<Website.Models.BackupFileInfo>
+@{
+    ViewData["Title"] = "Backup — Admin";
+    Layout = "_AdminLayout";
+}
+
+<div style="max-width: 640px;">
+    <div class="admin-toolbar" style="margin-bottom: 1rem;">
+        <h1>Backup</h1>
+    </div>
+
+    <p class="text-muted" style="margin-bottom: 1.75rem; line-height: 1.6;">
+        Download a snapshot straight from the server — no remote access needed. The app archive
+        includes <span class="mono">appsettings.local.json</span>, which holds live secrets
+        (admin password hash, API tokens), so keep the download somewhere secure.
+    </p>
+
+    <div style="display: flex; flex-direction: column; gap: 1rem; align-items: flex-start;">
+        <a href="/admin/backup/app.zip" class="admin-btn admin-btn--primary">
+            Download app files (.zip)
+        </a>
+
+        <a href="/admin/backup/databases.zip" class="admin-btn admin-btn--ghost">
+            Download databases (.zip)
+        </a>
+
+        <a href="/admin/backup/photos.zip" class="admin-btn admin-btn--ghost">
+            Download photos (.zip)
+        </a>
+    </div>
+
+    <p class="text-muted" style="margin-top: 0.75rem; font-size: 0.8125rem;">
+        Photos only include posts from July 2026 onward — older years are skipped to keep the download manageable.
+    </p>
+
+    @if (Model.Any())
+    {
+        <table class="admin-table" style="margin-top: 2rem;">
+            <thead>
+                <tr><th>Database</th><th>Size</th><th>Last modified (UTC)</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var db in Model)
+                {
+                    <tr>
+                        <td class="mono">@db.Name</td>
+                        <td>@db.SizeMb MB</td>
+                        <td>@db.LastModifiedUtc.ToString("yyyy-MM-dd HH:mm")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

@@ -56,9 +56,17 @@
     <link rel="me" href="https://indieweb.social/@@clint" />
     <link rel="authorization_endpoint" href="https://indielogin.com/auth" />
     <link rel="webmention" href="https://webmention.io/clintmcmahon.com/webmention" />
+    @if (ViewData["IsPreview"] is true)
+    {
+        <meta name="robots" content="noindex, nofollow" />
+    }
 </head>
 
 <body class="d-flex flex-column min-vh-100">
+    @if (ViewData["IsPreview"] is true)
+    {
+        @await Html.PartialAsync("_PreviewBanner")
+    }
     @await Html.PartialAsync("_HCard")
 
     @{

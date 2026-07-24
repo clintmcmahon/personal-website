@@ -113,8 +113,16 @@
       "keywords": "@string.Join(", ", photo.Tags)"</text>}
     }
     </script>
+    @if (ViewData["IsPreview"] is true)
+    {
+        <meta name="robots" content="noindex, nofollow" />
+    }
 </head>
 <body>
+    @if (ViewData["IsPreview"] is true)
+    {
+        @await Html.PartialAsync("_PreviewBanner")
+    }
     @await Html.PartialAsync("_HCard")
     <header class="pb-header">
         <a href="@homeHref" class="pb-site-name">Clint McMahon</a>
