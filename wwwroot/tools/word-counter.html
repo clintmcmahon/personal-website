@@ -1,0 +1,80 @@
+<!--
+title: Word Counter
+description: Count words, characters, and estimated reading time as you type. Runs entirely in your browser.
+date: 2026-07-29
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Word Counter</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    max-width: 720px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    line-height: 1.5;
+  }
+  a { color: inherit; }
+  h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+  .back { display: inline-block; margin-bottom: 1.5rem; font-size: 0.9rem; text-decoration: none; opacity: 0.7; }
+  textarea {
+    width: 100%;
+    min-height: 260px;
+    box-sizing: border-box;
+    padding: 0.75rem;
+    font: inherit;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #8888;
+    background: transparent;
+    color: inherit;
+  }
+  .stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+  .stat strong { display: block; font-size: 1.4rem; }
+  .stat span { font-size: 0.85rem; opacity: 0.7; }
+</style>
+</head>
+<body>
+  <a class="back" href="/tools">&larr; Tools</a>
+  <h1>Word Counter</h1>
+  <p>Paste or type text below.</p>
+  <textarea id="input" placeholder="Start typing..."></textarea>
+  <div class="stats">
+    <div class="stat"><strong id="words">0</strong><span>words</span></div>
+    <div class="stat"><strong id="chars">0</strong><span>characters</span></div>
+    <div class="stat"><strong id="charsNoSpaces">0</strong><span>characters (no spaces)</span></div>
+    <div class="stat"><strong id="readTime">0 min</strong><span>reading time</span></div>
+  </div>
+
+<script>
+  const input = document.getElementById('input');
+  const words = document.getElementById('words');
+  const chars = document.getElementById('chars');
+  const charsNoSpaces = document.getElementById('charsNoSpaces');
+  const readTime = document.getElementById('readTime');
+
+  function update() {
+    const text = input.value;
+    const wordMatches = text.trim().length ? text.trim().split(/\s+/) : [];
+    const wordCount = wordMatches.length;
+
+    words.textContent = wordCount;
+    chars.textContent = text.length;
+    charsNoSpaces.textContent = text.replace(/\s/g, '').length;
+    readTime.textContent = Math.max(1, Math.round(wordCount / 200)) + ' min';
+  }
+
+  input.addEventListener('input', update);
+  update();
+</script>
+</body>
+</html>

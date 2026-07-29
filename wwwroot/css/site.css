@@ -1073,6 +1073,20 @@ header {
   .blog-post {
     padding: 2rem 0;
   }
+
+  /* Bootstrap's default .container gutter (0.75rem) reads as edge-to-edge
+     on phones — give content real breathing room from the screen edge. */
+  .container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+/* Invisible to real visitors, catches bots that blindly fill every form field. */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
 }
 
 @media (max-width: 575.98px) {

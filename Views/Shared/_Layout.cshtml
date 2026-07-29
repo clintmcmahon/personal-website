@@ -11,6 +11,7 @@
 
     @{
         var canonicalUrl = ViewData["CanonicalUrl"] as string ?? "https://clintmcmahon.com/";
+        var ogImage = ViewData["OgImage"] as string ?? "https://clintmcmahon.com/images/default-image.png";
     }
 
     <!-- Open Graph and Twitter Card Meta Tags -->
@@ -18,11 +19,11 @@
     <meta property="og:description" content="@ViewData["Description"]" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="@canonicalUrl" />
-    <meta property="og:image" content="https://clintmcmahon.com/images/default-image.png" />
+    <meta property="og:image" content="@ogImage" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="@ViewData["Title"]" />
     <meta name="twitter:description" content="@ViewData["Description"]" />
-    <meta name="twitter:image" content="https://clintmcmahon.com/images/default-image.png" />
+    <meta name="twitter:image" content="@ogImage" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
@@ -51,6 +52,8 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
     
     <link rel="stylesheet" href="~/lib/glightbox/glightbox.min.css" />
+    <link rel="alternate" type="application/rss+xml" title="Clint McMahon's Blog" href="/rss" />
+    <link rel="alternate" type="application/feed+json" title="Clint McMahon's Blog (JSON Feed)" href="/feed.json" />
     <link rel="canonical" href="@canonicalUrl" />
     <link rel="me" href="https://github.com/clintmcmahon" />
     <link rel="me" href="https://indieweb.social/@@clint" />
@@ -113,6 +116,9 @@
                         <li class="nav-item"><a href="/now" class="nav-link">Now</a></li>
                         <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
                         <li class="nav-item"><a href="https://photos.clintmcmahon.com" class="nav-link">Photos</a></li>
+                        <li class="nav-item"><a href="/tools" class="nav-link">Tools</a></li>
+                        <li class="nav-item"><a href="/guestbook" class="nav-link">Guestbook</a></li>
+                        <li class="nav-item"><a href="/search" class="nav-link">Search</a></li>
                         <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
                     </ul>
                 </div>

@@ -29,6 +29,17 @@ public class PhotosController : Controller
     }
 
     [HttpGet]
+    [Route("photos/random")]
+    public IActionResult Random()
+    {
+        var photos = _photoRepository.GetAllPhotos();
+        if (photos.Count == 0) return NotFound();
+
+        var pick = photos[System.Random.Shared.Next(photos.Count)];
+        return RedirectToAction(nameof(PhotoByDate), new { date = pick.Date.ToString("yyyy-MM-dd") });
+    }
+
+    [HttpGet]
     [Route("photos/archive")]
     public IActionResult Archive()
     {

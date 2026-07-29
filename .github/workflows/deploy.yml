@@ -45,6 +45,7 @@ jobs:
             --exclude=wwwroot/images
             --exclude=wwwroot/photos
             --exclude=appsettings.local.json
+            --exclude=keys
             --exclude=*.db
             --exclude=*.db-shm
             --exclude=*.db-wal

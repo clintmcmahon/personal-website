@@ -1,6 +1,7 @@
 using Website.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 using Website.Middleware;
 using Website.Repositories;
 using Website.Services;
@@ -28,6 +29,16 @@ var webmentionDbPath = Path.Combine(builder.Environment.ContentRootPath, "webmen
 builder.Services.AddDbContext<WebmentionDbContext>(options =>
     options.UseSqlite($"Data Source={webmentionDbPath}"));
 
+// Add SQLite for blog post comments
+var blogCommentDbPath = Path.Combine(builder.Environment.ContentRootPath, "blogcomments.db");
+builder.Services.AddDbContext<BlogCommentDbContext>(options =>
+    options.UseSqlite($"Data Source={blogCommentDbPath}"));
+
+// Add SQLite for the guestbook
+var guestbookDbPath = Path.Combine(builder.Environment.ContentRootPath, "guestbook.db");
+builder.Services.AddDbContext<GuestbookDbContext>(options =>
+    options.UseSqlite($"Data Source={guestbookDbPath}"));
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -42,6 +53,7 @@ builder.Services.AddSingleton<PhotoRepository>(provider =>
 
 builder.Services.AddScoped<PhotoService>();
 builder.Services.AddScoped<ImageProcessingService>();
+builder.Services.AddSingleton<OgImageService>();
 builder.Services.AddHttpClient("Mastodon");
 builder.Services.AddScoped<MastodonService>();
 
@@ -68,6 +80,15 @@ builder.Services.AddHttpClient("Weather", c =>
     c.DefaultRequestHeaders.UserAgent.ParseAdd("clintmcmahon.com-weather/1.0");
 });
 builder.Services.AddScoped<WeatherService>();
+
+// Persist the data protection key ring to disk. Without this, the keys used to encrypt/decrypt
+// the auth cookie live only in memory and get regenerated every process restart — so every
+// deploy (which stops/starts the systemd service) silently invalidates every existing login,
+// regardless of the 30-day sliding expiration below. The "keys" folder is excluded from the
+// rsync --delete in deploy.yml so it survives deploys.
+builder.Services.AddDataProtection()
+    .SetApplicationName("clintmcmahon-website")
+    .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(builder.Environment.ContentRootPath, "keys")));
 
 // Persistent, signed auth cookie — not server-side session state. This is what actually
 // survives (a) being away from the keyboard for a long stretch, via sliding expiration,
@@ -99,6 +120,12 @@ using (var scope = app.Services.CreateScope())
 
     var webmentionDb = scope.ServiceProvider.GetRequiredService<WebmentionDbContext>();
     webmentionDb.Database.Migrate();
+
+    var blogCommentDb = scope.ServiceProvider.GetRequiredService<BlogCommentDbContext>();
+    blogCommentDb.Database.Migrate();
+
+    var guestbookDb = scope.ServiceProvider.GetRequiredService<GuestbookDbContext>();
+    guestbookDb.Database.Migrate();
 }
 
 // Configure the HTTP request pipeline.

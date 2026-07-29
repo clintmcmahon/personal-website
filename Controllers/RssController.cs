@@ -50,5 +50,35 @@ public class RssController : Controller
         return Content(rss.ToString(), "application/rss+xml", Encoding.UTF8);
     }
 
+    [HttpGet]
+    [Route("feed.json")]
+    public IActionResult Json()
+    {
+        var posts = _postRepository
+            .GetAllPosts()
+            .Where(post => !post.Draft)
+            .OrderByDescending(post => post.Date)
+            .Take(20);
 
+        var feed = new
+        {
+            version = "https://jsonfeed.org/version/1.1",
+            title = "Clint McMahon's Blog",
+            home_page_url = "https://clintmcmahon.com/blog",
+            feed_url = Url.Action("Json", "Rss", null, Request.Scheme),
+            description = "Thoughts on .NET development, software consulting, and the occasional coffee shop discovery from a Minneapolis-based developer.",
+            items = posts.Select(post => new
+            {
+                id = Url.Action("Details", "Blog", new { slug = post.Slug }, Request.Scheme),
+                url = Url.Action("Details", "Blog", new { slug = post.Slug }, Request.Scheme),
+                title = post.Title,
+                content_html = post.Content,
+                summary = post.Description,
+                date_published = post.Date.ToString("o"),
+                tags = post.Tags
+            })
+        };
+
+        return new JsonResult(feed) { ContentType = "application/feed+json; charset=utf-8" };
+    }
 }

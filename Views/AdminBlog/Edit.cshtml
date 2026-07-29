@@ -52,12 +52,9 @@
     @await Html.PartialAsync("_PostForm", Model)
     <div class="admin-form-actions">
         <button type="submit" class="admin-btn admin-btn--primary">Save changes</button>
+        <button type="submit" formaction="/admin/blog/@Model.Id/publish"
+                class="admin-btn @(Model.Draft ? "admin-btn--publish" : "admin-btn--ghost")">
+            @(Model.Draft ? "Publish" : "Unpublish")
+        </button>
     </div>
-</form>
-
-<form method="post" action="/admin/blog/@Model.Id/publish" style="margin-top: 0.5rem;">
-    @Html.AntiForgeryToken()
-    <button type="submit" class="admin-btn @(Model.Draft ? "admin-btn--publish" : "admin-btn--ghost")">
-        @(Model.Draft ? "Publish" : "Unpublish")
-    </button>
 </form>

@@ -52,6 +52,9 @@ appsettings.local.json
 *.db-shm
 *.db-wal
 
+# Data protection key ring — server-managed, must not be committed (see Program.cs)
+/keys/
+
 # Photo content — server-managed (uploaded via /admin, tracked in photos.db),
 # not deploy-time content. See deploy-iis.yml's robocopy /XD exclusion.
 wwwroot/photos/

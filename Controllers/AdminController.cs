@@ -281,7 +281,7 @@ public class AdminController : Controller
             Slug = slug,
             Date = date,
             ImageUrl = rows.FirstOrDefault()?.FirstOrDefault()?.Url ?? string.Empty,
-            Content = string.IsNullOrWhiteSpace(body) ? string.Empty : $"<p>{System.Web.HttpUtility.HtmlEncode(body.Trim())}</p>",
+            Content = string.IsNullOrWhiteSpace(body) ? string.Empty : FormatCaptionHtml(body),
             Tags = tagList,
             Rows = rows,
             FullRows = layoutRows,
@@ -371,5 +371,21 @@ public class AdminController : Controller
         safe = System.Text.RegularExpressions.Regex.Replace(safe, @"[^a-z0-9\-_]", "-");
         safe = System.Text.RegularExpressions.Regex.Replace(safe, @"-{2,}", "-");
         return safe.Trim('-');
+    }
+
+    // Plain-text caption -> HTML: blank lines start a new <p>, single newlines become <br>.
+    private static string FormatCaptionHtml(string body)
+    {
+        var paragraphs = body.Trim()
+            .Replace("\r\n", "\n")
+            .Split("\n\n", StringSplitOptions.RemoveEmptyEntries);
+
+        var html = paragraphs.Select(p =>
+        {
+            var lines = p.Split('\n').Select(line => System.Web.HttpUtility.HtmlEncode(line.Trim()));
+            return $"<p>{string.Join("<br>", lines)}</p>";
+        });
+
+        return string.Join(string.Empty, html);
     }
 }

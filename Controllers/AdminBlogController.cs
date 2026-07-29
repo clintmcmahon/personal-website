@@ -54,7 +54,7 @@ public class AdminBlogController : Controller
     public async Task<IActionResult> New(Post post)
     {
         if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect("/auth/login");
+            return Redirect("/auth/login?returnUrl=/admin/blog/new");
 
         if (string.IsNullOrWhiteSpace(post.Title))
             ModelState.AddModelError("Title", "Title is required.");
@@ -98,7 +98,7 @@ public class AdminBlogController : Controller
     public async Task<IActionResult> Edit(int id, Post updated)
     {
         if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect("/auth/login");
+            return Redirect($"/auth/login?returnUrl=/admin/blog/{id}/edit");
 
         var post = _db.Posts.Find(id);
         if (post == null) return NotFound();
@@ -112,15 +112,8 @@ public class AdminBlogController : Controller
             return View(updated);
         }
 
-        post.Title = updated.Title;
-        post.Slug = string.IsNullOrWhiteSpace(updated.Slug) ? Slugify(updated.Title) : updated.Slug;
-        post.Description = updated.Description;
-        post.Keywords = updated.Keywords;
-        post.Content = updated.Content;
-        post.Date = updated.Date;
+        ApplyPostFields(post, updated);
         post.Draft = updated.Draft;
-        post.TagsRaw = Request.Form["TagsRaw"];
-        post.UpdatedAt = DateTime.UtcNow;
 
         await _db.SaveChangesAsync();
 
@@ -129,20 +122,32 @@ public class AdminBlogController : Controller
     }
 
     // ── Publish toggle ───────────────────────────────────────────────────────
+    // Lives in the same <form> as "Save changes" (via formaction) so publishing also
+    // saves whatever's currently in the editor, instead of toggling Draft on stale content.
 
     [HttpPost("/admin/blog/{id:int}/publish")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Publish(int id)
+    public async Task<IActionResult> Publish(int id, Post updated)
     {
         if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect("/auth/login");
+            return Redirect($"/auth/login?returnUrl=/admin/blog/{id}/edit");
 
         var post = _db.Posts.Find(id);
         if (post == null) return NotFound();
 
+        if (string.IsNullOrWhiteSpace(updated.Title))
+            ModelState.AddModelError("Title", "Title is required.");
+
+        if (!ModelState.IsValid)
+        {
+            updated.Id = id;
+            return View("Edit", updated);
+        }
+
+        ApplyPostFields(post, updated);
+
         var wasDraft = post.Draft;
-        post.Draft = !post.Draft;
-        post.UpdatedAt = DateTime.UtcNow;
+        post.Draft = !wasDraft;
         await _db.SaveChangesAsync();
 
         TempData["Success"] = post.Draft ? $"\"{post.Title}\" unpublished." : $"\"{post.Title}\" published.";
@@ -158,6 +163,18 @@ public class AdminBlogController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    private void ApplyPostFields(Post post, Post updated)
+    {
+        post.Title = updated.Title;
+        post.Slug = string.IsNullOrWhiteSpace(updated.Slug) ? Slugify(updated.Title) : updated.Slug;
+        post.Description = updated.Description;
+        post.Keywords = updated.Keywords;
+        post.Content = updated.Content;
+        post.Date = updated.Date;
+        post.TagsRaw = Request.Form["TagsRaw"];
+        post.UpdatedAt = DateTime.UtcNow;
+    }
+
     // ── Delete ───────────────────────────────────────────────────────────────
 
     [HttpPost("/admin/blog/{id:int}/delete")]
@@ -165,7 +182,7 @@ public class AdminBlogController : Controller
     public async Task<IActionResult> Delete(int id)
     {
         if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect("/auth/login");
+            return Redirect("/auth/login?returnUrl=/admin/blog");
 
         var post = _db.Posts.Find(id);
         if (post == null) return NotFound();

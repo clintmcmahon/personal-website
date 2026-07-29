@@ -19,7 +19,7 @@ public class AdminBackupController : Controller
 
     private static readonly string[] DatabaseNames =
     {
-        "blog.db", "photos.db", "photocomments.db", "webmentions.db"
+        "blog.db", "photos.db", "photocomments.db", "webmentions.db", "blogcomments.db", "guestbook.db"
     };
 
     // Photos backup only goes back this far — older years are large and already

@@ -14,6 +14,7 @@
     var homeHref   = isSubdomain ? "/"         : "/photos";
     var aboutHref  = isSubdomain ? "/about"    : "/photos/about";
     var rssHref    = isSubdomain ? "/rss"      : "/photos/rss";
+    var randomHref = isSubdomain ? "/random"   : "/photos/random";
     var tagBase    = isSubdomain ? "/tag/"     : "/photos/tag/";
 
     var latestPhoto = Model.Years.Any() ? Model.PhotosByYear[Model.Years.First()].FirstOrDefault() : null;
@@ -98,6 +99,7 @@
 <nav class="pb-archive-nav" aria-label="Archive navigation">
     <div class="pb-year-nav" role="tablist">
         <span class="pb-year-nav-total">@Model.TotalCount photos</span>
+        <a href="@randomHref" class="pb-year-link">🎲 Random</a>
         @foreach (var year in Model.Years)
         {
             <a href="#year-@year" class="pb-year-link" role="tab">

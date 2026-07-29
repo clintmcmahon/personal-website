@@ -1,0 +1,51 @@
+@model List<Website.Models.GuestbookEntry>
+@{
+  ViewData["Title"] = ViewData["Title"] ?? "Guestbook | Clint McMahon";
+}
+<section class="guestbook py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Guestbook</h2>
+    <div class="row mb-5">
+      <div class="col-lg-8 mx-auto text-center">
+        <p class="lead">Say hi, leave a note, tell me what brought you here. No account needed.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <form asp-controller="Guestbook" asp-action="Post" method="post" class="mb-5">
+          <input type="hidden" name="loadedAt" value="@DateTimeOffset.UtcNow.ToUnixTimeSeconds()" />
+          <div class="hp-field" aria-hidden="true">
+            <label>Leave this field blank</label>
+            <input type="text" name="hp_website" tabindex="-1" autocomplete="off" />
+          </div>
+          <div class="mb-2">
+            <input type="text" name="name" class="form-control" placeholder="Your name" required />
+          </div>
+          <div class="mb-2">
+            <textarea name="message" class="form-control" rows="3" placeholder="Leave a message..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Sign the Guestbook</button>
+        </form>
+
+        @if (!Model.Any())
+        {
+          <p class="text-center text-muted">No entries yet &mdash; be the first to sign in.</p>
+        }
+        else
+        {
+          @foreach (var entry in Model)
+          {
+            <div class="row mb-4 pb-4 border-bottom">
+              <div class="col-12">
+                <strong>@entry.Name</strong>
+                <small class="text-muted ms-2">@entry.CreatedAt.ToLocalTime().ToString("MMMM d, yyyy")</small>
+                <p class="mb-0 mt-1">@entry.Message</p>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  </div>
+</section>

@@ -35,7 +35,7 @@ public class MastodonService
 
         var url = CanonicalUrlHelper.BlogPost(post.Slug);
         var tags = FormatTags(post.Tags ?? new List<string>());
-        var status = BuildStatus(post.Title, url, tags);
+        var status = BuildStatus(post.Title, null, url, tags);
 
         return await PublishStatusAsync(status);
     }
@@ -56,7 +56,8 @@ public class MastodonService
             ? photo.Date.ToString("MMMM d, yyyy")
             : photo.Title;
 
-        var status = BuildStatus(title, url, tags);
+        var caption = string.IsNullOrWhiteSpace(photo.Content) ? null : HtmlToPlainText(photo.Content);
+        var status = BuildStatus(title, caption, url, tags);
 
         // Upload up to 4 images (Mastodon's maximum per post)
         var allImages = (photo.Rows ?? new List<List<PhotoImage>>())
@@ -169,12 +170,47 @@ public class MastodonService
         return client;
     }
 
-    private static string BuildStatus(string title, string url, string tags)
+    // Mastodon's default per-instance status limit; used to keep long captions from
+    // pushing a post past the point where the server rejects it outright.
+    private const int StatusCharLimit = 500;
+
+    private static string BuildStatus(string title, string? body, string url, string tags)
     {
-        var parts = new List<string> { title, url };
+        var trimmedBody = string.IsNullOrWhiteSpace(body) ? null : body.Trim();
+
+        var fixedParts = new List<string> { title, url };
+        if (!string.IsNullOrWhiteSpace(tags))
+            fixedParts.Add(tags);
+
+        if (trimmedBody != null)
+        {
+            // Budget = limit minus everything else minus the two blank-line separators
+            // the body's own paragraph would add.
+            var budget = StatusCharLimit - string.Join("\n\n", fixedParts).Length - 4;
+            if (budget < 1)
+                trimmedBody = null;
+            else if (trimmedBody.Length > budget)
+                trimmedBody = trimmedBody[..(budget - 1)].TrimEnd() + "…";
+        }
+
+        var parts = new List<string> { title };
+        if (trimmedBody != null)
+            parts.Add(trimmedBody);
+        parts.Add(url);
         if (!string.IsNullOrWhiteSpace(tags))
             parts.Add(tags);
+
         return string.Join("\n\n", parts);
+    }
+
+    // Inverse of AdminController.FormatCaptionHtml: <br> -> newline, paragraph breaks ->
+    // blank line, strip remaining tags, decode entities.
+    private static string HtmlToPlainText(string html)
+    {
+        var withBreaks = Regex.Replace(html, "<br\\s*/?>", "\n");
+        withBreaks = Regex.Replace(withBreaks, "</p>\\s*<p>", "\n\n");
+        var stripped = Regex.Replace(withBreaks, "<[^>]+>", "");
+        return System.Net.WebUtility.HtmlDecode(stripped).Trim();
     }
 
     private static string FormatTags(List<string> tags) =>

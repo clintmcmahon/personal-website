@@ -1,0 +1,48 @@
+@model List<Website.Models.SearchResult>
+@{
+  var query = ViewData["Query"] as string ?? string.Empty;
+}
+<section class="search py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Search</h2>
+
+    <div class="row mb-5">
+      <div class="col-lg-6 mx-auto">
+        <form asp-controller="Search" asp-action="Index" method="get" class="d-flex gap-2">
+          <input type="search" name="q" class="form-control" placeholder="Search posts, photos, tools..." value="@query" autofocus />
+          <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        @if (string.IsNullOrWhiteSpace(query))
+        {
+          <p class="text-center text-muted">Search across blog posts, photos, and tools.</p>
+        }
+        else if (!Model.Any())
+        {
+          <p class="text-center text-muted">No results for "@query".</p>
+        }
+        else
+        {
+          <p class="text-muted">@Model.Count result@(Model.Count == 1 ? "" : "s") for "@query"</p>
+          @foreach (var result in Model)
+          {
+            <div class="row mb-4 pb-4 border-bottom">
+              <div class="col-12">
+                <span class="badge bg-secondary me-2">@result.Type</span>
+                <a href="@result.Url" class="fw-bold text-decoration-none">@result.Title</a>
+                @if (!string.IsNullOrWhiteSpace(result.Snippet))
+                {
+                  <p class="mb-0 mt-1 text-muted">@result.Snippet</p>
+                }
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  </div>
+</section>
