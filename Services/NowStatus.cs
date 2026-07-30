@@ -5,8 +5,8 @@ namespace Website.Services;
 // changes — keep it short (~40 chars) so it fits the terminal panel.
 public static class NowStatus
 {
-    public const string Blurb = "deep in AI, coffee, and a new photoblog";
+    public const string Blurb = "Taking pictures, sitting by the pool and soaking up the sunshine.";
 
     // Whatever's in the hopper. Shown in the homepage terminal's `cat ~/brewing`.
-    public const string CurrentlyBrewing = "Bombona Espresso by Coffee Collective";
+    public const string CurrentlyBrewing = "Heart Coffee Roasters single origin";
 }

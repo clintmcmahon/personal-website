@@ -4,43 +4,58 @@
 
 @model IEnumerable<Post>
 
-<section class="contact py-5">
-  <div class="container" style="max-width:800px">
-         <h1 class="display-4 fw-bold text-center mb-2">Now</h1>
-        <p class="text-center text-muted mb-4">@Website.Services.NowStatus.Blurb</p>
-        <div class="row g-4">
-            <div class="col">
-            <p class="text-center">
-                This is my <a href="https://nownownow.com/about" target="_blank">Now page</a>, inspired by <a
-                href="https://sive.rs/now">Derek Sivers</a>.
-            </p>
-            <p class="text-center text-muted small mb-4">Last updated: May 2026</p>
-            <div class="fw-bold mb-4">
-                🌸 May 2026 🪻
-            </div>
-            <p>
-                Lately I've been diving into utilizing AI in my personal and work lives. I've been using it for coffee, developing apps, architecting software and generally asking questions about the world. So far, I really like having AI around but also know and maybe fear what it could become.
-            </p>
-            <p>
-                Here's what I've been up to this spring:
-            </p>
-                <ul>
-                    <li>
-                        I used Claude to <a href="https://clintmcmahon.com/Blog/merge-coffee-apps" target="_blank">merge the code bases of MN Coffee, NYC Coffee and Chicago Coffee</a> into the same React native app. This is a big time savings update for the coffee apps. However, I'm losing interest in keeping all three of the apps alive. It's not just maintaining the mobile app but the API and data. Then I have to keep the database up to date for each of the three different apps. Since I don't get to Chicago or NYC as much as I want there is little incentive for me to keep those up to date. 
-                    </li>
-                    <li>
-                        Every week I brew a new batch of coffee with my Chemex. The coffee come from Heart or Sey run pretty light and from Africa. These coffees have always been really hard for me to brew. I used to spend so much time on coffee subreddits trying to figure out how to grind and pour. I started taking pictures of the bags of coffee and asking Claude to tell me what grind setting, water temp and pour style I should be using to brew these coffees. I think I've cracked the code. I give Claude my parameters like what type of grinder and kettle I'm working with, then take a picture of the bag and ask it to tell me how to brew the coffee with my Chemex. 90% of the time it's right on the first time. If the coffee tastes bitter or sour, I'll ask some questions and have Claude come up with a new path forward.
-                    </li>
-                    <li>
-                        Started a photo blog at <a href="https://photos.clintmcmahon.com" target="_blank">photos.clintmcmahon.com</a>. I'm nostalgic for the old photoblogs from the 2000s. I still use <a href="https://instagram.com/cwmcmhn">Instagram</a> but I love having my own photo blog that displays my images in a larger format than what's available on Instagram. Since starting this new photoblog I've found other folks around the world who are also doing this. I'm excited about where this little project goes.
-                    </li>
-                    <li>
-                        For the time being I have settled on <a href="https://onyxcoffeelab.com/products/monarch?variant=31861823176802" target="_blank">Onyx's Monarch</a> espresso blend for our house espresso. Somehow it pulls super fast and still tastes really good. I got tired of trying to find the BEST espresso for our house and finally decided to go with Onyx. They're great and their brew guides on their website are some of the best guides from roasters that are out there.
-                    </li>
-                    <li>
-                        We spent <a href="https://www.instagram.com/cwmcmhn/p/DXCP_QeDu4y/">spring</a> <a href="https://www.instagram.com/cwmcmhn/p/DW6uQQ-jsqu/">break</a> in <a href="https://www.instagram.com/cwmcmhn/p/DWzyb_bjCyy/">Belize</a> this <a href="https://www.instagram.com/cwmcmhn/p/DWukkcvjlqr/">year</a>. Definitely didn't spend enough time in other parts of the country. We stayed in San Pedro and had a great time driving golf carts around, snorkeling, visiting islands and getting food poisoning.  
-                </ul>
-        </div>
-  </div>
-</section>
+<div class="page-intro is-centered pb-0">
+    <h1>Now</h1>
+    <span class="portfolio-section-label mt-0 border-0">@Website.Services.NowStatus.Blurb</span>
+</div>
+
+<div class="page-body is-centered">
+<p>
+        This is my <a href="https://nownownow.com/about" target="_blank">Now page</a>, inspired by <a
+        href="https://sive.rs/now">Derek Sivers</a>.
+  </p>
+    <p class="text-muted small">Last updated: August 2026</p>
+
+    <span class="portfolio-section-label" style="margin-top:2.5rem">Work</span>
+    <ul>
+        <li>
+            Currently focused on legal tech. Embedded with the client team building Angular and .NET tools that give law firm partners visibility into data across
+            the firm and disparate data sources. We've been using AI-assisted development with Claude Code to work at the architecture
+            level by designing systems and data flows rather than hand-writing every line. It's new and has a strange feeling at first, but I'm starting to love how this new type of development lets me move faster and produce more features.
+        </li>
+        <li>
+            Over the past six months I've really shifted away from writing 100% of the code by hand. So much of the code that is produced is produced by AI. I'm prompting and telling the system the design, requirements and rules - but it's wild to see how powerful these AI systems actually are.
+            I've got some conflicted feelings about AI coding right now. Its powerful but is it going to take our jobs? So much of software development is problem solving, working through requirements and understanding what brings value to the users. I don't think AI can do those things. I much prefer to be an architect and AI coding systems are turning coders into architects now.
+        </li>
+    </ul>
+
+    <span class="portfolio-section-label">Side Projects</span>
+    <ul>
+        <li>
+            I've published a bunch of new updates to a few different apps this summer. <a href="https://todaysrecordhigh.com" target="_blank">Today's Record High</a> has a fully updated look and feel. There is a brand new dashboard that shows off the major cities across the country and what their record highs are. I also add a little blurb to indicate if that city is getting close to a record high that day.
+            Along with the new website updates, I've updated the mobile app for iOS and Android to match the new information and updates available on the website.
+        </li>
+        <li>Every month the MN Coffee Map gets a data update with the latest data from Google Maps. I haven't done very much app work on it for a few months. I'm going to leave it for now as it does exaclty what I want it to do: show me good coffee that's nearby.</li>
+        <li>
+            My photoblog is in full swing. It went from markdown file static site to a full DB backed CMS system now. I can post images to it just as easliy as I can to social media. I'm thinking that eventually I will just post to the photoblog and Mastodon in the future. It feels less addicting than Instagram and I can tailor my photos however I want and not have to worry about the algorythm.
+        </li>
+    </ul>
+
+    <span class="portfolio-section-label">Life</span>
+    <ul>
+        <li>
+            We just got back from a nice vacation to the San Jaun Islands off the coast of Washington. <a href="https://photos.clintmcmahon.com/2026-07-28">There are</a> a few <a href="https://photos.clintmcmahon.com/2026-07-22">different</a> sets of <a href="https://photos.clintmcmahon.com/2026-07-17">photos</a> on my photoblog from the trip.
+        </li>
+        <li>
+            Been carrying around my Ricoh GRIIIx everywhere I go. I love this camera so much. It takes such great photos but it's so simple to carry around with me. I beat it up pretty bad, so hopefully it lasts me a while because I don't want to shoot with anything else.
+        </li>
+        <li>
+            Out in Seattle I tried <a href="https://coffeecollective.dk/products/bombona-espresso-250-g">Bombona Espresso from Coffee Collective</a> and it's the best espresso I've ever had. 
+        </li>
+        <li>
+            I'd like to blog and write more. I've been reading a lot of <a href="https://simonwillison.net/">Simon Willison</a> and <a href="https://robertbirming.com/">Robert Birming</a> - both are excellent bloggers and have inspired me to write more. I still have that writers block feeling of not knowing what I'm suppose to blog about. I think training my brain to be a better writer is going to make me a better technologist in the future. As AI spreads and coding as I once knew it goes away, it's going to be so important to be able to write clearly.
+        </li>
+    </ul>
+
+</div>
 
