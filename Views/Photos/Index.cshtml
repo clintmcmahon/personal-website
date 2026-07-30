@@ -209,11 +209,14 @@
 
     sections.forEach(function (s) { sectionObserver.observe(s); });
 
-    // Smooth scroll for year nav links
+    // Smooth scroll for year nav links (skip the Random link, which is a real navigation)
     yearLinks.forEach(function (link) {
+        var href = link.getAttribute('href');
+        if (href.charAt(0) !== '#') return;
+
         link.addEventListener('click', function (e) {
             e.preventDefault();
-            var target = document.querySelector(link.getAttribute('href'));
+            var target = document.querySelector(href);
             if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });

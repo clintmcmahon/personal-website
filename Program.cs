@@ -29,11 +29,6 @@ var webmentionDbPath = Path.Combine(builder.Environment.ContentRootPath, "webmen
 builder.Services.AddDbContext<WebmentionDbContext>(options =>
     options.UseSqlite($"Data Source={webmentionDbPath}"));
 
-// Add SQLite for blog post comments
-var blogCommentDbPath = Path.Combine(builder.Environment.ContentRootPath, "blogcomments.db");
-builder.Services.AddDbContext<BlogCommentDbContext>(options =>
-    options.UseSqlite($"Data Source={blogCommentDbPath}"));
-
 // Add SQLite for the guestbook
 var guestbookDbPath = Path.Combine(builder.Environment.ContentRootPath, "guestbook.db");
 builder.Services.AddDbContext<GuestbookDbContext>(options =>
@@ -120,9 +115,6 @@ using (var scope = app.Services.CreateScope())
 
     var webmentionDb = scope.ServiceProvider.GetRequiredService<WebmentionDbContext>();
     webmentionDb.Database.Migrate();
-
-    var blogCommentDb = scope.ServiceProvider.GetRequiredService<BlogCommentDbContext>();
-    blogCommentDb.Database.Migrate();
 
     var guestbookDb = scope.ServiceProvider.GetRequiredService<GuestbookDbContext>();
     guestbookDb.Database.Migrate();

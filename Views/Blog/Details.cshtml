@@ -25,5 +25,5 @@
 
     @await Html.PartialAsync("_BlogPostFooter", Model)
 
-    @await Html.PartialAsync("_BlogComments", (IEnumerable<Website.Models.BlogComment>)(ViewData["BlogComments"] ?? new List<Website.Models.BlogComment>()))
+    @await Html.PartialAsync("_ReplyByEmail", Model)
 </div>

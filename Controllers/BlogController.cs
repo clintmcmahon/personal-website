@@ -1,19 +1,16 @@
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Website.Data;
 using Website.Repositories;
 
 namespace Website.Controllers;
 public class BlogController : Controller
 {
     private readonly IPostRepository _postRepository;
-    private readonly BlogCommentDbContext _comments;
 
-    public BlogController(IPostRepository postRepository, BlogCommentDbContext comments)
+    public BlogController(IPostRepository postRepository)
     {
         _postRepository = postRepository;
-        _comments = comments;
     }
 
     public IActionResult Index(int page = 1, int pageSize = 20)
@@ -40,12 +37,6 @@ public class BlogController : Controller
         {
             return NotFound();
         }
-
-        ViewData["BlogSlug"] = slug;
-        ViewData["BlogComments"] = _comments.BlogComments
-            .Where(c => c.Slug == slug)
-            .OrderBy(c => c.CreatedAt)
-            .ToList();
 
         return View(post);
     }
