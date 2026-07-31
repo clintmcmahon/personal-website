@@ -41,6 +41,36 @@ html, body {
 }
 .pb-site-name:hover { color: #999; }
 
+.pb-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.weather-widget {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.weather-icon {
+  font-size: 0.8rem;
+}
+
+.weather-temp {
+  font-size: 0.69rem;
+  font-weight: 600;
+  color: #333;
+  font-variant-numeric: tabular-nums;
+}
+
+.weather-loc {
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #999;
+}
+
 .pb-header-byline {
   font-size: 0.69rem;
   color: #777;
@@ -174,10 +204,12 @@ html, body {
   margin-left: auto;
 }
 
-.pb-nav-archive {
+.pb-nav-center {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  display: flex;
+  gap: 0.9rem;
 }
 
 .pb-nav a {

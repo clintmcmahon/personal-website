@@ -1,7 +1,9 @@
 @model PhotoViewModel
+@inject Website.Services.WeatherService WeatherService
 
 @{
     Layout = null;
+    var weather = await WeatherService.GetCurrentAsync();
     var photo = Model.CurrentPhoto;
     var canonicalUrl = $"https://photos.clintmcmahon.com/{photo.Date:yyyy-MM-dd}";
     ViewData["PhotoDate"] = photo.Date.ToString("yyyy-MM-dd");
@@ -126,7 +128,13 @@
     }
     @await Html.PartialAsync("_HCard")
     <header class="pb-header">
-        <a href="@homeHref" class="pb-site-name">Clint McMahon</a>
+        <div class="pb-header-left">
+            <a href="@homeHref" class="pb-site-name">Clint McMahon</a>
+            @if (weather != null)
+            {
+                @await Html.PartialAsync("_WeatherWidget", weather)
+            }
+        </div>
         <span class="pb-header-byline">photographs from the life of <a href="https://clintmcmahon.com" class="pb-header-byline-link">clintmcmahon.com</a></span>
     </header>
 
@@ -144,7 +152,10 @@
             {
                 <span></span>
             }
-            <a href="@archiveHref" class="pb-nav-archive">archive</a>
+            <div class="pb-nav-center">
+                <a href="@archiveHref" class="pb-nav-archive">archive</a>
+                <a href="@randomHref" class="pb-nav-random">random</a>
+            </div>
             @if (Model.NextPhoto != null)
             {
                 <a href="@photoBase@Model.NextPhoto.Date.ToString("yyyy-MM-dd")"

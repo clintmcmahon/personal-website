@@ -1,9 +1,11 @@
 @model Website.Models.PhotoIndexViewModel
 @using System.Web
 @using Website.Services
+@inject WeatherService WeatherService
 
 @{
     Layout = null;
+    var weather = await WeatherService.GetCurrentAsync();
     ViewData["Title"] = "Archive — Clint McMahon Photos";
     var canonicalUrl = "https://photos.clintmcmahon.com/archive";
     var rssUrl = "https://photos.clintmcmahon.com/rss";
@@ -92,7 +94,13 @@
 @await Html.PartialAsync("_HCard")
 
 <header class="pb-header">
-    <a href="@homeHref" class="pb-site-name">Clint McMahon</a>
+    <div class="pb-header-left">
+        <a href="@homeHref" class="pb-site-name">Clint McMahon</a>
+        @if (weather != null)
+        {
+            @await Html.PartialAsync("_WeatherWidget", weather)
+        }
+    </div>
     <span class="pb-header-byline">photographs from the life of <a href="https://clintmcmahon.com" class="pb-header-byline-link">clintmcmahon.com</a></span>
 </header>
 

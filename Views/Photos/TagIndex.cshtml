@@ -1,8 +1,10 @@
 @model Website.Models.PhotoIndexViewModel
 @using Website.Services
+@inject WeatherService WeatherService
 
 @{
     Layout = null;
+    var weather = await WeatherService.GetCurrentAsync();
     var tag = Model.ActiveTag ?? "";
     var displayTag = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(tag);
     ViewData["Title"] = $"#{displayTag} Photos — Clint McMahon";
@@ -72,7 +74,13 @@
 @await Html.PartialAsync("_HCard")
 
 <header class="pb-header">
-    <a href="@homeHref" class="pb-site-name">Clint McMahon</a>
+    <div class="pb-header-left">
+        <a href="@homeHref" class="pb-site-name">Clint McMahon</a>
+        @if (weather != null)
+        {
+            @await Html.PartialAsync("_WeatherWidget", weather)
+        }
+    </div>
     <span class="pb-header-byline">photographs from the life of <a href="https://clintmcmahon.com" class="pb-header-byline-link">clintmcmahon.com</a></span>
 </header>
 
