@@ -1,17 +1,22 @@
 @{
-  ViewData["Title"] = "Portfolio | Clint McMahon";
-  ViewData["Description"] = "Selected client work spanning healthcare data platforms, government systems, e-commerce, and enterprise integrations. 20+ years building software that lasts.";
+  ViewData["Title"] = "Portfolio | Health Data Platforms & Government Systems | Clint McMahon";
+  ViewData["Description"] = "Selected client work: federal health data platforms, Minnesota state government systems, e-commerce and enterprise integrations. 20+ years building software that lasts.";
+
+  // These two cards point at the case study once it is written, and at the live
+  // site until then. See Services/CaseStudies.cs.
+  var sos = Website.Services.CaseStudies.MinnesotaSecretaryOfState;
+  var srtr = Website.Services.CaseStudies.SrtrInteractiveReports;
 }
 
 <div class="page-intro">
     <h1>Portfolio</h1>
-    <p>Projects for clients across healthcare, government, and e-commerce. Most of the projects I work on are not publically available. These are the ones that are public.</p>
+    <p>Web applications that make complex data usable, and modernization of the systems underneath them. Federal health registries, Minnesota state agencies and businesses. Most of my work is not public. These are the projects that are.</p>
 </div>
 
 <span class="portfolio-section-label" style="margin-top:0">Healthcare &amp; Life Sciences</span>
 <div class="portfolio-grid">
 
-    <a href="https://preview.srtr.org/" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+    <a href="https://srtr.hrsa.gov/" class="portfolio-card" target="_blank" rel="noopener noreferrer">
         <img src="/images/pfwebsite.png" class="portfolio-card-img" alt="SRTR Patient-Friendly Website">
         <div class="portfolio-card-body">
             <h3 class="portfolio-card-title">SRTR.org</h3>
@@ -22,18 +27,22 @@
         </div>
     </a>
 
-    <a href="https://www.srtr.org/transplant-centers/interactive-report?center=NYUC&type=TX1&organ=ki" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+    <a href="@srtr.CardHref" class="portfolio-card" target="@srtr.CardTarget" rel="@srtr.CardRel">
         <img src="/images/transplantcentersearch.png" class="portfolio-card-img" alt="SRTR Interactive Reports">
         <div class="portfolio-card-body">
+            @if (srtr.Published)
+            {
+                <span class="portfolio-card-badge">Case study</span>
+            }
             <h3 class="portfolio-card-title">SRTR Interactive Reports</h3>
-            <p class="portfolio-card-text">Interactive charts displaying transplant program outcomes using R datasets and HighCharts. A significant performance and usability improvement over prior static reports.</p>
+            <p class="portfolio-card-text">Interactive charts displaying transplant program outcomes using R datasets and HighCharts. A significant improvement in usability and interactivity over prior static reports.</p>
             <div class="card-tech">
                 <span>C#</span><span>.NET</span><span>React</span><span>HighCharts</span><span>SQL Server</span><span>Mapbox</span>
             </div>
         </div>
     </a>
 
-    <a href="https://www.srtr.org/reports/opo-specific-reports/interactive-report" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+    <a href="https://srtr.hrsa.gov/transplant-professionals/organ-procurement-organization-report/organ-procurement-organization-reports-osr/" class="portfolio-card" target="_blank" rel="noopener noreferrer">
         <img src="/images/oporeports.png" class="portfolio-card-img" alt="Organ Procurement Report">
         <div class="portfolio-card-body">
             <h3 class="portfolio-card-title">Organ Procurement Report</h3>
@@ -66,7 +75,7 @@
         </div>
     </a>
 
-    <a href="https://www.srtr.org/tools/liver-waiting-list-outcomes-calculator" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+    <a href="https://srtr.hrsa.gov/decision-tools/liver-waiting-list-outcomes-calculator/" class="portfolio-card" target="_blank" rel="noopener noreferrer">
         <img src="/images/liver_waitlist.png" class="portfolio-card-img" alt="Liver Waiting List Outcomes Calculator">
         <div class="portfolio-card-body">
             <h3 class="portfolio-card-title">Liver Waiting List Calculator</h3>
@@ -82,9 +91,13 @@
 <span class="portfolio-section-label">Government &amp; Media</span>
 <div class="portfolio-grid">
 
-    <a href="https://www.sos.state.mn.us" class="portfolio-card" target="_blank" rel="noopener noreferrer">
+    <a href="@sos.CardHref" class="portfolio-card" target="@sos.CardTarget" rel="@sos.CardRel">
         <img src="/images/oss_home.png" class="portfolio-card-img" alt="Minnesota Secretary of State">
         <div class="portfolio-card-body">
+            @if (sos.Published)
+            {
+                <span class="portfolio-card-badge">Case study</span>
+            }
             <h3 class="portfolio-card-title">Minnesota Secretary of State</h3>
             <p class="portfolio-card-text">Led the full migration of Minnesota's official state website from Umbraco 7 to 14 and .NET Framework to .NET Core. Modernized for security, performance, and long-term maintainability.</p>
             <div class="card-tech">
@@ -97,7 +110,7 @@
         <img src="/images/artfulliving.png" class="portfolio-card-img" alt="Artful Living">
         <div class="portfolio-card-body">
             <h3 class="portfolio-card-title">Artful Living</h3>
-            <p class="portfolio-card-text">Ongoing management and custom development for an upscale lifestyle magazine's website — custom features, performance tuning, and a digital experience that matches the brand's editorial standards.</p>
+            <p class="portfolio-card-text">Ongoing management and custom development for an upscale lifestyle magazine's website. Custom features, performance tuning and a digital experience that matches the brand's editorial standards.</p>
             <div class="card-tech">
                 <span>WordPress</span><span>MySQL</span><span>WP Engine</span><span>JavaScript</span>
             </div>
@@ -118,13 +131,13 @@
 </div>
 
 <span class="portfolio-section-label">E-Commerce &amp; Enterprise</span>
-<div class="portfolio-grid" style="margin-bottom: 4rem;">
+<div class="portfolio-grid">
 
     <a href="https://www.master-supplements.com" class="portfolio-card" target="_blank" rel="noopener noreferrer">
         <img src="/images/master-supplements.png" class="portfolio-card-img" alt="Master Supplements">
         <div class="portfolio-card-body">
             <h3 class="portfolio-card-title">Master Supplements</h3>
-            <p class="portfolio-card-text">Full Shopify build for a health supplement brand — product catalog, custom checkout flows, Klaviyo integration, and order fulfillment optimization.</p>
+            <p class="portfolio-card-text">Full Shopify build for a health supplement brand. Product catalog, custom checkout flows, Klaviyo integration and order fulfillment optimization.</p>
             <div class="card-tech">
                 <span>Shopify</span><span>Liquid</span><span>JavaScript</span><span>Klaviyo</span>
             </div>
@@ -146,7 +159,7 @@
         <img src="/images/agc.png" class="portfolio-card-img" alt="AGC of Minnesota">
         <div class="portfolio-card-body">
             <h3 class="portfolio-card-title">AGC of Minnesota</h3>
-            <p class="portfolio-card-text">Custom frontend and backend for Minnesota's leading construction trade association — event registration, membership management, and integrations with QuickBooks and Constant Contact.</p>
+            <p class="portfolio-card-text">Custom frontend and backend for Minnesota's leading construction trade association. Event registration, membership management and integrations with QuickBooks and Constant Contact.</p>
             <div class="card-tech">
                 <span>C#</span><span>.NET</span><span>SQL Server</span><span>AWS</span><span>QuickBooks</span>
             </div>
@@ -154,3 +167,12 @@
     </a>
 
 </div>
+
+<section class="portfolio-cta">
+    <h2>Have something like this that needs building?</h2>
+    <p>Most of my work starts with data that is hard to use, a platform that is past end of life or a project that stalled. If any of those sound familiar, tell me about it.</p>
+    <a class="btn-hero" href="/contact">Get in touch &rarr;</a>
+    <p style="margin-top:1.25rem;margin-bottom:0;font-size:0.875rem;">
+        Or see what I offer on the <a href="/services">services page</a>.
+    </p>
+</section>

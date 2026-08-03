@@ -10,7 +10,8 @@
     <meta name="description" content="@ViewData["Description"]" />
 
     @{
-        var canonicalUrl = ViewData["CanonicalUrl"] as string ?? "https://clintmcmahon.com/";
+        var canonicalUrl = ViewData["CanonicalUrl"] as string
+            ?? Website.Services.CanonicalUrlHelper.ForPath(Context.Request.Path.Value);
         var ogImage = ViewData["OgImage"] as string ?? "https://clintmcmahon.com/images/default-image.png";
     }
 
@@ -96,7 +97,7 @@
         <div class="vertical-line"></div>
     </div>
 
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <header class="site-header d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <nav class="navbar navbar-expand-md w-100">
             <div class="container">
                 <a href="/" class="navbar-brand me-auto">Clint McMahon</a>
@@ -111,6 +112,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="nav ms-auto">
                         <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/services" class="nav-link">Services</a></li>
                         <li class="nav-item"><a href="/portfolio" class="nav-link">Portfolio</a></li>
                         <li class="nav-item"><a href="/now" class="nav-link">Now</a></li>
                         <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
@@ -144,7 +146,7 @@
                     <a href="/projects">Projects</a>
                     <a href="/guestbook">Guestbook</a>
                     <a href="https://xn--sr8hvo.ws" target="_blank" rel="noopener noreferrer">Webring</a>
-                    <span>Built in Minneapolis</span>
+                    <a href="/freelance-developer-minneapolis">Freelance developer in Minneapolis</a>
                 </div>
             </div>
         </div>

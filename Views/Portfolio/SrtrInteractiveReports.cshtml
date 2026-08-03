@@ -1,0 +1,101 @@
+@{
+    // DRAFT. Written from what the portfolio already claims plus general facts about
+    // transplant registry reporting. Nothing here is invented about the engagement, but
+    // nothing here is verified either. Read every paragraph before this ships.
+    //
+    // @* VERIFY *@ and @* ADD *@ comments mark the specific claims and missing numbers.
+    // Razor comments never reach the browser, so the page is publishable as it stands.
+    //
+    // Audience: a research director, registry lead or comms person at an academic medical
+    // center or public health program. They will not evaluate the React. They will
+    // evaluate whether you understand that the numbers have to be exactly right and the
+    // audience has no statistical training.
+
+    ViewData["Title"] = "Building Interactive Transplant Outcomes Reports for SRTR | Case Study";
+    ViewData["Description"] = "How I replaced static transplant program outcome reports with an interactive web application over R datasets, used by patients, clinicians and policymakers.";
+}
+
+<div class="case-study">
+
+<header class="case-study-header">
+    <span class="case-study-eyebrow">Case Study</span>
+    <h1>SRTR Interactive Reports</h1>
+    <p class="case-study-lead">Interactive reports over a federal transplant registry's analysis output, built for patients and clinicians.</p>
+</header>
+
+<img class="case-study-hero" src="/images/transplantcentersearch.png" alt="SRTR interactive transplant program report" />
+
+<div class="case-study-body">
+
+    <h2>The situation</h2>
+
+    <p>The Scientific Registry of Transplant Recipients publishes data for every transplant program in the country. Waitlist mortality, transplant rates, organ acceptance, survival after transplant in order to deliver key metrics to people in the field.</p>
+
+    <p>The analysis is careful work done by statisticians who know exactly what the numbers mean and exactly how far they can be pushed.</p>
+
+    <p>The results reached their audience as static documents in the past. The next move was to take the existing data and along side PDF documents, to publish this information in informative and interactive charts.</p>
+
+    @* VERIFY: describe what the reports actually were before you built this. PDFs?
+       Static HTML? How often were they published and how large were they? Concrete
+       beats general here. *@
+
+    <h2>The hard part</h2>
+
+    <p>Three things made this different from a normal data visualization project.</p>
+
+    <p><strong>The application could not do statistics.</strong> The analysis lives in R and it is the authoritative version. A web application that recomputes anything, even something that looks as harmless as a rounded percentage or a re-derived confidence interval, creates the possibility of disagreeing with the published result. The application consumes what the analysis produces and renders it. It does not reinterpret it.</p>
+
+    <p><strong>The combinations multiply fast.</strong> Every program, every organ, every metric, every cohort and every reporting period. The result is a very large number of views over a dataset that is regenerated on a cycle. Keeping it fast is a data modeling problem before it is a front end problem.</p>
+
+    <h2>What I built</h2>
+
+    <p>Interactive reports that open on a specific program and answers questions without making the reader hunt for the data.</p>
+
+    <p>Filtering by organ and metric. Charts rendered with HighCharts over the analysis output. Geography handled with Mapbox to make it easy for patients to find which programs are close enough to them. Comparison across programs so the numbers have context.</p>
+
+    <p>Every view has its own URL to allow anyone can send a patient or doctor a link to exactly the view they were just discussing instead of a set of instructions for reproducing it.</p>
+
+    <h2>What changed</h2>
+
+    <p>The reports went from documents you read to a tool you use. The audience that had the most trouble with the old format is the audience the new one is built for.</p>
+
+    <h2>The annual cycle</h2>
+
+    <p>New data lands on a schedule. That single fact changes what this kind of project is worth building.</p>
+
+    <p>If republishing means rebuilding, every cycle costs about the same as the last one. If the pipeline is built so a new cycle is a data operation rather than a development effort, each release costs less than the one before it.</p>
+
+    <p>That is worth deciding at the start rather than on the second release.</p>
+
+    @* VERIFY: this section is the strongest argument for the retainer model, so it needs
+       to be accurate. Describe what republishing a cycle actually involves now, and what
+       you automated to get it there. If it is still more manual than you would like, say
+       so. Honest is more persuasive than polished. *@
+
+    <h2>Stack</h2>
+    <div class="card-tech" style="margin-bottom:2rem;">
+        <span>C#</span><span>.NET</span><span>React</span><span>HighCharts</span><span>SQL Server</span><span>Mapbox</span><span>R</span>
+    </div>
+
+    <p>
+        <a href="https://srtr.hrsa.gov/transplant-professionals/program-specific-report/program-specific-reports-psr/" target="_blank" rel="noopener noreferrer">Visit the live tool &rarr;</a>
+    </p>
+
+    <p>Related work on the same data: the <a href="https://srtr.hrsa.gov/transplant-professionals/organ-procurement-organization-report/organ-procurement-organization-reports-osr/" target="_blank" rel="noopener noreferrer">organ procurement organization reports</a>, the <a href="https://srtr.hrsa.gov/decision-tools/liver-waiting-list-outcomes-calculator/" target="_blank" rel="noopener noreferrer">liver waiting list outcomes calculator</a> and <a href="https://www.transplantcentersearch.org" target="_blank" rel="noopener noreferrer">Transplant Center Search</a>.</p>
+
+    @* VERIFY: SRTR moved to srtr.hrsa.gov and the old deep links now 404. The PSR page
+       above is my best match for what you built. Swap it if the interactive report you
+       worked on lives somewhere else on the new site. *@
+
+</div>
+
+<section class="portfolio-cta">
+    <h2>Publishing research data?</h2>
+    <p>Registries, annual data reports and outcomes studies often reach their audience as static documents. I build the interactive layer over them.</p>
+    <a class="btn-hero" href="/contact">Start a conversation &rarr;</a>
+    <p style="margin-top:1.25rem;margin-bottom:0;font-size:0.875rem;">
+        More on <a href="/services/health-data-platforms">health and research data platforms</a>.
+    </p>
+</section>
+
+</div>

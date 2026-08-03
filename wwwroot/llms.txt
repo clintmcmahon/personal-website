@@ -4,7 +4,9 @@
 
 ## About
 
-Clint McMahon builds web applications and software systems for a living, and takes photographs as a habit. He's been writing software professionally for over 15 years, primarily in .NET and JavaScript, and lives in Minneapolis where he's worked on projects ranging from state government websites to e-commerce platforms.
+Clint McMahon builds web applications and software systems for a living, and takes photographs as a habit. He's been writing software professionally for over 20 years, primarily in .NET and JavaScript, and works as a freelance software developer and architect in Minneapolis, Minnesota. His client work ranges from state government websites and federal health data platforms to e-commerce and association systems.
+
+He is available for freelance and contract work: fixed-scope projects, monthly retainers, staff augmentation and system assessments. Hiring details are at https://clintmcmahon.com/freelance-developer-minneapolis
 
 The photoblog at photos.clintmcmahon.com is a running record of what caught his attention — street photography, urban scenes, coffee shops, seasons, and everyday life in the midwest.
 
@@ -22,6 +24,8 @@ The photoblog at photos.clintmcmahon.com is a running record of what caught his 
 - Software engineering blog: tutorials, opinions, and project write-ups
 - Portfolio of past work including government, nonprofit, and commercial projects
 - Topics: .NET, ASP.NET Core, JavaScript, SQL Server, React, software architecture
+- Freelance development services, based in Minneapolis: https://clintmcmahon.com/freelance-developer-minneapolis
+- Service pages: https://clintmcmahon.com/services
 
 ### Machine-Readable
 

@@ -1,8 +1,8 @@
 @using Website.Services
 @inject WeatherService WeatherService
 @{
-    ViewData["Title"] = "Clint McMahon – Freelance Software Engineer & Architect - C# | .Net | AI";
-    ViewData["Description"] = "Freelance software engineer and architect in Minneapolis, designing and building systems for the legal industry. Specializing in .NET, C#, AI, Azure and solving complex technical problems.";
+    ViewData["Title"] = "Clint McMahon | Freelance Software Developer in Minneapolis, MN";
+    ViewData["Description"] = "Freelance software developer and architect in Minneapolis, MN. 20+ years of .NET, C# and Azure work building data platforms and modernizing legacy systems. Available for projects and retainers.";
     var weather = await WeatherService.GetCurrentAsync();
     var tempSign = weather != null && weather.TempF >= 0 ? "+" : "";
 
@@ -21,12 +21,80 @@
 }
 @model IEnumerable<Post>
 
+@* Person + ProfessionalService for local search. The @@id values are shared with
+   the schema block on /freelance-developer-minneapolis so Google treats them as
+   the same entity rather than two unrelated ones. *@
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@graph": [
+    {
+      "@@type": "Person",
+      "@@id": "https://clintmcmahon.com/#person",
+      "name": "Clint McMahon",
+      "jobTitle": "Freelance Software Developer and Architect",
+      "url": "https://clintmcmahon.com",
+      "image": "https://clintmcmahon.com/images/icon/me.jpg",
+      "email": "clintmcmahon@@pm.me",
+      "telephone": "+1-612-314-5384",
+      "address": {
+        "@@type": "PostalAddress",
+        "addressLocality": "Minneapolis",
+        "addressRegion": "MN",
+        "addressCountry": "US"
+      },
+      "knowsAbout": [".NET", "C#", "ASP.NET Core", "Umbraco CMS", "Azure", "React", "SQL Server", "Data Visualization"],
+      "sameAs": [
+        "https://www.linkedin.com/in/clintmcmahon/",
+        "https://github.com/clintmcmahon",
+        "https://indieweb.social/@@clint",
+        "https://www.instagram.com/cwmcmhn/"
+      ]
+    },
+    {
+      "@@type": "ProfessionalService",
+      "@@id": "https://clintmcmahon.com/#business",
+      "name": "Clint McMahon",
+      "url": "https://clintmcmahon.com/freelance-developer-minneapolis",
+      "founder": { "@@id": "https://clintmcmahon.com/#person" },
+      "telephone": "+1-612-314-5384",
+      "image": "https://clintmcmahon.com/images/icon/me.jpg",
+      "priceRange": "$$$",
+      "address": {
+        "@@type": "PostalAddress",
+        "addressLocality": "Minneapolis",
+        "addressRegion": "MN",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@@type": "GeoCoordinates",
+        "latitude": 44.9778,
+        "longitude": -93.2650
+      },
+      "areaServed": [
+        { "@@type": "City", "name": "Minneapolis" },
+        { "@@type": "City", "name": "Saint Paul" },
+        { "@@type": "State", "name": "Minnesota" },
+        { "@@type": "Country", "name": "United States" }
+      ]
+    },
+    {
+      "@@type": "WebSite",
+      "@@id": "https://clintmcmahon.com/#website",
+      "url": "https://clintmcmahon.com",
+      "name": "Clint McMahon",
+      "publisher": { "@@id": "https://clintmcmahon.com/#person" }
+    }
+  ]
+}
+</script>
+
 <section class="hero">
     <div class="hero-content">
         <p class="hero-label">Hi, I'm Clint</p>
         <h1 class="hero-heading">I build things<br>for the Internet.</h1>
         <p class="hero-body">
-            Freelance software engineer and architect in Minneapolis. I design and build systems for the legal industry, specializing in .NET, C#, AI and Azure. I also write about software, espresso, and whatever side project has my attention.
+            <a href="/freelance-developer-minneapolis">Freelance software developer and architect in Minneapolis</a>. I build web applications that make complex data usable, and I modernize the systems underneath them. Federal health registries, state government websites and businesses. I also write about software, espresso and whatever side project has my attention.
         </p>
         <a class="btn-hero" href="/contact">Get in touch &rarr;</a>
     </div>
@@ -114,7 +182,7 @@
 <div class="home-cards">
     <a href="/portfolio" class="home-card featured">
         <h2>Work</h2>
-        <p>Solution architecture and custom software for healthcare, legal and government. Building data platforms, legacy modernization and business software integrations across enterprise systems.</p>
+        <p>Data platforms for federal health research, a full Umbraco and .NET Core migration of Minnesota's official state website and custom software for regulated organizations.</p>
         <span class="card-cta">View portfolio &rarr;</span>
     </a>
     <a href="/projects" class="home-card">

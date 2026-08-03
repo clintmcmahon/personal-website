@@ -62,4 +62,24 @@ public class ServicesController : Controller
         return View();
     }
 
+    [Route("[controller]/health-data-platforms")]
+    public IActionResult HealthDataPlatforms()
+    {
+        return View();
+    }
+
+    [Route("[controller]/website-care-plans")]
+    public IActionResult WebsiteCarePlans()
+    {
+        return View();
+    }
+
+    // Root-level route on purpose. This is the local-search landing page, and an
+    // exact-match URL is worth more than tidy nesting under /services.
+    [Route("freelance-developer-minneapolis")]
+    public IActionResult FreelanceDeveloperMinneapolis()
+    {
+        return View();
+    }
+
 }

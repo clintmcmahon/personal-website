@@ -88,7 +88,10 @@ p {
 /* ============================================================
    NAVIGATION
    ============================================================ */
-header {
+/* Scoped to the site nav. As a bare `header` selector this also hit every
+   in-page <header> (service pages, photo pages, case studies), giving them a
+   stray rule and stripping their margin via !important. */
+.site-header {
   border-bottom: 1px solid var(--border) !important;
   background: var(--bg);
   padding: 0 !important;
@@ -731,9 +734,171 @@ header {
   white-space: nowrap;
 }
 
+/* "Case study" flag on portfolio cards that link to a write-up
+   instead of straight out to the live site. */
+.portfolio-card-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  background: var(--accent-light);
+  border-radius: 3px;
+  padding: 0.15rem 0.45rem;
+  margin-bottom: 0.5rem;
+  align-self: flex-start;
+}
+
+.portfolio-cta {
+  margin: 3.5rem 0 4rem;
+  padding: 2.25rem 2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-subtle);
+  text-align: center;
+}
+
+.portfolio-cta h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.625rem;
+}
+
+.portfolio-cta p {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  max-width: 46ch;
+  margin: 0 auto 1.5rem;
+}
+
 @media (max-width: 768px) {
   .portfolio-grid {
     grid-template-columns: 1fr;
+  }
+
+  .portfolio-cta {
+    padding: 1.75rem 1.25rem;
+  }
+}
+
+/* ============================================================
+   CASE STUDY
+   Uses the full container rather than the 680px left-pinned
+   .page-body column: header and hero image span the whole width,
+   prose sits in a centered measure so it stays readable.
+   ============================================================ */
+.case-study {
+  padding-bottom: 2rem;
+}
+
+.case-study-header {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 3.5rem 0 3rem;
+  text-align: center;
+}
+
+.case-study-eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: var(--accent-light);
+  border-radius: 3px;
+  padding: 0.25rem 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.case-study-header h1 {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 0.875rem;
+}
+
+.case-study-lead {
+  color: var(--text-muted);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.case-study-hero {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 3.5rem;
+}
+
+.case-study-body {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.case-study-body h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 3rem 0 1.125rem;
+  padding-bottom: 0.625rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.case-study-body h2:first-child {
+  margin-top: 0;
+}
+
+.case-study-body p,
+.case-study-body li {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  margin-bottom: 1.25rem;
+}
+
+.case-study-body ul,
+.case-study-body ol {
+  padding-left: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.case-study-body img {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin: 2rem 0;
+}
+
+/* Lets a figure break out of the prose measure back to full width */
+.case-study-body .full-bleed {
+  max-width: none;
+  width: 100%;
+}
+
+.case-study .portfolio-cta {
+  margin-top: 4rem;
+}
+
+@media (max-width: 768px) {
+  .case-study-header {
+    padding: 2.5rem 0 1.75rem;
+    text-align: left;
+  }
+
+  .case-study-hero {
+    margin-bottom: 2.25rem;
+  }
+
+  .case-study-body h2 {
+    margin-top: 2.25rem;
   }
 }
 

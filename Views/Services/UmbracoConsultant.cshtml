@@ -1,110 +1,109 @@
 @{
-  ViewData["Title"] = "Expert Umbraco Consultant for Custom CMS Solutions";
-  ViewData["Description"] = "I bring over 20 years of enterprise consulting expertise-helping startups, governments, agencies, and corporations streamline their digital presence with custom Umbraco development.";
+  ViewData["Title"] = "Umbraco Version Migration Specialist | Umbraco 7 & 8 to Modern Umbraco | Clint McMahon";
+  ViewData["Description"] = "Umbraco 7 and 8 migrations to modern Umbraco on .NET Core. I led the Umbraco 7 to 14 migration of Minnesota's official state website. Fixed-scope engagements and white-label work for agencies.";
 }
 
 <div class="services page">
   <section class="container py-5">
     <header class="mb-5 text-center">
-      <h1 class="display-4 fw-bold">Expert Umbraco Consultant for Custom CMS Solutions</h1>
-      <p class="lead text-muted">Unlock the Full Potential of Umbraco with a Proven Consultant</p>
+      <h1 class="display-4 fw-bold">Umbraco Version Migrations</h1>
+      <p class="lead text-muted">Stranded on Umbraco 7 or 8? That is a fixed-scope engagement with a known ending.</p>
     </header>
 
-    <div class="mb-5">
-      <p>If you're searching for a seasoned <strong>Umbraco consultant</strong> who delivers high-performance content
-        management systems, you're in the right place. I bring over 20 years of enterprise development experience and
-        more than a decade of consulting expertise-helping startups, governments, agencies, and corporations streamline
-        their digital presence with <strong>custom Umbraco development</strong>.</p>
+    <div class="row mb-5">
+      <div class="col-md-8 offset-md-2">
+        <p class="lead">Moving from Umbraco 7 or 8 to a current version is not an upgrade. It is a rewrite.</p>
+        <p>The backend moves from .NET Framework to .NET Core. Every legacy property editor has to be replaced against a new API. The content tree has to migrate without losing history. Templates and document types need rebuilding. There is no in-place upgrade path, which is why many organizations are still running an unsupported version.</p>
+        <p>I have done this migration on a public system with real availability and accessibility requirements.</p>
+      </div>
+    </div>
+
+    <div class="row mb-5 align-items-center">
+      <div class="col-md-6">
+        <h3 class="fw-bold">Minnesota Secretary of State</h3>
+        <p>I led the full migration of Minnesota's official state website from Umbraco 7 to Umbraco 14, and from .NET Framework to .NET Core. Modernized for security, performance and long-term maintainability, on a public system with real availability requirements and accessibility obligations.</p>
+        @if (Website.Services.CaseStudies.MinnesotaSecretaryOfState.Published)
+        {
+            <p><a href="/portfolio/minnesota-secretary-of-state">Read the case study</a></p>
+        }
+        else
+        {
+            <p><a href="/portfolio">See more of my work</a></p>
+        }
+      </div>
+      <div class="col-md-6">
+        <a href="https://www.sos.state.mn.us/" target="_blank" rel="noopener noreferrer">
+          <img src="/images/oss_home.png" class="img-fluid rounded shadow" alt="Minnesota Secretary of State website after the Umbraco 14 migration">
+        </a>
+      </div>
     </div>
 
     <div class="row mb-5">
-      <div class="col-md-6">
-        <h3 class="fw-bold">Why Choose My Umbraco Consulting Services?</h3>
+      <div class="col-md-8 offset-md-2">
+        <h3 class="fw-bold mb-3">What a Migration Engagement Covers</h3>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Deep Technical Expertise: From Umbraco 7 to latest version</li>
-          <li class="list-group-item">End-to-End Delivery: Architecture, Razor views, APIs, and more</li>
-          <li class="list-group-item">Flexible Engagements: From staff augmentation to full builds</li>
+          <li class="list-group-item"><strong>Assessment first.</strong> An honest inventory of what migrates cleanly, what has to be rebuilt and what should be dropped. This is where the real scope gets set, and it is worth doing as its own small engagement.</li>
+          <li class="list-group-item"><strong>Content migration.</strong> Document types, templates, media and the full content tree, with version history preserved where the platform allows it.</li>
+          <li class="list-group-item"><strong>Backend rewrite.</strong> .NET Framework to .NET Core, including custom controllers, surface controllers, services and scheduled tasks.</li>
+          <li class="list-group-item"><strong>Property editor replacement.</strong> Legacy grid, macro and custom editors rebuilt against the current Umbraco API, including the block-based editors that replaced the old grid.</li>
+          <li class="list-group-item"><strong>Integration rework.</strong> Search, forms, authentication and whatever third-party packages have no modern equivalent and need replacing.</li>
+          <li class="list-group-item"><strong>Accessibility.</strong> WCAG and Section 508 conformance, which usually needs attention anyway on a site this old.</li>
+          <li class="list-group-item"><strong>Cutover planning.</strong> Sequencing, a rollback plan, URL and redirect preservation so you do not lose search rankings, and a launch that does not take the site down.</li>
         </ul>
       </div>
-      <div class="col-md-6">
-        <img src="/images/umbraco_dashboard.png" class="img-fluid rounded shadow" alt="Custom Umbraco dashboard view">
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-md-8 offset-md-2">
+        <h3 class="fw-bold mb-3">For Agencies</h3>
+        <p>If you are an agency with legacy Umbraco clients, I work white-label. You keep the relationship and the account. I do the migration under your name and hand back a site your team can maintain on a current version.</p>
+        <p>The client stays yours.</p>
+      </div>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-md-8 offset-md-2">
+        <h3 class="fw-bold mb-3">Other Umbraco Work</h3>
+        <p>Migrations are the specialty, but not the only thing I do on the platform.</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">New Umbraco builds, architecture and information design</li>
+          <li class="list-group-item">Custom property editors, dashboards and backoffice extensions</li>
+          <li class="list-group-item">Headless and Content Delivery API implementations</li>
+          <li class="list-group-item">Azure hosting, deployment pipelines and environment setup</li>
+          <li class="list-group-item">Performance tuning, caching and search</li>
+          <li class="list-group-item">Ongoing maintenance through a <a href="/services/website-care-plans">care plan</a></li>
+        </ul>
       </div>
     </div>
 
     <div class="mb-5">
-      <h3 class="fw-bold">Featured Work</h3>
-      <div class="mb-4">
-        <h5>Minnesota Office of the State Auditor</h5>
-        <p>Migrated from legacy CMS to a secure Umbraco platform with a custom document management system, tailored
-          content grid, and ADA-compliant front-end.</p>
-      </div>
-      <div class="mb-4">
-        <h5>Patient Friendly Transplant Center Search</h5>
-        <p>Led the CMS and backend design for a national healthcare donor portal, integrating secure document workflows
-          and identity management.</p>
-      </div>
-      <div>
-        <h5>Office of the State Secretary</h5>
-        <p>Migrated from legacy CMS to a secure Umbraco 13 platform with a custom document management system, tailored
-          content grid, and ADA-compliant front-end.</p>
-      </div>
-    </div>
-
-    <div class="mb-5">
-      <h3 class="fw-bold">Services Offered</h3>
-      <div class="row">
-        <div class="col-md-6">
-          <ul class="list-group">
-            <li class="list-group-item">Umbraco Upgrades & Migrations (v7 to v13)</li>
-            <li class="list-group-item">Custom Razor Views & Grid Editors</li>
-            <li class="list-group-item">.NET Core Integration & API Development</li>
-          </ul>
-        </div>
-        <div class="col-md-6">
-          <ul class="list-group">
-            <li class="list-group-item">Azure Hosting, Security & DevOps</li>
-            <li class="list-group-item">CMS Architecture & Rescue Projects</li>
-            <li class="list-group-item">Performance Tuning & SEO Optimization</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="mb-5">
-      <h3 class="fw-bold">Recent Umbraco Projects</h3>
+      <h3 class="fw-bold text-center mb-4">Recent Umbraco Projects</h3>
       <div class="row">
         <div class="col-md-4 mb-3">
-          <a href="https://www.sos.state.mn.us/"><img src="/images/oss_home.png" class="img-fluid rounded shadow"
-              alt="Custom Umbraco 13 migration">
+          <a href="https://www.sos.state.mn.us/" target="_blank" rel="noopener noreferrer">
+            <img src="/images/oss_home.png" class="img-fluid rounded shadow" alt="Minnesota Secretary of State, migrated from Umbraco 7 to 14">
           </a>
+          <p class="small text-muted mt-2">Minnesota Secretary of State. Umbraco 7 to 14, .NET Framework to .NET Core.</p>
         </div>
         <div class="col-md-4 mb-3">
-          <a href="https://preview.srtr.org/"><img src="/images/pfwebsite.png" class="img-fluid rounded shadow"
-            alt="Frontend layout of Umbraco-powered website">
+          <a href="https://srtr.hrsa.gov/" target="_blank" rel="noopener noreferrer">
+            <img src="/images/pfwebsite.png" class="img-fluid rounded shadow" alt="SRTR patient-friendly website built on Umbraco">
           </a>
+          <p class="small text-muted mt-2">SRTR.org. Full site overhaul on Umbraco for a federal transplant registry.</p>
         </div>
         <div class="col-md-4 mb-3">
-          <a href="https://www.osa.state.mn.us/">
-          <img src="/images/osa_home.png" class="img-fluid rounded shadow"
-            alt="Umbraco rebuild">
-            </a>
+          <a href="https://www.osa.state.mn.us/" target="_blank" rel="noopener noreferrer">
+            <img src="/images/osa_home.png" class="img-fluid rounded shadow" alt="Minnesota Office of the State Auditor Umbraco rebuild">
+          </a>
+          <p class="small text-muted mt-2">Minnesota Office of the State Auditor. Legacy CMS to Umbraco, with custom document management.</p>
         </div>
       </div>
     </div>
 
     <div class="text-center">
-      <h2 class="fw-bold">Ready to Build or Transform Your Umbraco Site?</h2>
-      <p>Partner with a consultant who knows the platform inside and out. Let’s future-proof your CMS and deliver a
-        user-friendly, scalable experience for your team and your audience.</p>
-      <a href="/contact" class="btn btn-primary btn-lg mt-3">Contact Me Today</a>
-    </div>
-    <div class="visually-hidden">
-      <p>SEO Keywords: Umbraco consultant, hire Umbraco developer, Umbraco CMS expert, Umbraco upgrade, Umbraco
-        migration, Umbraco 13 development, .NET CMS consultant, Umbraco freelancer, custom Umbraco development, Umbraco
-        for government, Umbraco Razor views, Umbraco content grid, Umbraco site optimization, Umbraco consulting
-        services, Minneapolis Umbraco consultant, USA Umbraco expert</p>
+      <h2 class="fw-bold">Still running Umbraco 7 or 8?</h2>
+      <p>Tell me what version you are on and what has been customized. I can usually describe the shape of the migration in one conversation.</p>
+      <a href="/contact" class="btn btn-primary btn-lg mt-3">Get a Migration Assessment</a>
     </div>
   </section>
-
-
-</section>
+</div>

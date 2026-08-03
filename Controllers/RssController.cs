@@ -17,6 +17,7 @@ public class RssController : Controller
     [HttpGet]
     [Route("rss")]
     [Route("feed")]
+    [Route("feed.rss")]
     public IActionResult Index()
     {
         var posts = _postRepository
