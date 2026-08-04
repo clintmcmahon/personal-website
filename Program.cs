@@ -1,4 +1,5 @@
 using Website.Data;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
@@ -36,6 +37,10 @@ builder.Services.AddDbContext<GuestbookDbContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Url.Action otherwise emits the controller name as declared ("/Blog/my-post"),
+// which does not match the lowercase canonical tags.
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddScoped<IPostRepository, DatabasePostRepository>();
 builder.Services.AddScoped<IPhotoRepository, DatabasePhotoRepository>();
@@ -119,6 +124,14 @@ using (var scope = app.Services.CreateScope())
     var guestbookDb = scope.ServiceProvider.GetRequiredService<GuestbookDbContext>();
     guestbookDb.Database.Migrate();
 }
+
+// The app runs behind a reverse proxy in production. Without this, Request.Scheme
+// is "http" for every request, which leaks into anything that generates an absolute
+// URL. Must come before any middleware that reads the scheme.
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedFor
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

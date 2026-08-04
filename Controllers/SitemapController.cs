@@ -3,6 +3,7 @@ using System.Text;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Website.Repositories;
+using Website.Services;
 
 namespace Website.Controllers;
 
@@ -21,41 +22,42 @@ public class SitemapController : Controller
     [HttpGet("sitemap.xml")]
     public IActionResult Sitemap()
     {
+        // Build absolute URLs from the canonical base rather than from the request.
+        // Url.Action with Request.Scheme produced "http://" behind the proxy and the
+        // controller's declared casing ("/Services"), so every listed URL differed
+        // from the page's own canonical tag. Route data still drives the path.
+        string Abs(string? routePath) => CanonicalUrlHelper.ForPath(routePath?.ToLowerInvariant());
+
         var urls = new List<string>
     {
-        Url.Action("Index", "Home", null, Request.Scheme),
-        Url.Action("FreelanceDeveloperMinneapolis", "Services", null, Request.Scheme),
-        Url.Action("Index", "Services", null, Request.Scheme),
-        Url.Action("RescueRecovery", "Services", null, Request.Scheme),
-        Url.Action("LegacySystems", "Services", null, Request.Scheme),
-        Url.Action("CustomSoftware", "Services", null, Request.Scheme),
-        Url.Action("AzureB2CIntegration", "Services", null, Request.Scheme),
-        Url.Action("CloudImplementation", "Services", null, Request.Scheme),
-        Url.Action("UmbracoConsultant", "Services", null, Request.Scheme),
-        Url.Action("HealthDataPlatforms", "Services", null, Request.Scheme),
-        Url.Action("WebsiteCarePlans", "Services", null, Request.Scheme),
-        Url.Action("Shopify", "Services", null, Request.Scheme),
-        Url.Action("WordpressHosting", "Services", null, Request.Scheme),
-        Url.Action("Index", "Portfolio", null, Request.Scheme),
-        Url.Action("Index", "About", null, Request.Scheme),
-        Url.Action("Index", "Blog", null, Request.Scheme),
-        Url.Action("Index", "Rss", null, Request.Scheme),
-        Url.Action("Index", "Contact", null, Request.Scheme)
+        Abs(Url.Action("Index", "Home")),
+        Abs(Url.Action("FreelanceDeveloperMinneapolis", "Services")),
+        Abs(Url.Action("Index", "Services")),
+        Abs(Url.Action("RescueRecovery", "Services")),
+        Abs(Url.Action("LegacySystems", "Services")),
+        Abs(Url.Action("CustomSoftware", "Services")),
+        Abs(Url.Action("AzureB2CIntegration", "Services")),
+        Abs(Url.Action("CloudImplementation", "Services")),
+        Abs(Url.Action("UmbracoConsultant", "Services")),
+        Abs(Url.Action("HealthDataPlatforms", "Services")),
+        Abs(Url.Action("WebsiteCarePlans", "Services")),
+        Abs(Url.Action("Shopify", "Services")),
+        Abs(Url.Action("WordpressHosting", "Services")),
+        Abs(Url.Action("Index", "Portfolio")),
+        Abs(Url.Action("Index", "About")),
+        Abs(Url.Action("Index", "Blog")),
+        Abs(Url.Action("Index", "Rss")),
+        Abs(Url.Action("Index", "Contact"))
     };
 
-        // Url.Action gives back the controller name as declared ("/Services"), but the
-        // canonical tags are lowercase. Listing a URL here that differs in case from the
-        // page's own canonical is a duplicate-content signal, so normalize.
-        urls = urls.Select(url => url?.ToLowerInvariant()).ToList()!;
-
         // Case studies only enter the sitemap once they are actually written.
-        urls.AddRange(Website.Services.CaseStudies.All
+        urls.AddRange(CaseStudies.All
             .Where(cs => cs.Published)
-            .Select(cs => $"{Request.Scheme}://{Request.Host}{cs.Url}"));
+            .Select(cs => CanonicalUrlHelper.ForPath(cs.Url)));
 
-        // Add individual blog post URLs
+        // Blog posts use the same helper the canonical tags use, so they cannot drift.
         var posts = _postRepository.GetAllPosts().Where(post => !post.Draft);
-        urls.AddRange(posts.Select(post => Url.Action("Details", "Blog", new { slug = post.Slug }, Request.Scheme)));
+        urls.AddRange(posts.Select(post => CanonicalUrlHelper.BlogPost(post.Slug)));
 
         // Define the XML namespace
         XNamespace xmlns = "http://www.sitemaps.org/schemas/sitemap/0.9";

@@ -25,6 +25,18 @@ public class RedirectMiddleware
             return;
         }
 
+        // Routing is case-insensitive, so "/Blog/my-post" and "/blog/my-post" both serve
+        // the same page. The feeds emitted the "/Blog/" form for a long time, so send
+        // those to the canonical lowercase URL instead of leaving two live spellings.
+        // GET and HEAD only: a 301 on a POST would drop the body and turn it into a GET.
+        var requestPath = context.Request.Path.Value ?? string.Empty;
+        var isSafeMethod = HttpMethods.IsGet(context.Request.Method) || HttpMethods.IsHead(context.Request.Method);
+        if (isSafeMethod && requestPath.Any(char.IsUpper))
+        {
+            context.Response.Redirect(requestPath.ToLowerInvariant() + context.Request.QueryString, true);
+            return;
+        }
+
         // Define paths that should not be redirected (controller routes)
         var excludedPaths = new[] { "photos", "projects", "about", "contact", "home", "blog", "now", "portfolio", "services", "rss", "sitemap" };
 

@@ -2,6 +2,7 @@ using System.Text;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Website.Repositories;
+using Website.Services;
 
 namespace Website.Controllers;
 public class RssController : Controller
@@ -31,16 +32,16 @@ public class RssController : Controller
                 new XAttribute("version", "2.0"),
                 new XElement("channel",
                     new XElement("title", "Clint McMahon's Blog"),
-                    new XElement("link", Url.Action("Index", "Blog", null, Request.Scheme)),
+                    new XElement("link", CanonicalUrlHelper.ForPath("/blog")),
                     new XElement("description", "Thoughts on .NET development, software consulting, and the occasional coffee shop discovery from a Minneapolis-based developer."),
                     new XElement("language", "en-us"),
                     posts.Select(post =>
                         new XElement("item",
                             new XElement("title", post.Title),
-                            new XElement("link", Url.Action("Details", "Blog", new { slug = post.Slug }, Request.Scheme)),
+                            new XElement("link", CanonicalUrlHelper.BlogPost(post.Slug)),
                             new XElement("description", post.Description),
                             new XElement("pubDate", post.Date.ToString("R")), // RFC1123 format for RSS
-                            new XElement("guid", Url.Action("Details", "Blog", new { slug = post.Slug }, Request.Scheme))
+                            new XElement("guid", CanonicalUrlHelper.BlogPost(post.Slug))
                         )
                     )
                 )
@@ -66,12 +67,12 @@ public class RssController : Controller
             version = "https://jsonfeed.org/version/1.1",
             title = "Clint McMahon's Blog",
             home_page_url = "https://clintmcmahon.com/blog",
-            feed_url = Url.Action("Json", "Rss", null, Request.Scheme),
+            feed_url = CanonicalUrlHelper.ForPath("/feed.json"),
             description = "Thoughts on .NET development, software consulting, and the occasional coffee shop discovery from a Minneapolis-based developer.",
             items = posts.Select(post => new
             {
-                id = Url.Action("Details", "Blog", new { slug = post.Slug }, Request.Scheme),
-                url = Url.Action("Details", "Blog", new { slug = post.Slug }, Request.Scheme),
+                id = CanonicalUrlHelper.BlogPost(post.Slug),
+                url = CanonicalUrlHelper.BlogPost(post.Slug),
                 title = post.Title,
                 content_html = post.Content,
                 summary = post.Description,
