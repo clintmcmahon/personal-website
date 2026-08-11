@@ -3,9 +3,10 @@ Allow: /
 Disallow: /admin/
 Disallow: /auth/
 
-Sitemap: https://photos.clintmcmahon.com/sitemap.xml
 Sitemap: https://clintmcmahon.com/sitemap.xml
 
+# The photoblog is a separate site now and publishes its own robots.txt and sitemap
+# at https://photos.clintmcmahon.com/.
+
 # AI / LLM agent guidance
-# https://photos.clintmcmahon.com/llms.txt
 # https://clintmcmahon.com/llms.txt

@@ -9,13 +9,13 @@ namespace Website.Controllers;
 public class SearchController : Controller
 {
     private readonly IPostRepository _postRepository;
-    private readonly IPhotoRepository _photoRepository;
     private readonly IWebHostEnvironment _env;
 
-    public SearchController(IPostRepository postRepository, IPhotoRepository photoRepository, IWebHostEnvironment env)
+    // Photos are no longer indexed here. They live in a separate app with its own
+    // database, and reaching across to it would re-couple the two deployments.
+    public SearchController(IPostRepository postRepository, IWebHostEnvironment env)
     {
         _postRepository = postRepository;
-        _photoRepository = photoRepository;
         _env = env;
     }
 
@@ -39,17 +39,6 @@ public class SearchController : Controller
                 Title = p.Title,
                 Snippet = Excerpt(p.Description ?? StripHtml(p.Content), term),
                 Url = $"/blog/{p.Slug}",
-                Date = p.Date
-            }));
-
-        results.AddRange(_photoRepository.GetAllPhotos()
-            .Where(p => Matches(p.Title, term) || Matches(StripHtml(p.Content), term) || p.Tags.Any(t => Matches(t, term)))
-            .Select(p => new SearchResult
-            {
-                Type = "Photo",
-                Title = string.IsNullOrWhiteSpace(p.Title) ? p.Date.ToString("MMMM d, yyyy") : p.Title,
-                Snippet = Excerpt(StripHtml(p.Content), term),
-                Url = CanonicalUrlHelper.Photo(p.Date),
                 Date = p.Date
             }));
 

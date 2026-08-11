@@ -34,6 +34,9 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           script: sudo systemctl stop clintmcmahon
 
+      # wwwroot/photos, photos.db and photocomments.db belong to the photoblog now, but
+      # the originals stay on this box until the cutover cleanup step runs. Keep them
+      # excluded until then so a deploy can't delete data the new app is still serving.
       - name: Deploy publish output (protecting server-only content)
         uses: burnett01/rsync-deployments@6.0.0
         with:

@@ -9,22 +9,18 @@ public class AdminBackupController : Controller
     private readonly IWebHostEnvironment _env;
 
     // Relative to ContentRootPath. Excludes bulk/data content that's already
-    // protected during deploy (photos, uploads, logs) and dev-only artifacts
-    // that only exist when running locally, not on the deployed server.
+    // protected during deploy (uploads, logs) and dev-only artifacts that only
+    // exist when running locally, not on the deployed server.
     private static readonly string[] ExcludedDirPrefixes =
     {
         "bin", "obj", ".git", ".github", ".vs", "node_modules",
-        Path.Combine("wwwroot", "photos"), "uploads", "logs"
+        "uploads", "logs"
     };
 
     private static readonly string[] DatabaseNames =
     {
-        "blog.db", "photos.db", "photocomments.db", "webmentions.db", "guestbook.db"
+        "blog.db", "webmentions.db", "guestbook.db"
     };
-
-    // Photos backup only goes back this far — older years are large and already
-    // backed up elsewhere, so they're skipped to keep the download manageable.
-    private static readonly DateTime PhotosCutoff = new(2026, 7, 1);
 
     public AdminBackupController(IWebHostEnvironment env)
     {
@@ -102,48 +98,6 @@ public class AdminBackupController : Controller
         }
 
         return File(ms.ToArray(), "application/zip", fileName);
-    }
-
-    [HttpGet("/admin/backup/photos.zip")]
-    public IActionResult PhotosZip()
-    {
-        if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect("/auth/login?returnUrl=/admin/backup");
-
-        var photosRoot = Path.Combine(_env.WebRootPath, "photos");
-        var fileName = $"clintmcmahon-photos-{DateTime.UtcNow:yyyy-MM-dd}.zip";
-
-        using var ms = new MemoryStream();
-        using (var archive = new ZipArchive(ms, ZipArchiveMode.Create, leaveOpen: true))
-        {
-            if (Directory.Exists(photosRoot))
-            {
-                foreach (var fullPath in Directory.EnumerateFiles(photosRoot, "*", SearchOption.AllDirectories))
-                {
-                    var relative = Path.GetRelativePath(photosRoot, fullPath);
-                    if (!IsOnOrAfterPhotosCutoff(relative, fullPath)) continue;
-
-                    var entry = archive.CreateEntry(relative.Replace('\\', '/'), CompressionLevel.Optimal);
-                    using var entryStream = entry.Open();
-                    using var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete);
-                    fileStream.CopyTo(entryStream);
-                }
-            }
-        }
-
-        return File(ms.ToArray(), "application/zip", fileName);
-    }
-
-    // Photo folders are laid out as {year}/{yyyy-MM-dd}/filename, and that
-    // folder name is the real post date — more reliable than file mtime,
-    // which can just reflect whenever the file was last copied/touched.
-    private static bool IsOnOrAfterPhotosCutoff(string relativePath, string fullPath)
-    {
-        var parts = relativePath.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-        if (parts.Length >= 2 && DateTime.TryParseExact(parts[1], "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out var postDate))
-            return postDate >= PhotosCutoff;
-
-        return System.IO.File.GetLastWriteTimeUtc(fullPath) >= PhotosCutoff;
     }
 
     private static bool ShouldExcludeFromAppZip(string relativePath)
