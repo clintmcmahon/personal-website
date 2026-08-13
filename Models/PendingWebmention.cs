@@ -7,10 +7,12 @@ public class PendingWebmention
     [Key]
     public int Id { get; set; }
 
-    // "Blog" or "Photo" — which table to re-read the live content from at send time.
+    // Which table to re-read the live content from at send time. "Blog" is the only
+    // type this app schedules; rows written before the photoblog split can still say
+    // "Photo", and WebmentionDispatcherService drains those without sending.
     public string EntityType { get; set; } = "";
 
-    // Post.Slug for blog entries, or the photo's yyyy-MM-dd date for photo entries.
+    // Post.Slug for blog entries.
     public string EntityKey { get; set; } = "";
 
     public string SourceUrl { get; set; } = "";

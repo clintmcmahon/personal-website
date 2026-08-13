@@ -1,0 +1,49 @@
+@using Website.Services
+@model IEnumerable<Post>
+
+@{
+    var tagName = ViewData["TagName"] as string ?? string.Empty;
+    var posts = Model.ToList();
+    var groupedPosts = posts.GroupBy(p => p.Date.Year).OrderByDescending(g => g.Key);
+}
+
+<section class="blog-post" style="max-width: 680px;">
+    <nav class="tag-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog">Blog</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/tags">Tags</a>
+    </nav>
+
+    <h1 class="hero-heading" style="font-size: clamp(2rem, 5vw, 2.75rem); margin-bottom: 0.5rem;">#@tagName</h1>
+    <p class="hero-body" style="margin-bottom: 2.5rem;">
+        @posts.Count post@(posts.Count == 1 ? "" : "s") tagged @tagName.
+    </p>
+
+    <div class="h-feed" style="margin-top: 0;">
+        @foreach (var yearGroup in groupedPosts)
+        {
+            <div class="post-year-group">
+                <span class="post-year-label">@yearGroup.Key</span>
+                @foreach (var post in yearGroup)
+                {
+                    <article class="post-entry h-entry">
+                        <a class="post-entry-link" href="@Url.Action("Details", "Blog", new { slug = post.Slug })">
+                            <span class="u-url" hidden>@CanonicalUrlHelper.BlogPost(post.Slug)</span>
+                            <h3 class="post-entry-title p-name">@post.Title</h3>
+                            <time class="post-date dt-published" datetime="@post.Date.ToString("yyyy-MM-dd")">@post.Date.ToString("MMMM d, yyyy")</time>
+                            @if (!string.IsNullOrWhiteSpace(post.Description))
+                            {
+                                <p class="post-entry-desc p-summary">@post.Description</p>
+                            }
+                        </a>
+                        @await Html.PartialAsync("_TagList", post.Tags)
+                    </article>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="/blog/tags" class="text-decoration-none">&larr; All tags</a>
+    </div>
+</section>

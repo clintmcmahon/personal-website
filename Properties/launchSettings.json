@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:6001;http://photos.local.clintmcmahon.com:6001",
+      "applicationUrl": "http://localhost:6001",
       "sslPort": 44378
     }
   },
@@ -12,7 +12,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:6001;http://photos.local.clintmcmahon.com:6001",
+      "applicationUrl": "http://localhost:6001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -21,7 +21,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7001;http://localhost:6001;https://photos.local.clintmcmahon.com:7002;http://photos.local.clintmcmahon.com:6001",
+      "applicationUrl": "https://localhost:7001;http://localhost:6001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

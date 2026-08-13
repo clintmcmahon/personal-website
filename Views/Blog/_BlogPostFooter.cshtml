@@ -1,3 +1,4 @@
+@using Website.Services
 @model Post
 
 <!-- Blog Post Footer -->
@@ -55,9 +56,9 @@
         <div class="related-topics mb-4">
             <h5 class="mb-3">Topics covered in this post</h5>
             <div class="d-flex flex-wrap gap-2">
-                @foreach (var tag in Model.Tags)
+                @foreach (var tag in Model.Tags.Where(t => !string.IsNullOrWhiteSpace(t)))
                 {
-                    <span class="badge bg-secondary p-category">@tag</span>
+                    <a class="badge bg-secondary" href="@TagUrl.Path(tag)" rel="tag"><span class="p-category">@tag</span></a>
                 }
             </div>
         </div>

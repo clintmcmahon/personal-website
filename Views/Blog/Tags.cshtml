@@ -1,0 +1,31 @@
+@model IReadOnlyList<TagSummary>
+
+<section class="blog-post" style="max-width: 680px;">
+    <nav class="tag-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog">Blog</a>
+    </nav>
+
+    <h1 class="hero-heading" style="font-size: clamp(2rem, 5vw, 2.75rem); margin-bottom: 0.5rem;">Tags</h1>
+    <p class="hero-body" style="margin-bottom: 2.5rem;">Every topic I have written about, most-written-about first.</p>
+
+    @if (Model.Count == 0)
+    {
+        <p class="text-muted">No tagged posts yet.</p>
+    }
+    else
+    {
+        <div class="tag-cloud">
+            @foreach (var tag in Model)
+            {
+                <a class="tag-chip" href="/blog/tag/@tag.Slug" rel="tag">
+                    <span class="tag-chip-name">#@tag.Name</span>
+                    <span class="tag-chip-count">@tag.Count</span>
+                </a>
+            }
+        </div>
+    }
+
+    <div class="text-center mt-4">
+        <a href="/blog" class="text-decoration-none">&larr; Back to all posts</a>
+    </div>
+</section>

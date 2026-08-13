@@ -1,4 +1,5 @@
 using Website.Models;
+using Website.Services;
 
 namespace Website.Repositories;
 
@@ -33,11 +34,20 @@ public class PostRepository : IPostRepository
         return filePath != null ? ParseMarkdownFile(filePath) : null;
     }
 
-    public IEnumerable<Post> GetPostsByTag(string tag)
+    public IEnumerable<Post> GetPostsByTagSlug(string tagSlug)
     {
-        var files = GetMarkdownFiles();
-        return files.Select(ParseMarkdownFile).Where(post => post.Tags != null && post.Tags.Contains(tag, StringComparer.OrdinalIgnoreCase));
+        var slug = TagUrl.Slug(tagSlug);
+        if (slug.Length == 0)
+            return Enumerable.Empty<Post>();
+
+        return GetMarkdownFiles()
+            .Select(ParseMarkdownFile)
+            .Where(post => post.Tags != null && post.Tags.Any(t => TagUrl.Slug(t) == slug))
+            .OrderByDescending(post => post.Date);
     }
+
+    public IReadOnlyList<TagSummary> GetAllTags() =>
+        TagIndex.Summarize(GetMarkdownFiles().Select(f => ParseMarkdownFile(f).Tags));
 
     private IEnumerable<string> GetMarkdownFiles()
     {

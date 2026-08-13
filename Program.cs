@@ -10,20 +10,10 @@ using Website.Services;
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true);
 
-// Add SQLite for photo comments
-var dbPath = Path.Combine(builder.Environment.ContentRootPath, "photocomments.db");
-builder.Services.AddDbContext<PhotoCommentDbContext>(options =>
-    options.UseSqlite($"Data Source={dbPath}"));
-
 // Add SQLite for blog posts
 var blogDbPath = Path.Combine(builder.Environment.ContentRootPath, "blog.db");
 builder.Services.AddDbContext<BlogDbContext>(options =>
     options.UseSqlite($"Data Source={blogDbPath}"));
-
-// Add SQLite for photo posts
-var photoDbPath = Path.Combine(builder.Environment.ContentRootPath, "photos.db");
-builder.Services.AddDbContext<PhotoDbContext>(options =>
-    options.UseSqlite($"Data Source={photoDbPath}"));
 
 // Add SQLite for the delayed webmention send queue
 var webmentionDbPath = Path.Combine(builder.Environment.ContentRootPath, "webmentions.db");
@@ -43,16 +33,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddScoped<IPostRepository, DatabasePostRepository>();
-builder.Services.AddScoped<IPhotoRepository, DatabasePhotoRepository>();
 
-// Keep the filesystem-based repo registered as a concrete type for the one-time migration route
-builder.Services.AddSingleton<PhotoRepository>(provider =>
-    new PhotoRepository(
-        Path.Combine(builder.Environment.ContentRootPath, "wwwroot", "photos"),
-        builder.Environment.IsDevelopment()));
-
-builder.Services.AddScoped<PhotoService>();
-builder.Services.AddScoped<ImageProcessingService>();
 builder.Services.AddSingleton<OgImageService>();
 builder.Services.AddHttpClient("Mastodon");
 builder.Services.AddScoped<MastodonService>();
@@ -86,14 +67,24 @@ builder.Services.AddScoped<WeatherService>();
 // deploy (which stops/starts the systemd service) silently invalidates every existing login,
 // regardless of the 30-day sliding expiration below. The "keys" folder is excluded from the
 // rsync --delete in deploy.yml so it survives deploys.
+//
+// The path is configuration rather than a constant because the photoblog at
+// photos.clintmcmahon.com shares this login: both apps must persist to the SAME directory
+// and use the SAME application name, or a cookie issued by one is undecryptable by the other.
+// Set DataProtection:KeyPath to the shared directory in appsettings.local.json on the server.
+var keyPath = builder.Configuration["DataProtection:KeyPath"] ?? "keys";
+if (!Path.IsPathRooted(keyPath))
+    keyPath = Path.Combine(builder.Environment.ContentRootPath, keyPath);
+
 builder.Services.AddDataProtection()
-    .SetApplicationName("clintmcmahon-website")
-    .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(builder.Environment.ContentRootPath, "keys")));
+    .SetApplicationName(builder.Configuration["DataProtection:ApplicationName"] ?? "clintmcmahon-website")
+    .PersistKeysToFileSystem(new DirectoryInfo(keyPath));
 
 // Persistent, signed auth cookie — not server-side session state. This is what actually
 // survives (a) being away from the keyboard for a long stretch, via sliding expiration,
 // and (b) deploys, since every push recycles the app pool and would otherwise wipe any
 // in-memory session instantly regardless of idle timeout.
+var cookieDomain = builder.Configuration["DataProtection:CookieDomain"];
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -103,20 +94,19 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.SameSite = SameSiteMode.Lax;
         options.ExpireTimeSpan = TimeSpan.FromDays(30);
         options.SlidingExpiration = true;
+
+        // Empty in development (localhost rejects a dotted domain); set to ".clintmcmahon.com"
+        // in production so the same cookie also authenticates against the photoblog.
+        if (!string.IsNullOrWhiteSpace(cookieDomain))
+            options.Cookie.Domain = cookieDomain;
     });
 
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<PhotoCommentDbContext>();
-    db.Database.Migrate();
-
     var blogDb = scope.ServiceProvider.GetRequiredService<BlogDbContext>();
     blogDb.Database.Migrate();
-
-    var photoDb = scope.ServiceProvider.GetRequiredService<PhotoDbContext>();
-    photoDb.Database.Migrate();
 
     var webmentionDb = scope.ServiceProvider.GetRequiredService<WebmentionDbContext>();
     webmentionDb.Database.Migrate();
@@ -144,7 +134,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseMiddleware<RedirectMiddleware>();
-app.UseMiddleware<SubdomainMiddleware>();
 
 app.UseRouting();
 
