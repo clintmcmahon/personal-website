@@ -68,7 +68,7 @@ namespace Website.Controllers
                 return NotFound();
 
             await SignInAsync();
-            return Redirect("/admin/photos/new");
+            return Redirect("/admin");
         }
 
         public static bool IsLoggedIn(HttpContext context) =>

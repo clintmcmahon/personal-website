@@ -12,7 +12,8 @@
 
 <section class="blog-post" style="max-width: 680px;">
     <h1 class="hero-heading" style="font-size: clamp(2rem, 5vw, 2.75rem); margin-bottom: 0.5rem;">Blog</h1>
-    <p class="hero-body" style="margin-bottom: 2.5rem;">This is a blog about software engineering, consulting, coffee and other things that I find interesting.</p>
+    <p class="hero-body" style="margin-bottom: 1rem;">This is a blog about software engineering, consulting, coffee and other things that I find interesting.</p>
+    <p style="margin-bottom: 2.5rem;"><a class="blog-see-all" href="/blog/tags">Browse by tag &rarr;</a></p>
 
     <div class="h-feed" style="margin-top: 0;">
         @foreach (var yearGroup in groupedPosts)
@@ -21,24 +22,21 @@
                 <span class="post-year-label">@yearGroup.Key</span>
                 @foreach (var post in yearGroup)
                 {
-                    <a class="post-entry h-entry" href="@Url.Action("Details", "Blog", new { slug = post.Slug })">
-                        <span class="u-url" hidden>@CanonicalUrlHelper.BlogPost(post.Slug)</span>
-                        <h3 class="post-entry-title p-name">@post.Title</h3>
-                        <time class="post-date dt-published" datetime="@post.Date.ToString("yyyy-MM-dd")">@post.Date.ToString("MMMM d, yyyy")</time>
-                        @if (!string.IsNullOrWhiteSpace(post.Description))
-                        {
-                            <p class="post-entry-desc p-summary">@post.Description</p>
-                        }
-                        @if (post.Tags != null && post.Tags.Any(t => !string.IsNullOrWhiteSpace(t)))
-                        {
-                            <div class="post-entry-tags">
-                                @foreach (var tag in post.Tags.Where(t => !string.IsNullOrWhiteSpace(t)))
-                                {
-                                    <span>#<span class="p-category">@tag</span></span>
-                                }
-                            </div>
-                        }
-                    </a>
+                    @* The entry used to be one big anchor. Tags are links now, and an
+                       anchor cannot nest inside another, so the link wraps only the
+                       title/date/summary and the tags sit as siblings. *@
+                    <article class="post-entry h-entry">
+                        <a class="post-entry-link" href="@Url.Action("Details", "Blog", new { slug = post.Slug })">
+                            <span class="u-url" hidden>@CanonicalUrlHelper.BlogPost(post.Slug)</span>
+                            <h3 class="post-entry-title p-name">@post.Title</h3>
+                            <time class="post-date dt-published" datetime="@post.Date.ToString("yyyy-MM-dd")">@post.Date.ToString("MMMM d, yyyy")</time>
+                            @if (!string.IsNullOrWhiteSpace(post.Description))
+                            {
+                                <p class="post-entry-desc p-summary">@post.Description</p>
+                            }
+                        </a>
+                        @await Html.PartialAsync("_TagList", post.Tags)
+                    </article>
                 }
             </div>
         }

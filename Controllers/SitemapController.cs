@@ -59,6 +59,10 @@ public class SitemapController : Controller
         var posts = _postRepository.GetAllPosts().Where(post => !post.Draft);
         urls.AddRange(posts.Select(post => CanonicalUrlHelper.BlogPost(post.Slug)));
 
+        // Tag pages are real landing pages for a topic, so they belong here too.
+        urls.Add(CanonicalUrlHelper.ForPath("/blog/tags"));
+        urls.AddRange(_postRepository.GetAllTags().Select(tag => CanonicalUrlHelper.BlogTag(tag.Slug)));
+
         // Define the XML namespace
         XNamespace xmlns = "http://www.sitemaps.org/schemas/sitemap/0.9";
 
