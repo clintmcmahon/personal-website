@@ -2,6 +2,7 @@ using Markdig;
 using Microsoft.EntityFrameworkCore;
 using Website.Data;
 using Website.Models;
+using Website.Services;
 
 namespace Website.Repositories;
 
@@ -46,14 +47,33 @@ public class DatabasePostRepository : IPostRepository
         return post != null ? RenderContent(post) : null;
     }
 
-    public IEnumerable<Post> GetPostsByTag(string tag)
+    // Tags are persisted as one delimited string (see BlogDbContext's value converter),
+    // so there is nothing for SQL to filter on — the match has to happen in memory
+    // after materializing. Same reason GetAllTags projects the column out by itself.
+    public IEnumerable<Post> GetPostsByTagSlug(string tagSlug)
     {
+        var slug = TagUrl.Slug(tagSlug);
+        if (slug.Length == 0)
+            return Enumerable.Empty<Post>();
+
         return _db.Posts
             .AsNoTracking()
             .Where(p => !p.Draft)
+            .OrderByDescending(p => p.Date)
             .ToList()
-            .Where(p => p.Tags != null && p.Tags.Contains(tag, StringComparer.OrdinalIgnoreCase))
+            .Where(p => p.Tags != null && p.Tags.Any(t => TagUrl.Slug(t) == slug))
             .Select(RenderContent);
+    }
+
+    public IReadOnlyList<TagSummary> GetAllTags()
+    {
+        var tagLists = _db.Posts
+            .AsNoTracking()
+            .Where(p => !p.Draft)
+            .Select(p => p.Tags)
+            .ToList();
+
+        return TagIndex.Summarize(tagLists);
     }
 
     public Post? GetPostByIdIncludingDrafts(int id)

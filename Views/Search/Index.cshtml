@@ -9,7 +9,7 @@
     <div class="row mb-5">
       <div class="col-lg-6 mx-auto">
         <form asp-controller="Search" asp-action="Index" method="get" class="d-flex gap-2">
-          <input type="search" name="q" class="form-control" placeholder="Search posts, photos, tools..." value="@query" autofocus />
+          <input type="search" name="q" class="form-control" placeholder="Search posts, tags, tools..." value="@query" autofocus />
           <button type="submit" class="btn btn-primary">Search</button>
         </form>
       </div>
@@ -19,7 +19,10 @@
       <div class="col-lg-8 mx-auto">
         @if (string.IsNullOrWhiteSpace(query))
         {
-          <p class="text-center text-muted">Search across blog posts, photos, and tools.</p>
+          <p class="text-center text-muted">
+            Search across blog posts, tags, and tools. Use <code>tag:dotnet</code> to list
+            everything under one tag, or <a href="/blog/tags">browse all tags</a>.
+          </p>
         }
         else if (!Model.Any())
         {

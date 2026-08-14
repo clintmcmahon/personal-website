@@ -16,14 +16,6 @@ public class RedirectMiddleware
     {
 
         var path = context.Request.Path.Value?.Trim('/') ?? string.Empty;
-        var host = context.Request.Host.Host;
-
-        // Skip redirect logic for photos.* subdomain
-        if (host.StartsWith("photos."))
-        {
-            await _next(context);
-            return;
-        }
 
         // Routing is case-insensitive, so "/Blog/my-post" and "/blog/my-post" both serve
         // the same page. The feeds emitted the "/Blog/" form for a long time, so send

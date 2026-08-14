@@ -1,0 +1,22 @@
+@using Website.Services
+@model List<string>
+
+@{
+    // Same tag can be written two ways across posts; show each slug once.
+    var tags = (Model ?? new List<string>())
+        .Where(t => !string.IsNullOrWhiteSpace(t))
+        .Select(t => new { Slug = TagUrl.Slug(t), Name = t.Trim() })
+        .Where(t => t.Slug.Length > 0)
+        .DistinctBy(t => t.Slug)
+        .ToList();
+}
+
+@if (tags.Count > 0)
+{
+    <div class="post-entry-tags">
+        @foreach (var tag in tags)
+        {
+            <a class="tag-link" href="/blog/tag/@tag.Slug" rel="tag">#<span class="p-category">@tag.Name</span></a>
+        }
+    </div>
+}

@@ -48,7 +48,6 @@ public class WebmentionDispatcherService : BackgroundService
             using var scope = _scopeFactory.CreateScope();
             var webmentionDb = scope.ServiceProvider.GetRequiredService<WebmentionDbContext>();
             var blogDb = scope.ServiceProvider.GetRequiredService<BlogDbContext>();
-            var photoDb = scope.ServiceProvider.GetRequiredService<PhotoDbContext>();
             var webmentionService = scope.ServiceProvider.GetRequiredService<WebmentionService>();
 
             var due = await webmentionDb.PendingWebmentions
@@ -61,17 +60,15 @@ public class WebmentionDispatcherService : BackgroundService
                 {
                     string? content = null;
 
+                    // Photos moved to their own app with its own queue and dispatcher, so
+                    // only "Blog" items are scheduled here now. Any "Photo" rows left over
+                    // from before the split fall through with null content and get marked
+                    // sent below rather than retrying forever.
                     if (item.EntityType == "Blog")
                     {
                         var post = await blogDb.Posts.AsNoTracking()
                             .FirstOrDefaultAsync(p => p.Slug == item.EntityKey && !p.Draft, stoppingToken);
                         content = post?.Content;
-                    }
-                    else if (item.EntityType == "Photo" && DateTime.TryParse(item.EntityKey, out var targetDate))
-                    {
-                        var photo = await photoDb.Photos.AsNoTracking()
-                            .FirstOrDefaultAsync(p => p.Date.Date == targetDate.Date && !p.Draft, stoppingToken);
-                        content = photo?.Content;
                     }
 
                     // If the post was deleted or unpublished again during the delay window, skip sending.
