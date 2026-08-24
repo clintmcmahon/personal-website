@@ -44,17 +44,7 @@ public class ServicesController : Controller
         return View();
     }
 
-    [Route("[controller]/wordpress-hosting")]
-    public IActionResult WordpressHosting()
-    {
-        return View();
-    }
 
-    [Route("[controller]/shopify-ecommerce-development")]
-    public IActionResult Shopify()
-    {
-        return View();
-    }
 
      [Route("[controller]/umbraco-consulting")]
     public IActionResult UmbracoConsultant()
@@ -68,11 +58,13 @@ public class ServicesController : Controller
         return View();
     }
 
+
+    // Retired services. The pages are gone but the URLs were indexed, so they
+    // send a 301 to the services index rather than dropping to a 404.
+    [Route("[controller]/wordpress-hosting")]
+    [Route("[controller]/shopify-ecommerce-development")]
     [Route("[controller]/website-care-plans")]
-    public IActionResult WebsiteCarePlans()
-    {
-        return View();
-    }
+    public IActionResult RetiredService() => RedirectPermanent("/services");
 
     // Root-level route on purpose. This is the local-search landing page, and an
     // exact-match URL is worth more than tidy nesting under /services.
