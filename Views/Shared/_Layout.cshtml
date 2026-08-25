@@ -67,6 +67,9 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
+    @* WCAG 2.4.1 Bypass Blocks. First focusable element on the page, visually
+       hidden until it takes focus, so keyboard users can jump the header nav. *@
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     @if (ViewData["IsPreview"] is true)
     {
         @await Html.PartialAsync("_PreviewBanner")
@@ -125,7 +128,7 @@
     </header>
 
         <!-- Main Content -->
-        <main role="main" class="container pb-3">
+        <main role="main" id="main-content" tabindex="-1" class="container pb-3">
             <div class="row">
                 <div class="col-12">
                     @RenderBody()

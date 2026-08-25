@@ -4,7 +4,7 @@
 }
 <section class="guestbook py-5">
   <div class="container">
-    <h2 class="text-center mb-4">Guestbook</h2>
+    <h1 class="text-center mb-4">Guestbook</h1>
     <div class="row mb-5">
       <div class="col-lg-8 mx-auto text-center">
         <p class="lead">Say hi, leave a note, tell me what brought you here. No account needed.</p>
@@ -20,10 +20,12 @@
             <input type="text" name="hp_website" tabindex="-1" autocomplete="off" />
           </div>
           <div class="mb-2">
-            <input type="text" name="name" class="form-control" placeholder="Your name" required />
+            <label for="gb-name" class="visually-hidden">Your name</label>
+            <input type="text" id="gb-name" name="name" class="form-control" placeholder="Your name" autocomplete="name" required />
           </div>
           <div class="mb-2">
-            <textarea name="message" class="form-control" rows="3" placeholder="Leave a message..." required></textarea>
+            <label for="gb-message" class="visually-hidden">Your message</label>
+            <textarea id="gb-message" name="message" class="form-control" rows="3" placeholder="Leave a message..." required></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Sign the Guestbook</button>
         </form>
