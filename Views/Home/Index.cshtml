@@ -128,9 +128,19 @@
     try { lines = JSON.parse(dataEl.textContent); } catch (e) { return; }
     if (!lines || !lines.length) return;
 
+    // WCAG 2.2.2 Pause, Stop, Hide applies to motion that starts on its own and
+    // runs past five seconds. At the old timings (32/500/650) four lines took
+    // ~6.1s, so this was failing with no way to stop it. These timings put the
+    // worst case at ~3.9s, below the threshold, which is a better answer than
+    // bolting a skip button onto the hero.
     var CHAR_DELAY = 32;
-    var AFTER_CMD = 500;
-    var AFTER_OUTPUT = 650;
+    var AFTER_CMD = 260;
+    var AFTER_OUTPUT = 320;
+
+    // Anyone who has asked their OS for less motion gets the finished terminal
+    // immediately rather than a faster version of the same animation.
+    var reduceMotion = window.matchMedia
+        && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function typeInto(el, text, i, done) {
         el.textContent = text.slice(0, i);
@@ -175,6 +185,28 @@
     }
 
     container.innerHTML = '';
+
+    if (reduceMotion) {
+        lines.forEach(function (line) {
+            var cmdP = document.createElement('p');
+            var prompt = document.createElement('span');
+            prompt.className = 'hero-terminal-prompt';
+            prompt.textContent = '$';
+            var cmdSpan = document.createElement('span');
+            cmdSpan.textContent = line.cmd;
+            cmdP.appendChild(prompt);
+            cmdP.appendChild(cmdSpan);
+            container.appendChild(cmdP);
+
+            var outP = document.createElement('p');
+            outP.className = 'hero-terminal-output';
+            outP.textContent = line.output;
+            container.appendChild(outP);
+        });
+        finish();
+        return;
+    }
+
     runLine(0);
 })();
 </script>

@@ -29,6 +29,40 @@
     --accent:       #4A9EA3;
     --accent-dark:  #6BBFC4;
     --accent-light: #1A2F30;
+
+    /* Bootstrap 5.3 only switches its own palette on [data-bs-theme="dark"],
+       which nothing sets here because the site follows prefers-color-scheme
+       rather than offering a toggle. Left alone, .text-muted stayed
+       rgba(33,37,41,.75) on the dark background (1.16:1) and .bg-light panels
+       stayed #F8F9FA under near-white text (1.11:1). Both failed WCAG 1.4.3 AA.
+       Mapping Bootstrap's tokens onto the ones above keeps a single source of
+       truth. The rgb() triplets are the hex values above, decomposed, because
+       Bootstrap composes them inside rgba(). */
+    --bs-body-bg:                 #0F1010;
+    --bs-body-bg-rgb:             15, 16, 16;
+    --bs-body-color:              #EDEDEB;
+    --bs-body-color-rgb:          237, 237, 235;
+    --bs-emphasis-color:          #FFFFFF;
+    --bs-emphasis-color-rgb:      255, 255, 255;
+    --bs-heading-color:           inherit;
+
+    --bs-secondary-color:         #888888;   /* .text-muted  -> 5.38:1 on --bg */
+    --bs-secondary-bg:            #1A1D1D;
+    --bs-secondary-bg-rgb:        26, 29, 29;
+    --bs-tertiary-color:          #888888;
+    --bs-tertiary-bg:             #1A1D1D;
+    --bs-tertiary-bg-rgb:         26, 29, 29;
+
+    --bs-light-rgb:               26, 29, 29;  /* .bg-light -> subtle dark panel */
+    --bs-dark-rgb:                237, 237, 235;
+
+    --bs-border-color:            #2A2F2F;
+    --bs-border-color-translucent: rgba(255, 255, 255, 0.15);
+
+    --bs-link-color:              #4A9EA3;
+    --bs-link-color-rgb:          74, 158, 163;
+    --bs-link-hover-color:        #6BBFC4;
+    --bs-link-hover-color-rgb:    107, 191, 196;
   }
 }
 
@@ -37,6 +71,35 @@
    ============================================================ */
 *, *::before, *::after {
   box-sizing: border-box;
+}
+
+/* WCAG 2.4.1 Bypass Blocks. Off-screen rather than display:none so it stays in
+   the tab order, and it pulls into view the moment it takes focus. Colours come
+   from the theme tokens, so it inherits the correct palette in both modes
+   (--text on --bg is 18.9:1 light, 16.3:1 dark). */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1000;
+  padding: 0.75rem 1.25rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 2px solid var(--accent);
+  border-radius: 0 0 4px 0;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* main is only ever focused programmatically by the skip link, never reached by
+   Tab, so suppressing its ring costs no keyboard affordance. Scoped deliberately
+   narrowly: no other element in this stylesheet removes a focus indicator. */
+main:focus {
+  outline: none;
 }
 
 body {
@@ -268,7 +331,9 @@ p {
   height: 1.05em;
   background: rgba(255, 255, 255, 0.85);
   vertical-align: -0.15em;
-  animation: hero-cursor-blink 1.1s steps(1) infinite;
+  /* Was infinite, which is blinking content running past the five second limit
+     in WCAG 2.2.2 with no way to stop it. Four iterations settle it at ~4.4s. */
+  animation: hero-cursor-blink 1.1s steps(1) 4;
 }
 
 @keyframes hero-cursor-blink {
@@ -1382,5 +1447,21 @@ p {
     justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
+  }
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+/* Honours the OS-level request. The hero terminal has its own path in
+   Views/Home/Index.cshtml that renders the finished state instead of typing;
+   this covers every CSS transition and animation on the site. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
