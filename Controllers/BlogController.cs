@@ -1,5 +1,6 @@
 using System.Text;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Website.Repositories;
 using Website.Services;
@@ -75,11 +76,9 @@ public class BlogController : Controller
     }
 
     [HttpGet("/admin/blog/{id:int}/preview")]
+    [Authorize]
     public IActionResult Preview(int id)
     {
-        if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect($"/auth/login?returnUrl=/admin/blog/{id}/preview");
-
         var post = _postRepository.GetPostByIdIncludingDrafts(id);
         if (post == null) return NotFound();
 

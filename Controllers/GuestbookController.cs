@@ -30,6 +30,7 @@ public class GuestbookController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Post(
         [FromForm] string name,
         [FromForm] string message,

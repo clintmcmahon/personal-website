@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Website.Data;
@@ -7,6 +8,7 @@ using Website.Services;
 
 namespace Website.Controllers;
 
+[Authorize]
 public class AdminBlogController : Controller
 {
     private readonly BlogDbContext _db;
@@ -27,9 +29,6 @@ public class AdminBlogController : Controller
     [HttpGet("/admin/blog")]
     public IActionResult Index()
     {
-        if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect("/auth/login?returnUrl=/admin/blog");
-
         var posts = _db.Posts
             .AsNoTracking()
             .OrderByDescending(p => p.Date)
@@ -43,9 +42,6 @@ public class AdminBlogController : Controller
     [HttpGet("/admin/blog/new")]
     public IActionResult New()
     {
-        if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect("/auth/login?returnUrl=/admin/blog/new");
-
         return View(new Post { Date = DateTime.Today, Draft = true });
     }
 
@@ -53,9 +49,6 @@ public class AdminBlogController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> New(Post post)
     {
-        if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect("/auth/login?returnUrl=/admin/blog/new");
-
         if (string.IsNullOrWhiteSpace(post.Title))
             ModelState.AddModelError("Title", "Title is required.");
 
@@ -84,9 +77,6 @@ public class AdminBlogController : Controller
     [HttpGet("/admin/blog/{id:int}/edit")]
     public IActionResult Edit(int id)
     {
-        if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect($"/auth/login?returnUrl=/admin/blog/{id}/edit");
-
         var post = _db.Posts.Find(id);
         if (post == null) return NotFound();
 
@@ -97,9 +87,6 @@ public class AdminBlogController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, Post updated)
     {
-        if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect($"/auth/login?returnUrl=/admin/blog/{id}/edit");
-
         var post = _db.Posts.Find(id);
         if (post == null) return NotFound();
 
@@ -129,9 +116,6 @@ public class AdminBlogController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Publish(int id, Post updated)
     {
-        if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect($"/auth/login?returnUrl=/admin/blog/{id}/edit");
-
         var post = _db.Posts.Find(id);
         if (post == null) return NotFound();
 
@@ -181,9 +165,6 @@ public class AdminBlogController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
-        if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect("/auth/login?returnUrl=/admin/blog");
-
         var post = _db.Posts.Find(id);
         if (post == null) return NotFound();
 
@@ -199,9 +180,6 @@ public class AdminBlogController : Controller
     [HttpPost("/admin/blog/upload-image")]
     public async Task<IActionResult> UploadImage(IFormFile image)
     {
-        if (!AuthController.IsLoggedIn(HttpContext))
-            return Unauthorized();
-
         if (image == null || image.Length == 0)
             return BadRequest(new { error = new { message = "No file received." } });
 
@@ -237,9 +215,6 @@ public class AdminBlogController : Controller
     [HttpGet("/admin/blog/migrate")]
     public IActionResult MigrateConfirm()
     {
-        if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect("/auth/login");
-
         var fileCount = Directory
             .EnumerateFiles(Path.Combine(_env.ContentRootPath, "wwwroot", "posts"), "*.md", SearchOption.AllDirectories)
             .Count();
@@ -253,9 +228,6 @@ public class AdminBlogController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> MigrateRun()
     {
-        if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect("/auth/login");
-
         var fileRepo = new PostRepository();
         var existing = _db.Posts.Select(p => p.Slug).ToHashSet();
 
