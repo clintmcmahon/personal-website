@@ -2,6 +2,7 @@ using System.Text;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Website.Models;
 using Website.Repositories;
 using Website.Services;
 
@@ -84,6 +85,26 @@ public class BlogController : Controller
 
         ViewData["IsPreview"] = true;
         return View("Details", post);
+    }
+
+    // Renders whatever is currently in the admin editor, saved or not, through the public
+    // post template. Posted from the edit/new form via formaction + formtarget="_blank".
+    // Lives here rather than in AdminBlogController because Details.cshtml's partials
+    // (_BlogPostFooter etc.) are only found when the controller is Blog. Nothing is saved.
+    [HttpPost("/admin/blog/preview")]
+    [Authorize]
+    [ValidateAntiForgeryToken]
+    public IActionResult PreviewDraft(Post draft)
+    {
+        draft.Title = string.IsNullOrWhiteSpace(draft.Title) ? "Untitled post" : draft.Title;
+        draft.Slug = string.IsNullOrWhiteSpace(draft.Slug)
+            ? System.Text.RegularExpressions.Regex.Replace(draft.Title.ToLowerInvariant().Trim(), @"[^a-z0-9]+", "-").Trim('-')
+            : draft.Slug;
+        draft.TagsRaw = Request.Form["TagsRaw"];
+        draft.Content = DatabasePostRepository.RenderMarkdown(draft.Content);
+
+        ViewData["IsPreview"] = true;
+        return View("Details", draft);
     }
 
 }

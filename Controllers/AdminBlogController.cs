@@ -108,24 +108,6 @@ public class AdminBlogController : Controller
         return RedirectToAction(nameof(Edit), new { id });
     }
 
-    // ── Preview (unsaved) ────────────────────────────────────────────────────
-    // Renders whatever is currently in the editor, saved or not, through the public post
-    // template. Posted from the edit/new form via formaction + formtarget="_blank".
-    // Nothing is written to the database.
-
-    [HttpPost("/admin/blog/preview")]
-    [ValidateAntiForgeryToken]
-    public IActionResult PreviewDraft(Post draft)
-    {
-        draft.Title = string.IsNullOrWhiteSpace(draft.Title) ? "Untitled post" : draft.Title;
-        draft.Slug = string.IsNullOrWhiteSpace(draft.Slug) ? Slugify(draft.Title) : draft.Slug;
-        draft.TagsRaw = Request.Form["TagsRaw"];
-        draft.Content = DatabasePostRepository.RenderMarkdown(draft.Content);
-
-        ViewData["IsPreview"] = true;
-        return View("~/Views/Blog/Details.cshtml", draft);
-    }
-
     // ── Publish toggle ───────────────────────────────────────────────────────
     // Lives in the same <form> as "Save changes" (via formaction) so publishing also
     // saves whatever's currently in the editor, instead of toggling Draft on stale content.
