@@ -180,8 +180,8 @@ app.Use(async (context, next) =>
     headers["Content-Security-Policy"] =
         "default-src 'self'; " +
         "img-src 'self' data: https:; " +
-        "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; " +
-        "font-src 'self' data: https://ka-f.fontawesome.com; " +
+        "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://fonts.googleapis.com https://cdn.jsdelivr.net; " +
+        "font-src 'self' data: https://ka-f.fontawesome.com https://fonts.gstatic.com https://cdn.jsdelivr.net; " +
         "script-src 'self' 'unsafe-inline' https://unpkg.com https://letterbird.co https://plausible.io https://cdnjs.cloudflare.com https://kit.fontawesome.com; " +
         "connect-src 'self' https://ka-f.fontawesome.com https://plausible.io; " +
         "frame-ancestors 'none'; " +
