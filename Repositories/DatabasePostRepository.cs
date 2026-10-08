@@ -84,7 +84,12 @@ public class DatabasePostRepository : IPostRepository
 
     private static Post RenderContent(Post post)
     {
-        post.Content = Markdown.ToHtml(post.Content ?? string.Empty, _pipeline);
+        post.Content = RenderMarkdown(post.Content);
         return post;
     }
+
+    // Shared with the admin editor's live preview so unsaved drafts render through the
+    // same pipeline as published posts.
+    public static string RenderMarkdown(string? markdown) =>
+        Markdown.ToHtml(markdown ?? string.Empty, _pipeline);
 }

@@ -7,7 +7,6 @@
 <div class="admin-toolbar">
     <h1>Edit Post</h1>
     <div style="display:flex; gap:1rem; align-items:center;">
-        <a href="/admin/blog/@Model.Id/preview" target="_blank" class="admin-link">Preview</a>
         @if (!Model.Draft)
         {
             <a href="/Blog/@Model.Slug" target="_blank" class="admin-link">View live →</a>
@@ -52,6 +51,8 @@
     @await Html.PartialAsync("_PostForm", Model)
     <div class="admin-form-actions">
         <button type="submit" class="admin-btn admin-btn--primary">Save changes</button>
+        <button type="submit" formaction="/admin/blog/preview" formtarget="_blank" formnovalidate
+                class="admin-btn admin-btn--ghost">Preview</button>
         <button type="submit" formaction="/admin/blog/@Model.Id/publish"
                 class="admin-btn @(Model.Draft ? "admin-btn--publish" : "admin-btn--ghost")">
             @(Model.Draft ? "Publish" : "Unpublish")
