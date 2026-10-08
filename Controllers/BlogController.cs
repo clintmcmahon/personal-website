@@ -94,17 +94,19 @@ public class BlogController : Controller
     [HttpPost("/admin/blog/preview")]
     [Authorize]
     [ValidateAntiForgeryToken]
-    public IActionResult PreviewDraft(Post draft)
+    public IActionResult PreviewDraft(Post previewPost)
     {
-        draft.Title = string.IsNullOrWhiteSpace(draft.Title) ? "Untitled post" : draft.Title;
-        draft.Slug = string.IsNullOrWhiteSpace(draft.Slug)
-            ? System.Text.RegularExpressions.Regex.Replace(draft.Title.ToLowerInvariant().Trim(), @"[^a-z0-9]+", "-").Trim('-')
-            : draft.Slug;
-        draft.TagsRaw = Request.Form["TagsRaw"];
-        draft.Content = DatabasePostRepository.RenderMarkdown(draft.Content);
+        // Not named "draft": Post has a Draft field, and a parameter matching a form key
+        // makes the binder use it as the model prefix, which leaves every other field empty.
+        previewPost.Title = string.IsNullOrWhiteSpace(previewPost.Title) ? "Untitled post" : previewPost.Title;
+        previewPost.Slug = string.IsNullOrWhiteSpace(previewPost.Slug)
+            ? System.Text.RegularExpressions.Regex.Replace(previewPost.Title.ToLowerInvariant().Trim(), @"[^a-z0-9]+", "-").Trim('-')
+            : previewPost.Slug;
+        previewPost.TagsRaw = Request.Form["TagsRaw"];
+        previewPost.Content = DatabasePostRepository.RenderMarkdown(previewPost.Content);
 
         ViewData["IsPreview"] = true;
-        return View("Details", draft);
+        return View("Details", previewPost);
     }
 
 }
