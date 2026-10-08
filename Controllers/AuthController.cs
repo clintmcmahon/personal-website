@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -22,7 +23,7 @@ namespace Website.Controllers
         public IActionResult Login(string? returnUrl = null)
         {
             if (IsLoggedIn(HttpContext))
-                return Redirect(returnUrl ?? "/admin");
+                return RedirectToLocal(returnUrl);
 
             ViewData["ReturnUrl"] = returnUrl;
             return View();
@@ -30,19 +31,25 @@ namespace Website.Controllers
 
         [HttpPost("/auth/login")]
         [ValidateAntiForgeryToken]
+        [EnableRateLimiting("login")]
         public async Task<IActionResult> Login(string password, string? returnUrl = null)
         {
             var storedHash = _config["Admin:PasswordHash"];
-            if (!string.IsNullOrEmpty(storedHash) && HashPassword(password) == storedHash)
+            if (!string.IsNullOrEmpty(storedHash) && VerifyPassword(password, storedHash))
             {
                 await SignInAsync();
-                return Redirect(returnUrl ?? "/admin");
+                return RedirectToLocal(returnUrl);
             }
 
             ViewData["ReturnUrl"] = returnUrl;
             ViewData["Error"] = "Incorrect password.";
             return View();
         }
+
+        private IActionResult RedirectToLocal(string? returnUrl) =>
+            !string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl)
+                ? Redirect(returnUrl)
+                : Redirect("/admin");
 
         [HttpGet("/auth/logout")]
         public async Task<IActionResult> Logout()
@@ -86,10 +93,32 @@ namespace Website.Controllers
                 new AuthenticationProperties { IsPersistent = true });
         }
 
+        private const int Pbkdf2Iterations = 210_000;
+        private const int SaltSize = 16;
+        private const int HashSize = 32;
+
+        // Format: pbkdf2.<iterations>.<saltBase64>.<hashBase64>
         private static string HashPassword(string password)
         {
-            var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));
-            return Convert.ToHexString(bytes).ToLowerInvariant();
+            var salt = RandomNumberGenerator.GetBytes(SaltSize);
+            var hash = Rfc2898DeriveBytes.Pbkdf2(
+                Encoding.UTF8.GetBytes(password), salt, Pbkdf2Iterations, HashAlgorithmName.SHA256, HashSize);
+
+            return $"pbkdf2.{Pbkdf2Iterations}.{Convert.ToBase64String(salt)}.{Convert.ToBase64String(hash)}";
+        }
+
+        private static bool VerifyPassword(string password, string storedHash)
+        {
+            var parts = storedHash.Split('.');
+            if (parts.Length != 4 || parts[0] != "pbkdf2") return false;
+            if (!int.TryParse(parts[1], out var iterations)) return false;
+
+            var salt = Convert.FromBase64String(parts[2]);
+            var expected = Convert.FromBase64String(parts[3]);
+            var actual = Rfc2898DeriveBytes.Pbkdf2(
+                Encoding.UTF8.GetBytes(password), salt, iterations, HashAlgorithmName.SHA256, expected.Length);
+
+            return CryptographicOperations.FixedTimeEquals(actual, expected);
         }
     }
 }

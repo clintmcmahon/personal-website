@@ -1,9 +1,11 @@
 using System.IO.Compression;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Website.Models;
 
 namespace Website.Controllers;
 
+[Authorize]
 public class AdminBackupController : Controller
 {
     private readonly IWebHostEnvironment _env;
@@ -15,6 +17,13 @@ public class AdminBackupController : Controller
     {
         "bin", "obj", ".git", ".github", ".vs", "node_modules",
         "uploads", "logs"
+    };
+
+    // Config files that carry live secrets (GitHub PAT, Mastodon token, admin password
+    // hash). Excluded so a downloaded app backup can't leak credentials on its own.
+    private static readonly string[] ExcludedFiles =
+    {
+        "appsettings.local.json"
     };
 
     private static readonly string[] DatabaseNames =
@@ -30,9 +39,6 @@ public class AdminBackupController : Controller
     [HttpGet("/admin/backup")]
     public IActionResult Index()
     {
-        if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect("/auth/login?returnUrl=/admin/backup");
-
         var databases = DatabaseNames
             .Select(name => new FileInfo(Path.Combine(_env.ContentRootPath, name)))
             .Where(f => f.Exists)
@@ -45,9 +51,6 @@ public class AdminBackupController : Controller
     [HttpGet("/admin/backup/app.zip")]
     public IActionResult AppZip()
     {
-        if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect("/auth/login?returnUrl=/admin/backup");
-
         var root = _env.ContentRootPath;
         var fileName = $"clintmcmahon-app-{DateTime.UtcNow:yyyy-MM-dd}.zip";
 
@@ -72,9 +75,6 @@ public class AdminBackupController : Controller
     [HttpGet("/admin/backup/databases.zip")]
     public IActionResult DatabasesZip()
     {
-        if (!AuthController.IsLoggedIn(HttpContext))
-            return Redirect("/auth/login?returnUrl=/admin/backup");
-
         var root = _env.ContentRootPath;
         var fileName = $"clintmcmahon-databases-{DateTime.UtcNow:yyyy-MM-dd}.zip";
 
@@ -111,6 +111,12 @@ public class AdminBackupController : Controller
         if (relativePath.EndsWith(".db", StringComparison.OrdinalIgnoreCase)) return true;
         if (relativePath.EndsWith(".db-shm", StringComparison.OrdinalIgnoreCase)) return true;
         if (relativePath.EndsWith(".db-wal", StringComparison.OrdinalIgnoreCase)) return true;
+
+        foreach (var excluded in ExcludedFiles)
+        {
+            if (string.Equals(relativePath, excluded, StringComparison.OrdinalIgnoreCase))
+                return true;
+        }
 
         return false;
     }

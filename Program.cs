@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 using Website.Middleware;
 using Website.Repositories;
 using Website.Services;
@@ -46,6 +48,22 @@ builder.Services.AddHttpClient("Webmention", c =>
 .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
 builder.Services.AddScoped<WebmentionService>();
 builder.Services.AddHostedService<WebmentionDispatcherService>();
+
+// Login attempts: 5 per minute per client IP, since the admin password is a single
+// shared secret with no other brute-force defense (no per-account lockout to bypass).
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    options.AddPolicy("login", context =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            _ => new FixedWindowRateLimiterOptions
+            {
+                Window = TimeSpan.FromMinutes(1),
+                PermitLimit = 5,
+                QueueLimit = 0
+            }));
+});
 
 builder.Services.AddMemoryCache();
 builder.Services.AddHttpClient("MastodonPublic", c =>
@@ -99,6 +117,22 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         // in production so the same cookie also authenticates against the photoblog.
         if (!string.IsNullOrWhiteSpace(cookieDomain))
             options.Cookie.Domain = cookieDomain;
+
+        // The EasyMDE image-upload endpoint is called via fetch/XHR from the post editor,
+        // not navigated to directly. If the session expires mid-edit, redirecting it to the
+        // login HTML page (the default challenge behavior) just leaves EasyMDE trying to
+        // parse a login page as JSON. Return a plain 401 for that one endpoint instead.
+        options.Events.OnRedirectToLogin = context =>
+        {
+            if (context.Request.Path.StartsWithSegments("/admin/blog/upload-image"))
+            {
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return Task.CompletedTask;
+            }
+
+            context.Response.Redirect(context.RedirectUri);
+            return Task.CompletedTask;
+        };
     });
 
 var app = builder.Build();
@@ -133,9 +167,34 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.Use(async (context, next) =>
+{
+    var headers = context.Response.Headers;
+    headers["X-Content-Type-Options"] = "nosniff";
+    headers["X-Frame-Options"] = "DENY";
+    headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
+    // script-src needs 'unsafe-inline' and a handful of third-party hosts because the site
+    // ships inline <script> blocks and loads EasyMDE/Masonry (unpkg), Font Awesome Kit,
+    // Plausible analytics, Prism (cdnjs) and the Letterbird contact embed from CDNs rather
+    // than bundling them locally. Still blocks arbitrary attacker-supplied script hosts.
+    headers["Content-Security-Policy"] =
+        "default-src 'self'; " +
+        "img-src 'self' data: https:; " +
+        "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; " +
+        "font-src 'self' data: https://ka-f.fontawesome.com; " +
+        "script-src 'self' 'unsafe-inline' https://unpkg.com https://letterbird.co https://plausible.io https://cdnjs.cloudflare.com https://kit.fontawesome.com; " +
+        "connect-src 'self' https://ka-f.fontawesome.com https://plausible.io; " +
+        "frame-ancestors 'none'; " +
+        "base-uri 'self'; " +
+        "form-action 'self'";
+    await next();
+});
+
 app.UseMiddleware<RedirectMiddleware>();
 
 app.UseRouting();
+
+app.UseRateLimiter();
 
 app.UseAuthentication();
 app.UseAuthorization();
