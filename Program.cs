@@ -190,7 +190,8 @@ app.Use(async (context, next) =>
         "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://fonts.googleapis.com https://cdn.jsdelivr.net https://maxcdn.bootstrapcdn.com; " +
         "font-src 'self' data: https://ka-f.fontawesome.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://maxcdn.bootstrapcdn.com; " +
         "script-src 'self' 'unsafe-inline' https://unpkg.com https://letterbird.co https://plausible.io https://cdnjs.cloudflare.com https://kit.fontawesome.com; " +
-        "connect-src 'self' https://ka-f.fontawesome.com https://plausible.io; " +
+        "connect-src 'self' https://ka-f.fontawesome.com https://ka-p.fontawesome.com https://kit.fontawesome.com https://plausible.io; " +
+        "frame-src https://letterbird.co; " +
         "frame-ancestors 'none'; " +
         "base-uri 'self'; " +
         "form-action 'self'";
