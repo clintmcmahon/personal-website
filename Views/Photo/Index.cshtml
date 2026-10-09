@@ -1,0 +1,57 @@
+@model Website.Models.LatestPhoto?
+@{
+    ViewData["Title"] = "Photo | Clint McMahon";
+    ViewData["Description"] = "The latest photo from my photoblog.";
+    if (Model != null)
+        ViewData["OgImage"] = Model.ImageUrl;
+}
+
+<div class="page-intro is-centered pb-0">
+    <h1>Photo</h1>
+    <span class="portfolio-section-label mt-0 border-0">The latest from my photoblog</span>
+</div>
+
+<div class="page-body is-centered pb-0">
+    <p>
+        This is a /photo page: one photo, swapped now and then. I got the idea from
+        <a href="https://robertbirming.com/photo/">Robert Birming</a>, who got it from a loose group of bloggers
+        who each keep one. It's the latest picture from my <a href="@Website.Services.CanonicalUrlHelper.PhotoBaseUrl">photoblog</a>,
+        so it changes whenever I post there. If you want the whole archive, that's the place.
+    </p>
+</div>
+
+<div class="photo-page">
+    @if (Model == null)
+    {
+        <p class="text-muted">The latest photo isn't loading right now. You can see everything at
+            <a href="@Website.Services.CanonicalUrlHelper.PhotoBaseUrl">photos.clintmcmahon.com</a>.</p>
+    }
+    else
+    {
+        <figure class="photo-latest">
+            <a href="@Model.Url">
+                <img src="@Model.ImageUrl" alt="@Model.Title" class="photo-latest-img" />
+            </a>
+            <figcaption>
+                <h2 class="photo-latest-title">@Model.Title</h2>
+                <p class="photo-latest-meta">
+                    @if (!string.IsNullOrWhiteSpace(Model.Location))
+                    {
+                        <span>@Model.Location</span>
+                        <span aria-hidden="true">&middot;</span>
+                    }
+                    <time datetime="@Model.Published.ToString("yyyy-MM-dd")">@Model.Published.ToString("MMMM d, yyyy")</time>
+                </p>
+                @if (Model.CaptionHtml != null)
+                {
+                    <div class="photo-latest-caption">@Html.Raw(Model.CaptionHtml)</div>
+                }
+                @if (Model.ImageCount > 1)
+                {
+                    <p><a href="@Model.Url">See all @Model.ImageCount photos in this post</a></p>
+                }
+            </figcaption>
+        </figure>
+        <p class="photo-more"><a href="@Website.Services.CanonicalUrlHelper.PhotoBaseUrl">More photos at photos.clintmcmahon.com</a></p>
+    }
+</div>
