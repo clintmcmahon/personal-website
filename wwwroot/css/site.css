@@ -1465,3 +1465,52 @@ p {
     scroll-behavior: auto !important;
   }
 }
+
+/* ============================================================
+   PHOTO — latest photo from the photoblog
+   ============================================================ */
+.photo-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding-bottom: 4rem;
+}
+
+.photo-latest {
+  margin: 0;
+}
+
+.photo-latest-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 85vh;
+  object-fit: contain;
+}
+
+.photo-latest figcaption {
+  max-width: 680px;
+  margin: 1.5rem auto 0;
+}
+
+.photo-latest-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+}
+
+.photo-latest-meta {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  margin-bottom: 1rem;
+}
+
+.photo-latest-caption p {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.photo-more {
+  max-width: 680px;
+  margin: 2rem auto 0;
+}

@@ -43,6 +43,7 @@ public class SitemapController : Controller
         Abs(Url.Action("Index", "Portfolio")),
         Abs(Url.Action("Index", "About")),
         Abs(Url.Action("Index", "Blog")),
+        Abs(Url.Action("Index", "Photo")),
         Abs(Url.Action("Index", "Rss")),
         Abs(Url.Action("Index", "Contact"))
     };

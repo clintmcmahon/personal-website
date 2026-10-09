@@ -80,6 +80,13 @@ builder.Services.AddHttpClient("Weather", c =>
 });
 builder.Services.AddScoped<WeatherService>();
 
+builder.Services.AddHttpClient("Photos", c =>
+{
+    c.Timeout = TimeSpan.FromSeconds(8);
+    c.DefaultRequestHeaders.UserAgent.ParseAdd("clintmcmahon.com-photo/1.0");
+});
+builder.Services.AddScoped<PhotoService>();
+
 // Persist the data protection key ring to disk. Without this, the keys used to encrypt/decrypt
 // the auth cookie live only in memory and get regenerated every process restart — so every
 // deploy (which stops/starts the systemd service) silently invalidates every existing login,
