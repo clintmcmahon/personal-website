@@ -32,7 +32,7 @@ public class MastodonService
 
         var url = CanonicalUrlHelper.BlogPost(post.Slug);
         var tags = FormatTags(post.Tags ?? new List<string>());
-        var status = BuildStatus(post.Title, null, url, tags);
+        var status = BuildStatus(post.Title, post.Description, url, tags);
 
         return await PublishStatusAsync(status);
     }
