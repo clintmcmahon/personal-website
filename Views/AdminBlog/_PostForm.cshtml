@@ -19,6 +19,10 @@
         <label for="Draft">Draft</label>
         <input type="checkbox" id="Draft" name="Draft" value="true" @(Model.Draft ? "checked" : "") class="admin-checkbox" />
     </div>
+    <div class="admin-field admin-field--narrow">
+        <label for="PostToMastodon">Post to Mastodon</label>
+        <input type="checkbox" id="PostToMastodon" name="PostToMastodon" value="true" @(Model.PostToMastodon ? "checked" : "") class="admin-checkbox" />
+    </div>
 </div>
 
 <div class="admin-field">

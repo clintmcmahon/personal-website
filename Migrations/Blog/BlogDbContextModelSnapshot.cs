@@ -15,7 +15,7 @@ namespace Website.Migrations.Blog
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.17");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
 
             modelBuilder.Entity("Website.Models.Post", b =>
                 {
@@ -40,6 +40,9 @@ namespace Website.Migrations.Blog
 
                     b.Property<string>("Keywords")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("PostToMastodon")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Slug")
                         .IsRequired()

@@ -16,6 +16,7 @@ public class Post
     public List<string> Tags { get; set; } = new List<string>();
     public string? Content { get; set; }
     public string? SyndicationUrl { get; set; }
+    public bool PostToMastodon { get; set; } = true;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 

@@ -42,7 +42,7 @@ public class AdminBlogController : Controller
     [HttpGet("/admin/blog/new")]
     public IActionResult New()
     {
-        return View(new Post { Date = DateTime.Today, Draft = true });
+        return View(new Post { Date = DateTime.Today, Draft = true, PostToMastodon = true });
     }
 
     [HttpPost("/admin/blog/new")]
@@ -138,8 +138,12 @@ public class AdminBlogController : Controller
 
         if (wasDraft && !post.Draft)
         {
-            post.SyndicationUrl = await _mastodon.PostBlogPostAsync(post);
-            await _db.SaveChangesAsync();
+            // Skip if already syndicated so unpublish/republish doesn't double-post.
+            if (post.PostToMastodon && string.IsNullOrEmpty(post.SyndicationUrl))
+            {
+                post.SyndicationUrl = await _mastodon.PostBlogPostAsync(post);
+                await _db.SaveChangesAsync();
+            }
 
             await _webmention.ScheduleAsync("Blog", post.Slug, CanonicalUrlHelper.BlogPost(post.Slug));
         }
@@ -155,6 +159,7 @@ public class AdminBlogController : Controller
         post.Keywords = updated.Keywords;
         post.Content = updated.Content;
         post.Date = updated.Date;
+        post.PostToMastodon = updated.PostToMastodon;
         post.TagsRaw = Request.Form["TagsRaw"];
         post.UpdatedAt = DateTime.UtcNow;
     }
