@@ -63,6 +63,18 @@ builder.Services.AddRateLimiter(options =>
                 PermitLimit = 5,
                 QueueLimit = 0
             }));
+
+    // Guestbook signatures: 3 per 10 minutes per client IP. A person signs once;
+    // this only slows a script that gets past the form checks.
+    options.AddPolicy("guestbook", context =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            _ => new FixedWindowRateLimiterOptions
+            {
+                Window = TimeSpan.FromMinutes(10),
+                PermitLimit = 3,
+                QueueLimit = 0
+            }));
 });
 
 builder.Services.AddMemoryCache();

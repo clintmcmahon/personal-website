@@ -1409,6 +1409,22 @@ main a.border:hover {
   padding-right: 0;
 }
 
+/* Guestbook: confirmation after signing, and form errors */
+.guestbook-notice {
+  border: 2px solid var(--text);
+  background: var(--highlight);
+  color: #0A0A0A;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.guestbook-notice--error {
+  background: var(--bg);
+  color: var(--text);
+  border-left-width: 8px;
+}
+
 /* Square portrait with the yellow offset, shared with the homepage */
 .portrait-box {
   display: block;

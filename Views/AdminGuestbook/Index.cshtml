@@ -1,0 +1,100 @@
+@model List<Website.Models.GuestbookEntry>
+@{
+    ViewData["Title"] = "Guestbook — Admin";
+    Layout = "_AdminLayout";
+    var pending = Model.Where(e => !e.IsApproved).ToList();
+    var approved = Model.Where(e => e.IsApproved).ToList();
+    var pendingTotal = ViewData["PendingTotal"] as int? ?? pending.Count;
+}
+
+<div class="admin-toolbar">
+    <h1>Guestbook</h1>
+    @if (pendingTotal > 0)
+    {
+        <form method="post" action="/admin/guestbook/delete-pending"
+              onsubmit="return confirm('Delete all @pendingTotal pending entries? This cannot be undone.')">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="admin-btn admin-btn--ghost">Delete all @pendingTotal pending</button>
+        </form>
+    }
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="admin-flash admin-flash--success">@TempData["Success"]</div>
+}
+
+<p class="text-muted" style="margin-bottom: 1.5rem; line-height: 1.6;">
+    New entries wait here and stay off the public page until you approve them.
+</p>
+
+<h2 style="font-size: 1rem; margin-bottom: 0.75rem;">Pending (@pendingTotal)</h2>
+@if (!pending.Any())
+{
+    <p class="text-muted">Nothing waiting.</p>
+}
+else
+{
+    <table class="admin-table">
+        <thead>
+            <tr><th>Name</th><th>Message</th><th>Date (UTC)</th><th></th></tr>
+        </thead>
+        <tbody>
+            @foreach (var entry in pending)
+            {
+                <tr>
+                    <td>@entry.Name</td>
+                    <td style="max-width: 420px; overflow-wrap: anywhere;">@entry.Message</td>
+                    <td class="mono">@entry.CreatedAt.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <div class="admin-actions">
+                            <form method="post" action="/admin/guestbook/@entry.Id/approve">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="admin-link">Approve</button>
+                            </form>
+                            <form method="post" action="/admin/guestbook/@entry.Id/delete">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="admin-link admin-link--danger">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (pendingTotal > pending.Count)
+    {
+        <p class="text-muted" style="margin-top: 0.75rem; font-size: 0.8125rem;">Showing the newest @pending.Count of @pendingTotal.</p>
+    }
+}
+
+<h2 style="font-size: 1rem; margin: 2.5rem 0 0.75rem;">Approved (@approved.Count)</h2>
+@if (!approved.Any())
+{
+    <p class="text-muted">None yet.</p>
+}
+else
+{
+    <table class="admin-table">
+        <thead>
+            <tr><th>Name</th><th>Message</th><th>Date (UTC)</th><th></th></tr>
+        </thead>
+        <tbody>
+            @foreach (var entry in approved)
+            {
+                <tr>
+                    <td>@entry.Name</td>
+                    <td style="max-width: 420px; overflow-wrap: anywhere;">@entry.Message</td>
+                    <td class="mono">@entry.CreatedAt.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <form method="post" action="/admin/guestbook/@entry.Id/delete"
+                              onsubmit="return confirm('Delete this entry?')">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="admin-link admin-link--danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

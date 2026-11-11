@@ -162,6 +162,7 @@
             <a href="/admin" class="@(Context.Request.Path.Value == "/admin" ? "active" : "")">Home</a>
             <a href="/admin/blog" class="@(Context.Request.Path.StartsWithSegments("/admin/blog") ? "active" : "")">Posts</a>
             <a href="https://photos.clintmcmahon.com/admin/photos">Photos &#8599;</a>
+            <a href="/admin/guestbook" class="@(Context.Request.Path.StartsWithSegments("/admin/guestbook") ? "active" : "")">Guestbook</a>
             <a href="/admin/backup" class="@(Context.Request.Path.StartsWithSegments("/admin/backup") ? "active" : "")">Backup</a>
         </div>
         <a href="/auth/logout" class="admin-nav-logout">Log out</a>

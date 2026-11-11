@@ -14,4 +14,13 @@ public static class SpamGuard
         var elapsed = DateTimeOffset.UtcNow.ToUnixTimeSeconds() - loadedAtUnixSeconds;
         return elapsed < minSeconds;
     }
+
+    // Link drops are what guestbook spam exists for. Covers bare URLs, www hosts,
+    // HTML anchors and BBCode, which is how bots try to get a link rendered.
+    private static readonly System.Text.RegularExpressions.Regex LinkPattern = new(
+        @"https?://|www\.|<\s*a\b|\[/?url\b|\[/?link\b",
+        System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Compiled);
+
+    public static bool ContainsLink(params string?[] values) =>
+        values.Any(v => !string.IsNullOrEmpty(v) && LinkPattern.IsMatch(v));
 }

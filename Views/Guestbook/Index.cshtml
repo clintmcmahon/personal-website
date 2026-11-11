@@ -13,6 +13,14 @@
 
     <div class="row">
       <div class="col-lg-8 mx-auto">
+        @if (TempData["GuestbookThanks"] != null)
+        {
+          <p class="guestbook-notice" role="status">Thanks for signing. Your note will show up here once I've read it.</p>
+        }
+        @if (ViewData["GuestbookError"] is string guestbookError)
+        {
+          <p class="guestbook-notice guestbook-notice--error" role="alert">@guestbookError</p>
+        }
         <form asp-controller="Guestbook" asp-action="Post" method="post" class="mb-5">
           <input type="hidden" name="loadedAt" value="@DateTimeOffset.UtcNow.ToUnixTimeSeconds()" />
           <div class="hp-field" aria-hidden="true">
@@ -21,11 +29,11 @@
           </div>
           <div class="mb-2">
             <label for="gb-name" class="visually-hidden">Your name</label>
-            <input type="text" id="gb-name" name="name" class="form-control" placeholder="Your name" autocomplete="name" required />
+            <input type="text" id="gb-name" name="name" class="form-control" placeholder="Your name" autocomplete="name" maxlength="60" value="@(ViewData["GuestbookName"] as string)" required />
           </div>
           <div class="mb-2">
             <label for="gb-message" class="visually-hidden">Your message</label>
-            <textarea id="gb-message" name="message" class="form-control" rows="3" placeholder="Leave a message..." required></textarea>
+            <textarea id="gb-message" name="message" class="form-control" rows="3" placeholder="Leave a message..." maxlength="1000" required>@(ViewData["GuestbookMessage"] as string)</textarea>
           </div>
           <button type="submit" class="btn btn-primary">Sign the Guestbook</button>
         </form>
