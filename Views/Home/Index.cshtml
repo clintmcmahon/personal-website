@@ -1,25 +1,9 @@
+@model IEnumerable<Post>
 @using Website.Services
-@inject WeatherService WeatherService
 @{
     ViewData["Title"] = "Clint McMahon | Freelance Software Developer in Minneapolis, MN";
     ViewData["Description"] = "Freelance software developer and architect in Minneapolis, MN. 20+ years of .NET, C# and Azure work building data platforms and modernizing legacy systems. Available for projects and retainers.";
-    var weather = await WeatherService.GetCurrentAsync();
-    var tempSign = weather != null && weather.TempF >= 0 ? "+" : "";
-
-    var terminalLines = new List<object>
-    {
-        new { cmd = "ls ~/stack", output = ".NET  C#  Azure  AI" },
-    };
-    if (!string.IsNullOrWhiteSpace(NowStatus.Blurb))
-        terminalLines.Add(new { cmd = "cat ~/now", output = NowStatus.Blurb });
-    if (!string.IsNullOrWhiteSpace(NowStatus.CurrentlyBrewing))
-        terminalLines.Add(new { cmd = "cat ~/brewing", output = NowStatus.CurrentlyBrewing });
-    if (weather != null)
-        terminalLines.Add(new { cmd = "curl wttr.in/msp", output = $"Minneapolis: {weather.Icon} {tempSign}{weather.TempF}°F" });
-
-    var terminalJson = System.Text.Json.JsonSerializer.Serialize(terminalLines);
 }
-@model IEnumerable<Post>
 
 @* Person + ProfessionalService for local search. The @@id values are shared with
    the schema block on /freelance-developer-minneapolis so Google treats them as
@@ -101,151 +85,76 @@
 }
 </script>
 
-<section class="hero">
-    <div class="hero-content">
-        <p class="hero-label">Hi, I'm Clint</p>
-        <h1 class="hero-heading">I build things<br>for the Internet.</h1>
-        <p class="hero-body">
-            <a href="/freelance-developer-minneapolis">Freelance software developer and architect in Minneapolis</a>. With 20+ years of experience in .NET and Umbraco, I build web applications that make complex data usable, and I modernize the legacy systems underneath them. Federal health registries, state government websites, a national law firm and businesses. Client work runs through <a href="https://parkasoftware.com">Parka Software</a>, the .NET consultancy I founded. I also write about software, espresso and whatever side project has my attention.
-        </p>
-        <a class="btn-hero" href="/contact">Get in touch &rarr;</a>
-    </div>
-    <div class="hero-terminal" aria-hidden="true">
-        <div class="hero-terminal-bar">
-            <span class="hero-terminal-dot dot-red"></span>
-            <span class="hero-terminal-dot dot-yellow"></span>
-            <span class="hero-terminal-dot dot-green"></span>
+<div class="home">
+
+    <section class="home-intro">
+        <div>
+            <p class="home-label">Clint McMahon / Minneapolis, MN</p>
+            <h1 class="home-title">I build things for<br>the Internet.</h1>
+            <p class="home-lead">
+                Welcome to my website. I live in Minneapolis, MN where I run <a target="_blank" href="https://parkasoftware.com">Parka Software</a> - a software consulting company. This is where I write down what I'm learning, building and making.
+            </p>
         </div>
-        <div class="hero-terminal-body" id="heroTerminalBody">
-            <noscript>
-                @foreach (dynamic line in terminalLines)
+        <img class="home-portrait" src="/images/icon/me.jpg" alt="Clint McMahon" width="176" height="176" />
+    </section>
+
+    <div class="home-body">
+        <section class="h-feed">
+            <h2 class="home-label">Latest posts</h2>
+            <ol class="home-posts">
+                @foreach (var post in Model)
                 {
-                    <p><span class="hero-terminal-prompt">$</span>@line.cmd</p>
-                    <p class="hero-terminal-output">@line.output</p>
+                    <li class="h-entry">
+                        <a href="@Url.Action("Details", "Blog", new { slug = post.Slug })">
+                            <span class="u-url" hidden>@CanonicalUrlHelper.BlogPost(post.Slug)</span>
+                            <time class="dt-published" datetime="@post.Date.ToString("yyyy-MM-dd")">@post.Date.ToString("MMM d")</time>
+                            <div>
+                                <h3 class="p-name">@post.Title</h3>
+                                @if (!string.IsNullOrWhiteSpace(post.Description))
+                                {
+                                    <p class="p-summary">@post.Description</p>
+                                }
+                            </div>
+                        </a>
+                    </li>
                 }
-                <p><span class="hero-terminal-prompt">$</span></p>
-            </noscript>
-        </div>
+            </ol>
+            <a class="home-all" href="/blog">All posts &rarr;</a>
+        </section>
+
+        <aside class="home-index" aria-label="Around the site">
+            <h2 class="home-label">Around the site</h2>
+            <ul>
+                <li><a href="/about"><strong>About</strong><span>Who I am and where to find me</span></a></li>
+                <li><a href="/now"><strong>Now</strong><span>What I'm working on and thinking about</span></a></li>
+                <li><a href="/projects"><strong>Projects</strong><span>Coffee maps, a radio archive, weather records</span></a></li>
+                <li><a href="/photo"><strong>Photo</strong><span>The latest from my photoblog</span></a></li>
+                <li><a href="/tools"><strong>Tools</strong><span>Small utilities that run in your browser</span></a></li>
+                <li><a href="/feeds"><strong>Blogroll</strong><span>The blogs I read</span></a></li>
+                <li><a href="/guestbook"><strong>Guestbook</strong><span>Leave a note</span></a></li>
+                <li><a href="/contact"><strong>Contact</strong><span>Email me</span></a></li>
+                <li><a href="https://parkasoftware.com"><strong>Parka Software &nearr;</strong><span>My consulting company</span></a></li>
+            </ul>
+
+            @if (!string.IsNullOrWhiteSpace(NowStatus.Blurb) || !string.IsNullOrWhiteSpace(NowStatus.CurrentlyBrewing))
+            {
+                <dl class="home-now">
+                    @if (!string.IsNullOrWhiteSpace(NowStatus.Blurb))
+                    {
+                        <div>
+                            <dt>Now</dt>
+                            <dd>@NowStatus.Blurb</dd>
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(NowStatus.CurrentlyBrewing))
+                    {
+                        <div>
+                            <dt>Brewing</dt>
+                            <dd>@NowStatus.CurrentlyBrewing</dd>
+                        </div>
+                    }
+                </dl>
+            }
+        </aside>
     </div>
-</section>
-
-<script type="application/json" id="heroTerminalData">@Html.Raw(terminalJson)</script>
-<script>
-(function () {
-    var container = document.getElementById('heroTerminalBody');
-    var dataEl = document.getElementById('heroTerminalData');
-    if (!container || !dataEl) return;
-
-    var lines;
-    try { lines = JSON.parse(dataEl.textContent); } catch (e) { return; }
-    if (!lines || !lines.length) return;
-
-    // WCAG 2.2.2 Pause, Stop, Hide applies to motion that starts on its own and
-    // runs past five seconds. At the old timings (32/500/650) four lines took
-    // ~6.1s, so this was failing with no way to stop it. These timings put the
-    // worst case at ~3.9s, below the threshold, which is a better answer than
-    // bolting a skip button onto the hero.
-    var CHAR_DELAY = 32;
-    var AFTER_CMD = 260;
-    var AFTER_OUTPUT = 320;
-
-    // Anyone who has asked their OS for less motion gets the finished terminal
-    // immediately rather than a faster version of the same animation.
-    var reduceMotion = window.matchMedia
-        && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function typeInto(el, text, i, done) {
-        el.textContent = text.slice(0, i);
-        if (i >= text.length) { done(); return; }
-        setTimeout(function () { typeInto(el, text, i + 1, done); }, CHAR_DELAY);
-    }
-
-    function finish() {
-        var p = document.createElement('p');
-        var prompt = document.createElement('span');
-        prompt.className = 'hero-terminal-prompt';
-        prompt.textContent = '$';
-        var cursor = document.createElement('span');
-        cursor.className = 'hero-terminal-cursor';
-        p.appendChild(prompt);
-        p.appendChild(cursor);
-        container.appendChild(p);
-    }
-
-    function runLine(index) {
-        if (index >= lines.length) { finish(); return; }
-
-        var line = lines[index];
-        var cmdP = document.createElement('p');
-        var prompt = document.createElement('span');
-        prompt.className = 'hero-terminal-prompt';
-        prompt.textContent = '$';
-        var cmdSpan = document.createElement('span');
-        cmdP.appendChild(prompt);
-        cmdP.appendChild(cmdSpan);
-        container.appendChild(cmdP);
-
-        typeInto(cmdSpan, line.cmd, 0, function () {
-            setTimeout(function () {
-                var outP = document.createElement('p');
-                outP.className = 'hero-terminal-output';
-                outP.textContent = line.output;
-                container.appendChild(outP);
-                setTimeout(function () { runLine(index + 1); }, AFTER_OUTPUT);
-            }, AFTER_CMD);
-        });
-    }
-
-    container.innerHTML = '';
-
-    if (reduceMotion) {
-        lines.forEach(function (line) {
-            var cmdP = document.createElement('p');
-            var prompt = document.createElement('span');
-            prompt.className = 'hero-terminal-prompt';
-            prompt.textContent = '$';
-            var cmdSpan = document.createElement('span');
-            cmdSpan.textContent = line.cmd;
-            cmdP.appendChild(prompt);
-            cmdP.appendChild(cmdSpan);
-            container.appendChild(cmdP);
-
-            var outP = document.createElement('p');
-            outP.className = 'hero-terminal-output';
-            outP.textContent = line.output;
-            container.appendChild(outP);
-        });
-        finish();
-        return;
-    }
-
-    runLine(0);
-})();
-</script>
-
-<div class="home-cards">
-    <a href="https://parkasoftware.com/portfolio" class="home-card featured">
-        <h2>Work</h2>
-        <p>Large scale data platforms, infrastructure and custom systems for organizations with high value data. Twenty five years of enterprise & startup software technology experience.</p>
-        <span class="card-cta">View the work at Parka Software &rarr;</span>
-    </a>
-    <a href="/projects" class="home-card">
-        <h2>Projects</h2>
-        <p>Side projects: coffee maps, weather data tools, browser extensions, etc.</p>
-        <span class="card-cta">See all projects &rarr;</span>
-    </a>
 </div>
-
-<section class="blog-list h-feed">
-    <p class="blog-list-heading">Recent Posts</p>
-    @foreach (var post in Model)
-    {
-        <a class="post-row h-entry" href="@Url.Action("Details", "Blog", new { slug = post.Slug })">
-            <span class="u-url" hidden>@CanonicalUrlHelper.BlogPost(post.Slug)</span>
-            <time class="post-date dt-published" datetime="@post.Date.ToString("yyyy-MM-dd")">@post.Date.ToString("MMM dd")</time>
-            <span class="post-arrow">&rarr;</span>
-            <span class="post-title p-name">@post.Title</span>
-        </a>
-    }
-    <a href="/blog" class="blog-see-all">All posts &rarr;</a>
-</section>

@@ -145,18 +145,28 @@
     padding: 0;
 }
 .feeds-list li {
-    margin-bottom: 1.5em;
-    padding: 1em;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    background: #fafafa;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--text);
+}
+.feeds-list li:first-child {
+    border-top: 1px solid var(--text);
 }
 .feeds-list a {
-    font-weight: bold;
-    color: #2a5db0;
+    font-weight: 700;
+    color: var(--text);
     text-decoration: none;
 }
 .feeds-list a:hover {
-    text-decoration: underline;
+    background: var(--highlight);
+    color: #0A0A0A;
+}
+.feeds-list small {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+.feeds-list small a {
+    font-weight: 400;
+    color: var(--text-muted);
 }
 </style>

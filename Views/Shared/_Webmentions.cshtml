@@ -19,20 +19,20 @@
 </div>
 
 <style>
-    .wm-notice { font-size: 0.78rem; color: #888; margin-bottom: 1.25rem; border-top: 1px solid #e8e8e8; padding-top: 1.5rem; }
-    .wm-notice a { color: #666; }
+    .wm-notice { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.25rem; border-top: 1px solid var(--text); padding-top: 1.5rem; }
+    .wm-notice a { color: var(--text-muted); }
     .webmentions { }
-    .wm-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #888; margin-bottom: 0.6rem; }
+    .wm-label { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
     .wm-facepile .wm-faces { display: flex; flex-wrap: wrap; gap: 6px; }
-    .wm-face img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 0 0 1px #ddd; }
-    .wm-reply { padding: 0.75rem 0; border-bottom: 1px solid #f2f2f2; }
+    .wm-face img { width: 36px; height: 36px; object-fit: cover; border: 2px solid var(--text); }
+    .wm-reply { padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
     .wm-reply:last-child { border-bottom: none; }
     .wm-reply-author { display: flex; align-items: center; gap: 8px; margin-bottom: 0.4rem; }
-    .wm-reply-author img { width: 28px; height: 28px; border-radius: 50%; }
-    .wm-reply-author-name { font-size: 0.8rem; font-weight: 500; color: #333; text-decoration: none; }
-    .wm-reply-author-name:hover { color: #111; }
-    .wm-reply-date { font-size: 0.72rem; color: #999; margin-left: auto; }
-    .wm-reply-content { font-size: 0.82rem; color: #444; line-height: 1.6; }
+    .wm-reply-author img { width: 28px; height: 28px; border: 1px solid var(--text); }
+    .wm-reply-author-name { font-size: 0.8rem; font-weight: 600; color: var(--text); text-decoration: none; }
+    .wm-reply-author-name:hover { background: var(--highlight); color: #0A0A0A; }
+    .wm-reply-date { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); margin-left: auto; }
+    .wm-reply-content { font-size: 0.82rem; color: var(--text); line-height: 1.6; }
 </style>
 
 <script>

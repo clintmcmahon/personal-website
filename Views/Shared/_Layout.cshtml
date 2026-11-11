@@ -78,6 +78,12 @@
 
     @{
         var weather = await WeatherService.GetCurrentAsync();
+
+        // Marks the nav link for the section being viewed. Razor drops the
+        // attribute entirely when this returns null.
+        var navPath = Context.Request.Path.Value ?? "/";
+        Func<string, string?> navCurrent = prefix =>
+            navPath.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) ? "page" : null;
     }
 
     <!-- Sticky Sidebar with Icons -->
@@ -103,7 +109,7 @@
     <header class="site-header d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <nav class="navbar navbar-expand-md w-100">
             <div class="container">
-                <a href="/" class="navbar-brand me-auto">Clint McMahon</a>
+                <a href="/" class="navbar-brand me-auto"><span class="brand-mark" aria-hidden="true"></span>Clint McMahon</a>
                 @if (weather != null)
                 {
                     @await Html.PartialAsync("_WeatherWidget", weather)
@@ -114,12 +120,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="nav ms-auto">
-                        <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
-                        <li class="nav-item"><a href="https://parkasoftware.com" class="nav-link">Parka Software</a></li>
-                        <li class="nav-item"><a href="/now" class="nav-link">Now</a></li>
-                        <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
-                        <li class="nav-item"><a href="/photo" class="nav-link">Photo</a></li>
-                        <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+                        <li class="nav-item"><a href="/about" class="nav-link" aria-current="@navCurrent("/about")">About</a></li>
+                        <li class="nav-item"><a href="/blog" class="nav-link" aria-current="@navCurrent("/blog")">Blog</a></li>
+                        <li class="nav-item"><a href="/contact" class="nav-link nav-link-cta" aria-current="@navCurrent("/contact")">Contact</a></li>
                     </ul>
                 </div>
             </div>
