@@ -1,6 +1,6 @@
 @{
     ViewData["Title"] = "Freelance Developer in Minneapolis | .NET, Umbraco & Web Development | Clint McMahon";
-    ViewData["Description"] = "Freelance software developer in Minneapolis, MN. 20+ years building .NET, Umbraco, WordPress and Shopify systems for Minnesota state agencies, associations and businesses. Available for projects and retainers.";
+    ViewData["Description"] = "Freelance software developer in Minneapolis, MN. 20+ years building .NET and Umbraco systems for Minnesota state agencies, associations and businesses. Available for projects and retainers.";
 }
 
 <script type="application/ld+json">
@@ -11,7 +11,7 @@
   "name": "Clint McMahon",
   "alternateName": "Clint McMahon Freelance Software Development",
   "url": "https://clintmcmahon.com/freelance-developer-minneapolis",
-  "description": "Freelance software developer in Minneapolis, Minnesota. .NET, Umbraco, WordPress and Shopify development for state agencies, associations, research organizations and businesses.",
+  "description": "Freelance software developer in Minneapolis, Minnesota. .NET and Umbraco development for state agencies, associations, research organizations and businesses.",
   "telephone": "+1-612-314-5384",
   "email": "clintmcmahon@@pm.me",
   "image": "https://clintmcmahon.com/images/icon/me.jpg",
@@ -34,7 +34,13 @@
     { "@@type": "State", "name": "Minnesota" },
     { "@@type": "Country", "name": "United States" }
   ],
-  "knowsAbout": [".NET", "C#", "ASP.NET Core", "Umbraco CMS", "Azure", "React", "SQL Server", "WordPress", "Shopify", "Data Visualization", "Legacy System Modernization"],
+  "knowsAbout": [".NET", "C#", "ASP.NET Core", "Umbraco CMS", "Azure", "React", "SQL Server", "Data Visualization", "Legacy System Modernization"],
+  "parentOrganization": {
+    "@@type": "ProfessionalService",
+    "@@id": "https://parkasoftware.com/#organization",
+    "name": "Parka Software",
+    "url": "https://parkasoftware.com"
+  },
   "founder": {
     "@@type": "Person",
     "@@id": "https://clintmcmahon.com/#person",
@@ -60,7 +66,7 @@
     {
       "@@type": "Question",
       "name": "What technologies does a Minneapolis freelance developer like Clint McMahon work in?",
-      "acceptedAnswer": { "@@type": "Answer", "text": "Primarily C# and .NET, including ASP.NET Core and Umbraco, with SQL Server and Azure behind it. On the front end, React and plain JavaScript. Also WordPress and Shopify work for clients already on those platforms." }
+      "acceptedAnswer": { "@@type": "Answer", "text": "Primarily C# and .NET, including ASP.NET Core and Umbraco, with SQL Server and Azure behind it. On the front end, React and plain JavaScript." }
     },
     {
       "@@type": "Question",
@@ -94,6 +100,7 @@
         <p>I build web applications and modernize the ones that have stopped keeping up, and I have been doing it from Minneapolis for over twenty years.</p>
         <p>Most of my work is one of two things. An organization has data spread across systems that do not talk to each other, or it is running on a platform that is past end of life. I build the application that resolves it.</p>
         <p>I work with clients across the country, but a large share of my work has always been local. Minnesota state agencies, Twin Cities associations and Minneapolis businesses make up a good part of the portfolio below.</p>
+        <p>Client work is contracted through <a href="https://parkasoftware.com">Parka Software</a>, the Minneapolis .NET consultancy I founded. You still get me: the person you talk to is the person who writes the code. Parka is where the services, rates and full portfolio are written up.</p>
       </div>
     </div>
 
@@ -129,7 +136,7 @@
           </div>
         </div>
 
-        <p class="mt-4">There is more, including federal health data platforms for the transplant and kidney disease registries, on the <a href="/portfolio">portfolio page</a>.</p>
+        <p class="mt-4">There is more, including federal health data platforms for the transplant and kidney disease registries, in the <a href="https://parkasoftware.com/portfolio">Parka Software portfolio</a>. There are also long-form case studies of the <a href="/portfolio/minnesota-secretary-of-state">Secretary of State migration</a> and the <a href="/portfolio/srtr-interactive-reports">SRTR interactive reports</a>.</p>
       </div>
     </div>
 
@@ -138,25 +145,25 @@
         <h2 class="h3 fw-bold mb-4">What I Build</h2>
         <div class="row g-3">
           <div class="col-md-6">
-            <a href="/services/custom-software-development" class="d-block h-100 p-3 border rounded text-decoration-none">
+            <a href="https://parkasoftware.com/services" class="d-block h-100 p-3 border rounded text-decoration-none">
               <strong class="d-block mb-1">Custom Web Applications</strong>
               <span class="text-muted small">.NET, C#, React and SQL Server. Internal tools, portals, member systems and data applications.</span>
             </a>
           </div>
           <div class="col-md-6">
-            <a href="/services/umbraco-consulting" class="d-block h-100 p-3 border rounded text-decoration-none">
+            <a href="https://parkasoftware.com/services/legacy-net-migration" class="d-block h-100 p-3 border rounded text-decoration-none">
               <strong class="d-block mb-1">Umbraco &amp; CMS Work</strong>
               <span class="text-muted small">New builds and version migrations, including Umbraco 7 and 8 sites stranded on .NET Framework.</span>
             </a>
           </div>
           <div class="col-md-6">
-            <a href="/services/legacy-systems" class="d-block h-100 p-3 border rounded text-decoration-none">
+            <a href="https://parkasoftware.com/services/legacy-net-migration" class="d-block h-100 p-3 border rounded text-decoration-none">
               <strong class="d-block mb-1">Legacy Modernization</strong>
               <span class="text-muted small">Aging .NET Framework applications brought onto modern .NET and Azure without taking operations down.</span>
             </a>
           </div>
           <div class="col-md-6">
-            <a href="/services/health-data-platforms" class="d-block h-100 p-3 border rounded text-decoration-none">
+            <a href="https://parkasoftware.com/portfolio" class="d-block h-100 p-3 border rounded text-decoration-none">
               <strong class="d-block mb-1">Data Platforms &amp; Reporting</strong>
               <span class="text-muted small">Interactive reporting and visualization over research datasets and business data.</span>
             </a>
@@ -185,7 +192,7 @@
           <li class="list-group-item"><strong>Fixed-scope projects.</strong> A migration, a new application, a specific build. Scoped up front with a defined ending.</li>
           <li class="list-group-item"><strong>Monthly retainers.</strong> A block of hours with a guaranteed response time, for organizations that need ongoing work rather than one project.</li>
           <li class="list-group-item"><strong>Staff augmentation.</strong> Embedded with your team for a stretch, working the way your team works.</li>
-          <li class="list-group-item"><strong>Assessments.</strong> A flat-fee look at a system or a stalled project, with a written recommendation. Often the right first step. See <a href="/services/rescue-recovery">rescue and recovery</a>.</li>
+          <li class="list-group-item"><strong>Assessments.</strong> A flat-fee look at a system or a stalled project, with a written recommendation. Often the right first step. See <a href="https://parkasoftware.com/services/project-rescue">project rescue at Parka Software</a>.</li>
         </ul>
       </div>
     </div>
@@ -204,7 +211,7 @@
         <h2 class="h3 fw-bold mb-4">Common Questions</h2>
 
         <h3 class="h5 fw-bold mt-4">What technologies do you work in?</h3>
-        <p>Primarily C# and .NET, including ASP.NET Core and Umbraco, with SQL Server and Azure behind it. On the front end, React and plain JavaScript. I also do a fair amount of WordPress and Shopify work for clients who are already on those platforms.</p>
+        <p>Primarily C# and .NET, including ASP.NET Core and Umbraco, with SQL Server and Azure behind it. On the front end, React and plain JavaScript.</p>
 
         <h3 class="h5 fw-bold mt-4">Do you take small projects?</h3>
         <p>Sometimes. If it is genuinely small and well defined, yes. If it is small but vague, the assessment is usually the better starting point so we both know what we are looking at.</p>
