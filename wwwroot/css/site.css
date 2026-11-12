@@ -9,7 +9,7 @@
   --text-muted:   #575757;
   /* --accent is ink for links and solid buttons; --on-accent is the text that
      sits on it. --highlight is a background only and always carries black. */
-  --accent:       #0A0A0A;
+  --accent:       #333333;
   --accent-dark:  #333333;
   --accent-light: #FFF6A6;
   --on-accent:    #FFFFFF;
@@ -1490,8 +1490,6 @@ main a.border:hover {
   margin-right: 0.85rem;
   margin-left:.85rem;
   background: var(--bg);
-  border: 1px solid var(--text);
-  border-radius: 0;
   font-size: 0.78rem;
   color: var(--text-muted);
   line-height: 1;
