@@ -21,6 +21,9 @@ public class SitePage
     // status line on the homepage.
     public string? Tagline { get; set; }
 
+    // Portrait-style image above the heading (the About page photo).
+    public string? HeaderImageUrl { get; set; }
+
     // Markdown. Raw HTML passes through.
     public string? Content { get; set; }
 

@@ -1,0 +1,54 @@
+@model List<Website.Models.Project>
+@{
+    ViewData["Title"] = "Projects — Admin";
+    Layout = "_AdminLayout";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="admin-flash admin-flash--success">@TempData["Success"]</div>
+}
+
+<div class="admin-toolbar">
+    <h1>Projects</h1>
+    <div style="display:flex; gap:1rem; align-items:center;">
+        <a href="/projects" target="_blank" class="admin-link">View live →</a>
+        <a href="/admin/projects/new" class="admin-btn admin-btn--primary">+ New Project</a>
+    </div>
+</div>
+
+<p class="text-muted" style="margin-bottom: 1.5rem; line-height: 1.6;">
+    Cards are grouped by section. Lower order numbers come first, and each section sits where its lowest-numbered card would.
+</p>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">No projects yet.</p>
+}
+else
+{
+    <table class="admin-table">
+        <thead>
+            <tr><th>Name</th><th>Section</th><th>Order</th><th>Tech</th><th></th></tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td><a href="/admin/projects/@p.Id/edit">@p.Name</a></td>
+                    <td>@p.Section</td>
+                    <td class="mono">@p.SortOrder</td>
+                    <td class="mono text-muted" style="font-size:0.75rem;">@p.Tech</td>
+                    <td class="admin-actions">
+                        <a href="/admin/projects/@p.Id/edit">Edit</a>
+                        <form method="post" action="/admin/projects/@p.Id/delete"
+                              onsubmit="return confirm('Delete this project?')">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="admin-link admin-link--danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

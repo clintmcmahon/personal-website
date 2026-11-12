@@ -30,11 +30,20 @@ public class RedirectMiddleware
         }
 
         // Define paths that should not be redirected (controller routes)
-        var excludedPaths = new[] { "photos", "projects", "about", "contact", "home", "blog", "now", "portfolio", "services", "rss", "sitemap" };
+        var excludedPaths = new[] { "photos", "projects", "home", "blog", "portfolio", "services", "rss", "sitemap" };
 
         // Only execute if the path has no slashes (indicating it's at the root) and is not an excluded path
         if (!string.IsNullOrEmpty(path) && !path.Contains("/") && !excludedPaths.Contains(path, StringComparer.OrdinalIgnoreCase))
         {
+            // Database-backed pages live at the root too (/now, /about...). One of those
+            // wins over a blog post that happens to share its slug.
+            var blogDb = context.RequestServices.GetService<Website.Data.BlogDbContext>();
+            if (blogDb != null && blogDb.Pages.Any(p => p.Slug == path))
+            {
+                await _next(context);
+                return;
+            }
+
             // Resolve IPostRepository within the request scope
             var postRepository = context.RequestServices.GetService<IPostRepository>();
 

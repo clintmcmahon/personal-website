@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
+using Website.Data;
 using Website.Models;
 using Website.Repositories;
 using Website.Services;
@@ -10,13 +11,15 @@ public class SearchController : Controller
 {
     private readonly IPostRepository _postRepository;
     private readonly IWebHostEnvironment _env;
+    private readonly BlogDbContext _db;
 
     // Photos are no longer indexed here. They live in a separate app with its own
     // database, and reaching across to it would re-couple the two deployments.
-    public SearchController(IPostRepository postRepository, IWebHostEnvironment env)
+    public SearchController(IPostRepository postRepository, IWebHostEnvironment env, BlogDbContext db)
     {
         _postRepository = postRepository;
         _env = env;
+        _db = db;
     }
 
     [HttpGet("/search")]
@@ -74,6 +77,20 @@ public class SearchController : Controller
             });
 
         results.AddRange(posts.Concat(tools).OrderByDescending(r => r.Date));
+
+        // Standalone pages have no meaningful date, so they go after the dated results.
+        results.AddRange(_db.Pages
+            .Where(p => p.Published)
+            .ToList()
+            .Select(p => (Page: p, Text: StripHtml(DatabasePostRepository.RenderMarkdown(p.Content))))
+            .Where(x => Matches(x.Page.Title, term) || Matches(x.Page.Tagline, term) || Matches(x.Text, term))
+            .Select(x => new SearchResult
+            {
+                Type = "Page",
+                Title = x.Page.Title,
+                Snippet = Excerpt(x.Page.Description ?? x.Text, term),
+                Url = $"/{x.Page.Slug}"
+            }));
 
         return View(results);
     }

@@ -35,11 +35,10 @@ public class SitemapController : Controller
     {
         Abs(Url.Action("Index", "Home")),
         Abs(Url.Action("FreelanceDeveloperMinneapolis", "Services")),
-        Abs(Url.Action("Index", "About")),
         Abs(Url.Action("Index", "Blog")),
         Abs(Url.Action("Index", "Photo")),
         Abs(Url.Action("Index", "Rss")),
-        Abs(Url.Action("Index", "Contact"))
+        Abs(Url.Action("Index", "Projects"))
     };
 
         // Database-backed pages (/now and anything created at /admin/pages).

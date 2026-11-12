@@ -1,0 +1,104 @@
+@model Website.Models.Project
+@{
+    var isNew = Model.Id == 0;
+    ViewData["Title"] = (isNew ? "New Project" : $"Edit: {Model.Name}") + " — Admin";
+    Layout = "_AdminLayout";
+    var sections = ViewData["Sections"] as List<string> ?? new List<string>();
+}
+
+<div class="admin-toolbar">
+    <h1>@(isNew ? "New Project" : "Edit Project")</h1>
+    <a href="/admin/projects" class="admin-link">← All projects</a>
+</div>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="admin-flash admin-flash--error">
+        @foreach (var err in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div>@err.ErrorMessage</div>
+        }
+    </div>
+}
+
+<form method="post" action="@(isNew ? "/admin/projects/new" : $"/admin/projects/{Model.Id}/edit")" class="admin-form">
+    @Html.AntiForgeryToken()
+
+    <div class="admin-field-row" style="grid-template-columns: 1fr 1fr;">
+        <div class="admin-field">
+            <label for="Name">Name</label>
+            <input type="text" id="Name" name="Name" value="@Model.Name" class="admin-input" required />
+        </div>
+        <div class="admin-field">
+            <label for="Url">URL</label>
+            <input type="url" id="Url" name="Url" value="@Model.Url" class="admin-input admin-input--mono" required />
+        </div>
+    </div>
+
+    <div class="admin-field">
+        <label for="Description">Description</label>
+        <textarea id="Description" name="Description" class="admin-input" rows="3">@Model.Description</textarea>
+    </div>
+
+    <div class="admin-field-row" style="grid-template-columns: 1fr 1fr 120px;">
+        <div class="admin-field">
+            <label for="Section">Section</label>
+            <input type="text" id="Section" name="Section" value="@Model.Section" class="admin-input" list="section-options" />
+            <datalist id="section-options">
+                @foreach (var s in sections)
+                {
+                    <option value="@s"></option>
+                }
+            </datalist>
+        </div>
+        <div class="admin-field">
+            <label for="Tech">Tech <span class="admin-hint">(comma-separated)</span></label>
+            <input type="text" id="Tech" name="Tech" value="@Model.Tech" class="admin-input" placeholder="React Native, Expo" />
+        </div>
+        <div class="admin-field">
+            <label for="SortOrder">Order</label>
+            <input type="number" id="SortOrder" name="SortOrder" value="@Model.SortOrder" class="admin-input admin-input--mono" />
+        </div>
+    </div>
+
+    <div class="admin-field-row" style="grid-template-columns: 1fr 1fr;">
+        <div class="admin-field">
+            <label for="ImageUrl">Icon image <span class="admin-hint">(path or URL)</span></label>
+            <input type="text" id="ImageUrl" name="ImageUrl" value="@Model.ImageUrl" class="admin-input admin-input--mono" placeholder="/images/2026/icon.png" />
+            <input type="file" id="ImageUpload" accept=".jpg,.jpeg,.png,.gif,.webp" style="margin-top:0.5rem; font-size:0.8125rem;" />
+            <div id="ImageUploadStatus" class="admin-hint" style="font-size:0.8125rem;"></div>
+        </div>
+        <div class="admin-field">
+            <label for="IconClass">Or a Bootstrap icon <span class="admin-hint">(used when there's no image)</span></label>
+            <input type="text" id="IconClass" name="IconClass" value="@Model.IconClass" class="admin-input admin-input--mono" placeholder="bi-globe2" />
+        </div>
+    </div>
+
+    <div class="admin-form-actions">
+        <button type="submit" class="admin-btn admin-btn--primary">@(isNew ? "Add project" : "Save changes")</button>
+        <a href="/admin/projects" class="admin-btn admin-btn--ghost">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        // Reuses the blog editor's upload endpoint and drops the saved path into the field.
+        document.getElementById("ImageUpload").addEventListener("change", async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const status = document.getElementById("ImageUploadStatus");
+            status.textContent = "Uploading…";
+            const body = new FormData();
+            body.append("image", file);
+            try {
+                const res = await fetch("/admin/blog/upload-image", { method: "POST", body });
+                const json = await res.json();
+                if (!res.ok) throw new Error(json?.error?.message || res.statusText);
+                document.getElementById("ImageUrl").value = json.data.filePath;
+                status.textContent = "Uploaded. Save to keep it.";
+            } catch (err) {
+                status.textContent = "Upload failed: " + err.message;
+            }
+        });
+    </script>
+}

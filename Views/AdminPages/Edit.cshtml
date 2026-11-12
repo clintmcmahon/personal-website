@@ -61,6 +61,11 @@
     </div>
 
     <div class="admin-field">
+        <label for="HeaderImageUrl">Header image <span class="admin-hint">(optional portrait above the heading, e.g. /images/icon/me.jpg)</span></label>
+        <input type="text" id="HeaderImageUrl" name="HeaderImageUrl" value="@Model.HeaderImageUrl" class="admin-input admin-input--mono" />
+    </div>
+
+    <div class="admin-field">
         <label for="MetaTitle">Browser title <span class="admin-hint">(defaults to "Title | Clint McMahon")</span></label>
         <input type="text" id="MetaTitle" name="MetaTitle" value="@Model.MetaTitle" class="admin-input" />
     </div>

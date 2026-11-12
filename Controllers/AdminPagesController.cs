@@ -119,6 +119,7 @@ public class AdminPagesController : Controller
         page.MetaTitle = input.MetaTitle;
         page.Description = input.Description;
         page.Tagline = input.Tagline;
+        page.HeaderImageUrl = string.IsNullOrWhiteSpace(input.HeaderImageUrl) ? null : input.HeaderImageUrl.Trim();
         page.Content = input.Content;
         page.Published = input.Published;
         page.ShowLastUpdated = input.ShowLastUpdated;

@@ -6,6 +6,10 @@
 }
 
 <div class="page-intro is-centered @(hasTagline ? "pb-0" : "")">
+    @if (!string.IsNullOrWhiteSpace(Model.HeaderImageUrl))
+    {
+        <img class="u-photo portrait-box mb-4" src="@Model.HeaderImageUrl" alt="" width="112" height="112" />
+    }
     <h1>@Model.Title</h1>
     @if (hasTagline)
     {
@@ -13,7 +17,8 @@
     }
 </div>
 
-<div class="page-body page-content is-centered">
+@* page-{slug} lets site.css style one page's markdown output (see .page-feeds). *@
+<div class="page-body page-content page-@Model.Slug is-centered">
     @if (User.Identity?.IsAuthenticated == true)
     {
         <p class="text-muted small">

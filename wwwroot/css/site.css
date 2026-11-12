@@ -992,6 +992,37 @@ p {
   margin-top: 3rem;
 }
 
+/* Blogroll (/feeds): the page's markdown list of links. */
+.page-feeds ul {
+  list-style: none;
+  padding: 0;
+}
+.page-feeds li {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--text);
+}
+.page-feeds li:first-child {
+  border-top: 1px solid var(--text);
+}
+.page-feeds li a {
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+.page-feeds li a:hover {
+  background: var(--highlight);
+  color: #0A0A0A;
+}
+.page-feeds li small {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.page-feeds li small a {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
 .portfolio-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1259,30 +1290,6 @@ p {
   }
 }
 
-/* Bootstrap .card used elsewhere (Projects page) */
-.card {
-  border: 2px solid var(--text) !important;
-  border-radius: 0 !important;
-  background: var(--bg) !important;
-  box-shadow: none !important;
-  transition: box-shadow 0.12s ease, transform 0.12s ease;
-}
-
-.card:hover {
-  box-shadow: 6px 6px 0 var(--text) !important;
-  transform: translate(-3px, -3px);
-}
-
-.card-img-top {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
-}
-
-.card-body {
-  padding: 1.5rem !important;
-}
 
 .card-title {
   font-size: 1rem;
