@@ -1424,6 +1424,68 @@ main a.border:hover {
   padding-right: 0;
 }
 
+/* About page: profile links as boxed tiles instead of a bullet list */
+.elsewhere {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.elsewhere a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--text);
+  color: var(--text);
+  text-decoration: none;
+  transition: box-shadow 0.12s ease, transform 0.12s ease, background 0.12s ease;
+}
+
+.elsewhere i {
+  font-size: 1.375rem;
+  line-height: 1;
+}
+
+.elsewhere strong {
+  display: block;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.elsewhere small {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.elsewhere a:hover,
+.elsewhere a:focus-visible {
+  background: var(--highlight);
+  color: #0A0A0A;
+  box-shadow: 5px 5px 0 var(--text);
+  transform: translate(-2px, -2px);
+}
+
+.elsewhere a:hover small,
+.elsewhere a:focus-visible small {
+  color: #0A0A0A;
+}
+
+@media (max-width: 520px) {
+  .elsewhere {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* Guestbook: confirmation after signing, and form errors */
 .guestbook-notice {
   border: 2px solid var(--text);
