@@ -1,0 +1,97 @@
+@{
+    ViewData["Title"] = "404: Not Found | Clint McMahon";
+    ViewData["Description"] = "This page doesn't exist. It probably went out for coffee.";
+    var path = ViewData["MissingPath"] as string ?? "/";
+
+    // One excuse per visit, picked at random.
+    var excuses = new[]
+    {
+        "It went out for coffee and didn't come back. Honestly, relatable.",
+        "I renamed it during a \"quick\" refactor. There's no such thing as a quick refactor.",
+        "It's somewhere on my camera's SD card, along with 4,000 photos of the same street corner.",
+        "Claude Code and I agreed it was unnecessary. One of us was wrong.",
+        "It was deleted to make room for another side project I won't finish.",
+        "It's still in drafts. Like most of my blog posts.",
+        "It's on hold, next to the Chicago Coffee Map.",
+        "Minnesota winter got it. It's fine. It'll thaw out in May."
+    };
+    var excuse = excuses[Random.Shared.Next(excuses.Length)];
+}
+
+<div class="page-intro is-centered pb-0">
+    <h1 class="nf-code">404</h1>
+    <span class="portfolio-section-label mt-0 border-0">Page not found</span>
+</div>
+
+<div class="page-body is-centered">
+    <p>@excuse</p>
+
+    <pre class="nf-terminal" aria-label="A fake terminal session searching for the page">
+<span class="nf-prompt">~$</span> cd @path
+cd: no such file or directory: @path
+<span class="nf-prompt">~$</span> find / -name "@path.TrimStart('/')"
+find: searched under the Chemex, behind the grinder, in the camera bag
+find: 0 results
+<span class="nf-prompt">~$</span> sudo find / -name "@path.TrimStart('/')"
+find: 0 results, but more confidently
+<span class="nf-prompt">~$</span> <span class="nf-cursor">█</span></pre>
+
+    <span class="portfolio-section-label">Try one of these</span>
+    <ul>
+        <li><a href="/">The homepage</a>, where things generally exist</li>
+        <li><a href="/blog">The blog</a>, if you came here to read</li>
+        <li><a href="/now">What I'm up to now</a></li>
+        <li><a href="/contact">Tell me about the broken link</a> and I'll fix it (eventually)</li>
+    </ul>
+
+    <form action="/search" method="get" class="nf-search" role="search">
+        <label for="nf-q" class="visually-hidden">Search the site</label>
+        <input id="nf-q" type="search" name="q" placeholder="Or search for it" />
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<style>
+.nf-code {
+    font-size: clamp(4rem, 14vw, 7rem);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 1;
+}
+.nf-terminal {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    background: var(--text);
+    color: var(--bg);
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+.nf-prompt { color: var(--highlight); }
+.nf-cursor { animation: nf-blink 1s steps(1) infinite; }
+@@keyframes nf-blink { 50% { opacity: 0; } }
+@@media (prefers-reduced-motion: reduce) { .nf-cursor { animation: none; } }
+.nf-search {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+.nf-search input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid var(--text);
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+}
+.nf-search button {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--text);
+    background: var(--highlight);
+    color: #0A0A0A;
+    font-weight: 600;
+}
+</style>

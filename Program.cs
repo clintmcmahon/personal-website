@@ -183,6 +183,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// Re-runs empty-bodied error responses through /error/{code} so a missing page gets
+// the 404 view instead of a blank screen. Responses that already have a body (the
+// upload endpoint's JSON errors, for example) pass through untouched.
+app.UseStatusCodePagesWithReExecute("/error/{0}");
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

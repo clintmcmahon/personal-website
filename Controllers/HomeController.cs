@@ -38,6 +38,21 @@ public class HomeController : Controller
         return View(posts);
     }
 
+    // Target of UseStatusCodePagesWithReExecute in Program.cs. Only 404 gets a page;
+    // every other code keeps its status with an empty body, as before.
+    [Route("/error/{code:int}")]
+    public IActionResult StatusCodePage(int code)
+    {
+        if (code != StatusCodes.Status404NotFound)
+            return StatusCode(code);
+
+        var feature = HttpContext.Features.Get<Microsoft.AspNetCore.Diagnostics.IStatusCodeReExecuteFeature>();
+        ViewData["MissingPath"] = feature?.OriginalPath ?? Request.Path.Value;
+
+        Response.StatusCode = StatusCodes.Status404NotFound;
+        return View("NotFound");
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
