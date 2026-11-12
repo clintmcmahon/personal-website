@@ -223,4 +223,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// Database-backed pages (/now and anything created at /admin/pages). A fallback so
+// every real controller route wins and a page can never shadow one.
+app.MapFallbackToController("{slug}", "Show", "SitePage");
+
 app.Run();

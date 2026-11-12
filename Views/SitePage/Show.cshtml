@@ -1,0 +1,33 @@
+@model Website.Models.SitePage
+@{
+    ViewData["Title"] = string.IsNullOrWhiteSpace(Model.MetaTitle) ? $"{Model.Title} | Clint McMahon" : Model.MetaTitle;
+    ViewData["Description"] = Model.Description;
+    var hasTagline = !string.IsNullOrWhiteSpace(Model.Tagline);
+}
+
+<div class="page-intro is-centered @(hasTagline ? "pb-0" : "")">
+    <h1>@Model.Title</h1>
+    @if (hasTagline)
+    {
+        <span class="portfolio-section-label mt-0 border-0">@Model.Tagline</span>
+    }
+</div>
+
+<div class="page-body page-content is-centered">
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <p class="text-muted small">
+            <a href="/admin/pages/@Model.Id/edit">Edit this page</a>
+            @if (!Model.Published)
+            {
+                <span>(draft, only you can see it)</span>
+            }
+        </p>
+    }
+    @if (Model.ShowLastUpdated)
+    {
+        <p class="text-muted small">Last updated: @Model.UpdatedAt.ToString("MMMM yyyy")</p>
+    }
+
+    @Html.Raw(ViewData["ContentHtml"])
+</div>

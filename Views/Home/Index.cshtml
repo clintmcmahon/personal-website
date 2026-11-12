@@ -136,14 +136,15 @@
                 <li><a href="https://parkasoftware.com"><strong>Parka Software &nearr;</strong><span>My consulting company</span></a></li>
             </ul>
 
-            @if (!string.IsNullOrWhiteSpace(NowStatus.Blurb) || !string.IsNullOrWhiteSpace(NowStatus.CurrentlyBrewing))
+            @{ var nowBlurb = ViewData["NowBlurb"] as string; }
+            @if (!string.IsNullOrWhiteSpace(nowBlurb) || !string.IsNullOrWhiteSpace(NowStatus.CurrentlyBrewing))
             {
                 <dl class="home-now">
-                    @if (!string.IsNullOrWhiteSpace(NowStatus.Blurb))
+                    @if (!string.IsNullOrWhiteSpace(nowBlurb))
                     {
                         <div>
                             <dt>Now</dt>
-                            <dd>@NowStatus.Blurb</dd>
+                            <dd>@nowBlurb</dd>
                         </div>
                     }
                     @if (!string.IsNullOrWhiteSpace(NowStatus.CurrentlyBrewing))

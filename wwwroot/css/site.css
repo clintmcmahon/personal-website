@@ -974,6 +974,24 @@ p {
   margin-top: 3rem;
 }
 
+/* Database-backed pages (Views/SitePage): a markdown "## Heading" gets the same
+   look as a hand-written .portfolio-section-label. */
+.page-content h2 {
+  display: block;
+  width: fit-content;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--bg);
+  background: var(--text);
+  padding: 0.4rem 0.6rem;
+  margin-bottom: 1.5rem;
+  margin-top: 3rem;
+}
+
 .portfolio-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

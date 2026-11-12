@@ -1,0 +1,97 @@
+@model Website.Models.SitePage
+@{
+    var isNew = Model.Id == 0;
+    ViewData["Title"] = (isNew ? "New Page" : $"Edit: {Model.Title}") + " — Admin";
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-toolbar">
+    <h1>@(isNew ? "New Page" : "Edit Page")</h1>
+    <div style="display:flex; gap:1rem; align-items:center;">
+        @if (!isNew)
+        {
+            <a href="/@Model.Slug" target="_blank" class="admin-link">@(Model.Published ? "View live →" : "Preview draft →")</a>
+        }
+        <a href="/admin/pages" class="admin-link">← All pages</a>
+    </div>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="admin-flash admin-flash--success">@TempData["Success"]</div>
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="admin-flash admin-flash--error">
+        @foreach (var err in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div>@err.ErrorMessage</div>
+        }
+    </div>
+}
+
+<form method="post" action="@(isNew ? "/admin/pages/new" : $"/admin/pages/{Model.Id}/edit")" class="admin-form">
+    @Html.AntiForgeryToken()
+
+    <div class="admin-field">
+        <label for="Title">Title</label>
+        <input type="text" id="Title" name="Title" value="@Model.Title" class="admin-input" required />
+    </div>
+
+    <div class="admin-field-row" style="grid-template-columns: 1fr auto auto;">
+        <div class="admin-field">
+            <label for="Slug">Slug <span class="admin-hint">(the page lives at /slug)</span></label>
+            <input type="text" id="Slug" name="Slug" value="@Model.Slug" class="admin-input admin-input--mono"
+                   placeholder="auto-generated from title if blank" />
+        </div>
+        <div class="admin-field admin-field--narrow">
+            <label for="Published">Published</label>
+            <input type="checkbox" id="Published" name="Published" value="true" @(Model.Published ? "checked" : "") class="admin-checkbox" />
+        </div>
+        <div class="admin-field admin-field--narrow">
+            <label for="ShowLastUpdated">Show "Last updated"</label>
+            <input type="checkbox" id="ShowLastUpdated" name="ShowLastUpdated" value="true" @(Model.ShowLastUpdated ? "checked" : "") class="admin-checkbox" />
+        </div>
+    </div>
+
+    <div class="admin-field">
+        <label for="Tagline">Tagline <span class="admin-hint">(short line under the heading; on the Now page it's also the homepage status)</span></label>
+        <input type="text" id="Tagline" name="Tagline" value="@Model.Tagline" class="admin-input" />
+    </div>
+
+    <div class="admin-field">
+        <label for="MetaTitle">Browser title <span class="admin-hint">(defaults to "Title | Clint McMahon")</span></label>
+        <input type="text" id="MetaTitle" name="MetaTitle" value="@Model.MetaTitle" class="admin-input" />
+    </div>
+
+    <div class="admin-field">
+        <label for="Description">Description <span class="admin-hint">(meta tags)</span></label>
+        <textarea id="Description" name="Description" class="admin-input" rows="2">@Model.Description</textarea>
+    </div>
+
+    <div class="admin-field admin-field--editor">
+        <label for="Content">Content <span class="admin-hint">(markdown; ## headings become section labels)</span></label>
+        <textarea id="Content" name="Content">@Model.Content</textarea>
+    </div>
+
+    <div class="admin-form-actions">
+        <button type="submit" class="admin-btn admin-btn--primary">@(isNew ? "Save" : "Save changes")</button>
+        <a href="/admin/pages" class="admin-btn admin-btn--ghost">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css" />
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+    <script>
+        new EasyMDE({
+            element: document.getElementById("Content"),
+            spellChecker: false,
+            uploadImage: true,
+            imageUploadEndpoint: "/admin/blog/upload-image",
+            toolbar: ["bold","italic","heading","|","quote","unordered-list","ordered-list","|","link","image","upload-image","code","table","|","preview","side-by-side","fullscreen","|","guide"],
+            minHeight: "420px"
+        });
+    </script>
+}

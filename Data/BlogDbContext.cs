@@ -9,6 +9,7 @@ public class BlogDbContext : DbContext
     public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options) { }
 
     public DbSet<Post> Posts { get; set; }
+    public DbSet<SitePage> Pages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -27,6 +28,12 @@ public class BlogDbContext : DbContext
             entity.HasIndex(p => p.Slug).IsUnique();
             entity.Property(p => p.Tags).HasConversion(tagsConverter);
             entity.Ignore(p => p.TagsRaw);
+        });
+
+        modelBuilder.Entity<SitePage>(entity =>
+        {
+            entity.HasKey(p => p.Id);
+            entity.HasIndex(p => p.Slug).IsUnique();
         });
     }
 }

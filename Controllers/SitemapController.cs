@@ -2,6 +2,7 @@
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Website.Data;
 using Website.Repositories;
 using Website.Services;
 
@@ -10,10 +11,12 @@ namespace Website.Controllers;
 public class SitemapController : Controller
 {
     private readonly IPostRepository _postRepository;
+    private readonly BlogDbContext _db;
 
-    public SitemapController(IPostRepository postRepository)
+    public SitemapController(IPostRepository postRepository, BlogDbContext db)
     {
         _postRepository = postRepository;
+        _db = db;
     }
 
     // robots.txt and llms.txt both advertise /sitemap.xml, which is also the URL
@@ -38,6 +41,13 @@ public class SitemapController : Controller
         Abs(Url.Action("Index", "Rss")),
         Abs(Url.Action("Index", "Contact"))
     };
+
+        // Database-backed pages (/now and anything created at /admin/pages).
+        urls.AddRange(_db.Pages
+            .Where(p => p.Published)
+            .Select(p => p.Slug)
+            .ToList()
+            .Select(slug => CanonicalUrlHelper.ForPath("/" + slug)));
 
         // Case studies only enter the sitemap once they are actually written.
         urls.AddRange(CaseStudies.All

@@ -69,6 +69,52 @@ namespace Website.Migrations.Blog
 
                     b.ToTable("Posts");
                 });
+
+            modelBuilder.Entity("Website.Models.SitePage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MetaTitle")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Published")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("ShowLastUpdated")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Tagline")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
+                    b.ToTable("Pages");
+                });
 #pragma warning restore 612, 618
         }
     }

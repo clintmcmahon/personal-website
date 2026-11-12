@@ -1,12 +1,9 @@
 namespace Website.Services;
 
-// Single source of truth for the short "what I'm up to" line shown on both
-// /now and the homepage terminal's `cat ~/now`. Update this whenever /now
-// changes — keep it short (~40 chars) so it fits the terminal panel.
+// The short "what I'm up to" line moved to the Now page's tagline, edited at
+// /admin/pages. Only the coffee line is still hardcoded here.
 public static class NowStatus
 {
-    public const string Blurb = "Taking pictures, drinking coffee & sunshine.";
-
     // Whatever's in the hopper. Shown in the homepage terminal's `cat ~/brewing`.
     public const string CurrentlyBrewing = "Heart Coffee Roasters single origin";
 }

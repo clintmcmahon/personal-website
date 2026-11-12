@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Website.Data;
 using Website.Models;
 using Website.Repositories;
 
@@ -12,11 +13,13 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly IPostRepository _postRepository;
+    private readonly BlogDbContext _db;
 
-    public HomeController(ILogger<HomeController> logger, IPostRepository postRepository)
+    public HomeController(ILogger<HomeController> logger, IPostRepository postRepository, BlogDbContext db)
     {
         _logger = logger;
         _postRepository = postRepository;
+        _db = db;
     }
 
     public IActionResult Index()
@@ -25,6 +28,13 @@ public class HomeController : Controller
            .Where(post => !post.Draft)
            .OrderByDescending(post => post.Date)
            .Take(10);
+
+        // The homepage status line is the /now page's tagline, edited at /admin/pages.
+        ViewData["NowBlurb"] = _db.Pages
+            .Where(p => p.Slug == "now" && p.Published)
+            .Select(p => p.Tagline)
+            .FirstOrDefault();
+
         return View(posts);
     }
 

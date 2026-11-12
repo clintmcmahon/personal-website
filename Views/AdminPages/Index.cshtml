@@ -1,0 +1,51 @@
+@model List<Website.Models.SitePage>
+@{
+    ViewData["Title"] = "Pages — Admin";
+    Layout = "_AdminLayout";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="admin-flash admin-flash--success">@TempData["Success"]</div>
+}
+
+<div class="admin-toolbar">
+    <h1>Pages</h1>
+    <a href="/admin/pages/new" class="admin-btn admin-btn--primary">+ New Page</a>
+</div>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">No pages yet.</p>
+}
+else
+{
+    <table class="admin-table">
+        <thead>
+            <tr><th>Title</th><th>URL</th><th>Status</th><th>Updated (UTC)</th><th></th></tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr class="@(p.Published ? "" : "row--draft")">
+                    <td><a href="/admin/pages/@p.Id/edit">@p.Title</a></td>
+                    <td class="mono"><a href="/@p.Slug" target="_blank">/@p.Slug</a></td>
+                    <td>
+                        <span class="admin-pill @(p.Published ? "admin-pill--live" : "admin-pill--draft")" style="cursor: default;">
+                            @(p.Published ? "Live" : "Draft")
+                        </span>
+                    </td>
+                    <td class="mono">@p.UpdatedAt.ToString("yyyy-MM-dd")</td>
+                    <td class="admin-actions">
+                        <a href="/admin/pages/@p.Id/edit">Edit</a>
+                        <form method="post" action="/admin/pages/@p.Id/delete"
+                              onsubmit="return confirm('Delete this page? This cannot be undone.')">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="admin-link admin-link--danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
