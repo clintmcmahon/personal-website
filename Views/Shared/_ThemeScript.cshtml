@@ -1,0 +1,79 @@
+@* Inlined in <head> by both layouts, ahead of the stylesheets, so the theme is set
+   before first paint and there's no flash of the wrong palette.
+
+   The theme follows the visitor's local clock: light from 7:00, dark from 19:00.
+   The toggle button overrides that only until the next scheduled switch, then the
+   clock takes over again. An open tab flips on its own when the switch time hits. *@
+<script>
+(function () {
+    var LIGHT_FROM = 7, DARK_FROM = 19, KEY = "theme-override";
+    var root = document.documentElement, timer;
+
+    function byClock(d) {
+        var h = d.getHours();
+        return h >= LIGHT_FROM && h < DARK_FROM ? "light" : "dark";
+    }
+
+    function nextSwitch(d) {
+        var n = new Date(d), h = d.getHours();
+        if (h >= DARK_FROM) n.setDate(n.getDate() + 1);
+        n.setHours(h >= LIGHT_FROM && h < DARK_FROM ? DARK_FROM : LIGHT_FROM, 0, 0, 0);
+        return n;
+    }
+
+    // Storage can be blocked (private windows, strict settings). The clock still works.
+    function override() {
+        try {
+            var o = JSON.parse(localStorage.getItem(KEY) || "null");
+            if (o && o.until > Date.now() && (o.theme === "light" || o.theme === "dark")) return o.theme;
+            localStorage.removeItem(KEY);
+        } catch (e) { }
+        return null;
+    }
+
+    function current() { return override() || byClock(new Date()); }
+
+    function label(theme) {
+        var next = theme === "dark" ? "light" : "dark";
+        document.querySelectorAll("[data-theme-toggle]").forEach(function (b) {
+            b.setAttribute("aria-label", "Switch to " + next + " mode");
+            b.title = "Switch to " + next + " mode";
+        });
+    }
+
+    function apply(theme) {
+        root.setAttribute("data-theme", theme);
+        label(theme);
+    }
+
+    function schedule() {
+        clearTimeout(timer);
+        timer = setTimeout(function () { apply(current()); schedule(); },
+            nextSwitch(new Date()) - Date.now() + 1000);
+    }
+
+    function toggle() {
+        var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        try {
+            localStorage.setItem(KEY, JSON.stringify({ theme: next, until: nextSwitch(new Date()).getTime() }));
+        } catch (e) { }
+        apply(next);
+    }
+
+    apply(current());
+    schedule();
+
+    document.addEventListener("DOMContentLoaded", function () {
+        label(root.getAttribute("data-theme"));
+        document.querySelectorAll("[data-theme-toggle]").forEach(function (b) {
+            b.addEventListener("click", toggle);
+        });
+    });
+
+    // Timers stall while a laptop sleeps or a tab is in the background, so
+    // re-check whenever the page comes back into view.
+    document.addEventListener("visibilitychange", function () {
+        if (!document.hidden) { apply(current()); schedule(); }
+    });
+})();
+</script>

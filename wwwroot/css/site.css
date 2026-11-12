@@ -22,54 +22,58 @@
   --content-width: 720px;
   --radius:    0;
   --radius-lg: 0;
+
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg:           #0C0C0C;
-    --bg-subtle:    #191919;
-    --border:       #2E2E2E;
-    --text:         #F2F2EF;
-    --text-muted:   #9A9A96;
-    --accent:       #FFE600;
-    --accent-dark:  #FFF27A;
-    --accent-light: #2B2A10;
-    --on-accent:    #0A0A0A;
+/* Dark palette. data-theme is set on <html> before first paint by
+   Views/Shared/_ThemeScript.cshtml from the visitor's local time of day,
+   or by the header toggle. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg:           #0C0C0C;
+  --bg-subtle:    #191919;
+  --border:       #2E2E2E;
+  --text:         #F2F2EF;
+  --text-muted:   #9A9A96;
+  --accent:       #FFE600;
+  --accent-dark:  #FFF27A;
+  --accent-light: #2B2A10;
+  --on-accent:    #0A0A0A;
 
-    /* Bootstrap 5.3 only switches its own palette on [data-bs-theme="dark"],
-       which nothing sets here because the site follows prefers-color-scheme
-       rather than offering a toggle. Left alone, .text-muted stayed
-       rgba(33,37,41,.75) on the dark background (1.16:1) and .bg-light panels
-       stayed #F8F9FA under near-white text (1.11:1). Both failed WCAG 1.4.3 AA.
-       Mapping Bootstrap's tokens onto the ones above keeps a single source of
-       truth. The rgb() triplets are the hex values above, decomposed, because
-       Bootstrap composes them inside rgba(). */
-    --bs-body-bg:                 #0C0C0C;
-    --bs-body-bg-rgb:             12, 12, 12;
-    --bs-body-color:              #EDEDEB;
-    --bs-body-color-rgb:          237, 237, 235;
-    --bs-emphasis-color:          #FFFFFF;
-    --bs-emphasis-color-rgb:      255, 255, 255;
-    --bs-heading-color:           inherit;
+  /* Bootstrap 5.3 only switches its own palette on [data-bs-theme="dark"],
+     which nothing sets here: the site uses its own data-theme attribute
+     (set by Views/Shared/_ThemeScript.cshtml). Left alone, .text-muted stayed
+     rgba(33,37,41,.75) on the dark background (1.16:1) and .bg-light panels
+     stayed #F8F9FA under near-white text (1.11:1). Both failed WCAG 1.4.3 AA.
+     Mapping Bootstrap's tokens onto the ones above keeps a single source of
+     truth. The rgb() triplets are the hex values above, decomposed, because
+     Bootstrap composes them inside rgba(). */
+  --bs-body-bg:                 #0C0C0C;
+  --bs-body-bg-rgb:             12, 12, 12;
+  --bs-body-color:              #EDEDEB;
+  --bs-body-color-rgb:          237, 237, 235;
+  --bs-emphasis-color:          #FFFFFF;
+  --bs-emphasis-color-rgb:      255, 255, 255;
+  --bs-heading-color:           inherit;
 
-    --bs-secondary-color:         #888888;   /* .text-muted  -> 5.38:1 on --bg */
-    --bs-secondary-bg:            #1A1D1D;
-    --bs-secondary-bg-rgb:        26, 29, 29;
-    --bs-tertiary-color:          #888888;
-    --bs-tertiary-bg:             #1A1D1D;
-    --bs-tertiary-bg-rgb:         26, 29, 29;
+  --bs-secondary-color:         #888888;   /* .text-muted  -> 5.38:1 on --bg */
+  --bs-secondary-bg:            #1A1D1D;
+  --bs-secondary-bg-rgb:        26, 29, 29;
+  --bs-tertiary-color:          #888888;
+  --bs-tertiary-bg:             #1A1D1D;
+  --bs-tertiary-bg-rgb:         26, 29, 29;
 
-    --bs-light-rgb:               26, 29, 29;  /* .bg-light -> subtle dark panel */
-    --bs-dark-rgb:                237, 237, 235;
+  --bs-light-rgb:               26, 29, 29;  /* .bg-light -> subtle dark panel */
+  --bs-dark-rgb:                237, 237, 235;
 
-    --bs-border-color:            #2A2F2F;
-    --bs-border-color-translucent: rgba(255, 255, 255, 0.15);
+  --bs-border-color:            #2A2F2F;
+  --bs-border-color-translucent: rgba(255, 255, 255, 0.15);
 
-    --bs-link-color:              #FFE600;
-    --bs-link-color-rgb:          255, 230, 0;
-    --bs-link-hover-color:        #FFF27A;
-    --bs-link-hover-color-rgb:    255, 242, 122;
-  }
+  --bs-link-color:              #FFE600;
+  --bs-link-color-rgb:          255, 230, 0;
+  --bs-link-hover-color:        #FFF27A;
+  --bs-link-hover-color-rgb:    255, 242, 122;
 }
 
 /* ============================================================
@@ -1565,6 +1569,35 @@ main a.border:hover {
   height: 80px;
   background-color: var(--text);
 }
+
+/* ============================================================
+   THEME TOGGLE (Views/Shared/_ThemeToggle.cshtml)
+   ============================================================ */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.5rem;
+  padding: 0;
+  border: 2px solid var(--text);
+  border-radius: 0;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  background: var(--highlight);
+  color: #0A0A0A;
+}
+
+.theme-toggle-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle-sun { display: block; }
+:root[data-theme="dark"] .theme-toggle-moon { display: none; }
 
 /* ============================================================
    WEATHER WIDGET

@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
+    @await Html.PartialAsync("_ThemeScript")
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -167,7 +168,10 @@
             <a href="/admin/guestbook" class="@(Context.Request.Path.StartsWithSegments("/admin/guestbook") ? "active" : "")">Guestbook</a>
             <a href="/admin/backup" class="@(Context.Request.Path.StartsWithSegments("/admin/backup") ? "active" : "")">Backup</a>
         </div>
-        <a href="/auth/logout" class="admin-nav-logout">Log out</a>
+        <span style="margin-left:auto; display:flex; align-items:center; gap:1rem;">
+            @await Html.PartialAsync("_ThemeToggle")
+            <a href="/auth/logout" class="admin-nav-logout" style="margin-left:0;">Log out</a>
+        </span>
     </nav>
 
     <main class="admin-main">
