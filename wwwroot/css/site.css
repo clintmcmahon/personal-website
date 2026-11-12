@@ -5,12 +5,12 @@
   --bg:           #FFFFFF;
   --bg-subtle:    #F4F4F2;
   --border:       #DEDEDA;
-  --text:         #0A0A0A;
+  --text:         #333333;
   --text-muted:   #575757;
   /* --accent is ink for links and solid buttons; --on-accent is the text that
      sits on it. --highlight is a background only and always carries black. */
   --accent:       #0A0A0A;
-  --accent-dark:  #2E2E2E;
+  --accent-dark:  #333333;
   --accent-light: #FFF6A6;
   --on-accent:    #FFFFFF;
   --highlight:    #FFE600;
