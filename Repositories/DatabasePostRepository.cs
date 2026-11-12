@@ -91,5 +91,41 @@ public class DatabasePostRepository : IPostRepository
     // Shared with the admin editor's live preview so unsaved drafts render through the
     // same pipeline as published posts.
     public static string RenderMarkdown(string? markdown) =>
-        Markdown.ToHtml(markdown ?? string.Empty, _pipeline);
+        UpgradeLegacyCodeBlocks(Markdown.ToHtml(markdown ?? string.Empty, _pipeline));
+
+    // Posts imported from WordPress carry code as
+    //   <pre class="EnlighterJSRAW" data-enlighter-language="yaml">...</pre>
+    // which only meant something to the EnlighterJS plugin. Rewritten here to the
+    // <pre><code class="language-x"> shape Markdig emits for fenced blocks, so old
+    // and new posts get the same highlighting without editing every old post.
+    private static readonly System.Text.RegularExpressions.Regex LegacyCodeBlock = new(
+        @"<pre\b(?<attrs>[^>]*\bEnlighterJSRAW\b[^>]*)>(?<code>.*?)</pre>",
+        System.Text.RegularExpressions.RegexOptions.Singleline |
+        System.Text.RegularExpressions.RegexOptions.IgnoreCase |
+        System.Text.RegularExpressions.RegexOptions.Compiled);
+
+    private static readonly System.Text.RegularExpressions.Regex LegacyLanguage = new(
+        @"data-enlighter-language\s*=\s*""(?<lang>[\w+#-]*)""",
+        System.Text.RegularExpressions.RegexOptions.IgnoreCase |
+        System.Text.RegularExpressions.RegexOptions.Compiled);
+
+    private static string UpgradeLegacyCodeBlocks(string html) =>
+        LegacyCodeBlock.Replace(html, m =>
+        {
+            var lang = LegacyLanguage.Match(m.Groups["attrs"].Value).Groups["lang"].Value.ToLowerInvariant();
+
+            // Enlighter names that Prism calls something else, or has no grammar for.
+            lang = lang switch
+            {
+                "" or "generic" or "raw" or "no-highlight" => "none",
+                "html" or "xml" => "markup",
+                "shell" => "bash",
+                "c#" => "csharp",
+                _ => lang
+            };
+
+            // A newline straight after <code> would render as an empty first line.
+            var code = m.Groups["code"].Value.TrimStart('\r', '\n').TrimEnd();
+            return $"<pre><code class=\"language-{lang}\">{code}</code></pre>";
+        });
 }

@@ -877,6 +877,21 @@ p {
   margin: 1.5rem 0;
 }
 
+/* Highlighted blocks: Prism's theme supplies the dark background and token
+   colours; this squares it off to match the rest of the site. */
+.post-content pre[class*="language-"] {
+  border: 2px solid var(--text);
+  border-radius: 0;
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.post-content pre code {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
 .post-content img {
   max-width: 100%;
   height: auto;

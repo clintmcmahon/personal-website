@@ -51,6 +51,9 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    @* Fetches any other grammar (yaml, bash, sql, json...) the first time a post uses it,
+       so a new language in a post does not need a new script tag here. *@
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     
     <link rel="stylesheet" href="~/lib/glightbox/glightbox.min.css" />
     <link rel="alternate" type="application/rss+xml" title="Clint McMahon's Blog" href="/rss" />
