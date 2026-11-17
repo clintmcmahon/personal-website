@@ -6,7 +6,7 @@ Disallow: /auth/
 Sitemap: https://clintmcmahon.com/sitemap.xml
 
 # The photoblog is a separate site now and publishes its own robots.txt and sitemap
-# at https://photos.clintmcmahon.com/.
+# at https://skywayhours.com/.
 
 # AI / LLM agent guidance
 # https://clintmcmahon.com/llms.txt

@@ -105,9 +105,11 @@ builder.Services.AddScoped<PhotoService>();
 // regardless of the 30-day sliding expiration below. The "keys" folder is excluded from the
 // rsync --delete in deploy.yml so it survives deploys.
 //
-// The path is configuration rather than a constant because the photoblog at
-// photos.clintmcmahon.com shares this login: both apps must persist to the SAME directory
-// and use the SAME application name, or a cookie issued by one is undecryptable by the other.
+// The path is configuration rather than a constant because the photoblog (originally at
+// photos.clintmcmahon.com, now skywayhours.com) shared this login: both apps must persist to the
+// SAME directory and use the SAME application name, or a cookie issued by one is undecryptable
+// by the other. Cookies can't span clintmcmahon.com and skywayhours.com, so the shared key ring
+// alone no longer gives single sign-on across the two.
 // Set DataProtection:KeyPath to the shared directory in appsettings.local.json on the server.
 var keyPath = builder.Configuration["DataProtection:KeyPath"] ?? "keys";
 if (!Path.IsPathRooted(keyPath))
@@ -132,8 +134,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromDays(30);
         options.SlidingExpiration = true;
 
-        // Empty in development (localhost rejects a dotted domain); set to ".clintmcmahon.com"
-        // in production so the same cookie also authenticates against the photoblog.
+        // Empty in development (localhost rejects a dotted domain). Was ".clintmcmahon.com" in
+        // production so the cookie also covered photos.clintmcmahon.com; that no longer reaches
+        // the photoblog at skywayhours.com.
         if (!string.IsNullOrWhiteSpace(cookieDomain))
             options.Cookie.Domain = cookieDomain;
 

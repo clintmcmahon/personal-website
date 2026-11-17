@@ -6,7 +6,7 @@ public static class CanonicalUrlHelper
 
     // Only PhotoRedirectController still needs this: the photoblog is its own app now,
     // and nothing here builds photo URLs beyond forwarding the old /photos/* paths.
-    public const string PhotoBaseUrl = "https://photos.clintmcmahon.com";
+    public const string PhotoBaseUrl = "https://skywayhours.com";
 
     public static string BlogPost(string slug) => $"{BlogBaseUrl}/blog/{slug}";
 

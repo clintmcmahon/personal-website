@@ -3,21 +3,21 @@ using Website.Services;
 
 namespace Website.Controllers;
 
-// The photoblog moved to its own app at photos.clintmcmahon.com, where every *page* sits at
+// The photoblog moved to its own app, first at photos.clintmcmahon.com and now at skywayhours.com, where every *page* sits at
 // the domain root. These 301s keep the old clintmcmahon.com/photos/* URLs alive: bookmarks,
 // old feed entries, Mastodon posts, and anything already indexed.
 //
 // Two shapes used to live under /photos on this site, and they move differently:
 //
 //   Pages, which lost the prefix:
-//     /photos                  -> https://photos.clintmcmahon.com/
-//     /photos/archive          -> https://photos.clintmcmahon.com/archive
-//     /photos/2026-08-10       -> https://photos.clintmcmahon.com/2026-08-10
-//     /photos/tag/minneapolis  -> https://photos.clintmcmahon.com/tag/minneapolis
+//     /photos                  -> https://skywayhours.com/
+//     /photos/archive          -> https://skywayhours.com/archive
+//     /photos/2026-08-10       -> https://skywayhours.com/2026-08-10
+//     /photos/tag/minneapolis  -> https://skywayhours.com/tag/minneapolis
 //
 //   Image files under wwwroot/photos/{year}/…, which kept it, because the directory moved
 //   across unchanged and the URLs are baked into photos.db:
-//     /photos/2026/2026-08-10/img.jpeg -> https://photos.clintmcmahon.com/photos/2026/2026-08-10/img.jpeg
+//     /photos/2026/2026-08-10/img.jpeg -> https://skywayhours.com/photos/2026/2026-08-10/img.jpeg
 //
 // A bare four-digit first segment is what separates them. Photo permalinks are full dates
 // ("2026-08-10"), so they never collide with a year directory ("2026").

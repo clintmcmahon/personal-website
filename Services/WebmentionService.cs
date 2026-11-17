@@ -13,7 +13,7 @@ public class WebmentionService
 {
     private static readonly HashSet<string> OwnHosts = new(StringComparer.OrdinalIgnoreCase)
     {
-        "clintmcmahon.com", "photos.clintmcmahon.com"
+        "clintmcmahon.com", "skywayhours.com", "photos.clintmcmahon.com"
     };
 
     private static readonly TimeSpan RegexTimeout = TimeSpan.FromSeconds(2);

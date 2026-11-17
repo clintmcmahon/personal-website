@@ -7,7 +7,7 @@ using Website.Models;
 
 namespace Website.Services;
 
-// Latest post from the photoblog at photos.clintmcmahon.com. The RSS feed supplies the title,
+// Latest post from the photoblog at skywayhours.com. The RSS feed supplies the title,
 // image and caption; the location only exists on the permalink page (JSON-LD contentLocation),
 // so that gets a second request. Cached so the page never waits on the photoblog per visit.
 public class PhotoService

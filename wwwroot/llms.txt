@@ -8,12 +8,12 @@ Clint McMahon builds web applications and software systems for a living, and tak
 
 Client work is contracted through Parka Software: fixed-scope projects, monthly retainers and system assessments. Services and the full portfolio are at https://parkasoftware.com. A local overview is at https://clintmcmahon.com/freelance-developer-minneapolis
 
-The photoblog at photos.clintmcmahon.com is a running record of what caught his attention — street photography, urban scenes, coffee shops, seasons, and everyday life in the midwest.
+The photoblog at skywayhours.com is a running record of what caught his attention — street photography, urban scenes, coffee shops, seasons, and everyday life in the midwest.
 
 ## Sites
 
 - Main site / blog: https://clintmcmahon.com
-- Photoblog: https://photos.clintmcmahon.com
+- Photoblog: https://skywayhours.com
 
 ---
 
@@ -35,7 +35,7 @@ The photoblog at photos.clintmcmahon.com is a running record of what caught his 
 
 ---
 
-## photos.clintmcmahon.com — Photoblog
+## skywayhours.com — Photoblog
 
 ### Content
 
@@ -46,15 +46,15 @@ The photoblog at photos.clintmcmahon.com is a running record of what caught his 
 
 ### Browsing
 
-- Archive of all photos: https://photos.clintmcmahon.com/archive
-- Individual photos by date: https://photos.clintmcmahon.com/YYYY-MM-DD
-- Browse by tag: https://photos.clintmcmahon.com/tag/{tag}
+- Archive of all photos: https://skywayhours.com/archive
+- Individual photos by date: https://skywayhours.com/YYYY-MM-DD
+- Browse by tag: https://skywayhours.com/tag/{tag}
 - Common tags: minneapolis, street, downtown, nature, coffee, winter, summer, architecture
 
 ### Machine-Readable
 
-- Sitemap: https://photos.clintmcmahon.com/sitemap.xml
-- RSS feed: https://photos.clintmcmahon.com/rss
+- Sitemap: https://skywayhours.com/sitemap.xml
+- RSS feed: https://skywayhours.com/rss
 
 ### Photo Format
 
@@ -68,7 +68,7 @@ Each photo page includes structured data (JSON-LD ImageObject) with title, descr
 - Location: Minneapolis, Minnesota, USA
 - Website: https://clintmcmahon.com
 - Company: Parka Software, https://parkasoftware.com
-- Photoblog: https://photos.clintmcmahon.com
+- Photoblog: https://skywayhours.com
 - GitHub: https://github.com/clintmcmahon
 - Instagram: https://www.instagram.com/cwmcmhn/
 

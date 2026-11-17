@@ -27,8 +27,8 @@
 }
 
 /* Dark palette. data-theme is set on <html> before first paint by
-   Views/Shared/_ThemeScript.cshtml from the visitor's local time of day,
-   or by the header toggle. */
+   Views/Shared/_ThemeScript.cshtml from the visitor's OS setting, or from the
+   header toggle when they've picked one. */
 :root[data-theme="dark"] {
   color-scheme: dark;
   --bg:           #0C0C0C;
