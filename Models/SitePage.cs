@@ -21,6 +21,11 @@ public class SitePage
     // status line on the homepage.
     public string? Tagline { get; set; }
 
+    // Only used on the "now" page: the "Brewing" and "Listening to" lines under the
+    // homepage's "Working on" status (which is the Tagline).
+    public string? Brewing { get; set; }
+    public string? ListeningTo { get; set; }
+
     // Portrait-style image above the heading (the About page photo).
     public string? HeaderImageUrl { get; set; }
 

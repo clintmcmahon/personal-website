@@ -29,11 +29,15 @@ public class HomeController : Controller
            .OrderByDescending(post => post.Date)
            .Take(10);
 
-        // The homepage status line is the /now page's tagline, edited at /admin/pages.
-        ViewData["NowBlurb"] = _db.Pages
+        // The homepage Working on / Brewing / Listening to lines are the /now page's
+        // Tagline, Brewing and ListeningTo fields, edited at /admin/pages.
+        var now = _db.Pages
             .Where(p => p.Slug == "now" && p.Published)
-            .Select(p => p.Tagline)
+            .Select(p => new { p.Tagline, p.Brewing, p.ListeningTo })
             .FirstOrDefault();
+        ViewData["NowBlurb"] = now?.Tagline;
+        ViewData["NowBrewing"] = now?.Brewing;
+        ViewData["NowListening"] = now?.ListeningTo;
 
         return View(posts);
     }

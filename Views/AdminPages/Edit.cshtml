@@ -56,9 +56,28 @@
     </div>
 
     <div class="admin-field">
-        <label for="Tagline">Tagline <span class="admin-hint">(short line under the heading; on the Now page it's also the homepage status)</span></label>
+        <label for="Tagline">Tagline <span class="admin-hint">(short line under the heading; on the Now page it's also the homepage "Working on" line)</span></label>
         <input type="text" id="Tagline" name="Tagline" value="@Model.Tagline" class="admin-input" />
     </div>
+
+    @if (Model.Slug == "now")
+    {
+        <div class="admin-field-row" style="grid-template-columns: 1fr 1fr;">
+            <div class="admin-field">
+                <label for="Brewing">Brewing <span class="admin-hint">(homepage; blank hides it)</span></label>
+                <input type="text" id="Brewing" name="Brewing" value="@Model.Brewing" class="admin-input" />
+            </div>
+            <div class="admin-field">
+                <label for="ListeningTo">Listening to <span class="admin-hint">(homepage; blank hides it)</span></label>
+                <input type="text" id="ListeningTo" name="ListeningTo" value="@Model.ListeningTo" class="admin-input" />
+            </div>
+        </div>
+    }
+    else
+    {
+        <input type="hidden" name="Brewing" value="@Model.Brewing" />
+        <input type="hidden" name="ListeningTo" value="@Model.ListeningTo" />
+    }
 
     <div class="admin-field">
         <label for="HeaderImageUrl">Header image <span class="admin-hint">(optional portrait above the heading, e.g. /images/icon/me.jpg)</span></label>

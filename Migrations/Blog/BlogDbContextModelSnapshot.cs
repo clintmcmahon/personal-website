@@ -15,7 +15,7 @@ namespace Website.Migrations.Blog
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.15");
 
             modelBuilder.Entity("Website.Models.Post", b =>
                 {
@@ -114,6 +114,9 @@ namespace Website.Migrations.Blog
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Brewing")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Content")
                         .HasColumnType("TEXT");
 
@@ -124,6 +127,9 @@ namespace Website.Migrations.Blog
                         .HasColumnType("TEXT");
 
                     b.Property<string>("HeaderImageUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ListeningTo")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("MetaTitle")

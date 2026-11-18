@@ -499,8 +499,14 @@ p {
   color: #0A0A0A;
 }
 
+/* Now/Brewing sits above the portrait, held to the portrait's width (plus its shadow)
+   so a long status wraps instead of widening the intro's right column. */
+.home-aside {
+  width: calc(clamp(112px, 14vw, 176px) + 10px);
+}
+
 .home-now {
-  margin: 2.25rem 0 0;
+  margin: 0 0 1.5rem;
   font-size: 0.875rem;
   line-height: 1.5;
 }
@@ -527,10 +533,14 @@ p {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .home-portrait {
+  .home-aside {
     order: -1;
-    width: 96px;
+    width: auto;
     margin-bottom: 2rem;
+  }
+
+  .home-portrait {
+    width: 96px;
   }
 
   .home-body {
