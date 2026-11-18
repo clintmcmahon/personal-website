@@ -204,13 +204,15 @@ app.Use(async (context, next) =>
     // ships inline <script> blocks and loads EasyMDE/Masonry (unpkg), Font Awesome Kit,
     // Plausible analytics, Prism (cdnjs) and the Letterbird contact embed from CDNs rather
     // than bundling them locally. Still blocks arbitrary attacker-supplied script hosts.
+    // connect-src allows webmention.io because _Webmentions.cshtml fetches mentions in the
+    // browser; the /privacy page lists webmention.io as a service visitors connect to.
     headers["Content-Security-Policy"] =
         "default-src 'self'; " +
         "img-src 'self' data: https:; " +
         "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://fonts.googleapis.com https://cdn.jsdelivr.net https://maxcdn.bootstrapcdn.com; " +
         "font-src 'self' data: https://ka-f.fontawesome.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://maxcdn.bootstrapcdn.com; " +
         "script-src 'self' 'unsafe-inline' https://unpkg.com https://letterbird.co https://plausible.io https://cdnjs.cloudflare.com https://kit.fontawesome.com; " +
-        "connect-src 'self' https://ka-f.fontawesome.com https://ka-p.fontawesome.com https://kit.fontawesome.com https://plausible.io; " +
+        "connect-src 'self' https://ka-f.fontawesome.com https://ka-p.fontawesome.com https://kit.fontawesome.com https://plausible.io https://webmention.io; " +
         "frame-src https://letterbird.co; " +
         "frame-ancestors 'none'; " +
         "base-uri 'self'; " +

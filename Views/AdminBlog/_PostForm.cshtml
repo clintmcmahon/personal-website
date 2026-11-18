@@ -40,6 +40,13 @@
     <input type="text" id="TagsRaw" name="TagsRaw" value="@Model.TagsRaw" class="admin-input" placeholder="ai, dotnet, coffee" />
 </div>
 
+<div class="admin-prompts">
+    <ol>
+        <li>What's the goal of this blog post?</li>
+        <li>Why is your perspective on this topic interesting?</li>
+    </ol>
+</div>
+
 <div class="admin-field admin-field--editor">
     <label for="Content">Content <span class="admin-hint">(markdown)</span></label>
     <textarea id="Content" name="Content">@Model.Content</textarea>
