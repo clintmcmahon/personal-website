@@ -97,6 +97,20 @@ public class WebmentionService
         }
     }
 
+    // One known target rather than every link in a body. Used for blogroll entries,
+    // where the source is /feeds and the target is the blog's homepage.
+    public async Task SendToTargetAsync(string sourceUrl, string targetUrl)
+    {
+        try
+        {
+            await SendOneAsync(_httpClientFactory.CreateClient("Webmention"), sourceUrl, targetUrl);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Webmention: failed processing target {Target}", targetUrl);
+        }
+    }
+
     private static List<string> ExtractOutboundLinks(string htmlContent)
     {
         var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);

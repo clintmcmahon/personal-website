@@ -10,13 +10,23 @@ public class WebmentionDispatcherService : BackgroundService
 {
     private static readonly TimeSpan PollInterval = TimeSpan.FromMinutes(15);
 
+    // Blogroll rows: EntityKey is the blog's homepage, and a row existing (sent or not)
+    // is the record that the blog has been notified, so each one is notified only once
+    // even if it's removed and re-added by a later OPML upload.
+    private const string BlogrollEntityType = "Blogroll";
+    private const string BlogrollPageSlug = "feeds";
+    private const string BlogrollSourceUrl = "https://clintmcmahon.com/feeds";
+
     private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger<WebmentionDispatcherService> _logger;
 
-    public WebmentionDispatcherService(IServiceScopeFactory scopeFactory, ILogger<WebmentionDispatcherService> logger)
+    private readonly IHostEnvironment _env;
+
+    public WebmentionDispatcherService(IServiceScopeFactory scopeFactory, ILogger<WebmentionDispatcherService> logger, IHostEnvironment env)
     {
         _scopeFactory = scopeFactory;
         _logger = logger;
+        _env = env;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -41,6 +51,41 @@ public class WebmentionDispatcherService : BackgroundService
         }
     }
 
+    // Queues a webmention for every blogroll site that hasn't had one, with the same
+    // SendDelay as posts. Runs each tick, so the initial seed and later OPML uploads
+    // are both picked up without the upload having to touch webmentions.db.
+    private static async Task ScheduleBlogrollAsync(WebmentionDbContext webmentionDb, BlogDbContext blogDb, CancellationToken ct)
+    {
+        var sites = await blogDb.BlogrollFeeds.AsNoTracking()
+            .Where(f => f.SiteUrl != null)
+            .Select(f => f.SiteUrl!)
+            .Distinct()
+            .ToListAsync(ct);
+
+        var known = (await webmentionDb.PendingWebmentions.AsNoTracking()
+                .Where(p => p.EntityType == BlogrollEntityType)
+                .Select(p => p.EntityKey)
+                .ToListAsync(ct))
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        var scheduledFor = DateTime.UtcNow + WebmentionService.SendDelay;
+        var added = 0;
+        foreach (var site in sites.Where(s => !known.Contains(s)))
+        {
+            webmentionDb.PendingWebmentions.Add(new Models.PendingWebmention
+            {
+                EntityType = BlogrollEntityType,
+                EntityKey = site,
+                SourceUrl = BlogrollSourceUrl,
+                ScheduledFor = scheduledFor,
+            });
+            added++;
+        }
+
+        if (added > 0)
+            await webmentionDb.SaveChangesAsync(ct);
+    }
+
     private async Task DispatchDueAsync(CancellationToken stoppingToken)
     {
         try
@@ -49,6 +94,11 @@ public class WebmentionDispatcherService : BackgroundService
             var webmentionDb = scope.ServiceProvider.GetRequiredService<WebmentionDbContext>();
             var blogDb = scope.ServiceProvider.GetRequiredService<BlogDbContext>();
             var webmentionService = scope.ServiceProvider.GetRequiredService<WebmentionService>();
+
+            // Production only: a local copy of blog.db would otherwise queue the same
+            // notifications on a dev machine and send them a second time.
+            if (_env.IsProduction())
+                await ScheduleBlogrollAsync(webmentionDb, blogDb, stoppingToken);
 
             var due = await webmentionDb.PendingWebmentions
                 .Where(p => !p.Sent && p.ScheduledFor <= DateTime.UtcNow)
@@ -69,6 +119,18 @@ public class WebmentionDispatcherService : BackgroundService
                         var post = await blogDb.Posts.AsNoTracking()
                             .FirstOrDefaultAsync(p => p.Slug == item.EntityKey && !p.Draft, stoppingToken);
                         content = post?.Content;
+                    }
+                    else if (item.EntityType == BlogrollEntityType)
+                    {
+                        // Wait while /feeds is unpublished, since the receiver checks that the
+                        // source page links to the target. Leaving the row unsent retries next tick.
+                        var feedsLive = await blogDb.Pages.AnyAsync(p => p.Slug == BlogrollPageSlug && p.Published, stoppingToken);
+                        if (!feedsLive) continue;
+
+                        // Dropped from the blogroll during the delay: mark sent without notifying.
+                        var stillListed = await blogDb.BlogrollFeeds.AnyAsync(f => f.SiteUrl == item.EntityKey, stoppingToken);
+                        if (stillListed)
+                            await webmentionService.SendToTargetAsync(item.SourceUrl, item.EntityKey);
                     }
 
                     // If the post was deleted or unpublished again during the delay window, skip sending.

@@ -39,18 +39,21 @@
     @if (ViewData["Blogroll"] is List<(string Category, List<Website.Models.BlogrollFeed> Feeds)> blogroll)
     {
         <p class="small"><a href="/blogroll.opml">Download the whole list as OPML</a> to import into your feed reader.</p>
+        @* Each folder starts collapsed; <details> needs no script and stays searchable with find-in-page. *@
         @foreach (var group in blogroll)
         {
-            <h2>@group.Category</h2>
-            <ul>
-                @foreach (var feed in group.Feeds)
-                {
-                    <li>
-                        <a href="@(feed.SiteUrl ?? feed.FeedUrl)">@feed.Title</a><br>
-                        <small>RSS: <a href="@feed.FeedUrl">@feed.FeedUrl</a></small>
-                    </li>
-                }
-            </ul>
+            <details class="blogroll-group">
+                <summary><span class="blogroll-label">@group.Category</span> <span class="blogroll-count">@group.Feeds.Count feeds</span></summary>
+                <ul>
+                    @foreach (var feed in group.Feeds)
+                    {
+                        <li>
+                            <a href="@(feed.SiteUrl ?? feed.FeedUrl)">@feed.Title</a><br>
+                            <small>RSS: <a href="@feed.FeedUrl">@feed.FeedUrl</a></small>
+                        </li>
+                    }
+                </ul>
+            </details>
         }
     }
 </div>

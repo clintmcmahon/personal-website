@@ -1006,7 +1006,61 @@ p {
   margin-top: 3rem;
 }
 
-/* Blogroll (/feeds): the list SitePage/Show.cshtml renders from the BlogrollFeeds table. */
+/* Blogroll (/feeds): the list SitePage/Show.cshtml renders from the BlogrollFeeds table,
+   one collapsed <details> per NetNewsWire folder. The summary borrows the .page-content h2 label look. */
+.blogroll-group {
+  margin-top: 2rem;
+}
+.blogroll-group summary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  list-style: none;
+  padding: 0.75rem 0;
+  border-top: 3px solid var(--text);
+  border-bottom: 1px solid var(--text);
+}
+.blogroll-group summary::-webkit-details-marker {
+  display: none;
+}
+.blogroll-group summary::after {
+  content: "+";
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.blogroll-group[open] summary::after {
+  content: "\2212";
+}
+.blogroll-group summary:hover .blogroll-label,
+.blogroll-group summary:focus-visible .blogroll-label {
+  background: var(--highlight);
+  color: #0A0A0A;
+}
+.blogroll-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--bg);
+  background: var(--text);
+  padding: 0.4rem 0.6rem;
+}
+.blogroll-count {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.page-feeds .blogroll-group ul {
+  margin: 0;
+}
+.page-feeds .blogroll-group li:first-child {
+  border-top: 0;
+}
 .page-feeds ul {
   list-style: none;
   padding: 0;
