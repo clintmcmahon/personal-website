@@ -35,4 +35,22 @@
     }
 
     @Html.Raw(ViewData["ContentHtml"])
+
+    @if (ViewData["Blogroll"] is List<(string Category, List<Website.Models.BlogrollFeed> Feeds)> blogroll)
+    {
+        <p class="small"><a href="/blogroll.opml">Download the whole list as OPML</a> to import into your feed reader.</p>
+        @foreach (var group in blogroll)
+        {
+            <h2>@group.Category</h2>
+            <ul>
+                @foreach (var feed in group.Feeds)
+                {
+                    <li>
+                        <a href="@(feed.SiteUrl ?? feed.FeedUrl)">@feed.Title</a><br>
+                        <small>RSS: <a href="@feed.FeedUrl">@feed.FeedUrl</a></small>
+                    </li>
+                }
+            </ul>
+        }
+    }
 </div>

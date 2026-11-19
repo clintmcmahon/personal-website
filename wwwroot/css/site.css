@@ -1006,7 +1006,7 @@ p {
   margin-top: 3rem;
 }
 
-/* Blogroll (/feeds): the page's markdown list of links. */
+/* Blogroll (/feeds): the list SitePage/Show.cshtml renders from the BlogrollFeeds table. */
 .page-feeds ul {
   list-style: none;
   padding: 0;

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Website.Data;
 using Website.Repositories;
+using Website.Services;
 
 namespace Website.Controllers;
 
@@ -27,6 +28,19 @@ public class SitePageController : Controller
             return NotFound();
 
         ViewData["ContentHtml"] = DatabasePostRepository.RenderMarkdown(page.Content);
+
+        // The blogroll list under the /feeds intro comes from NetNewsWire (/admin/blogroll),
+        // not from the page's markdown.
+        if (page.Slug == "feeds")
+        {
+            var feeds = await _db.BlogrollFeeds.AsNoTracking().ToListAsync();
+            ViewData["Blogroll"] = BlogrollOpml.Categories
+                .Select(c => (Category: c, Feeds: feeds.Where(f => f.Category == c)
+                    .OrderBy(f => f.Title, StringComparer.OrdinalIgnoreCase).ToList()))
+                .Where(g => g.Feeds.Count > 0)
+                .ToList();
+        }
+
         return View(page);
     }
 }

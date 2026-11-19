@@ -1,0 +1,49 @@
+@using Website.Services
+@{
+    ViewData["Title"] = "Blogroll — Admin";
+    Layout = "_AdminLayout";
+    var counts = ViewData["Counts"] as List<KeyValuePair<string, int>> ?? new();
+    var importedAt = ViewData["ImportedAt"] as DateTime?;
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="admin-flash admin-flash--success">@TempData["Success"]</div>
+}
+@if (ViewData["Error"] != null)
+{
+    <div class="admin-flash admin-flash--error">@ViewData["Error"]</div>
+}
+
+<div class="admin-toolbar">
+    <h1>Blogroll</h1>
+    <div style="display:flex; gap:1rem; align-items:center;">
+        <a href="/feeds" target="_blank" class="admin-link">View live →</a>
+        <a href="/blogroll.opml" target="_blank" class="admin-link">OPML →</a>
+    </div>
+</div>
+
+<p class="text-muted" style="margin-bottom: 1.5rem; line-height: 1.6;">
+    @if (counts.Count == 0)
+    {
+        <span>The blogroll is empty.</span>
+    }
+    else
+    {
+        <span>@string.Join(", ", counts.Select(c => $"{c.Value} {c.Key}")), last imported @importedAt?.ToLocalTime().ToString("MMM d, yyyy h:mm tt").</span>
+    }
+    In NetNewsWire, choose File → Export Subscriptions and upload the file here.
+    Feeds in the @string.Join(" and ", BlogrollOpml.Categories) folders replace the whole blogroll; every other folder is ignored.
+    The intro text on /feeds is edited at <a href="/admin/pages">Pages</a>.
+</p>
+
+<form method="post" action="/admin/blogroll" enctype="multipart/form-data" class="admin-form">
+    @Html.AntiForgeryToken()
+    <div class="admin-field">
+        <label for="opml">OPML export</label>
+        <input type="file" id="opml" name="opml" accept=".opml,.xml,text/xml,text/x-opml" class="admin-input" required />
+    </div>
+    <div class="admin-form-actions">
+        <button type="submit" class="admin-btn admin-btn--primary">Replace blogroll</button>
+    </div>
+</form>

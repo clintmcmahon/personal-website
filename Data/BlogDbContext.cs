@@ -11,6 +11,7 @@ public class BlogDbContext : DbContext
     public DbSet<Post> Posts { get; set; }
     public DbSet<SitePage> Pages { get; set; }
     public DbSet<Project> Projects { get; set; }
+    public DbSet<BlogrollFeed> BlogrollFeeds { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
